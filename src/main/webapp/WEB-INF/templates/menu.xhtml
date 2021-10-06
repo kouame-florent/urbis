@@ -1,0 +1,40 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:p="http://primefaces.org/ui">
+    <ui:composition>
+       
+        <div class="p-grid">
+            <div class="p-col-12">
+               
+            <h:form>
+                <p:menu style="width: 100%">
+                    <p:submenu label="Actes">
+                        <p:menuitem value="Actes de naissance"  icon="pi pi-user-plus"/>
+                        <p:menuitem value="Actes de mariage"   icon="pi pi-users"/>
+                        <p:menuitem value="Actes de décès"   icon="pi pi-user-minus"/>
+                        <p:menuitem value="Actes divers"   icon="pi pi-table"/>
+                    </p:submenu>
+                    <p:submenu label="Données de base">
+                        <p:menuitem value="Registres"  ajax="false" icon="pi pi-book" />
+                        <p:menuitem value="Données existantes"  ajax="false" icon="pi pi-clone" />
+                        <p:menuitem value="Données dégradées"  ajax="false" icon="pi pi-file-o" />
+                        
+                    </p:submenu>
+                    <p:submenu label="Paramètres sectoriel">
+                        
+                    </p:submenu>
+                     <p:submenu label="Paramètres généreaux">
+                        
+                    </p:submenu>
+                    
+                </p:menu>
+            </h:form>
+           </div>
+        </div>
+           
+       
+           
+       
+     </ui:composition>
+</html>

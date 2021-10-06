@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+xmlns:h="http://xmlns.jcp.org/jsf/html"
+xmlns:f="http://xmlns.jcp.org/jsf/core"
+xmlns:p="http://primefaces.org/ui">
+    
+ <ui:composition template="/WEB-INF/templates/dialog-tpl.xhtml">
+    
+    <ui:define name="content">
+        <h:form id="messageForm">
+                <p:growl globalOnly="true" life="15000"/>        
+        </h:form>
+             
+        <h:form id="contenttForm">
+     
+            <p:fieldset legend="Type de registres">
+                <p:selectOneRadio id="console" value="#{creerSerieBacking.selectedType}" 
+                                  converter="omnifaces.SelectItemsConverter"
+                                  required="true">
+                    <p:ajax listener="#{creerSerieBacking.onTypeRgistreSelect}" 
+                            update="contenttForm:commune contenttForm:centre contenttForm:tribunal"/>
+                    <f:selectItems value="#{creerSerieBacking.typesRegistre}" var="type" 
+                                   itemLabel="#{type.libelle}" itemValue="#{type}"/>
+                </p:selectOneRadio>
+                
+            </p:fieldset>
+            <p:spacer height="2"/>
+            <p:fieldset legend="Information des registres">
+                <div class="ui-fluid p-formgrid p-grid">
+                    <div class="p-field p-col">
+                    <p:outputLabel for="commune" styleClass="p-d-block">Commune</p:outputLabel>
+                    <p:inputText id="commune" value="#{creerSerieBacking.currentLocalite.libelle}"
+                                 disabled="true" required="true" styleClass="p-d-block"/>
+
+                    </div>
+                    <div class="p-field p-col">
+                        <p:outputLabel for="centre" styleClass="p-d-block">Centre</p:outputLabel>
+                        <p:inputText id="centre" value="#{creerSerieBacking.currentCentre.libelle}"
+                                     disabled="true"  required="true" styleClass="p-d-block"/>
+
+                    </div>
+                    <div class="p-field p-col">
+                        <p:outputLabel for="tribunal" styleClass="p-d-block">Tribunal</p:outputLabel>
+                        <p:inputText id="tribunal" value="#{creerSerieBacking.currentTribunal.libelle}" disabled="true"
+                                   required="true"  styleClass="p-d-block"/>
+
+                    </div>
+              
+                </div>
+
+            </p:fieldset>
+             <p:spacer height="2"/>
+            <p:fieldset legend="Officier d'état civil">
+                <div class="ui-fluid p-formgrid p-grid">
+                    <div class="p-field p-col">
+                        <p:outputLabel for="officier" styleClass="p-d-block">Officier</p:outputLabel>
+                        <p:selectOneMenu id="officier" value="#{creerSerieBacking.selectedOfficierId}"          
+                                         label="Selectionnez" required="true">
+
+                            <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez un officier --" />
+                            <f:selectItems value="#{creerSerieBacking.officiers}" var="officier" 
+                                           itemLabel="#{officier.prenoms} #{officier.nom} [#{officier.titre}]" 
+                                           itemValue="#{officier.id}"/>
+                        </p:selectOneMenu>
+                       
+
+                    </div>
+                    
+
+                </div>
+
+            </p:fieldset>
+            <p:spacer height="2"/>
+             <p:fieldset legend="Informations de la serie">
+                 <div class="ui-fluid p-formgrid p-grid">
+                     <div class="p-field p-col">
+                        <p:outputLabel for="annee" styleClass="p-d-block">Année</p:outputLabel>
+                        <p:inputMask id="annee" value="#{creerSerieBacking.annee}" mask="9999" maxlength="4"
+                                     required="true" styleClass="p-d-block"/>
+                        
+                    </div>
+                     <div class="p-field p-col">
+                        <p:outputLabel for="premier"  styleClass="p-d-block">Numero du premier registre</p:outputLabel>
+                        <p:inputNumber id="premier" value="#{creerSerieBacking.premier}"  maxlength="5" 
+                                     required="true" styleClass="p-d-block"/>
+
+                    </div>
+                    <div class="p-field p-col">
+                            <p:outputLabel for="dernier"  styleClass="p-d-block">Numero du dernier registre</p:outputLabel>
+                            <p:inputNumber id="dernier" value="#{creerSerieBacking.dernier}"  maxlength="5" 
+                                         required="true" styleClass="p-d-block"/>
+
+                    </div>
+                     <div class="p-field p-col">
+                        <p:outputLabel for="nombreFeuillets" styleClass="p-d-block">Nombre de feuillets</p:outputLabel>
+                        <p:inputNumber id="nombreFeuillets" value="#{creerSerieBacking.nombreDeFeuillets}" maxlength="5" 
+                                     required="true" styleClass="p-d-block"/>
+
+                    </div>
+                 </div>
+                
+            </p:fieldset>
+           <p:spacer height="2"/>
+            <div class="ui-fluid p-formgrid p-grid">
+                <div class="p-field p-col">
+                    <p:commandButton id="creer" value="Créer la serie" process="@form" action="#{creerSerieBacking.creer()}"
+                                     update="@form"  icon="pi pi-check" />
+                </div>
+                <div class="p-field p-col">
+                    <p:commandButton value="Annuler" icon="pi pi-times" 
+                                     styleClass="ui-button-secondary" />
+                </div>
+            </div>
+
+
+        </h:form>
+          
+        
+    </ui:define>
+
+</ui:composition>  
+ 
+</html>
+
