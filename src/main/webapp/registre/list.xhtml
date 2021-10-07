@@ -31,11 +31,11 @@ xmlns:p="http://primefaces.org/ui">
                  <p:toolbarGroup>
                      <p:commandButton  value="Créer un registre" action="#{listBacking.showCreerView()}" icon="pi pi-plus" 
                                        process="@this" style="margin-right: .5rem">   
-                         
+                         <p:ajax event="dialogReturn" listener="#{listBacking.onSerieCreated}" update="messageForm @form"/>
                     </p:commandButton>
                      <p:commandButton value="Créer une serie de registres" action="#{listBacking.showCreerSerieView()}" icon="pi pi-plus" 
                                       process="@this" style="margin-right: .5rem"> 
-                         <p:ajax event="dialogReturn" listener="#{listBacking.onSerieCreated}" update="messageForm @form"/>
+                         <p:ajax event="dialogReturn" listener="#{listBacking.onCreate}" update="messageForm @form"/>
                     </p:commandButton>
                      
                 </p:toolbarGroup>
@@ -67,16 +67,11 @@ xmlns:p="http://primefaces.org/ui">
                            <p:inputText id="numero" value="#{listBacking.filterData.numero}" styleClass="p-d-block"/>
 
                         </div>
-                        <div class="p-field p-col">
-                           <p:outputLabel for="statut" styleClass="p-d-block">Statut</p:outputLabel>
-                           <p:inputText id="statut" styleClass="p-d-block"/>
-
-                        </div>
                     </div>
                     <div class="ui-fluid p-formgrid p-grid">
                     <div class="p-field p-col">
                         <p:commandButton id="rechercher" value="Appliquer les filtres" 
-                                         process="@this contenttForm:annee contenttForm:numero contenttForm:statut"
+                                         process="@this contenttForm:annee contenttForm:numero"
                                          action="#{listBacking.filtrer()}"
                                          update="contenttForm:registre"  icon="pi pi-check" />
                     </div>

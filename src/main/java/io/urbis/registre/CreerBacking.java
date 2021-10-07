@@ -27,6 +27,7 @@ import io.urbis.share.dto.TribunalDto;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.primefaces.PrimeFaces;
 
 /**
  *
@@ -136,13 +137,14 @@ public class CreerBacking implements Serializable{
                 "",
                 selectedOfficierId, 
                 numeroPremierActe, 
-                0, 
+                nombreDeFeuillets + numeroPremierActe, 
                 nombreDeFeuillets, 
                 "", 
                 null, 
                 "");
         
         RegistreDto regRes = registreService.create(reg);
+        PrimeFaces.current().dialog().closeDynamic("");
     }
 
     public LocaliteDto getCurrentLocalite() {
@@ -184,6 +186,8 @@ public class CreerBacking implements Serializable{
     public void setNumeroPremierActe(int numeroPremierActe) {
         this.numeroPremierActe = numeroPremierActe;
     }
+
+    
 
     public TribunalDto getCurrentTribunal() {
         return currentTribunal;

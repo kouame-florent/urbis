@@ -118,7 +118,7 @@ public class CreerSerieBacking implements Serializable{
             LOG.log(Level.INFO, "CREATING REGISTRE ...");
             //int numeroRegistre = registreService.numero(selectedType.getCode(),annee);
             int numeroPremierActe = registreService.numeroPremierActe(selectedType.getCode());
-            LOG.log(Level.INFO, "CURRENT ANNEE: {0}", annee);
+            LOG.log(Level.INFO, "NUMERO PREMIER ACTE: {0}", numeroPremierActe);
             var reg = new RegistreDto(
                     "", 
                     null, 

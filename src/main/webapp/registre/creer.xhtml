@@ -59,23 +59,21 @@ xmlns:p="http://primefaces.org/ui">
             <p:spacer height="2"/>
             <p:fieldset legend="Actes">
                 <div class="ui-fluid p-formgrid p-grid">
+                     <div class="p-field p-col">
+                        <p:outputLabel for="nombreFeuillets" styleClass="p-d-block">Nombre de feuillets</p:outputLabel>
+                        <p:inputText id="nombreFeuillets" value="#{creerBacking.nombreDeFeuillets}" required="true"
+                                     maxlength="5" styleClass="p-d-block">
+                          
+                        </p:inputText>
+
+                    </div>
                     <div class="p-field p-col">
                         <p:outputLabel for="numeroPremierActe"  styleClass="p-d-block">Numéro premier acte</p:outputLabel>
                         <p:inputText id="numeroPremierActe" value="#{creerBacking.numeroPremierActe}" 
-                                       maxlength="5" required="true" styleClass="p-d-block"/>
+                                     maxlength="5" required="true" disabled="true" styleClass="p-d-block"/>
 
                     </div>
-                    <div class="p-field p-col">
-                        <p:outputLabel for="numeroDernierActe" styleClass="p-d-block">Numéro dernier acte</p:outputLabel>
-                        <p:inputText id="numeroDernierActe" maxlength="5" styleClass="p-d-block"/>
-
-                    </div>
-                    <div class="p-field p-col">
-                        <p:outputLabel for="nombreFeuillets" styleClass="p-d-block">Nombre de feuillets</p:outputLabel>
-                        <p:inputText id="nombreFeuillets" value="#{creerBacking.nombreDeFeuillets}" required="true"
-                                       maxlength="5" styleClass="p-d-block"/>
-
-                    </div>
+                    
 
                 </div>
 

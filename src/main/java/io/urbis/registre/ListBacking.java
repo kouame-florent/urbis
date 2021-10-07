@@ -150,10 +150,17 @@ public class ListBacking extends BaseBacking implements Serializable{
     public void returnToCaller(SelectEvent event){
         
     }
+    
+    public void onCreate(SelectEvent event){
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Création de registre", "Registre crée avec succès");
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
         
     
+    
+    
     public void onSerieCreated(SelectEvent event){
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Création de registre", "Serie créere avec succès");
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Création de registre", "Serie créee avec succès");
         
         FacesContext.getCurrentInstance().addMessage(null, message);
     
