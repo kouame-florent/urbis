@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package io.urbis.registre;
+package io.urbis.registre.backing;
 
 import io.urbis.registre.service.EtatService;
 import io.urbis.registre.service.RegistreService;
@@ -145,6 +145,13 @@ public class ListBacking extends BaseBacking implements Serializable{
         Map<String, List<String>> params = Map.of("id", values);
         PrimeFaces.current().dialog().openDynamic("annuler", getDialogOptions(70,95,true), params);
     
+    }
+    
+    public void showDeclarationView(RegistreDto registreDto){
+        LOG.log(Level.INFO, "REGISTRE ID: {0}", registreDto.getId());
+        var values = List.of(registreDto.getId());
+        Map<String, List<String>> params = Map.of("id", values);
+        PrimeFaces.current().dialog().openDynamic("/naissance/declaration", getDialogOptions(98,98,true), params);
     }
     
     public void returnToCaller(SelectEvent event){

@@ -16,7 +16,7 @@ xmlns:p="http://primefaces.org/ui">
         <h:form id="contenttForm">
      
             <p:fieldset legend="Type de registres">
-                <p:selectOneRadio id="console" value="#{creerBacking.selectedType}" 
+                <p:selectOneRadio id="typeRegistre" value="#{creerBacking.selectedType}" 
                                   converter="omnifaces.SelectItemsConverter"
                                   required="true">
                     <p:ajax listener="#{creerBacking.onTypeRgistreSelect}" update="@form"/>

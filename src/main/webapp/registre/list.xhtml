@@ -105,7 +105,7 @@ xmlns:p="http://primefaces.org/ui">
                 <p:column headerText="Numéro"  >
                     <h:outputText value="#{registre.numero}"/>
                 </p:column>
-                <p:column headerText="Date d'ouverture" >
+                <p:column headerText="Date d'ouverture" width="10%" >
                     <h:outputText value="#{registre.created}">
                         <f:convertDateTime type="localDateTime" pattern="dd-MM-yyyy" />
                     </h:outputText>
@@ -119,7 +119,7 @@ xmlns:p="http://primefaces.org/ui">
                 <p:column headerText="Nombre d'actes" >
                     <h:outputText value="#{listBacking.nombreActe}"/>
                 </p:column>
-                <p:column headerText="Officier" >
+                <p:column headerText="Officier" width="15%">
                     <h:outputText value="#{registre.officierEtatCivilNomComplet}"/>
                 </p:column>
                 <p:column headerText="Statut"  >
@@ -127,9 +127,10 @@ xmlns:p="http://primefaces.org/ui">
              
                 </p:column>
                 
-                <p:column >
-                    <p:commandButton  value="valider" action="#{listBacking.showValiderView(registre)}"
-                                      styleClass="ui-button-outlined" process="@this" update="contenttForm:registre">
+                <p:column width="10%" rendered="false">
+                    <p:commandButton  value="Valider" action="#{listBacking.showValiderView(registre)}"
+                                      styleClass="ui-button-outlined" process="@this" 
+                                      update="contenttForm:registre" >
                     <p:ajax event="dialogReturn" 
                             listener="#{listBacking.returnToCaller}" 
                                         update=":contenttForm:registre"/>
@@ -138,9 +139,15 @@ xmlns:p="http://primefaces.org/ui">
                 </p:commandButton>
              
                 </p:column>
-                <p:column>
-                    <p:menuButton icon="pi pi-ellipsis-h" >
+                <p:column width="5%">
+                    <p:menuButton icon="pi pi-ellipsis-h" style="width: 100%;white-space: nowrap;width: auto !important;">
                         <p:menuitem value="Consulter" process="@this" action="#{listBacking.showValiderView(registre)}" icon="pi pi-book"/>
+                        <p:menuitem value="Valider" process="@this" action="#{listBacking.showValiderView(registre)}" 
+                                    update="contenttForm:registre" icon="pi pi-book">
+                            <p:ajax event="dialogReturn" listener="#{listBacking.returnToCaller}" update=":contenttForm:registre"/>
+                            <f:setPropertyActionListener value="#{registre}" target="#{listBacking.selectedRegistre}"/>
+                        
+                        </p:menuitem>
                         <p:menuitem value="Modifier" process="@this" action="#{listBacking.showValiderView(registre)}" icon="pi pi-book"/>
                         <p:menuitem value="Cloturer" process="@this"  icon="pi pi-ban"/>
                         <p:menuitem value="Annuler" process="@this" action="#{listBacking.showAnnulerView(registre)}"  icon="pi pi-undo">
@@ -148,6 +155,11 @@ xmlns:p="http://primefaces.org/ui">
                             listener="#{listBacking.returnToCaller}" 
                                         update=":contenttForm:registre"/>
                         </p:menuitem>
+                        <p:divider/>
+                        <p:menuitem value="Declaration jugement" process="@this"  icon="pi pi-ban"
+                                    action="#{listBacking.showDeclarationView(registre)}"/>
+                        <p:menuitem value="Saisie actes naissances existants" process="@this" 
+                                    action="#{listBacking.showValiderView(registre)}" icon="pi pi-book"/>
                         <p:divider/>
                         <p:menuitem value="Supprimer" process="@this" icon="pi pi-times"/>
                     </p:menuButton>

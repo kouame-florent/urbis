@@ -3,16 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package io.urbis.registre;
+package io.urbis.registre.backing;
 
-import io.urbis.registre.service.CentreService;
-import io.urbis.registre.service.LocaliteService;
-import io.urbis.registre.service.OfficierService;
+
 import io.urbis.registre.service.RegistreService;
-import io.urbis.registre.service.TribunalService;
-import io.urbis.registre.service.TypeRegistreService;
-import io.urbis.share.dto.CentreDto;
-import io.urbis.share.dto.LocaliteDto;
 import io.urbis.share.dto.RegistreDto;
 import io.urbis.share.dto.RegistrePatchDto;
 import io.urbis.share.dto.StatutRegistre;

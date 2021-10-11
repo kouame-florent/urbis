@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package io.urbis.registre;
+package io.urbis.registre.backing;
 
 import java.io.Serializable;
 import javax.enterprise.context.Dependent;
