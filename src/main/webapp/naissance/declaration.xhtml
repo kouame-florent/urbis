@@ -121,12 +121,17 @@ xmlns:p="http://primefaces.org/ui">
                         
                     </div>
                     </p:fieldset>
+                    <p:spacer width="2"/>
                     <p:fieldset legend="Le déclaré">
                         <div class="ui-fluid p-formgrid p-grid">
                             <div class="p-field p-lg-6">
                                 <p:outputLabel for="dateNaissance" styleClass="p-d-block">Date de naissance</p:outputLabel>
-                                <p:inputText id="dateNaissance" value="#{declarationBacking.acteNaissanceDto.enfantDateNaissance}"  required="true"  
-                                       styleClass="p-d-block"/>
+                                <p:inputMask id="dateNaissance" value="#{declarationBacking.acteNaissanceDto.enfantDateNaissance}"
+                                             mask="99/99/9999 99:99">
+                                    <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+                                </p:inputMask>
+                                <p:watermark  value="jj/MM/AAAA HH:mm" for="dateNaissance" />    
+                            
                             </div>
                             <div class="p-field p-lg-6">
                                 <p:outputLabel for="nom" styleClass="p-d-block">Nom</p:outputLabel>
@@ -149,9 +154,25 @@ xmlns:p="http://primefaces.org/ui">
                                                 styleClass="p-d-block"/>
                             </div>
                              <div class="p-field p-lg-6"> 
-                                <p:outputLabel for="sexe" styleClass="p-d-block">Sexe</p:outputLabel>
-                                <p:inputText id="sexe" value="#{declarationBacking.acteNaissanceDto.enfantSexe}" required="true"  
+                                 <div class="ui-fluid  p-grid">
+                                 <div class="p-field p-lg-6">
+                                     <p:outputLabel for="sexe" styleClass="p-d-block">Sexe</p:outputLabel>
+                                        <p:selectOneRadio id="sexe" value="#{declarationBacking.selectedSexe}" 
+                                                        converter="omnifaces.SelectItemsConverter"
+                                                        required="true">
+
+                                            <f:selectItems value="#{declarationBacking.sexes}" var="sexe" 
+                                                         itemLabel="#{sexe.libelle}" itemValue="#{sexe}"/>
+                                       </p:selectOneRadio>
+                                 </div>
+                                 <div class="p-field p-lg-6">
+                                     <p:outputLabel for="rang" styleClass="p-d-block">Rang</p:outputLabel>
+                                    <p:inputText id="rang" value="#{declarationBacking.rang}" 
                                                 styleClass="p-d-block"/>
+                                 </div>
+                                </div>
+                                
+                                
                             </div>
                             
                         </div>
@@ -163,15 +184,54 @@ xmlns:p="http://primefaces.org/ui">
                                 <p:fieldset legend="Père">
                                 <div class="ui-fluid p-formgrid p-grid">
                                     <div class="p-field p-lg-12">
-                                    
-                                         <p:outputLabel for="pereNom" styleClass="p-d-block">Nom</p:outputLabel>
-                                        <p:inputText id="pereNom"  required="true" maxlength="5" 
-                                                      styleClass="p-d-block"/>
-                                        <p:outputLabel for="perePrenoms" styleClass="p-d-block">Prénoms</p:outputLabel>
-                                        <p:inputText id="perePrenoms"  required="true" maxlength="5" 
-                                                     styleClass="p-d-block"/>
+                                        <p:outputLabel for="pereDecede" styleClass="p-d-block">Père décédé ?</p:outputLabel>
+                                        <p:toggleSwitch id="pereDecede" value="#{declarationBacking.pereDecede}"/>
+                                        <div class="p-field p-lg-12">    
+                                            <p:outputLabel for="pereNom" styleClass="p-d-block">Nom</p:outputLabel>
+                                            <p:inputText id="pereNom" value="#{declarationBacking.acteNaissanceDto.pereNom}"  required="true" maxlength="5" 
+                                                          styleClass="p-d-block"/>
+                                        </div>
+                                        <div class="p-field p-lg-12">
+                                            <p:outputLabel for="perePrenoms" styleClass="p-d-block">Prénoms</p:outputLabel>
+                                            <p:inputText id="perePrenoms" value="#{declarationBacking.acteNaissanceDto.perePrenoms}" required="true" maxlength="5" 
+                                                         styleClass="p-d-block"/>
+                                        </div>
                                         
-                                    
+                                        <div class="p-field p-lg-12">
+                                            <p:outputLabel for="pereDateNaissance" styleClass="p-d-block">Date naissance</p:outputLabel>
+                                            <p:inputMask id="pereDateNaissance" value="#{declarationBacking.acteNaissanceDto.pereDateNaissance}"
+                                                mask="99/99/9999" required="true">
+                                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                                            </p:inputMask>
+                                            <p:watermark  value="jj/MM/AAAA" for="pereDateNaissance" />    
+                                            
+                                        </div>
+                                        <div class="p-field p-lg-12">
+                                            <p:outputLabel for="pereLieuNaissance" styleClass="p-d-block">Localité</p:outputLabel>
+                                            <p:inputText id="pereLieuNaissance" value="#{declarationBacking.acteNaissanceDto.pereLieuNaissance}"  required="true" maxlength="5" 
+                                                         styleClass="p-d-block"/>
+                                        </div>
+                                        <div class="p-field p-lg-12">
+                                            <p:outputLabel for="pereProfession" styleClass="p-d-block">Profession</p:outputLabel>
+                                            <p:inputText id="pereProfession" value="#{declarationBacking.acteNaissanceDto.pereProfession}" required="true" maxlength="5" 
+                                                         styleClass="p-d-block"/>
+                                        </div>
+                                        <div class="p-field p-lg-12">
+                                            <p:outputLabel for="pereLocalite" styleClass="p-d-block">Domicile</p:outputLabel>
+                                            <p:inputText id="pereLocalite" value="#{declarationBacking.acteNaissanceDto.pereLocalite}" required="true" maxlength="5" 
+                                                         styleClass="p-d-block"/>
+                                        </div>
+                                        <div class="p-field p-lg-12">
+                                            <p:outputLabel for="pereNationalite" styleClass="p-d-block">Nationalité</p:outputLabel>
+                                            <p:selectOneMenu id="pereNationalite" value="#{declarationBacking.selectedPereNationalite}"          
+                                                             label="Selectionnez" required="true">
+                                                <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez une nationalité --" />
+                                                <f:selectItems value="#{declarationBacking.nationalites}" var="nationalite" 
+                                                               itemLabel="#{nationalite.libelle}"  
+                                                               itemValue="#{nationalite}"/>
+                                            </p:selectOneMenu>
+                                            
+                                        </div>
                                      </div>
                                 </div>
                                 </p:fieldset>
@@ -180,14 +240,93 @@ xmlns:p="http://primefaces.org/ui">
                                 <p:fieldset legend="Mère">
                                     <div class="ui-fluid p-formgrid p-grid">
                                          <div class="p-field p-lg-12">
+                                             <p:outputLabel for="mereDecede" styleClass="p-d-block">Mère décédé ?</p:outputLabel>
+                                            <p:toggleSwitch id="mereDecede" value="#{declarationBacking.mereDecede}"/>
+                                            <div class="p-field p-lg-12">    
+                                                <p:outputLabel for="mereNom" styleClass="p-d-block">Nom</p:outputLabel>
+                                                <p:inputText id="mereNom" value="#{declarationBacking.acteNaissanceDto.mereNom}"  required="true" maxlength="5" 
+                                                              styleClass="p-d-block"/>
+                                            </div>
+                                            <div class="p-field p-lg-12">
+                                                <p:outputLabel for="merePrenoms" styleClass="p-d-block">Prénoms</p:outputLabel>
+                                                <p:inputText id="merePrenoms" value="#{declarationBacking.acteNaissanceDto.merePrenoms}" required="true" maxlength="5" 
+                                                             styleClass="p-d-block"/>
+                                            </div>
 
-                                         </div>
+                                            <div class="p-field p-lg-12">
+                                                <p:outputLabel for="mereDateNaissance" styleClass="p-d-block">Date naissance</p:outputLabel>
+                                                <p:inputMask id="mereDateNaissance" value="#{declarationBacking.acteNaissanceDto.mereDateNaissance}"
+                                                    mask="99/99/9999" required="true">
+                                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                                </p:inputMask>
+                                                <p:watermark  value="jj/MM/AAAA" for="mereDateNaissance" />    
+                                            </div>
+                                            <div class="p-field p-lg-12">
+                                                <p:outputLabel for="mereLieuNaissance" styleClass="p-d-block">Localité</p:outputLabel>
+                                                <p:inputText id="mereLieuNaissance" value="#{declarationBacking.acteNaissanceDto.mereLieuNaissance}"  required="true" maxlength="5" 
+                                                             styleClass="p-d-block"/>
+                                            </div>
+                                            <div class="p-field p-lg-12">
+                                                <p:outputLabel for="mereProfession" styleClass="p-d-block">Profession</p:outputLabel>
+                                                <p:inputText id="mereProfession" value="#{declarationBacking.acteNaissanceDto.mereProfession}" required="true" maxlength="5" 
+                                                             styleClass="p-d-block"/>
+                                            </div>
+                                            <div class="p-field p-lg-12">
+                                                <p:outputLabel for="mereLocalite" styleClass="p-d-block">Domicile</p:outputLabel>
+                                                <p:inputText id="mereLocalite" value="#{declarationBacking.acteNaissanceDto.mereLocalite}" required="true" maxlength="5" 
+                                                             styleClass="p-d-block"/>
+                                            </div>
+                                            <div class="p-field p-lg-12">
+                                                <p:outputLabel for="mereNationalite" styleClass="p-d-block">Nationalité</p:outputLabel>
+                                                <p:selectOneMenu id="mereNationalite" value="#{declarationBacking.selectedMereNationalite}"          
+                                                                 label="Selectionnez" required="true">
+                                                    <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez une nationalité --" />
+                                                    <f:selectItems value="#{declarationBacking.nationalites}" var="nationalite" 
+                                                                   itemLabel="#{nationalite.libelle}"  
+                                                                   itemValue="#{nationalite}"/>
+                                                </p:selectOneMenu>
+
+                                            </div>
+
+                                        </div>
                                      </div> 
                                 </p:fieldset>
                             </div>
                             
                         </div>
                        
+                    </p:fieldset>
+                    <p:spacer height="2" />
+                    <p:fieldset >
+                        <div class="ui-fluid p-formgrid p-grid">
+                            <div class="p-field p-lg-4">
+                                <p:outputLabel for="dateDeclaration" styleClass="p-d-block">Date déclaration</p:outputLabel>
+                                <p:inputMask id="dateDeclaration" value="#{declarationBacking.acteNaissanceDto.dateDeclaration}"
+                                             mask="99/99/9999" required="true">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </p:inputMask>
+                                <p:watermark  value="jj/MM/AAAA" for="dateDeclaration" />    
+                            </div>
+                            <div class="p-field p-lg-4">
+                                <p:outputLabel for="dateDressage" styleClass="p-d-block">Date dressage</p:outputLabel>
+                                <p:inputMask id="dateDressage" value="#{declarationBacking.acteNaissanceDto.dateDressage}"
+                                             mask="99/99/9999 99:99" required="true">
+                                    <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+                                </p:inputMask>
+                                <p:watermark  value="jj/MM/AAAA HH:mm" for="dateDressage" />    
+                            </div>
+                            <div class="p-field p-lg-4">
+                                <p:outputLabel for="lienParenteDeclarant" >Lien parenté déclarant</p:outputLabel>
+                                <p:selectOneRadio id="lienParenteDeclarant" value="#{declarationBacking.selectedLienParenteDeclarant}" 
+                                                    converter="omnifaces.SelectItemsConverter"
+                                                    required="true">
+
+                                    <f:selectItems value="#{declarationBacking.liensParenteDeclarant}" var="lien" 
+                                                     itemLabel="#{lien.libelle}" itemValue="#{lien}"/>
+                                  </p:selectOneRadio>
+                            </div>
+                        </div>
+                            
                     </p:fieldset>
                 </p:tab>
                 <p:tab title="Autre Informations">

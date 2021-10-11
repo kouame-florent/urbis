@@ -6,19 +6,25 @@
 package io.urbis.naissance.backing;
 
 import io.urbis.naissance.service.ActeNaissanceService;
+import io.urbis.naissance.service.LienDeclarantService;
 import io.urbis.naissance.service.ModeDeclarationService;
+import io.urbis.naissance.service.SexeService;
 import io.urbis.naissance.service.TypeNaissanceService;
 import io.urbis.registre.backing.BaseBacking;
 import io.urbis.registre.backing.ValiderBacking;
 import io.urbis.registre.service.CentreService;
 import io.urbis.registre.service.LocaliteService;
+import io.urbis.registre.service.NationaliteService;
 import io.urbis.registre.service.RegistreService;
 import io.urbis.registre.service.TribunalService;
 import io.urbis.share.dto.ActeNaissanceDto;
 import io.urbis.share.dto.CentreDto;
+import io.urbis.share.dto.LienDeclarantDto;
 import io.urbis.share.dto.LocaliteDto;
 import io.urbis.share.dto.ModeDeclarationDto;
+import io.urbis.share.dto.NationaliteDto;
 import io.urbis.share.dto.RegistreDto;
+import io.urbis.share.dto.SexeDto;
 import io.urbis.share.dto.TypeNaissanceDto;
 import java.io.Serializable;
 import java.util.List;
@@ -54,6 +60,18 @@ public class DeclarationBacking extends BaseBacking implements Serializable{
     
     @Inject
     @RestClient
+    SexeService sexeService;
+    
+    @Inject
+    @RestClient
+    NationaliteService nationaliteService;
+    
+    @Inject
+    @RestClient
+    LienDeclarantService lienDeclarantService;
+    
+    @Inject
+    @RestClient
     ActeNaissanceService acteNaissanceService;
     
     private String registreID;
@@ -65,6 +83,16 @@ public class DeclarationBacking extends BaseBacking implements Serializable{
     private List<TypeNaissanceDto> typesNaissance;
     private TypeNaissanceDto selectedTypeNaissance;
     
+    private List<SexeDto> sexes;
+    private SexeDto selectedSexe;
+    
+    private List<LienDeclarantDto> liensParenteDeclarant;
+    private LienDeclarantDto selectedLienParenteDeclarant;
+    
+    private List<NationaliteDto> nationalites;
+    private NationaliteDto selectedPereNationalite;
+    private NationaliteDto selectedMereNationalite;
+    
     private boolean naissanceMultiple;
     
     private int extraitsExtraordinaires;
@@ -72,6 +100,11 @@ public class DeclarationBacking extends BaseBacking implements Serializable{
     private int extraitsOrdinaires;
     
     private int numeroActe;
+    private int rang = 1;
+    
+    
+    private boolean pereDecede;
+    private boolean mereDecede;
     
     private ActeNaissanceDto acteNaissanceDto;
     
@@ -88,8 +121,13 @@ public class DeclarationBacking extends BaseBacking implements Serializable{
     public void init(){
         modesDeclaration = modeDeclarationService.findAll();
         typesNaissance = typeNaissanceService.findAll();
+        sexes = sexeService.findAll();
+        nationalites = nationaliteService.findAll();
+        liensParenteDeclarant = lienDeclarantService.findAll();
         acteNaissanceDto = new ActeNaissanceDto();
     }
+    
+    
 
     public String getRegistreID() {
         return registreID;
@@ -179,6 +217,74 @@ public class DeclarationBacking extends BaseBacking implements Serializable{
 
     public void setActeNaissanceDto(ActeNaissanceDto acteNaissanceDto) {
         this.acteNaissanceDto = acteNaissanceDto;
+    }
+
+    public SexeDto getSelectedSexe() {
+        return selectedSexe;
+    }
+
+    public void setSelectedSexe(SexeDto selectedSexe) {
+        this.selectedSexe = selectedSexe;
+    }
+
+    public List<SexeDto> getSexes() {
+        return sexes;
+    }
+
+    public int getRang() {
+        return rang;
+    }
+
+    public void setRang(int rang) {
+        this.rang = rang;
+    }
+
+    public boolean isPereDecede() {
+        return pereDecede;
+    }
+
+    public void setPereDecede(boolean pereDecede) {
+        this.pereDecede = pereDecede;
+    }
+
+    public NationaliteDto getSelectedPereNationalite() {
+        return selectedPereNationalite;
+    }
+
+    public void setSelectedPereNationalite(NationaliteDto selectedPereNationalite) {
+        this.selectedPereNationalite = selectedPereNationalite;
+    }
+
+    public NationaliteDto getSelectedMereNationalite() {
+        return selectedMereNationalite;
+    }
+
+    public void setSelectedMereNationalite(NationaliteDto selectedMereNationalite) {
+        this.selectedMereNationalite = selectedMereNationalite;
+    }
+
+    public List<NationaliteDto> getNationalites() {
+        return nationalites;
+    }
+
+    public boolean isMereDecede() {
+        return mereDecede;
+    }
+
+    public void setMereDecede(boolean mereDecede) {
+        this.mereDecede = mereDecede;
+    }
+
+    public LienDeclarantDto getSelectedLienParenteDeclarant() {
+        return selectedLienParenteDeclarant;
+    }
+
+    public void setSelectedLienParenteDeclarant(LienDeclarantDto selectedLienParenteDeclarant) {
+        this.selectedLienParenteDeclarant = selectedLienParenteDeclarant;
+    }
+
+    public List<LienDeclarantDto> getLiensParenteDeclarant() {
+        return liensParenteDeclarant;
     }
     
     
