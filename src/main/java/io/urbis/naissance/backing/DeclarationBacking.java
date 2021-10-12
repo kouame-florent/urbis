@@ -11,21 +11,16 @@ import io.urbis.naissance.service.ModeDeclarationService;
 import io.urbis.naissance.service.SexeService;
 import io.urbis.naissance.service.TypeNaissanceService;
 import io.urbis.registre.backing.BaseBacking;
-import io.urbis.registre.backing.ValiderBacking;
-import io.urbis.registre.service.CentreService;
-import io.urbis.registre.service.LocaliteService;
 import io.urbis.registre.service.NationaliteService;
 import io.urbis.registre.service.RegistreService;
-import io.urbis.registre.service.TribunalService;
 import io.urbis.share.dto.ActeNaissanceDto;
-import io.urbis.share.dto.CentreDto;
 import io.urbis.share.dto.LienDeclarantDto;
-import io.urbis.share.dto.LocaliteDto;
 import io.urbis.share.dto.ModeDeclarationDto;
 import io.urbis.share.dto.NationaliteDto;
 import io.urbis.share.dto.RegistreDto;
 import io.urbis.share.dto.SexeDto;
 import io.urbis.share.dto.TypeNaissanceDto;
+import io.urbis.share.dto.TypePieceDto;
 import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Level;
@@ -89,6 +84,11 @@ public class DeclarationBacking extends BaseBacking implements Serializable{
     private List<LienDeclarantDto> liensParenteDeclarant;
     private LienDeclarantDto selectedLienParenteDeclarant;
     
+    private List<TypePieceDto> typesPiece;
+    private TypePieceDto selectedPereTypePiece;
+    private TypePieceDto selectedMereTypePiece;
+    private TypePieceDto selectedDeclarantTypePiece;
+    
     private List<NationaliteDto> nationalites;
     private NationaliteDto selectedPereNationalite;
     private NationaliteDto selectedMereNationalite;
@@ -127,6 +127,12 @@ public class DeclarationBacking extends BaseBacking implements Serializable{
         acteNaissanceDto = new ActeNaissanceDto();
     }
     
+    
+    public void creer(){
+        acteNaissanceDto.setPereNationalite(selectedPereNationalite.getCode());
+        
+    
+    }
     
 
     public String getRegistreID() {
@@ -285,6 +291,34 @@ public class DeclarationBacking extends BaseBacking implements Serializable{
 
     public List<LienDeclarantDto> getLiensParenteDeclarant() {
         return liensParenteDeclarant;
+    }
+
+    public TypePieceDto getSelectedPereTypePiece() {
+        return selectedPereTypePiece;
+    }
+
+    public void setSelectedPereTypePiece(TypePieceDto selectedPereTypePiece) {
+        this.selectedPereTypePiece = selectedPereTypePiece;
+    }
+
+    public TypePieceDto getSelectedMereTypePiece() {
+        return selectedMereTypePiece;
+    }
+
+    public void setSelectedMereTypePiece(TypePieceDto selectedMereTypePiece) {
+        this.selectedMereTypePiece = selectedMereTypePiece;
+    }
+
+    public TypePieceDto getSelectedDeclarantTypePiece() {
+        return selectedDeclarantTypePiece;
+    }
+
+    public void setSelectedDeclarantTypePiece(TypePieceDto selectedDeclarantTypePiece) {
+        this.selectedDeclarantTypePiece = selectedDeclarantTypePiece;
+    }
+
+    public List<TypePieceDto> getTypesPiece() {
+        return typesPiece;
     }
     
     

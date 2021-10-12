@@ -5,7 +5,9 @@
  */
 package io.urbis.naissance.service;
 
+import io.urbis.share.dto.ActeNaissanceDto;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
@@ -17,6 +19,9 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 @Path("/naissances")
 @RegisterRestClient(baseUri = "http://127.0.0.1:8181")
 public interface ActeNaissanceService {
+    
+    @POST
+    public void create(ActeNaissanceDto acteNaissanceDto);
     
     @GET
     @Path("/numero-acte/{id}")

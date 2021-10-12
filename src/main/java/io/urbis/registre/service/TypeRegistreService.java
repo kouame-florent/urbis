@@ -17,10 +17,9 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
  */
 @Path("/")
 @RegisterRestClient(baseUri = "http://127.0.0.1:8181")
-//@RegisterRestClient
 public interface TypeRegistreService {
     
-    @Path("/modes-declaration")
+    @Path("/types-registre")
     @GET
     List<TypeRegistreDto> findAll();  
 }

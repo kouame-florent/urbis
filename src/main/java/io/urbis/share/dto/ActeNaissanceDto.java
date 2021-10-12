@@ -82,7 +82,26 @@ public class ActeNaissanceDto {
     private String declarantNumeroPiece;
     private LocalDateTime declarantDatePiece;
     private String declarantLieuPiece;
-   
+    
+    public String interpreteNom;
+    public String interpretePrenoms;
+    public String interpreteProfession;
+    public LocalDateTime interpreteDateNaissance;
+    public String interpreteDomicile;
+    public String interpreteLangue;
+    
+    public String temoinPremierNom;
+    public String temoinPremierPrenoms;
+    public LocalDateTime temoinPremierDateNaissance;
+    public String temoinPremierProfession;
+    public String temoinPremierDomicile;
+    
+    public String temoinDeuxiemeNom;
+    public String temoinDeuxiemePrenoms;
+    public LocalDateTime temoinDeuxiemeDateNaissance;
+    public String temoinDeuxiemeProfession;
+    public String temoinDeuxiemeDomicile;
+  
     private String statut;
     private String motifAnnulation;
     private int nombreCopiesIntegrales;
