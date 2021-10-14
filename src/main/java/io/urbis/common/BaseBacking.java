@@ -3,16 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package io.urbis.registre.backing;
+package io.urbis.common;
 
 import java.util.HashMap;
 import java.util.Map;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 
 /**
  *
  * @author florent
  */
 public abstract class BaseBacking {
+    
+    @Inject
+    FacesContext facesContext;
     
     protected Map<String,Object> getDialogOptions(int widthPercent,int heightPercent,boolean closable){
       
@@ -30,6 +36,17 @@ public abstract class BaseBacking {
         
         return options;
    }
+   
+    public void addGlobalMessage(String message,FacesMessage.Severity severity){
+        FacesMessage msg = new FacesMessage(severity,message ,"");
+       facesContext.addMessage(null, msg);
+       
+    }
+    
+    public void addMessage(String clientId,FacesMessage msg){
+        facesContext.addMessage(clientId, msg);
+    }
+    
    
     
 }

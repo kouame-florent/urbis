@@ -5,6 +5,7 @@
  */
 package io.urbis.registre.backing;
 
+import io.urbis.common.BaseBacking;
 import io.urbis.registre.service.EtatService;
 import io.urbis.registre.service.RegistreService;
 import io.urbis.registre.service.TypeRegistreService;
