@@ -6,10 +6,12 @@
 package io.urbis.naissance.service;
 
 import io.urbis.share.dto.ActeNaissanceDto;
+import java.util.List;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.QueryParam;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 /**
@@ -22,6 +24,12 @@ public interface ActeNaissanceService {
     
     @POST
     public void create(ActeNaissanceDto acteNaissanceDto);
+    
+    @GET
+    public List<ActeNaissanceDto> findWithFilters(@QueryParam("offset") int offset, @QueryParam("page-size") int pageSize);
+    
+    @GET @Path("/count")
+    public int count();
     
     @GET
     @Path("/numero-acte/{id}")

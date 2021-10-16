@@ -102,25 +102,29 @@ public class DeclarationBacking extends BaseBacking implements Serializable{
     private String selectedDeclarantLienParente;
     
     private List<TypePieceDto> typesPiece;
+    /*
     private String selectedPereTypePiece;
     private String selectedMereTypePiece;
     private String selectedDeclarantTypePiece;
-    
+    */
     private List<NationaliteDto> nationalites;
+    /*
     private String selectedPereNationalite;
     private String selectedMereNationalite;
     private String selectedDeclarantNationalite;
+    */
     
     private List<OfficierEtatCivilDto> officiers;
     private String selectedOfficierId;
-    
-    private boolean naissanceMultiple;
-    
+     
     private int extraitsExtraordinaires;
     private int nombreCopies;
     private int extraitsOrdinaires;
     
     private int numeroActe;
+    
+    private boolean naissanceMultiple;
+    private int nombreNaissance;
     private int rang = 1;
     
     
@@ -163,12 +167,16 @@ public class DeclarationBacking extends BaseBacking implements Serializable{
         acteNaissanceService.create(acteNaissanceDto);
         //reset acte dto
         acteNaissanceDto = new ActeNaissanceDto();
-        addGlobalMessage("Acte de naissance créé avec succès", FacesMessage.SEVERITY_INFO);
+        addGlobalMessage("Déclaration enregistrée avec succès", FacesMessage.SEVERITY_INFO);
         
-        
+        numeroActe = acteNaissanceService.numeroActe(registreID);
         
     }
     
+    private void resetForNaissanceMultiple(ActeNaissanceDto old){
+        acteNaissanceDto = new ActeNaissanceDto();
+        acteNaissanceDto.setPereDateDeces(old.getPereDateDeces());
+    }
 
     public String getRegistreID() {
         return registreID;
@@ -333,53 +341,8 @@ public class DeclarationBacking extends BaseBacking implements Serializable{
         this.selectedDeclarantLienParente = selectedDeclarantLienParente;
     }
 
-    public String getSelectedPereTypePiece() {
-        return selectedPereTypePiece;
-    }
-
-    public void setSelectedPereTypePiece(String selectedPereTypePiece) {
-        this.selectedPereTypePiece = selectedPereTypePiece;
-    }
-
-    public String getSelectedMereTypePiece() {
-        return selectedMereTypePiece;
-    }
-
-    public void setSelectedMereTypePiece(String selectedMereTypePiece) {
-        this.selectedMereTypePiece = selectedMereTypePiece;
-    }
-
-    public String getSelectedDeclarantTypePiece() {
-        return selectedDeclarantTypePiece;
-    }
-
-    public void setSelectedDeclarantTypePiece(String selectedDeclarantTypePiece) {
-        this.selectedDeclarantTypePiece = selectedDeclarantTypePiece;
-    }
-
-    public String getSelectedPereNationalite() {
-        return selectedPereNationalite;
-    }
-
-    public void setSelectedPereNationalite(String selectedPereNationalite) {
-        this.selectedPereNationalite = selectedPereNationalite;
-    }
-
-    public String getSelectedMereNationalite() {
-        return selectedMereNationalite;
-    }
-
-    public void setSelectedMereNationalite(String selectedMereNationalite) {
-        this.selectedMereNationalite = selectedMereNationalite;
-    }
-
-    public String getSelectedDeclarantNationalite() {
-        return selectedDeclarantNationalite;
-    }
-
-    public void setSelectedDeclarantNationalite(String selectedDeclarantNationalite) {
-        this.selectedDeclarantNationalite = selectedDeclarantNationalite;
-    }
+   
     
+
     
 }

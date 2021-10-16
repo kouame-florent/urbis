@@ -143,12 +143,12 @@ xmlns:p="http://primefaces.org/ui">
                     <p:menuButton icon="pi pi-ellipsis-h" style="width: 100%;white-space: nowrap;width: auto !important;">
                         <p:menuitem value="Consulter" process="@this" action="#{listBacking.showValiderView(registre)}" icon="pi pi-book"/>
                         <p:menuitem value="Valider" process="@this" action="#{listBacking.showValiderView(registre)}" 
-                                    update="contenttForm:registre" icon="pi pi-book">
+                                    update="contenttForm:registre" icon="pi pi-ticket">
                             <p:ajax event="dialogReturn" listener="#{listBacking.returnToCaller}" update=":contenttForm:registre"/>
                             <f:setPropertyActionListener value="#{registre}" target="#{listBacking.selectedRegistre}"/>
                         
                         </p:menuitem>
-                        <p:menuitem value="Modifier" process="@this" action="#{listBacking.showValiderView(registre)}" icon="pi pi-book"/>
+                        <p:menuitem value="Modifier" process="@this" action="#{listBacking.showValiderView(registre)}" icon="pi pi-pencil"/>
                         <p:menuitem value="Cloturer" process="@this"  icon="pi pi-ban"/>
                         <p:menuitem value="Annuler" process="@this" action="#{listBacking.showAnnulerView(registre)}"  icon="pi pi-undo">
                             <p:ajax event="dialogReturn" 
@@ -156,10 +156,14 @@ xmlns:p="http://primefaces.org/ui">
                                         update=":contenttForm:registre"/>
                         </p:menuitem>
                         <p:divider/>
-                        <p:menuitem value="Declaration jugement" process="@this"  icon="pi pi-ban"
-                                    action="#{listBacking.showDeclarationView(registre)}"/>
+                        <p:menuitem value="Liste des actes" process="@this"  icon="pi pi-file"
+                                    action="#{listBacking.showActesListView(registre)}"/>
+                        <p:menuitem value="Declaration jugement" process="@this"  icon="pi pi-folder-open"
+                                    action="#{listBacking.showDeclarationView(registre)}"  
+                                    disabled="#{listBacking.enableMenuDeclarationActe(registre)}"/>
                         <p:menuitem value="Saisie actes naissances existants" process="@this" 
-                                    action="#{listBacking.showValiderView(registre)}" icon="pi pi-book"/>
+                                    action="#{listBacking.showValiderView(registre)}" icon="pi pi-folder"
+                                    disabled="#{listBacking.enableSaisieActesExistants(registre)}"/>
                         <p:divider/>
                         <p:menuitem value="Supprimer" process="@this" icon="pi pi-times"/>
                     </p:menuButton>

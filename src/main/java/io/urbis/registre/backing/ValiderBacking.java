@@ -31,12 +31,10 @@ public class ValiderBacking implements Serializable{
     
     private String registreID;
     private RegistreDto registreDto;
-    
      
     @Inject 
     @RestClient
     RegistreService registreService;
-    
     
     public void onload(){
         

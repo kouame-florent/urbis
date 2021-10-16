@@ -24,6 +24,9 @@ xmlns:p="http://primefaces.org/ui">
         </h:form>
              
         <h:form id="contenttForm">  
+            
+            <p:focus context="contenttForm"/>
+           
             <p:fieldset legend="Référence registre">
                <div class="ui-fluid p-formgrid p-grid">
                    <div class="p-field p-col">
@@ -61,11 +64,13 @@ xmlns:p="http://primefaces.org/ui">
                         <p:outputLabel for="modeDeclaration" >Mode déclaration</p:outputLabel>
                         <p:selectOneRadio id="modeDeclaration" value="#{declarationBacking.acteNaissanceDto.modeDeclaration}" 
                                             converter="omnifaces.SelectItemsConverter"
-                                            required="true">
+                                            required="true" requiredMessage="Ce champ est obligatoire">
                             <p:ajax update="contenttForm:jugementOutputPanel"/>
                               <f:selectItems value="#{declarationBacking.modesDeclaration}" var="mode" 
                                              itemLabel="#{mode.libelle}" itemValue="#{mode.code}"/>
                           </p:selectOneRadio>
+                        <p:message for="modeDeclaration"/>
+                        
                     </div>
                     <div class="p-field p-col">
                         <p:outputLabel for="extraitExtraordinaire" styleClass="p-d-block">Extraits extraordinaires</p:outputLabel>
@@ -152,7 +157,7 @@ xmlns:p="http://primefaces.org/ui">
                             <div class="p-field p-lg-6">
                                 <p:outputLabel for="dateNaissance" styleClass="p-d-block">Date de naissance</p:outputLabel>
                                 <p:inputMask id="dateNaissance" value="#{declarationBacking.acteNaissanceDto.enfantDateNaissance}"
-                                             mask="99/99/9999 99:99:99">
+                                             mask="99/99/9999 99:99:99" required="true">
                                     
                                 </p:inputMask>
                                 <p:watermark  value="JJ/MM/YYYY" for="dateNaissance" /> 
@@ -676,7 +681,7 @@ xmlns:p="http://primefaces.org/ui">
             
             <div class="ui-fluid p-formgrid p-grid">
                 <div class="p-field p-lg-6">
-                    <p:commandButton value="Creer l'acte" process="@form" action="#{declarationBacking.creer()}"
+                    <p:commandButton value="Enregitrer la déclaration" process="@form" action="#{declarationBacking.creer()}"
                                      update="@form messageForm"  icon="pi pi-check" />
                 </div>
                 <div class="p-field p-lg-6">

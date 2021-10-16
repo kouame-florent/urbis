@@ -113,4 +113,7 @@ public class ActeNaissanceDto {
     private int nombreExtraits;
     private String officierEtatCivilID;
     
+    private int registreAnnee;
+    private int registreNumero;
+    
 }

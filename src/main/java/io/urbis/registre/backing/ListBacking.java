@@ -10,6 +10,7 @@ import io.urbis.registre.service.EtatService;
 import io.urbis.registre.service.RegistreService;
 import io.urbis.registre.service.TypeRegistreService;
 import io.urbis.share.dto.RegistreDto;
+import io.urbis.share.dto.StatutRegistre;
 import io.urbis.share.dto.TypeRegistreDto;
 import java.io.File;
 import java.io.FileInputStream;
@@ -17,7 +18,6 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -32,7 +32,6 @@ import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.primefaces.PrimeFaces;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DefaultStreamedContent;
-import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.StreamedContent;
 
 /**
@@ -153,6 +152,21 @@ public class ListBacking extends BaseBacking implements Serializable{
         var values = List.of(registreDto.getId());
         Map<String, List<String>> params = Map.of("id", values);
         PrimeFaces.current().dialog().openDynamic("/naissance/declaration", getDialogOptions(98,98,true), params);
+    }
+    
+    public void showActesListView(RegistreDto registreDto){
+        LOG.log(Level.INFO, "REGISTRE ID: {0}", registreDto.getId());
+        var values = List.of(registreDto.getId());
+        Map<String, List<String>> params = Map.of("id", values);
+        PrimeFaces.current().dialog().openDynamic("/naissance/liste", getDialogOptions(98,98,true), params);
+    }
+    
+    public boolean enableMenuDeclarationActe(RegistreDto registreDto){
+      return !registreDto.getStatut().equals(StatutRegistre.VALIDE.name());  
+    }
+    
+    public boolean enableSaisieActesExistants(RegistreDto registreDto){
+        return !registreDto.getStatut().equals(StatutRegistre.VALIDE.name());  
     }
     
     public void returnToCaller(SelectEvent event){

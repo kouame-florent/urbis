@@ -17,6 +17,13 @@
             org.primefaces.application.DialogViewHandler
         </view-handler>
         
+        <locale-config>
+            <default-locale>fr</default-locale>
+        </locale-config>
+        <resource-bundle>
+            <base-name>io.urbis.i18n.messages</base-name>
+            <var>msg</var>
+        </resource-bundle>
        
     </application>
 </faces-config>
