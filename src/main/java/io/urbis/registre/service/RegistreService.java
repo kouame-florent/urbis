@@ -55,16 +55,15 @@ public interface RegistreService {
     
     
     
-    @Path("/annee")
+    @Path("/annee-courante")
     @GET
-    int annee();
+    int anneeCourante();
    
     @Path("/numero/{type}/{annee}")
     @GET
-    int numero(@PathParam("type") String typeRegistre,@PathParam("annee") int annee);
+    int numeroRegistre(@PathParam("type") String typeRegistre,@PathParam("annee") int annee);
     
-    @Path("/numero-premier-acte/{type}")
-    @GET
-    int numeroPremierActe(@PathParam("type") String typeRegistre);
+    @GET @Path("numero-premier-acte/{type}/{annee}")
+    public int numeroPremierActe(@PathParam("type") String typeRegistre,@PathParam("annee") int annee);
 
 }

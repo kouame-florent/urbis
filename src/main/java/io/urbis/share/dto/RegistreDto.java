@@ -51,6 +51,8 @@ public class RegistreDto {
      
     private int nombreDeFeuillets;
     
+    private int nombreActe;
+    
     private String statut;
     
     private LocalDateTime dateAnnulation;

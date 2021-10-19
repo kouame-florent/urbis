@@ -116,11 +116,11 @@ xmlns:p="http://primefaces.org/ui">
             <div class="ui-fluid p-formgrid p-grid">
                 <div class="p-field p-col">
                     <p:commandButton value="Creer" process="@form" action="#{creerBacking.creer()}"
-                                     update="@form"  icon="pi pi-check" />
+                                     update="@form"  icon="pi pi-check" styleClass="ui-button-outlined"/>
                 </div>
                 <div class="p-field p-col">
                     <p:commandButton value="Annuler" icon="pi pi-times" 
-                                     styleClass="ui-button-secondary" />
+                                     styleClass="ui-button-outlined ui-button-warning"/>
                 </div>
             </div>
 

@@ -26,4 +26,7 @@
         </resource-bundle>
        
     </application>
+    <factory>
+       
+    </factory>
 </faces-config>

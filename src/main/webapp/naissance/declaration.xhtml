@@ -118,7 +118,8 @@ xmlns:p="http://primefaces.org/ui">
             <p:spacer height="2" />
             <p:tabView id="declTabview">
                 <p:tab title="Déclaration">
-                   <div class="ui-fluid p-formgrid p-grid">
+                    <p:outputPanel id="naissanceMultipleOutputPanel" >
+                    <div class="ui-fluid p-formgrid p-grid">
                         <div class="p-field p-lg-2">
                             <p:outputLabel for="numeroActe" >Numéro acte</p:outputLabel>
                             <p:inputText id="numeroActe" value="#{declarationBacking.numeroActe}" disabled="true"  />
@@ -126,31 +127,36 @@ xmlns:p="http://primefaces.org/ui">
                         </div>
                        
                     </div>
-                    <p:fieldset>
-                    <div class="ui-fluid p-formgrid p-grid">
-                        
-                        <div class="p-field p-lg-2">
-                            
-                                <p:outputLabel for="naissanceMultiple" styleClass="p-d-block">Naissance multiple ?</p:outputLabel>
-                                <p:toggleSwitch id="naissanceMultiple" value="#{declarationBacking.naissanceMultiple}"/>
-                                
-                        </div>
-                       
-                        <div class="p-field p-lg-10">
-                            
-                                <p:outputLabel for="typeNaisance" styleClass="p-d-block">Type naissance</p:outputLabel>
-                                <p:selectOneRadio id="typeNaisance" value="#{declarationBacking.acteNaissanceDto.typeNaissance}" 
-                                                converter="omnifaces.SelectItemsConverter"
-                                                required="true">
+                    <p:fieldset legend="Naissance multiple">
+                         <div class="ui-fluid p-formgrid p-grid">
+                             <div class="p-field p-lg-2">
 
-                                    <f:selectItems value="#{declarationBacking.typesNaissance}" var="type" 
-                                                   itemLabel="#{type.libelle}" itemValue="#{type.code}"/>
-                               </p:selectOneRadio>
-                           
-                        </div>
-                        
-                    </div>
-                    </p:fieldset>
+                                 <p:outputLabel for="naissanceMultiple" styleClass="p-d-block">Naissance multiple ?</p:outputLabel>
+                                 <p:toggleSwitch id="naissanceMultiple" value="#{declarationBacking.naissanceMultiple}" styleClass="p-d-block">
+                                     <p:ajax update="naissanceMultipleOutputPanel"/>
+                                 </p:toggleSwitch>
+                             </div>
+                             <div class="p-field p-lg-2">
+
+                             
+                                 <p:outputLabel for="nombreNaissance" styleClass="p-d-block" rendered="#{declarationBacking.naissanceMultiple}">Nombre</p:outputLabel>
+                                 <p:inputText id="nombreNaissance" value="#{declarationBacking.nombreNaissance}" 
+                                              styleClass="p-d-block" rendered="#{declarationBacking.naissanceMultiple}"/>
+                         
+                             </div>
+                         </div>
+                     </p:fieldset>
+                    <p:spacer width="2"/>
+                    <p:fieldset>      
+                        <p:outputLabel for="typeNaisance" styleClass="p-d-block">Type naissance</p:outputLabel>
+                        <p:selectOneMenu id="typeNaisance" converter="omnifaces.SelectItemsConverter" 
+                                        value="#{declarationBacking.acteNaissanceDto.typeNaissance}" styleClass="p-d-block">
+                           <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez un type --" />
+                           <f:selectItems value="#{declarationBacking.typesNaissance}" var="type" 
+                                          itemLabel="#{type.libelle}"  
+                                          itemValue="#{type.code}"/>
+                        </p:selectOneMenu>
+                    </p:fieldset> 
                     <p:spacer width="2"/>
                     <p:fieldset legend="Le déclaré">
                         <div class="ui-fluid p-formgrid p-grid">
@@ -197,9 +203,11 @@ xmlns:p="http://primefaces.org/ui">
                                        </p:selectOneRadio>
                                  </div>
                                  <div class="p-field p-lg-6">
-                                     <p:outputLabel for="rang" styleClass="p-d-block">Rang</p:outputLabel>
+                                    <p:outputLabel for="rang" styleClass="p-d-block" 
+                                                   rendered="#{declarationBacking.naissanceMultiple}">Rang</p:outputLabel>
                                     <p:inputText id="rang" value="#{declarationBacking.rang}" 
-                                                styleClass="p-d-block"/>
+                                                 rendered="#{declarationBacking.naissanceMultiple}" required="true"
+                                                 styleClass="p-d-block" disabled="true"/>
                                  </div>
                                 </div>
                                 
@@ -207,7 +215,9 @@ xmlns:p="http://primefaces.org/ui">
                             </div>
                             
                         </div>
+                        
                     </p:fieldset>
+                    </p:outputPanel>
                     <p:spacer height="2" />
                     <p:fieldset legend="Filiation">
                         <div class="p-grid">

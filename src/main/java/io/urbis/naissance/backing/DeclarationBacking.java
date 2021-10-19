@@ -102,18 +102,8 @@ public class DeclarationBacking extends BaseBacking implements Serializable{
     private String selectedDeclarantLienParente;
     
     private List<TypePieceDto> typesPiece;
-    /*
-    private String selectedPereTypePiece;
-    private String selectedMereTypePiece;
-    private String selectedDeclarantTypePiece;
-    */
     private List<NationaliteDto> nationalites;
-    /*
-    private String selectedPereNationalite;
-    private String selectedMereNationalite;
-    private String selectedDeclarantNationalite;
-    */
-    
+     
     private List<OfficierEtatCivilDto> officiers;
     private String selectedOfficierId;
      
@@ -165,11 +155,34 @@ public class DeclarationBacking extends BaseBacking implements Serializable{
         acteNaissanceDto.setOfficierEtatCivilID(selectedOfficierId);
         
         acteNaissanceService.create(acteNaissanceDto);
-        //reset acte dto
-        acteNaissanceDto = new ActeNaissanceDto();
+        resetActeDto();
         addGlobalMessage("Déclaration enregistrée avec succès", FacesMessage.SEVERITY_INFO);
         
         numeroActe = acteNaissanceService.numeroActe(registreID);
+        
+    }
+    
+    public void resetActeDto(){
+        if(!naissanceMultiple){
+            acteNaissanceDto = new ActeNaissanceDto();
+        }else{
+            if(rang < nombreNaissance){
+                rang += 1;
+                acteNaissanceDto.setEnfantDateNaissance("");
+                acteNaissanceDto.setEnfantLieuNaissance("");
+                acteNaissanceDto.setEnfantLocalite("");
+                acteNaissanceDto.setEnfantNationalite("");
+                acteNaissanceDto.setEnfantNom("");
+                acteNaissanceDto.setEnfantPrenoms("");
+                acteNaissanceDto.setEnfantPrenoms("");
+            }else{
+                acteNaissanceDto = new ActeNaissanceDto();
+                naissanceMultiple = false;
+                nombreNaissance = 0;
+            }
+            
+            
+        }
         
     }
     
@@ -339,6 +352,14 @@ public class DeclarationBacking extends BaseBacking implements Serializable{
 
     public void setSelectedDeclarantLienParente(String selectedDeclarantLienParente) {
         this.selectedDeclarantLienParente = selectedDeclarantLienParente;
+    }
+
+    public int getNombreNaissance() {
+        return nombreNaissance;
+    }
+
+    public void setNombreNaissance(int nombreNaissance) {
+        this.nombreNaissance = nombreNaissance;
     }
 
    

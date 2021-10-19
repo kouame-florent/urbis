@@ -93,9 +93,9 @@ public class CreerBacking implements Serializable{
         currentLocalite = localiteService.currentLocalite();
         currentCentre = centreService.currentCentre();
         currentTribunal = tribunalService.currentTribunal();
-        annee = registreService.annee();
-        numeroRegistre = registreService.numero(selectedType.getCode(),annee);
-        numeroPremierActe = registreService.numeroPremierActe(selectedType.getCode());
+        annee = registreService.anneeCourante();
+        numeroRegistre = registreService.numeroRegistre(selectedType.getCode(),annee);
+        numeroPremierActe = registreService.numeroPremierActe(selectedType.getCode(),annee);
     }
 
     public void onOfficierSelect(){
@@ -139,6 +139,7 @@ public class CreerBacking implements Serializable{
                 numeroPremierActe, 
                 nombreDeFeuillets + numeroPremierActe, 
                 nombreDeFeuillets, 
+                0,
                 "", 
                 null, 
                 "");

@@ -99,8 +99,8 @@ public class CreerSerieBacking implements Serializable{
         currentLocalite = localiteService.currentLocalite();
         currentCentre = centreService.currentCentre();
         currentTribunal = tribunalService.currentTribunal();
-       // annee = registreService.annee();
-       // numeroRegistre = registreService.numero(selectedType.getCode());
+       // anneeCourante = registreService.anneeCourante();
+       // numeroRegistre = registreService.numeroRegistre(selectedType.getCode());
        // numeroPremierActe = registreService.numeroPremierActe(selectedType.getCode());
     }
     
@@ -116,8 +116,8 @@ public class CreerSerieBacking implements Serializable{
         }
         for (int i = premier; i <= dernier; i++ ){
             LOG.log(Level.INFO, "CREATING REGISTRE ...");
-            //int numeroRegistre = registreService.numero(selectedType.getCode(),annee);
-            int numeroPremierActe = registreService.numeroPremierActe(selectedType.getCode());
+            //int numeroRegistre = registreService.numeroRegistre(selectedType.getCode(),anneeCourante);
+            int numeroPremierActe = registreService.numeroPremierActe(selectedType.getCode(),annee);
             LOG.log(Level.INFO, "NUMERO PREMIER ACTE: {0}", numeroPremierActe);
             var reg = new RegistreDto(
                     "", 
@@ -138,6 +138,7 @@ public class CreerSerieBacking implements Serializable{
                     numeroPremierActe, 
                     numeroPremierActe + nombreDeFeuillets, 
                     nombreDeFeuillets, 
+                    0,
                     "", 
                     null, 
                     "");

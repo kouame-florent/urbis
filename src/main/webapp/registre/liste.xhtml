@@ -30,11 +30,11 @@ xmlns:p="http://primefaces.org/ui">
             <p:toolbar>
                  <p:toolbarGroup>
                      <p:commandButton  value="Créer un registre" action="#{listBacking.showCreerView()}" icon="pi pi-plus" 
-                                       process="@this" style="margin-right: .5rem">   
+                                       process="@this" style="margin-right: .5rem" styleClass="ui-button-outlined">   
                          <p:ajax event="dialogReturn" listener="#{listBacking.onSerieCreated}" update="messageForm @form"/>
                     </p:commandButton>
                      <p:commandButton value="Créer une serie de registres" action="#{listBacking.showCreerSerieView()}" icon="pi pi-plus" 
-                                      process="@this" style="margin-right: .5rem"> 
+                                      process="@this" style="margin-right: .5rem" styleClass="ui-button-outlined"> 
                          <p:ajax event="dialogReturn" listener="#{listBacking.onCreate}" update="messageForm @form"/>
                     </p:commandButton>
                      
@@ -73,13 +73,14 @@ xmlns:p="http://primefaces.org/ui">
                         <p:commandButton id="rechercher" value="Appliquer les filtres" 
                                          process="@this contenttForm:annee contenttForm:numero"
                                          action="#{listBacking.filtrer()}"
-                                         update="contenttForm:registre"  icon="pi pi-check" />
+                                         update="contenttForm:registre"  icon="pi pi-check" 
+                                         styleClass="ui-button-outlined"/>
                     </div>
                     <div class="p-field p-col">
                         <p:commandButton value="Effacer les filtres" icon="pi pi-times" process="@this contenttForm:annee"
                                          action="#{listBacking.effacerFiltres()}"
                                          update="contenttForm:registre contenttForm:annee"  
-                                         styleClass="ui-button-secondary" />
+                                         styleClass="ui-button-outlined ui-button-warning" />
                     </div>
                 </div>
             </p:fieldset>
@@ -117,7 +118,7 @@ xmlns:p="http://primefaces.org/ui">
                      <h:outputText value="#{registre.numeroDernierActe}"/>
                 </p:column>
                 <p:column headerText="Nombre d'actes" >
-                    <h:outputText value="#{listBacking.nombreActe}"/>
+                    <h:outputText value="#{registre.nombreActe}"/>
                 </p:column>
                 <p:column headerText="Officier" width="15%">
                     <h:outputText value="#{registre.officierEtatCivilNomComplet}"/>
@@ -140,30 +141,37 @@ xmlns:p="http://primefaces.org/ui">
              
                 </p:column>
                 <p:column width="5%">
+                    
                     <p:menuButton icon="pi pi-ellipsis-h" style="width: 100%;white-space: nowrap;width: auto !important;">
                         <p:menuitem value="Consulter" process="@this" action="#{listBacking.showValiderView(registre)}" icon="pi pi-book"/>
                         <p:menuitem value="Valider" process="@this" action="#{listBacking.showValiderView(registre)}" 
-                                    update="contenttForm:registre" icon="pi pi-ticket">
+                                    update="contenttForm:registre" icon="pi pi-ticket" 
+                                    disabled="#{registre.statut == 'VALIDE'}">
                             <p:ajax event="dialogReturn" listener="#{listBacking.returnToCaller}" update=":contenttForm:registre"/>
                             <f:setPropertyActionListener value="#{registre}" target="#{listBacking.selectedRegistre}"/>
                         
                         </p:menuitem>
-                        <p:menuitem value="Modifier" process="@this" action="#{listBacking.showValiderView(registre)}" icon="pi pi-pencil"/>
+                        <p:menuitem value="Modifier" process="@this" action="#{listBacking.showValiderView(registre)}" 
+                                    icon="pi pi-pencil"/>
                         <p:menuitem value="Cloturer" process="@this"  icon="pi pi-ban"/>
-                        <p:menuitem value="Annuler" process="@this" action="#{listBacking.showAnnulerView(registre)}"  icon="pi pi-undo">
+                        <p:menuitem value="Annuler" process="@this" action="#{listBacking.showAnnulerView(registre)}"  
+                                    icon="pi pi-undo">
                             <p:ajax event="dialogReturn" 
                             listener="#{listBacking.returnToCaller}" 
                                         update=":contenttForm:registre"/>
                         </p:menuitem>
                         <p:divider/>
                         <p:menuitem value="Liste des actes" process="@this"  icon="pi pi-file"
-                                    action="#{listBacking.showActesListView(registre)}"/>
+                                    action="#{listBacking.showActesListView(registre)}"
+                                    rendered="#{listBacking.renderActeNaissanceMenus(registre)}"/>
                         <p:menuitem value="Declaration jugement" process="@this"  icon="pi pi-folder-open"
                                     action="#{listBacking.showDeclarationView(registre)}"  
-                                    disabled="#{listBacking.enableMenuDeclarationActe(registre)}"/>
+                                    disabled="#{listBacking.enableMenuDeclarationActe(registre)}"
+                                    rendered="#{listBacking.renderActeNaissanceMenus(registre)}"/>
                         <p:menuitem value="Saisie actes naissances existants" process="@this" 
                                     action="#{listBacking.showValiderView(registre)}" icon="pi pi-folder"
-                                    disabled="#{listBacking.enableSaisieActesExistants(registre)}"/>
+                                    disabled="#{listBacking.enableSaisieActesExistants(registre)}"
+                                    rendered="#{listBacking.renderActeNaissanceMenus(registre)}"/>
                         <p:divider/>
                         <p:menuitem value="Supprimer" process="@this" icon="pi pi-times"/>
                     </p:menuButton>

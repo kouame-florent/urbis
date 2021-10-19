@@ -39,17 +39,17 @@ public class ListBacking extends BaseBacking implements Serializable{
     private RegistreDto registreDto;
     
     public void onload(){
-        
         LOG.log(Level.INFO,"REGISTRE ID: {0}",registreID);
         registreDto = registreService.findById(registreID);
-        LOG.log(Level.INFO,"REGISTRE LIBELLE: {0}",registreDto.getLibelle());
+        lazyDeclarationDataModel.setRegistreID(registreID);
     }
     
     private ActeNaissanceDto selectedActe;
     
     @PostConstruct
     public void init(){
-    
+        
+        
     }
 
     public LazyDeclarationDataModel getLazyDeclarationDataModel() {

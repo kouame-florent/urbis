@@ -68,7 +68,7 @@ public class ListBacking extends BaseBacking implements Serializable{
     
     private List<RegistreDto> registres = new ArrayList<>();
     private RegistreDto selectedRegistre;
-    private int nombreActe;
+    //private int nombreActe;
     
     private List<TypeRegistreDto> typesRegistre;
     private TypeRegistreDto selectedType;
@@ -161,6 +161,18 @@ public class ListBacking extends BaseBacking implements Serializable{
         PrimeFaces.current().dialog().openDynamic("/naissance/liste", getDialogOptions(98,98,true), params);
     }
     
+    public boolean renderActeNaissanceMenus(RegistreDto registre){
+        return registre.getTypeRegistre().equals("NAISSANCE");
+    }
+    
+    public boolean renderActeMariageMenus(RegistreDto registre){
+        return registre.getTypeRegistre().equals("MARIAGE");
+    }
+    
+    public boolean renderActeDecesMenus(RegistreDto registre){
+        return registre.getTypeRegistre().equals("DECES");
+    }
+    
     public boolean enableMenuDeclarationActe(RegistreDto registreDto){
       return !registreDto.getStatut().equals(StatutRegistre.VALIDE.name());  
     }
@@ -244,9 +256,6 @@ public class ListBacking extends BaseBacking implements Serializable{
         this.selectedRegistre = selectedRegistre;
     }
 
-    public int getNombreActe() {
-        return nombreActe;
-    }
 
     public TypeRegistreDto getSelectedType() {
         return selectedType;

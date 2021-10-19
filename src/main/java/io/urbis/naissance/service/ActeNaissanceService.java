@@ -25,8 +25,9 @@ public interface ActeNaissanceService {
     @POST
     public void create(ActeNaissanceDto acteNaissanceDto);
     
-    @GET
-    public List<ActeNaissanceDto> findWithFilters(@QueryParam("offset") int offset, @QueryParam("page-size") int pageSize);
+    @GET @Path("/{registre-id}")
+    public List<ActeNaissanceDto> findWithFilters(@QueryParam("offset") int offset, 
+            @QueryParam("page-size") int pageSize,@PathParam("registre-id") String registreID);
     
     @GET @Path("/count")
     public int count();
