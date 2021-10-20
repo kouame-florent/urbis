@@ -178,12 +178,21 @@ public class ListBacking extends BaseBacking implements Serializable{
         return registre.getTypeRegistre().equals("DECES");
     }
     
-    public boolean enableMenuDeclarationActe(RegistreDto registreDto){
-      return !registreDto.getStatut().equals(StatutRegistre.VALIDE.name());  
+    public boolean disableMenuDeclarationActe(RegistreDto registreDto){
+        return registreDto.getStatut().equals(StatutRegistre.ANNULE.name()) || 
+                registreDto.getStatut().equals(StatutRegistre.CLOTURE.name()) ||
+                registreDto.getStatut().equals(StatutRegistre.PROJET.name());  
     }
     
-    public boolean enableSaisieActesExistants(RegistreDto registreDto){
-        return !registreDto.getStatut().equals(StatutRegistre.VALIDE.name());  
+    public boolean disableMenuListActe(RegistreDto registreDto){
+        return registreDto.getStatut().equals(StatutRegistre.ANNULE.name()) || 
+                registreDto.getStatut().equals(StatutRegistre.PROJET.name());  
+    }
+    
+    public boolean disableSaisieActesExistants(RegistreDto registreDto){
+        return registreDto.getStatut().equals(StatutRegistre.ANNULE.name()) || 
+                registreDto.getStatut().equals(StatutRegistre.CLOTURE.name()) ||
+                registreDto.getStatut().equals(StatutRegistre.PROJET.name());  
     }
     
     public void returnToCaller(SelectEvent event){

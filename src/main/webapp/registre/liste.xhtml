@@ -154,29 +154,32 @@ xmlns:p="http://primefaces.org/ui">
                         <p:menuitem value="Modifier" process="@this" action="#{listBacking.showValiderView(registre)}" 
                                     icon="pi pi-pencil"
                                     disabled="#{registre.statut == 'PROJET'}"/>
-                        <p:menuitem value="Cloturer" process="@this" action="#{listBacking.cloturer()}"  icon="pi pi-ban"
-                                    disabled="#{!registre.statut == 'VALIDE'}" >
+                        <p:menuitem value="Cloturer" process="@this" action="#{listBacking.cloturer(registre.id)}"  icon="pi pi-ban"
+                                    disabled="#{registre.statut == 'PROJET' || 
+                                                registre.statut == 'CLOTURER' || 
+                                                registre.statut == 'ANNULER'}" >
                             <p:confirm header="Confirmation" 
                                        message="Voulez-vous vraiment cloturer le registre #{registre.numero} de #{registre.annee} ?" 
                                        icon="pi pi-exclamation-triangle"/>
                         </p:menuitem>
                         <p:menuitem value="Annuler" process="@this" action="#{listBacking.showAnnulerView(registre)}"  
                                     icon="pi pi-undo"
-                                    disabled="#{!(registre.statut == 'VALIDE' || registre.statut == 'PROJET')}">
+                                    disabled="#{registre.statut == 'ANNULER' || registre.statut == 'CLOTURER'}">
                             <p:ajax event="dialogReturn" listener="#{listBacking.returnToCaller}" 
                                         update=":contenttForm:registre"/>
                         </p:menuitem>
                         <p:divider/>
                         <p:menuitem value="Liste des actes" process="@this"  icon="pi pi-file"
                                     action="#{listBacking.showActesListView(registre)}"
+                                    disabled="#{listBacking.disableMenuDeclarationActe(registre)}"
                                     rendered="#{listBacking.renderActeNaissanceMenus(registre)}"/>
                         <p:menuitem value="Declaration jugement" process="@this"  icon="pi pi-folder-open"
                                     action="#{listBacking.showDeclarationView(registre)}"  
-                                    disabled="#{listBacking.enableMenuDeclarationActe(registre)}"
+                                    disabled="#{listBacking.disableMenuDeclarationActe(registre)}"
                                     rendered="#{listBacking.renderActeNaissanceMenus(registre)}"/>
                         <p:menuitem value="Saisie actes naissances existants" process="@this" 
                                     action="#{listBacking.showValiderView(registre)}" icon="pi pi-folder"
-                                    disabled="#{listBacking.enableSaisieActesExistants(registre)}"
+                                    disabled="#{listBacking.disableSaisieActesExistants(registre)}"
                                     rendered="#{listBacking.renderActeNaissanceMenus(registre)}"/>
                         <p:divider/>
                         <p:menuitem value="Supprimer" process="@this" icon="pi pi-times"/>
