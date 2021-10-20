@@ -54,13 +54,23 @@ xmlns:p="http://primefaces.org/ui">
                     <h:outputText value="#{acte.numero}"/>
                 </p:column>
               
+                <p:column  >
+                    <p:commandButton process="@this" title="Imprimer"
+                                     ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" icon="pi pi-print">
+                        <f:setPropertyActionListener value="#{acte.id}" target="#{acteNaissanceListBacking.selectedActeID}"/>
+                        <p:fileDownload value="#{acteNaissanceListBacking.download()}"/>
+                     </p:commandButton>
+                </p:column>
                
                 <p:column  >
                     <p:menuButton icon="pi pi-ellipsis-h" style="width: 100%;white-space: nowrap;width: auto !important;">
                         <p:menuitem value="Consulter" process="@this"  icon="pi pi-book"/>
                         <p:menuitem value="Valider" process="@this" icon="pi pi-book"/>
+                        <p:menuitem value="Imprimer" action="#{acteNaissanceListBacking.download()}" process="@this" 
+                                    icon="pi pi-book"/>
                     </p:menuButton>
                 </p:column>
+                
              
                 </p:dataTable>
 

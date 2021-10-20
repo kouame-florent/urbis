@@ -5,7 +5,7 @@
  */
 package io.urbis.registre.service;
 
-import io.urbis.share.dto.TypeRegistreDto;
+import io.urbis.registre.dto.TypeRegistreDto;
 import java.util.List;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

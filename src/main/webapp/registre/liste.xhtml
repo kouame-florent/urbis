@@ -13,9 +13,9 @@ xmlns:p="http://primefaces.org/ui">
             <p:growl globalOnly="true" life="15000" showDetail="true"/>        
         </h:form>
         
-        <h:form id="downloadForm" rendered="false">
+        <h:form id="downloadForm" >
             <p:toolbar>
-                 <p:toolbarGroup align="right">
+                <p:toolbarGroup align="right" rendered="false">
                     <p:commandButton value="download" process="@this" 
                                       ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);">
                          <p:fileDownload value="#{listBacking.download()}"/>
@@ -152,12 +152,18 @@ xmlns:p="http://primefaces.org/ui">
                         
                         </p:menuitem>
                         <p:menuitem value="Modifier" process="@this" action="#{listBacking.showValiderView(registre)}" 
-                                    icon="pi pi-pencil"/>
-                        <p:menuitem value="Cloturer" process="@this"  icon="pi pi-ban"/>
+                                    icon="pi pi-pencil"
+                                    disabled="#{registre.statut == 'PROJET'}"/>
+                        <p:menuitem value="Cloturer" process="@this" action="#{listBacking.cloturer()}"  icon="pi pi-ban"
+                                    disabled="#{!registre.statut == 'VALIDE'}" >
+                            <p:confirm header="Confirmation" 
+                                       message="Voulez-vous vraiment cloturer le registre #{registre.numero} de #{registre.annee} ?" 
+                                       icon="pi pi-exclamation-triangle"/>
+                        </p:menuitem>
                         <p:menuitem value="Annuler" process="@this" action="#{listBacking.showAnnulerView(registre)}"  
-                                    icon="pi pi-undo">
-                            <p:ajax event="dialogReturn" 
-                            listener="#{listBacking.returnToCaller}" 
+                                    icon="pi pi-undo"
+                                    disabled="#{!(registre.statut == 'VALIDE' || registre.statut == 'PROJET')}">
+                            <p:ajax event="dialogReturn" listener="#{listBacking.returnToCaller}" 
                                         update=":contenttForm:registre"/>
                         </p:menuitem>
                         <p:divider/>
@@ -178,7 +184,11 @@ xmlns:p="http://primefaces.org/ui">
                 </p:column>
                 
                 </p:dataTable>
-
+            
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+                <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+                <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" />
+            </p:confirmDialog>
 
         </h:form>
           

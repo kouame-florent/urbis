@@ -6,9 +6,9 @@
 package io.urbis.registre.backing;
 
 import io.urbis.registre.service.RegistreService;
-import io.urbis.share.dto.RegistreDto;
-import io.urbis.share.dto.RegistrePatchDto;
-import io.urbis.share.dto.StatutRegistre;
+import io.urbis.registre.dto.RegistreDto;
+import io.urbis.registre.dto.RegistrePatchDto;
+import io.urbis.registre.dto.StatutRegistre;
 import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;

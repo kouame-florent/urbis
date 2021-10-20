@@ -5,7 +5,7 @@
  */
 package io.urbis.naissance.service;
 
-import io.urbis.share.dto.SexeDto;
+import io.urbis.naissance.dto.SexeDto;
 import java.util.List;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

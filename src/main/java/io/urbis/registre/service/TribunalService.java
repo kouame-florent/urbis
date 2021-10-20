@@ -5,7 +5,7 @@
  */
 package io.urbis.registre.service;
 
-import io.urbis.share.dto.TribunalDto;
+import io.urbis.registre.dto.TribunalDto;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;

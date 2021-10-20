@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package io.urbis.share.dto;
+package io.urbis.naissance.dto;
 
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;

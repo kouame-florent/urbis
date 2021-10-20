@@ -5,16 +5,12 @@
  */
 package io.urbis.registre.service;
 
-import io.urbis.share.dto.CentreDto;
-import io.urbis.share.dto.LocaliteDto;
-import io.urbis.share.dto.RegistreDto;
-import io.urbis.share.dto.RegistrePatchDto;
-import io.urbis.share.dto.TribunalDto;
+import io.urbis.registre.dto.RegistreDto;
+import io.urbis.registre.dto.RegistrePatchDto;
 import java.util.List;
 import javax.ws.rs.GET;
 import javax.ws.rs.PATCH;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;

@@ -8,6 +8,7 @@ package io.urbis.registre.service;
 import java.io.File;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.QueryParam;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 /**
@@ -21,4 +22,8 @@ public interface EtatService {
     @GET
     @Path("/registres")
     public File downloadRegistre();
+    
+    @GET
+    @Path("/acte_naissance")
+    public File downloadActeNaissance(@QueryParam("ACTE_NAISSANCE_ID") String acteNaissanceID);
 }

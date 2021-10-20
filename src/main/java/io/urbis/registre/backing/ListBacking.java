@@ -9,9 +9,10 @@ import io.urbis.common.BaseBacking;
 import io.urbis.registre.service.EtatService;
 import io.urbis.registre.service.RegistreService;
 import io.urbis.registre.service.TypeRegistreService;
-import io.urbis.share.dto.RegistreDto;
-import io.urbis.share.dto.StatutRegistre;
-import io.urbis.share.dto.TypeRegistreDto;
+import io.urbis.registre.dto.RegistreDto;
+import io.urbis.registre.dto.RegistrePatchDto;
+import io.urbis.registre.dto.StatutRegistre;
+import io.urbis.registre.dto.TypeRegistreDto;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -115,6 +116,10 @@ public class ListBacking extends BaseBacking implements Serializable{
         lazyRegistreDataModel.setTypeRegistre(selectedType.getCode());
        // lazyRegistreDataModel.setAnnee(2018);
         
+    }
+    
+    public void cloturer(String registreID){
+        registreService.patch(registreID,new RegistrePatchDto(StatutRegistre.CLOTURE.name(),""));
     }
     
     public void showCreerView(){
