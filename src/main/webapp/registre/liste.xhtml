@@ -146,27 +146,28 @@ xmlns:p="http://primefaces.org/ui">
                         <p:menuitem value="Consulter" process="@this" action="#{listBacking.showValiderView(registre)}" icon="pi pi-book"/>
                         <p:menuitem value="Valider" process="@this" action="#{listBacking.showValiderView(registre)}" 
                                     update="contenttForm:registre" icon="pi pi-ticket" 
-                                    disabled="#{registre.statut == 'VALIDE'}">
+                                    disabled="#{listBacking.disableMenuActiver(registre)}">
                             <p:ajax event="dialogReturn" listener="#{listBacking.returnToCaller}" update=":contenttForm:registre"/>
                             <f:setPropertyActionListener value="#{registre}" target="#{listBacking.selectedRegistre}"/>
                         
                         </p:menuitem>
                         <p:menuitem value="Modifier" process="@this" action="#{listBacking.showValiderView(registre)}" 
                                     icon="pi pi-pencil"
-                                    disabled="#{registre.statut == 'PROJET'}"/>
+                                    disabled="#{listBacking.disableMenuModifier(registre)}"/>
                         <p:menuitem value="Cloturer" process="@this" action="#{listBacking.cloturer(registre.id)}"  icon="pi pi-ban"
-                                    disabled="#{registre.statut == 'PROJET' || 
-                                                registre.statut == 'CLOTURER' || 
-                                                registre.statut == 'ANNULER'}" >
+                                    disabled="#{listBacking.disableMenuCloturer(registre)}" >
+                            <p:ajax event="dialogReturn" listener="#{listBacking.returnToCaller}" 
+                                        update=":contenttForm:registre"/>
                             <p:confirm header="Confirmation" 
                                        message="Voulez-vous vraiment cloturer le registre #{registre.numero} de #{registre.annee} ?" 
                                        icon="pi pi-exclamation-triangle"/>
                         </p:menuitem>
                         <p:menuitem value="Annuler" process="@this" action="#{listBacking.showAnnulerView(registre)}"  
                                     icon="pi pi-undo"
-                                    disabled="#{registre.statut == 'ANNULER' || registre.statut == 'CLOTURER'}">
+                                    disabled="#{listBacking.disableMenuAnnuler(registre)}">
                             <p:ajax event="dialogReturn" listener="#{listBacking.returnToCaller}" 
                                         update=":contenttForm:registre"/>
+                            
                         </p:menuitem>
                         <p:divider/>
                         <p:menuitem value="Liste des actes" process="@this"  icon="pi pi-file"
@@ -178,7 +179,7 @@ xmlns:p="http://primefaces.org/ui">
                                     disabled="#{listBacking.disableMenuDeclarationActe(registre)}"
                                     rendered="#{listBacking.renderActeNaissanceMenus(registre)}"/>
                         <p:menuitem value="Saisie actes naissances existants" process="@this" 
-                                    action="#{listBacking.showValiderView(registre)}" icon="pi pi-folder"
+                                    action="#{listBacking.showSaisieActeExistantview(registre)}" icon="pi pi-folder"
                                     disabled="#{listBacking.disableSaisieActesExistants(registre)}"
                                     rendered="#{listBacking.renderActeNaissanceMenus(registre)}"/>
                         <p:divider/>

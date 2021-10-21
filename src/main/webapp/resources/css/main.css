@@ -7,6 +7,12 @@ body {
     
 }
 
+.ui-widget, .ui-widget .ui-widget 
+{
+    font-size: 95% !important; 
+     
+}
+
 .ui-menu{
     white-space: nowrap;
     width: auto !important;

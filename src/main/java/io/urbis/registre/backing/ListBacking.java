@@ -159,6 +159,12 @@ public class ListBacking extends BaseBacking implements Serializable{
         PrimeFaces.current().dialog().openDynamic("/naissance/declaration", getDialogOptions(98,98,true), params);
     }
     
+    public void showSaisieActeExistantview(RegistreDto registreDto){
+        var values = List.of(registreDto.getId());
+        Map<String, List<String>> params = Map.of("id", values);
+        PrimeFaces.current().dialog().openDynamic("/naissance/saisie", getDialogOptions(98,98,true), params);
+    }
+    
     public void showActesListView(RegistreDto registreDto){
         LOG.log(Level.INFO, "REGISTRE ID: {0}", registreDto.getId());
         var values = List.of(registreDto.getId());
@@ -178,10 +184,33 @@ public class ListBacking extends BaseBacking implements Serializable{
         return registre.getTypeRegistre().equals("DECES");
     }
     
-    public boolean disableMenuDeclarationActe(RegistreDto registreDto){
+    public boolean disableMenuActiver(RegistreDto registreDto){
+        return registreDto.getStatut().equals(StatutRegistre.ANNULE.name()) || 
+                registreDto.getStatut().equals(StatutRegistre.CLOTURE.name()) ||
+                registreDto.getStatut().equals(StatutRegistre.VALIDE.name());  
+    }
+    
+    public boolean disableMenuAnnuler(RegistreDto registreDto){
+        return registreDto.getStatut().equals(StatutRegistre.ANNULE.name()) || 
+                registreDto.getStatut().equals(StatutRegistre.CLOTURE.name());  
+    }
+    
+    public boolean disableMenuCloturer(RegistreDto registreDto){
         return registreDto.getStatut().equals(StatutRegistre.ANNULE.name()) || 
                 registreDto.getStatut().equals(StatutRegistre.CLOTURE.name()) ||
                 registreDto.getStatut().equals(StatutRegistre.PROJET.name());  
+    }
+    
+    public boolean disableMenuModifier(RegistreDto registreDto){ 
+        return registreDto.getStatut().equals(StatutRegistre.ANNULE.name()) || 
+                registreDto.getStatut().equals(StatutRegistre.CLOTURE.name());  
+    }
+    
+    public boolean disableMenuDeclarationActe(RegistreDto registreDto){
+        return registreDto.getStatut().equals(StatutRegistre.ANNULE.name()) || 
+                registreDto.getStatut().equals(StatutRegistre.CLOTURE.name()) ||
+                registreDto.getStatut().equals(StatutRegistre.PROJET.name());
+        
     }
     
     public boolean disableMenuListActe(RegistreDto registreDto){
