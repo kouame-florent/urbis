@@ -34,6 +34,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
+import org.primefaces.event.SelectEvent;
 
 /**
  *
@@ -84,6 +85,8 @@ public class SaisieActeExistantBacking extends BaseBacking implements Serializab
     
     @Inject
     LazySaisieActeExistantDataModel lazySaisieActeExistantDataModel;
+    
+    private ViewMode viewMode;
    
     
     private String registreID;
@@ -115,7 +118,7 @@ public class SaisieActeExistantBacking extends BaseBacking implements Serializab
     
     private int numeroActe;
     
-    private boolean naissanceMultiple;
+    //private boolean naissanceMultiple;
     private int nombreNaissance;
     private int rang = 1;
     
@@ -138,6 +141,9 @@ public class SaisieActeExistantBacking extends BaseBacking implements Serializab
     
     @PostConstruct
     public void init(){
+        
+        viewMode = ViewMode.NEW;
+        
         officiers = officierService.findAll();
         modesDeclaration = modeDeclarationService.findAll();
         typesNaissance = typeNaissanceService.findAll();
@@ -148,6 +154,13 @@ public class SaisieActeExistantBacking extends BaseBacking implements Serializab
         acteNaissanceDto = new ActeNaissanceDto();
     }
     
+    public void onRowSelect(SelectEvent<ActeNaissanceDto> event){
+        LOG.log(Level.INFO,"ENFANT NOM: {0}",selectedActe.getEnfantNom());
+        LOG.log(Level.INFO,"SELECTED ACTE OFFICIER ID: {0}",selectedActe.getOfficierEtatCivilID());
+        acteNaissanceDto = selectedActe;
+        //change view mode to render maj commande button
+        viewMode = ViewMode.UPDATE;
+    }
     
     public void creer(){
         LOG.log(Level.INFO,"Creating acte naissance...");
@@ -155,39 +168,41 @@ public class SaisieActeExistantBacking extends BaseBacking implements Serializab
         LOG.log(Level.INFO,"ENFANT DATE NAISSANCE: {0}",acteNaissanceDto.getEnfantDateNaissance());
         
         acteNaissanceDto.setRegistreID(registreID);
-        acteNaissanceDto.setNumero(numeroActe);
-        acteNaissanceDto.setOfficierEtatCivilID(selectedOfficierId);
+        //acteNaissanceDto.setNumero(numeroActe);
+        //acteNaissanceDto.setOfficierEtatCivilID(selectedOfficierId);
         
         acteNaissanceService.create(acteNaissanceDto);
         resetActeDto();
         addGlobalMessage("Déclaration enregistrée avec succès", FacesMessage.SEVERITY_INFO);
         
-        numeroActe = acteNaissanceService.numeroActe(registreID);
+        //numeroActe = acteNaissanceService.numeroActe(registreID);
         
     }
     
-    public void resetActeDto(){
-        if(!naissanceMultiple){
-            acteNaissanceDto = new ActeNaissanceDto();
-        }else{
-            if(rang < nombreNaissance){
-                rang += 1;
-                acteNaissanceDto.setEnfantDateNaissance("");
-                acteNaissanceDto.setEnfantLieuNaissance("");
-                acteNaissanceDto.setEnfantLocalite("");
-                acteNaissanceDto.setEnfantNationalite("");
-                acteNaissanceDto.setEnfantNom("");
-                acteNaissanceDto.setEnfantPrenoms("");
-                acteNaissanceDto.setEnfantPrenoms("");
-            }else{
-                acteNaissanceDto = new ActeNaissanceDto();
-                naissanceMultiple = false;
-                nombreNaissance = 0;
-            }
-            
-            
-        }
+    public void modifier(){
+        LOG.log(Level.INFO,"Creating acte naissance...");
+         
+        LOG.log(Level.INFO,"ENFANT DATE NAISSANCE: {0}",acteNaissanceDto.getEnfantDateNaissance());
         
+        //acteNaissanceDto.setRegistreID(registreID);
+        acteNaissanceDto.setNumero(numeroActe);
+        //acteNaissanceDto.setOfficierEtatCivilID(selectedOfficierId);
+        
+        acteNaissanceService.update(acteNaissanceDto.getId(),acteNaissanceDto);
+        resetActeDto();
+        addGlobalMessage("L'acte a été modifié avec succès", FacesMessage.SEVERITY_INFO);
+        
+        //numeroActe = acteNaissanceService.numeroActe(registreID);
+    }
+    
+    public void nouvelEngeristrement(){
+        resetActeDto();
+        viewMode = ViewMode.NEW;
+    }
+    
+    public void resetActeDto(){
+        acteNaissanceDto = new ActeNaissanceDto();
+    
     }
     
     private void resetForNaissanceMultiple(ActeNaissanceDto old){
@@ -253,14 +268,6 @@ public class SaisieActeExistantBacking extends BaseBacking implements Serializab
 
     public List<TypeNaissanceDto> getTypesNaissance() {
         return typesNaissance;
-    }
-
-    public boolean isNaissanceMultiple() {
-        return naissanceMultiple;
-    }
-
-    public void setNaissanceMultiple(boolean naissanceMultiple) {
-        this.naissanceMultiple = naissanceMultiple;
     }
 
     public ActeNaissanceDto getActeNaissanceDto() {
@@ -376,6 +383,10 @@ public class SaisieActeExistantBacking extends BaseBacking implements Serializab
 
     public void setSelectedActe(ActeNaissanceDto selectedActe) {
         this.selectedActe = selectedActe;
+    }
+
+    public ViewMode getViewMode() {
+        return viewMode;
     }
 
    

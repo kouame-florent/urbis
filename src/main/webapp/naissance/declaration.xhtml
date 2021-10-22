@@ -23,9 +23,9 @@ xmlns:p="http://primefaces.org/ui">
                 <p:growl globalOnly="true" life="15000"/>        
         </h:form>
              
-        <h:form id="contenttForm">  
+        <h:form id="contentForm">  
             
-            <p:focus context="contenttForm"/>
+            <p:focus context="contentForm"/>
            
             <p:fieldset legend="Référence registre">
                <div class="ui-fluid p-formgrid p-grid">
@@ -65,7 +65,7 @@ xmlns:p="http://primefaces.org/ui">
                         <p:selectOneRadio id="modeDeclaration" value="#{declarationBacking.acteNaissanceDto.modeDeclaration}" 
                                             converter="omnifaces.SelectItemsConverter"
                                             required="true" requiredMessage="Ce champ est obligatoire">
-                            <p:ajax update="contenttForm:jugementOutputPanel"/>
+                            <p:ajax update="contentForm:jugementOutputPanel"/>
                               <f:selectItems value="#{declarationBacking.modesDeclaration}" var="mode" 
                                              itemLabel="#{mode.libelle}" itemValue="#{mode.code}"/>
                           </p:selectOneRadio>
@@ -663,7 +663,7 @@ xmlns:p="http://primefaces.org/ui">
 
                             <f:selectItems value="#{declarationBacking.liensParenteDeclarant}" var="lien" 
                                            itemLabel="#{lien.libelle}" itemValue="#{lien.code}"/>
-                            <p:ajax update="contenttForm:declTabview:declarantLienParente"/>
+                            <p:ajax update="contentForm:declTabview:declarantLienParente"/>
                           </p:selectOneRadio>
                     </div>
                 </div>
@@ -691,7 +691,7 @@ xmlns:p="http://primefaces.org/ui">
             
             <div class="ui-fluid p-formgrid p-grid">
                 <div class="p-field p-lg-6">
-                    <p:commandButton value="Enregitrer la déclaration" process="@form" action="#{declarationBacking.creer()}"
+                    <p:commandButton value="Enregistrer la déclaration" process="@form" action="#{declarationBacking.creer()}"
                                      update="@form messageForm"  icon="pi pi-check" 
                                      styleClass="ui-button-outlined"/>
                 </div>

@@ -23,9 +23,9 @@ xmlns:p="http://primefaces.org/ui">
                 <p:growl globalOnly="true" life="15000"/>        
         </h:form>
              
-        <h:form id="contenttForm">  
+        <h:form id="contentForm">  
             
-            <p:focus context="contenttForm"/>
+            <p:focus context="contentForm"/>
            
             <p:fieldset legend="Référence registre">
                <div class="ui-fluid p-formgrid p-grid">
@@ -60,8 +60,11 @@ xmlns:p="http://primefaces.org/ui">
             <p:spacer height="2" />
                 <p:dataTable id="registre" widgetVar="acteNaissanceWidget" var="acte" 
                         value="#{saisieActeExistantBacking.lazySaisieActeExistantDataModel}"
+                        selectionMode="single"
                         selection="#{saisieActeExistantBacking.selectedActe}" rowKey="#{acte.id}" paginator="true"
-                        rows="25" rowSelectMode="add" paginatorPosition="bottom">
+                        rows="25" rowSelectMode="add" paginatorPosition="bottom" size="small">
+                    
+                    <p:ajax event="rowSelect" listener="#{saisieActeExistantBacking.onRowSelect}" update="@form"/>
                     
                     <f:facet name="header">
                         Actes de naissance
@@ -93,7 +96,29 @@ xmlns:p="http://primefaces.org/ui">
               
                
                 </p:dataTable>
+            <p:spacer height="4"/>
+            <p:outputPanel>
+            <p:toolbar>
+                <p:toolbarGroup>
+                    <p:tag id="modeNouvelAjoutTag" value="Mode ajout nouvel ajout acte" severity="success" 
+                           rendered="#{saisieActeExistantBacking.viewMode == 'NEW'}"/>
+                    <p:tag id='modeMiseJourTag' value="Mode mise à jour des actes" severity="danger"
+                           rendered="#{saisieActeExistantBacking.viewMode == 'UPDATE'}"/>
+                    <p:spacer width="5"/>
+                    <p:commandButton id="nouvelAnregistrement" value="Passer en mode 'ajout un nouvel acte'" process="@form" 
+                                     action="#{saisieActeExistantBacking.nouvelEngeristrement()}"
+                                     update="@form messageForm"  icon="pi pi-file" 
+                                     styleClass="ui-button-outlined" 
+                                     rendered="#{saisieActeExistantBacking.viewMode == 'UPDATE'}"/>
+                    
+                </p:toolbarGroup>
+                <p:toolbarGroup align="right">
+                    
+                </p:toolbarGroup>
+            </p:toolbar>
+            </p:outputPanel>
             <p:spacer height="2"/>
+            
             <p:fieldset>
                 <div class="ui-fluid p-formgrid p-grid">
                     <div class="p-field p-col">
@@ -101,7 +126,7 @@ xmlns:p="http://primefaces.org/ui">
                         <p:selectOneRadio id="modeDeclaration" value="#{saisieActeExistantBacking.acteNaissanceDto.modeDeclaration}" 
                                             converter="omnifaces.SelectItemsConverter"
                                             required="true" requiredMessage="Ce champ est obligatoire">
-                            <p:ajax update="contenttForm:jugementOutputPanel"/>
+                            <p:ajax update="contentForm:jugementOutputPanel"/>
                               <f:selectItems value="#{saisieActeExistantBacking.modesDeclaration}" var="mode" 
                                              itemLabel="#{mode.libelle}" itemValue="#{mode.code}"/>
                           </p:selectOneRadio>
@@ -127,6 +152,7 @@ xmlns:p="http://primefaces.org/ui">
              
             </p:fieldset>
             <p:spacer height="2"/>
+            
             <p:outputPanel id="jugementOutputPanel">
                 <p:outputPanel  rendered="#{saisieActeExistantBacking.selectedModeDeclaration.code == 'JUGEMENT'}">
                 <p:fieldset legend="Info jugement">
@@ -158,30 +184,12 @@ xmlns:p="http://primefaces.org/ui">
                     <div class="ui-fluid p-formgrid p-grid">
                         <div class="p-field p-lg-2">
                             <p:outputLabel for="numeroActe" >Numéro acte</p:outputLabel>
-                            <p:inputText id="numeroActe" value="#{saisieActeExistantBacking.numeroActe}" disabled="true"  />
+                            <p:inputText id="numeroActe" value="#{saisieActeExistantBacking.acteNaissanceDto.numero}" />
                        
                         </div>
                        
                     </div>
-                    <p:fieldset legend="Naissance multiple">
-                         <div class="ui-fluid p-formgrid p-grid">
-                             <div class="p-field p-lg-2">
-
-                                 <p:outputLabel for="naissanceMultiple" styleClass="p-d-block">Naissance multiple ?</p:outputLabel>
-                                 <p:toggleSwitch id="naissanceMultiple" value="#{saisieActeExistantBacking.naissanceMultiple}" styleClass="p-d-block">
-                                     <p:ajax update="naissanceMultipleOutputPanel"/>
-                                 </p:toggleSwitch>
-                             </div>
-                             <div class="p-field p-lg-2">
-
-                             
-                                 <p:outputLabel for="nombreNaissance" styleClass="p-d-block" rendered="#{saisieActeExistantBacking.naissanceMultiple}">Nombre</p:outputLabel>
-                                 <p:inputText id="nombreNaissance" value="#{saisieActeExistantBacking.nombreNaissance}" 
-                                              styleClass="p-d-block" rendered="#{saisieActeExistantBacking.naissanceMultiple}"/>
-                         
-                             </div>
-                         </div>
-                     </p:fieldset>
+                   
                     <p:spacer width="2"/>
                     <p:fieldset>      
                         <p:outputLabel for="typeNaisance" styleClass="p-d-block">Type naissance</p:outputLabel>
@@ -228,7 +236,7 @@ xmlns:p="http://primefaces.org/ui">
                             </div>
                              <div class="p-field p-lg-6"> 
                                  <div class="ui-fluid  p-grid">
-                                 <div class="p-field p-lg-6">
+                                 <div class="p-field p-lg-12">
                                      <p:outputLabel for="sexe" styleClass="p-d-block">Sexe</p:outputLabel>
                                      <p:selectOneRadio id="sexe" value="#{saisieActeExistantBacking.acteNaissanceDto.enfantSexe}" 
                                                         converter="omnifaces.SelectItemsConverter"
@@ -238,13 +246,7 @@ xmlns:p="http://primefaces.org/ui">
                                                            itemLabel="#{sexe.libelle}" itemValue="#{sexe.code}"/>
                                        </p:selectOneRadio>
                                  </div>
-                                 <div class="p-field p-lg-6">
-                                    <p:outputLabel for="rang" styleClass="p-d-block" 
-                                                   rendered="#{saisieActeExistantBacking.naissanceMultiple}">Rang</p:outputLabel>
-                                    <p:inputText id="rang" value="#{saisieActeExistantBacking.rang}" 
-                                                 rendered="#{saisieActeExistantBacking.naissanceMultiple}" required="true"
-                                                 styleClass="p-d-block" disabled="true"/>
-                                 </div>
+                                 
                                 </div>
                                 
                                 
@@ -702,7 +704,7 @@ xmlns:p="http://primefaces.org/ui">
 
                             <f:selectItems value="#{saisieActeExistantBacking.liensParenteDeclarant}" var="lien" 
                                            itemLabel="#{lien.libelle}" itemValue="#{lien.code}"/>
-                            <p:ajax update="contenttForm:declTabview:declarantLienParente"/>
+                            <p:ajax update="contentForm:declTabview:declarantLienParente"/>
                           </p:selectOneRadio>
                     </div>
                 </div>
@@ -712,7 +714,7 @@ xmlns:p="http://primefaces.org/ui">
                 <div class="ui-fluid p-formgrid p-grid">
                     <div class="p-field p-col">
                         <p:outputLabel for="officier" styleClass="p-d-block">Officier</p:outputLabel>
-                        <p:selectOneMenu id="officier" value="#{saisieActeExistantBacking.selectedOfficierId}"          
+                        <p:selectOneMenu id="officier" value="#{saisieActeExistantBacking.acteNaissanceDto.officierEtatCivilID}"          
                                          label="Selectionnez" required="true">
                             <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez un officier --" />
                             <f:selectItems value="#{saisieActeExistantBacking.officiers}" var="officier" 
@@ -727,19 +729,28 @@ xmlns:p="http://primefaces.org/ui">
                 </div>
 
             </p:fieldset>
-            
+            <p:outputPanel id="commandOutputPanel">
             <div class="ui-fluid p-formgrid p-grid">
+                
                 <div class="p-field p-lg-6">
-                    <p:commandButton value="Enregitrer la déclaration" process="@form" action="#{saisieActeExistantBacking.creer()}"
+                   
+                    <p:commandButton value="Enregistrer l'acte" process="@form" action="#{saisieActeExistantBacking.creer()}"
                                      update="@form messageForm"  icon="pi pi-check" 
-                                     styleClass="ui-button-outlined"/>
+                                     styleClass="ui-button-outlined"
+                                     rendered="#{saisieActeExistantBacking.viewMode == 'NEW'}"/>
+                    <p:commandButton value="mettre à jour l'acte" process="@form" action="#{saisieActeExistantBacking.modifier()}"
+                                     update="@form messageForm"  icon="pi pi-check" 
+                                     styleClass="ui-button-outlined"
+                                     rendered="#{saisieActeExistantBacking.viewMode == 'UPDATE'}"/>
+                   
                 </div>
+               
                 <div class="p-field p-lg-6">
                     <p:commandButton value="Annuler" icon="pi pi-times" 
                                      styleClass="ui-button-outlined ui-button-warning" />
                 </div>
             </div>
-           
+           </p:outputPanel>
         </h:form>
           
         
