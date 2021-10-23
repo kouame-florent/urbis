@@ -6,7 +6,8 @@
 package io.urbis.registre.backing;
 
 
-import io.urbis.registre.service.RegistreService;
+
+import io.urbis.registre.api.RegistreService;
 import io.urbis.registre.dto.RegistreDto;
 import io.urbis.registre.dto.RegistrePatchDto;
 import io.urbis.registre.dto.StatutRegistre;
@@ -37,7 +38,6 @@ public class ValiderBacking implements Serializable{
     RegistreService registreService;
     
     public void onload(){
-        
         LOG.log(Level.INFO,"REGISTRE ID: {0}",registreID);
         registreDto = registreService.findById(registreID);
         LOG.log(Level.INFO,"REGISTRE LIBELLE: {0}",registreDto.getLibelle());

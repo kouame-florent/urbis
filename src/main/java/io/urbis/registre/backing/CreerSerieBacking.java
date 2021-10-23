@@ -5,12 +5,12 @@
  */
 package io.urbis.registre.backing;
 
-import io.urbis.registre.service.CentreService;
-import io.urbis.registre.service.LocaliteService;
-import io.urbis.registre.service.OfficierService;
-import io.urbis.registre.service.RegistreService;
-import io.urbis.registre.service.TribunalService;
-import io.urbis.registre.service.TypeRegistreService;
+import io.urbis.registre.api.CentreService;
+import io.urbis.registre.api.LocaliteService;
+import io.urbis.registre.api.OfficierService;
+import io.urbis.registre.api.RegistreService;
+import io.urbis.registre.api.TribunalService;
+import io.urbis.registre.api.TypeRegistreService;
 import io.urbis.registre.dto.CentreDto;
 import io.urbis.registre.dto.LocaliteDto;
 import io.urbis.naissance.dto.OfficierEtatCivilDto;
@@ -136,7 +136,7 @@ public class CreerSerieBacking implements Serializable{
                     "",
                     selectedOfficierId, 
                     numeroPremierActe, 
-                    numeroPremierActe + nombreDeFeuillets, 
+                    numeroPremierActe + nombreDeFeuillets - 1, 
                     nombreDeFeuillets, 
                     0,
                     "", 

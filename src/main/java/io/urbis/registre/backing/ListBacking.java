@@ -6,9 +6,9 @@
 package io.urbis.registre.backing;
 
 import io.urbis.common.BaseBacking;
-import io.urbis.registre.service.EtatService;
-import io.urbis.registre.service.RegistreService;
-import io.urbis.registre.service.TypeRegistreService;
+import io.urbis.registre.api.EtatService;
+import io.urbis.registre.api.RegistreService;
+import io.urbis.registre.api.TypeRegistreService;
 import io.urbis.registre.dto.RegistreDto;
 import io.urbis.registre.dto.RegistrePatchDto;
 import io.urbis.registre.dto.StatutRegistre;

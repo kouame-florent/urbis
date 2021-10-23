@@ -5,35 +5,32 @@
  */
 package io.urbis.naissance.backing;
 
-import io.urbis.naissance.api.ActeNaissanceService;
-import io.urbis.naissance.api.LienDeclarantService;
-import io.urbis.naissance.api.ModeDeclarationService;
-import io.urbis.naissance.api.SexeService;
-import io.urbis.naissance.api.TypeNaissanceService;
-import io.urbis.naissance.api.TypePieceService;
 import io.urbis.common.BaseBacking;
-import io.urbis.registre.api.NationaliteService;
-import io.urbis.registre.api.OfficierService;
-import io.urbis.registre.api.RegistreService;
 import io.urbis.naissance.dto.ActeNaissanceDto;
 import io.urbis.naissance.dto.LienDeclarantDto;
 import io.urbis.naissance.dto.ModeDeclarationDto;
 import io.urbis.naissance.dto.NationaliteDto;
 import io.urbis.naissance.dto.OfficierEtatCivilDto;
 import io.urbis.naissance.dto.Operation;
-import io.urbis.registre.dto.RegistreDto;
 import io.urbis.naissance.dto.SexeDto;
 import io.urbis.naissance.dto.TypeNaissanceDto;
 import io.urbis.naissance.dto.TypePieceDto;
+import io.urbis.naissance.api.ActeNaissanceService;
+import io.urbis.naissance.api.LienDeclarantService;
+import io.urbis.naissance.api.ModeDeclarationService;
+import io.urbis.naissance.api.SexeService;
+import io.urbis.naissance.api.TypeNaissanceService;
+import io.urbis.naissance.api.TypePieceService;
+import io.urbis.registre.dto.RegistreDto;
+import io.urbis.registre.api.NationaliteService;
+import io.urbis.registre.api.OfficierService;
+import io.urbis.registre.api.RegistreService;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -43,10 +40,9 @@ import org.eclipse.microprofile.rest.client.inject.RestClient;
  *
  * @author florent
  */
-@Named(value = "declarationBacking")
+@Named(value = "validerNaissanceBacking")
 @ViewScoped
-public class DeclarationBacking extends BaseBacking implements Serializable{
-    
+public class ValiderBacking extends BaseBacking implements Serializable{
     private static final Logger LOG = Logger.getLogger(DeclarationBacking.class.getName());
     
     @Inject 
@@ -84,10 +80,12 @@ public class DeclarationBacking extends BaseBacking implements Serializable{
     @Inject 
     @RestClient
     OfficierService officierService;
+     
     
     
+    private String acteNaissanceID;
+    private ActeNaissanceDto acteNaissanceDto;
     
-    private String registreID;
     private RegistreDto registreDto;
     
     private List<ModeDeclarationDto> modesDeclaration;
@@ -122,31 +120,38 @@ public class DeclarationBacking extends BaseBacking implements Serializable{
     private boolean pereDecede;
     private boolean mereDecede;
     
-    private ActeNaissanceDto acteNaissanceDto;
+   // private ActeNaissanceDto acteNaissanceDto;
     
    
     public void onload(){
-        LOG.log(Level.INFO,"REGISTRE ID: {0}",registreID);
-        registreDto = registreService.findById(registreID);
-        LOG.log(Level.INFO,"REGISTRE LIBELLE: {0}",registreDto.getLibelle());
-        numeroActe = acteNaissanceService.numeroActe(registreID);
+        LOG.log(Level.INFO,"ACTE ID: {0}",acteNaissanceID);
+        acteNaissanceDto = acteNaissanceService.findById(acteNaissanceID);
+        registreDto = registreService.findById(acteNaissanceDto.getRegistreID());
+        //LOG.log(Level.INFO,"REGISTRE LIBELLE: {0}",registreDto.getLibelle());
+        //numeroActe = acteNaissanceService.numeroActe(registreID);
         
     }
     
     @PostConstruct
     public void init(){
-        officiers = officierService.findAll();
-        modesDeclaration = modeDeclarationService.findAll();
-        typesNaissance = typeNaissanceService.findAll();
         sexes = sexeService.findAll();
         nationalites = nationaliteService.findAll();
+        officiers = officierService.findAll();
+        /*
+       
+        modesDeclaration = modeDeclarationService.findAll();
+        typesNaissance = typeNaissanceService.findAll();
+        
+        
         liensParenteDeclarant = lienDeclarantService.findAll();
         typesPiece = typePieceService.findAll();
         acteNaissanceDto = new ActeNaissanceDto();
+        */
     }
     
     
     public void creer(){
+        /*
         LOG.log(Level.INFO,"Creating acte naissance...");
          
         LOG.log(Level.INFO,"ENFANT DATE NAISSANCE: {0}",acteNaissanceDto.getEnfantDateNaissance());
@@ -161,7 +166,7 @@ public class DeclarationBacking extends BaseBacking implements Serializable{
         addGlobalMessage("Déclaration enregistrée avec succès", FacesMessage.SEVERITY_INFO);
         
         numeroActe = acteNaissanceService.numeroActe(registreID);
-        
+        */
     }
     
     public void resetActeDto(){
@@ -237,24 +242,15 @@ public class DeclarationBacking extends BaseBacking implements Serializable{
         */
     }
 
-    public String getRegistreID() {
-        return registreID;
+    public String getActeNaissanceID() {
+        return acteNaissanceID;
     }
 
-    public void setRegistreID(String registreID) {
-        this.registreID = registreID;
-    }
-    
-    
-
-    public RegistreDto getRegistreDto() {
-        return registreDto;
+    public void setActeNaissanceID(String acteNaissanceID) {
+        this.acteNaissanceID = acteNaissanceID;
     }
 
-    public void setRegistreDto(RegistreDto registreDto) {
-        this.registreDto = registreDto;
-    }
-
+   
    
     public List<ModeDeclarationDto> getModesDeclaration() {
         return modesDeclaration;
@@ -408,8 +404,13 @@ public class DeclarationBacking extends BaseBacking implements Serializable{
         this.nombreNaissance = nombreNaissance;
     }
 
-   
-    
+    public RegistreDto getRegistreDto() {
+        return registreDto;
+    }
 
+    public void setRegistreDto(RegistreDto registreDto) {
+        this.registreDto = registreDto;
+    }
+    
     
 }

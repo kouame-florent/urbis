@@ -5,7 +5,7 @@
  */
 package io.urbis.registre.backing;
 
-import io.urbis.registre.service.RegistreService;
+import io.urbis.registre.api.RegistreService;
 import io.urbis.registre.dto.RegistreDto;
 import java.util.List;
 import java.util.Map;

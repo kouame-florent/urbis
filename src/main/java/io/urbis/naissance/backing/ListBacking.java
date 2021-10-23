@@ -6,15 +6,17 @@
 package io.urbis.naissance.backing;
 
 import io.urbis.common.BaseBacking;
-import io.urbis.registre.service.EtatService;
-import io.urbis.registre.service.RegistreService;
 import io.urbis.naissance.dto.ActeNaissanceDto;
+import io.urbis.registre.api.EtatService;
+import io.urbis.registre.api.RegistreService;
 import io.urbis.registre.dto.RegistreDto;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -22,6 +24,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
+import org.primefaces.PrimeFaces;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
@@ -84,6 +87,13 @@ public class ListBacking extends BaseBacking implements Serializable{
         }
        
        return content;
+    }
+    
+    public void showValiderActeView(ActeNaissanceDto dto){
+        LOG.log(Level.INFO, "ACTE ID: {0}", dto.getId());
+        var values = List.of(dto.getId());
+        Map<String, List<String>> params = Map.of("id", values);
+        PrimeFaces.current().dialog().openDynamic("/naissance/valider", getDialogOptions(98,98,true), params);
     }
 
     public LazyDeclarationDataModel getLazyDeclarationDataModel() {

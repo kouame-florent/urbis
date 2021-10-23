@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package io.urbis.naissance.service;
+package io.urbis.naissance.api;
 
 import io.urbis.naissance.dto.LienDeclarantDto;
 import java.util.List;

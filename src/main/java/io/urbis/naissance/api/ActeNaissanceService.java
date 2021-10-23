@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package io.urbis.naissance.service;
+package io.urbis.naissance.api;
 
 import io.urbis.naissance.dto.ActeNaissanceDto;
 import java.util.List;
@@ -24,15 +24,18 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 @RegisterRestClient(baseUri = "http://127.0.0.1:8181")
 public interface ActeNaissanceService {
     
+    @GET @Path("{id}")
+    public ActeNaissanceDto findById(@PathParam("id") String id);
+    
     @POST
     public void create(ActeNaissanceDto acteNaissanceDto);
     
     @PUT @Path("{id}")
     public void update(@PathParam("id")String id, ActeNaissanceDto acteNaissanceDto);
     
-    @GET @Path("/{registre-id}")
+    @GET
     public List<ActeNaissanceDto> findWithFilters(@QueryParam("offset") int offset, 
-            @QueryParam("page-size") int pageSize,@PathParam("registre-id") String registreID);
+            @QueryParam("page-size") int pageSize,@QueryParam("registre-id") String registreID);
     
     @GET @Path("/count")
     public int count();

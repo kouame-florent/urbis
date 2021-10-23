@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package io.urbis.naissance.service;
+package io.urbis.registre.api;
 
-import io.urbis.naissance.dto.SexeDto;
+import io.urbis.naissance.dto.NationaliteDto;
 import java.util.List;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -17,9 +17,9 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
  */
 @Path("/")
 @RegisterRestClient(baseUri = "http://127.0.0.1:8181")
-public interface SexeService {
+public interface NationaliteService {
     
-    @Path("/sexes")
+    @Path("/nationalites")
     @GET
-    List<SexeDto> findAll();  
+    List<NationaliteDto> findAll();  
 }

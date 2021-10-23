@@ -11,19 +11,20 @@ import io.urbis.naissance.dto.LienDeclarantDto;
 import io.urbis.naissance.dto.ModeDeclarationDto;
 import io.urbis.naissance.dto.NationaliteDto;
 import io.urbis.naissance.dto.OfficierEtatCivilDto;
+import io.urbis.naissance.dto.Operation;
 import io.urbis.naissance.dto.SexeDto;
 import io.urbis.naissance.dto.TypeNaissanceDto;
 import io.urbis.naissance.dto.TypePieceDto;
-import io.urbis.naissance.service.ActeNaissanceService;
-import io.urbis.naissance.service.LienDeclarantService;
-import io.urbis.naissance.service.ModeDeclarationService;
-import io.urbis.naissance.service.SexeService;
-import io.urbis.naissance.service.TypeNaissanceService;
-import io.urbis.naissance.service.TypePieceService;
+import io.urbis.naissance.api.ActeNaissanceService;
+import io.urbis.naissance.api.LienDeclarantService;
+import io.urbis.naissance.api.ModeDeclarationService;
+import io.urbis.naissance.api.SexeService;
+import io.urbis.naissance.api.TypeNaissanceService;
+import io.urbis.naissance.api.TypePieceService;
 import io.urbis.registre.dto.RegistreDto;
-import io.urbis.registre.service.NationaliteService;
-import io.urbis.registre.service.OfficierService;
-import io.urbis.registre.service.RegistreService;
+import io.urbis.registre.api.NationaliteService;
+import io.urbis.registre.api.OfficierService;
+import io.urbis.registre.api.RegistreService;
 import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Level;
@@ -166,7 +167,7 @@ public class SaisieActeExistantBacking extends BaseBacking implements Serializab
         LOG.log(Level.INFO,"Creating acte naissance...");
          
         LOG.log(Level.INFO,"ENFANT DATE NAISSANCE: {0}",acteNaissanceDto.getEnfantDateNaissance());
-        
+        acteNaissanceDto.setOperation(Operation.SAISIE_ACTE_EXISTANT.name());
         acteNaissanceDto.setRegistreID(registreID);
         //acteNaissanceDto.setNumero(numeroActe);
         //acteNaissanceDto.setOfficierEtatCivilID(selectedOfficierId);
@@ -183,7 +184,7 @@ public class SaisieActeExistantBacking extends BaseBacking implements Serializab
         LOG.log(Level.INFO,"Creating acte naissance...");
          
         LOG.log(Level.INFO,"ENFANT DATE NAISSANCE: {0}",acteNaissanceDto.getEnfantDateNaissance());
-        
+        acteNaissanceDto.setOperation(Operation.MISE_A_JOUR.name());
         //acteNaissanceDto.setRegistreID(registreID);
         acteNaissanceDto.setNumero(numeroActe);
         //acteNaissanceDto.setOfficierEtatCivilID(selectedOfficierId);

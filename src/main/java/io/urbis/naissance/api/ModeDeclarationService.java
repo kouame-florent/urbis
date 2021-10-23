@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package io.urbis.naissance.service;
+package io.urbis.naissance.api;
 
-import io.urbis.naissance.dto.TypePieceDto;
+import io.urbis.naissance.dto.ModeDeclarationDto;
 import java.util.List;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -17,10 +17,9 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
  */
 @Path("/")
 @RegisterRestClient(baseUri = "http://127.0.0.1:8181")
-public interface TypePieceService {
+public interface ModeDeclarationService {
     
-    @Path("/types-piece")
+    @Path("/modes-declaration")
     @GET
-    List<TypePieceDto> findAll();  
-    
+    List<ModeDeclarationDto> findAll();  
 }

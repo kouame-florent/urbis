@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package io.urbis.registre.service;
+package io.urbis.registre.api;
 
 import io.urbis.registre.dto.RegistreDto;
 import io.urbis.registre.dto.RegistrePatchDto;

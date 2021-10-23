@@ -6,7 +6,7 @@
 package io.urbis.naissance.backing;
 
 import io.urbis.naissance.dto.ActeNaissanceDto;
-import io.urbis.naissance.service.ActeNaissanceService;
+import io.urbis.naissance.api.ActeNaissanceService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

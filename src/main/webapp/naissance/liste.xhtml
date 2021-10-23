@@ -64,9 +64,10 @@ xmlns:p="http://primefaces.org/ui">
                
                 <p:column  >
                     <p:menuButton icon="pi pi-ellipsis-h" style="width: 100%;white-space: nowrap;width: auto !important;">
-                        <p:menuitem value="Consulter" process="@this"  icon="pi pi-book"/>
-                        <p:menuitem value="Valider" process="@this" icon="pi pi-book"/>
-                        <p:menuitem value="Imprimer" action="#{acteNaissanceListBacking.download()}" process="@this" 
+                        <p:menuitem value="Consulter l'acte" process="@this"  icon="pi pi-book"/>
+                        <p:menuitem value="Valider l'acte" action="#{acteNaissanceListBacking.showValiderActeView(acte)}" 
+                                    process="@this" icon="pi pi-book"/>
+                        <p:menuitem value="Imprimer l'acte" action="#{acteNaissanceListBacking.download()}" process="@this" 
                                     icon="pi pi-book"/>
                     </p:menuButton>
                 </p:column>

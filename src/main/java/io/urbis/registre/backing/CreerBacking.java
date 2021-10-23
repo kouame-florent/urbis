@@ -5,11 +5,11 @@
  */
 package io.urbis.registre.backing;
 
-import io.urbis.registre.service.CentreService;
-import io.urbis.registre.service.LocaliteService;
-import io.urbis.registre.service.OfficierService;
-import io.urbis.registre.service.RegistreService;
-import io.urbis.registre.service.TribunalService;
+import io.urbis.registre.api.CentreService;
+import io.urbis.registre.api.LocaliteService;
+import io.urbis.registre.api.OfficierService;
+import io.urbis.registre.api.RegistreService;
+import io.urbis.registre.api.TribunalService;
 import io.urbis.registre.dto.TypeRegistreDto;
 import java.io.Serializable;
 import java.util.List;
@@ -18,7 +18,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
-import io.urbis.registre.service.TypeRegistreService;
+import io.urbis.registre.api.TypeRegistreService;
 import io.urbis.registre.dto.CentreDto;
 import io.urbis.registre.dto.LocaliteDto;
 import io.urbis.naissance.dto.OfficierEtatCivilDto;
@@ -137,7 +137,7 @@ public class CreerBacking implements Serializable{
                 "",
                 selectedOfficierId, 
                 numeroPremierActe, 
-                nombreDeFeuillets + numeroPremierActe, 
+                nombreDeFeuillets + numeroPremierActe - 1, 
                 nombreDeFeuillets, 
                 0,
                 "", 

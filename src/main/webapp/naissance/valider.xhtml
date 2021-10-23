@@ -15,8 +15,8 @@ xmlns:p="http://primefaces.org/ui">
     <ui:define name="content">
         
         <f:metadata>
-            <f:viewParam name="id" value="#{declarationBacking.registreID}" />
-            <f:viewAction action="#{declarationBacking.onload}" />
+            <f:viewParam name="id" value="#{validerNaissanceBacking.acteNaissanceID}" />
+            <f:viewAction action="#{validerNaissanceBacking.onload}" />
         </f:metadata>
         
         <h:form id="messageForm">
@@ -31,25 +31,25 @@ xmlns:p="http://primefaces.org/ui">
                <div class="ui-fluid p-formgrid p-grid">
                    <div class="p-field p-col">
                    <p:outputLabel for="localite" styleClass="p-d-block">Commune</p:outputLabel>
-                   <p:inputText id="localite" value="#{declarationBacking.registreDto.localite}"
+                   <p:inputText id="localite" value="#{validerNaissanceBacking.registreDto.localite}"
                                 disabled="true" required="true" styleClass="p-d-block"/>
 
                    </div>
                    <div class="p-field p-col">
                        <p:outputLabel for="centre" styleClass="p-d-block">Centre</p:outputLabel>
-                       <p:inputText id="centre" value="#{declarationBacking.registreDto.centre}"
+                       <p:inputText id="centre" value="#{validerNaissanceBacking.registreDto.centre}"
                                     disabled="true"  required="true" styleClass="p-d-block"/>
 
                    </div>
                    <div class="p-field p-col">
                        <p:outputLabel for="annee" styleClass="p-d-block">Année</p:outputLabel>
-                       <p:inputText id="annee" value="#{declarationBacking.registreDto.annee}" required="true"
+                       <p:inputText id="annee" value="#{validerNaissanceBacking.registreDto.annee}" required="true"
                                     disabled="true" styleClass="p-d-block"/>
 
                    </div>
                    <div class="p-field p-col">
                        <p:outputLabel for="numero" styleClass="p-d-block">Numéro</p:outputLabel>
-                       <p:inputText id="numero" value="#{declarationBacking.registreDto.numero}"  required="true" 
+                       <p:inputText id="numero" value="#{validerNaissanceBacking.registreDto.numero}"  required="true" 
                                     disabled="true"   styleClass="p-d-block"/>
 
                    </div>
@@ -58,62 +58,8 @@ xmlns:p="http://primefaces.org/ui">
 
            </p:fieldset>
             <p:spacer height="2" />
-            <p:fieldset>
-                <div class="ui-fluid p-formgrid p-grid">
-                    <div class="p-field p-col">
-                        <p:outputLabel for="modeDeclaration" >Mode déclaration</p:outputLabel>
-                        <p:selectOneRadio id="modeDeclaration" value="#{declarationBacking.acteNaissanceDto.modeDeclaration}" 
-                                            converter="omnifaces.SelectItemsConverter"
-                                            required="true" requiredMessage="Ce champ est obligatoire">
-                            <p:ajax update="contentForm:jugementOutputPanel"/>
-                              <f:selectItems value="#{declarationBacking.modesDeclaration}" var="mode" 
-                                             itemLabel="#{mode.libelle}" itemValue="#{mode.code}"/>
-                          </p:selectOneRadio>
-                        <p:message for="modeDeclaration"/>
-                        
-                    </div>
-                    <div class="p-field p-col">
-                        <p:outputLabel for="extraitExtraordinaire" styleClass="p-d-block">Extraits extraordinaires</p:outputLabel>
-                        <p:inputText id="extraitExtraordinaire" value="#{declarationBacking.extraitsExtraordinaires}"  required="true" styleClass="p-d-block"/>
-                      
-                    </div>
-                    <div class="p-field p-col">
-                        <p:outputLabel for="copieActe" styleClass="p-d-block">Copies d'acte</p:outputLabel>
-                        <p:inputText id="copieActe" value="#{declarationBacking.nombreCopies}" required="true" styleClass="p-d-block"/>   
-                    </div>
-                        
-                    <div class="p-field p-col">
-                        <p:outputLabel for="extraitOrdinaire" styleClass="p-d-block">Extraits ordinaires</p:outputLabel>
-                        <p:inputText id="extraitOrdinaire" value="#{declarationBacking.extraitsOrdinaires}" required="true" styleClass="p-d-block"/>
-                    </div>
-                   
-                </div>
-             
-            </p:fieldset>
-            <p:spacer height="2"/>
-            <p:outputPanel id="jugementOutputPanel">
-                <p:outputPanel  rendered="#{declarationBacking.selectedModeDeclaration.code == 'JUGEMENT'}">
-                <p:fieldset legend="Info jugement">
-                    <div class="ui-fluid p-formgrid p-grid">
-                        <div class="p-field p-lg-4">
-                            <p:outputLabel for="numeroJugement" styleClass="p-d-block">Numéro jugement</p:outputLabel>
-                            <p:inputText id="numeroJugement" value="#{declarationBacking.acteNaissanceDto.jugementNumero}" styleClass="p-d-block"/>
-                        </div>
-                        <div class="p-field p-lg-4">
-                            <p:outputLabel for="dateJugement" styleClass="p-d-block">Du</p:outputLabel>
-                            <p:inputMask id="dateJugement" value="#{declarationBacking.acteNaissanceDto.jugementDate}"
-                                mask="99/99/9999 99:99:99" >
-                            </p:inputMask>
-                            <p:watermark  value="jj/MM/AAAA" for="dateJugement"/>   
-                        </div>
-                        <div class="p-field p-lg-4">
-                            <p:outputLabel for="tribunalJugement" styleClass="p-d-block">Tribunal</p:outputLabel>
-                            <p:inputText id="tribunalJugement" value="#{declarationBacking.acteNaissanceDto.jugementTribunal}" styleClass="p-d-block"/>
-                        </div>
-                    </div>
-                 </p:fieldset>
-                 </p:outputPanel>
-            </p:outputPanel>
+           
+            
             
             <p:spacer height="2" />
             <p:tabView id="declTabview">
@@ -122,94 +68,77 @@ xmlns:p="http://primefaces.org/ui">
                     <div class="ui-fluid p-formgrid p-grid">
                         <div class="p-field p-lg-2">
                             <p:outputLabel for="numeroActe" >Numéro acte</p:outputLabel>
-                            <p:inputText id="numeroActe" value="#{declarationBacking.numeroActe}" disabled="true"  />
+                            <p:inputText id="numeroActe" value="#{validerNaissanceBacking.numeroActe}" disabled="true"  />
                        
                         </div>
                        
                     </div>
-                    <p:fieldset legend="Naissance multiple">
-                         <div class="ui-fluid p-formgrid p-grid">
-                             <div class="p-field p-lg-2">
-
-                                 <p:outputLabel for="naissanceMultiple" styleClass="p-d-block">Naissance multiple ?</p:outputLabel>
-                                 <p:toggleSwitch id="naissanceMultiple" value="#{declarationBacking.naissanceMultiple}" styleClass="p-d-block">
-                                     <p:ajax update="naissanceMultipleOutputPanel"/>
-                                 </p:toggleSwitch>
-                             </div>
-                             <div class="p-field p-lg-2">
-
-                             
-                                 <p:outputLabel for="nombreNaissance" styleClass="p-d-block" rendered="#{declarationBacking.naissanceMultiple}">Nombre</p:outputLabel>
-                                 <p:inputText id="nombreNaissance" value="#{declarationBacking.nombreNaissance}" 
-                                              styleClass="p-d-block" rendered="#{declarationBacking.naissanceMultiple}"/>
-                         
-                             </div>
-                         </div>
-                     </p:fieldset>
-                    <p:spacer width="2"/>
-                    <p:fieldset>      
-                        <p:outputLabel for="typeNaisance" styleClass="p-d-block">Type naissance</p:outputLabel>
-                        <p:selectOneMenu id="typeNaisance" converter="omnifaces.SelectItemsConverter" 
-                                        value="#{declarationBacking.acteNaissanceDto.typeNaissance}" styleClass="p-d-block">
-                           <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez un type --" />
-                           <f:selectItems value="#{declarationBacking.typesNaissance}" var="type" 
-                                          itemLabel="#{type.libelle}"  
-                                          itemValue="#{type.code}"/>
-                           <p:ajax update="filiationOutputPanel"/>
-                        </p:selectOneMenu>
-                    </p:fieldset> 
+                    
+                    
                     <p:spacer width="2"/>
                     <p:fieldset legend="Le déclaré">
                         <div class="ui-fluid p-formgrid p-grid">
                             <div class="p-field p-lg-6">
                                 <p:outputLabel for="dateNaissance" styleClass="p-d-block">Date de naissance</p:outputLabel>
-                                <p:inputMask id="dateNaissance" value="#{declarationBacking.acteNaissanceDto.enfantDateNaissance}"
-                                             mask="99/99/9999 99:99:99" required="true">
+                                <p:inplace editor="true">
+                                <p:inputMask id="dateNaissance" value="#{validerNaissanceBacking.acteNaissanceDto.enfantDateNaissance}"
+                                             mask="99/99/9999 99:99:99" required="true" disabled="true">
                                     
                                 </p:inputMask>
+                                </p:inplace>
+                                <p:separator/>
                                 <p:watermark  value="JJ/MM/YYYY" for="dateNaissance" /> 
                                 <p:message for="dateNaissance"/>
                             
                             </div>
                             <div class="p-field p-lg-6">
                                 <p:outputLabel for="nom" styleClass="p-d-block">Nom</p:outputLabel>
-                                <p:inputText id="nom" value="#{declarationBacking.acteNaissanceDto.enfantNom}" required="true"  
+                                <p:inplace editor="true">
+                                <p:inputText id="nom" value="#{validerNaissanceBacking.acteNaissanceDto.enfantNom}" required="true"  
                                                 styleClass="p-d-block"/>
+                                </p:inplace>
+                                <p:separator/>
                             </div>
                             <div class="p-field p-lg-6">
                                 <p:outputLabel for="lieuNaissance" styleClass="p-d-block">Lieu de naissance</p:outputLabel>
-                                <p:inputText id="lieuNaissance" value="#{declarationBacking.acteNaissanceDto.enfantLieuNaissance}" required="true"  
+                                <p:inplace editor="true">
+                                <p:inputText id="lieuNaissance" value="#{validerNaissanceBacking.acteNaissanceDto.enfantLieuNaissance}" required="true"  
                                                 styleClass="p-d-block"/>
+                                </p:inplace>
+                                <p:separator/>
                             </div>
                             <div class="p-field p-lg-6">
                                 <p:outputLabel for="prenoms" styleClass="p-d-block">Prénoms</p:outputLabel>
-                                <p:inputText id="prenoms" value="#{declarationBacking.acteNaissanceDto.enfantPrenoms}" required="true"  
+                                <p:inplace editor="true">
+                                <p:inputText id="prenoms" value="#{validerNaissanceBacking.acteNaissanceDto.enfantPrenoms}" required="true"  
                                                 styleClass="p-d-block"/>
+                                </p:inplace>
+                               <p:separator/>
                             </div>
                              <div class="p-field p-lg-6">
                                 <p:outputLabel for="localite" styleClass="p-d-block">Localité</p:outputLabel>
-                                <p:inputText id="localite" value="#{declarationBacking.acteNaissanceDto.enfantLocalite}" required="true"  
+                                <p:inplace editor="true">
+                                <p:inputText id="localite" value="#{validerNaissanceBacking.acteNaissanceDto.enfantLocalite}" required="true"  
                                                 styleClass="p-d-block"/>
+                                </p:inplace>
+                                <p:separator/>
                             </div>
                              <div class="p-field p-lg-6"> 
                                  <div class="ui-fluid  p-grid">
-                                 <div class="p-field p-lg-6">
+                                 <div class="p-field p-lg-12">
                                      <p:outputLabel for="sexe" styleClass="p-d-block">Sexe</p:outputLabel>
-                                     <p:selectOneRadio id="sexe" value="#{declarationBacking.acteNaissanceDto.enfantSexe}" 
+                                     <p:inplace editor="true">
+                                     <p:selectOneRadio id="sexe" value="#{validerNaissanceBacking.acteNaissanceDto.enfantSexe}" 
                                                         converter="omnifaces.SelectItemsConverter"
                                                         required="true">
 
-                                            <f:selectItems value="#{declarationBacking.sexes}" var="sexe" 
+                                            <f:selectItems value="#{validerNaissanceBacking.sexes}" var="sexe" 
                                                            itemLabel="#{sexe.libelle}" itemValue="#{sexe.code}"/>
                                        </p:selectOneRadio>
+                                      </p:inplace>
+                                     <p:separator/>
                                  </div>
-                                 <div class="p-field p-lg-6">
-                                    <p:outputLabel for="rang" styleClass="p-d-block" 
-                                                   rendered="#{declarationBacking.naissanceMultiple}">Rang</p:outputLabel>
-                                    <p:inputText id="rang" value="#{declarationBacking.rang}" 
-                                                 rendered="#{declarationBacking.naissanceMultiple}" required="true"
-                                                 styleClass="p-d-block" disabled="true"/>
-                                 </div>
+                                 
                                 </div>
                                 
                                 
@@ -229,26 +158,26 @@ xmlns:p="http://primefaces.org/ui">
                                 <div class="ui-fluid p-formgrid p-grid">
                                     <div class="p-field p-lg-12">
                                         <p:outputLabel for="pereDecede" styleClass="p-d-block">Père décédé ?</p:outputLabel>
-                                        <p:toggleSwitch id="pereDecede" value="#{declarationBacking.pereDecede}">
+                                        <p:toggleSwitch id="pereDecede" value="#{validerNaissanceBacking.pereDecede}">
                                             <p:ajax  update="pereOutputPanel"/>
                                         </p:toggleSwitch>
                                         <div class="p-field p-lg-12">    
                                             <p:outputLabel for="pereNom" styleClass="p-d-block">Nom</p:outputLabel>
-                                            <p:inputText id="pereNom" value="#{declarationBacking.acteNaissanceDto.pereNom}" 
-                                                         required="#{declarationBacking.requiredFiliationPere()}" 
+                                            <p:inputText id="pereNom" value="#{validerNaissanceBacking.acteNaissanceDto.pereNom}" 
+                                                         required="#{validerNaissanceBacking.requiredFiliationPere()}" 
                                                           styleClass="p-d-block"/>
                                         </div>
                                         <div class="p-field p-lg-12">
                                             <p:outputLabel for="perePrenoms" styleClass="p-d-block">Prénoms</p:outputLabel>
-                                            <p:inputText id="perePrenoms" value="#{declarationBacking.acteNaissanceDto.perePrenoms}" 
-                                                         required="#{declarationBacking.requiredFiliationPere()}" 
+                                            <p:inputText id="perePrenoms" value="#{validerNaissanceBacking.acteNaissanceDto.perePrenoms}" 
+                                                         required="#{validerNaissanceBacking.requiredFiliationPere()}" 
                                                          styleClass="p-d-block"/>
                                         </div>
                                         
                                         <div class="p-field p-lg-12">
                                             <p:outputLabel for="pereDateNaissance" styleClass="p-d-block">Date de naissance</p:outputLabel>
-                                            <p:inputMask id="pereDateNaissance" value="#{declarationBacking.acteNaissanceDto.pereDateNaissance}"
-                                                mask="99/99/9999" required="#{declarationBacking.requiredFiliationPere()}" >
+                                            <p:inputMask id="pereDateNaissance" value="#{validerNaissanceBacking.acteNaissanceDto.pereDateNaissance}"
+                                                mask="99/99/9999" required="#{validerNaissanceBacking.requiredFiliationPere()}" >
                                                 
                                             </p:inputMask>
                                             <p:watermark  value="jj/MM/AAAA" for="pereDateNaissance" />    
@@ -256,44 +185,44 @@ xmlns:p="http://primefaces.org/ui">
                                         </div>
                                         <div class="p-field p-lg-12">
                                             <p:outputLabel for="pereLieuNaissance" styleClass="p-d-block">Lieu de naissance</p:outputLabel>
-                                            <p:inputText id="pereLieuNaissance" value="#{declarationBacking.acteNaissanceDto.pereLieuNaissance}"  
-                                                         required="#{declarationBacking.requiredFiliationPere()}" 
+                                            <p:inputText id="pereLieuNaissance" value="#{validerNaissanceBacking.acteNaissanceDto.pereLieuNaissance}"  
+                                                         required="#{validerNaissanceBacking.requiredFiliationPere()}" 
                                                          styleClass="p-d-block"/>
                                         </div>
                                         <div class="p-field p-lg-12">
-                                            <p:outputLabel for="pereProfession" styleClass="p-d-block" rendered="#{!declarationBacking.pereDecede}">Profession</p:outputLabel>
-                                            <p:inputText id="pereProfession" value="#{declarationBacking.acteNaissanceDto.pereProfession}"
-                                                         rendered="#{!declarationBacking.pereDecede}" 
-                                                         required="#{declarationBacking.requiredFiliationPere()}"  
+                                            <p:outputLabel for="pereProfession" styleClass="p-d-block" rendered="#{!validerNaissanceBacking.pereDecede}">Profession</p:outputLabel>
+                                            <p:inputText id="pereProfession" value="#{validerNaissanceBacking.acteNaissanceDto.pereProfession}"
+                                                         rendered="#{!validerNaissanceBacking.pereDecede}" 
+                                                         required="#{validerNaissanceBacking.requiredFiliationPere()}"  
                                                          styleClass="p-d-block"/>
                                         </div>
                                         <div class="p-field p-lg-12">
                                             <div class="ui-fluid p-grid">
                                                 <div class="p-field p-lg-6">
-                                                    <p:outputLabel for="pereDateDeces" rendered="#{declarationBacking.pereDecede}" styleClass="p-d-block">Décédé le</p:outputLabel>
-                                                    <p:inputText id="pereDateDeces" rendered="#{declarationBacking.pereDecede}" value="#{declarationBacking.acteNaissanceDto.pereDateDeces}"  
+                                                    <p:outputLabel for="pereDateDeces" rendered="#{validerNaissanceBacking.pereDecede}" styleClass="p-d-block">Décédé le</p:outputLabel>
+                                                    <p:inputText id="pereDateDeces" rendered="#{validerNaissanceBacking.pereDecede}" value="#{validerNaissanceBacking.acteNaissanceDto.pereDateDeces}"  
                                                              styleClass="p-d-block"/>
                                                 </div>
                                                 <div class="p-field p-lg-6">
-                                                    <p:outputLabel for="pereLieuDeces" rendered="#{declarationBacking.pereDecede}" styleClass="p-d-block">à</p:outputLabel>
-                                                    <p:inputText id="pereLieuDeces" rendered="#{declarationBacking.pereDecede}" value="#{declarationBacking.acteNaissanceDto.pereLieuDeces}"  
+                                                    <p:outputLabel for="pereLieuDeces" rendered="#{validerNaissanceBacking.pereDecede}" styleClass="p-d-block">à</p:outputLabel>
+                                                    <p:inputText id="pereLieuDeces" rendered="#{validerNaissanceBacking.pereDecede}" value="#{validerNaissanceBacking.acteNaissanceDto.pereLieuDeces}"  
                                                              styleClass="p-d-block"/>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="p-field p-lg-12">
-                                            <p:outputLabel for="pereLocalite" rendered="#{!declarationBacking.pereDecede}" styleClass="p-d-block">Domicile</p:outputLabel>
-                                            <p:inputText id="pereLocalite" rendered="#{!declarationBacking.pereDecede}" 
-                                                         value="#{declarationBacking.acteNaissanceDto.pereLocalite}" 
-                                                         required="#{declarationBacking.requiredFiliationPere()}"
+                                            <p:outputLabel for="pereLocalite" rendered="#{!validerNaissanceBacking.pereDecede}" styleClass="p-d-block">Domicile</p:outputLabel>
+                                            <p:inputText id="pereLocalite" rendered="#{!validerNaissanceBacking.pereDecede}" 
+                                                         value="#{validerNaissanceBacking.acteNaissanceDto.pereLocalite}" 
+                                                         required="#{validerNaissanceBacking.requiredFiliationPere()}"
                                                          styleClass="p-d-block"/>
                                         </div>
                                         <div class="p-field p-lg-12">
                                             <p:outputLabel for="pereNationalite" styleClass="p-d-block">Nationalité</p:outputLabel>
-                                            <p:selectOneMenu id="pereNationalite" value="#{declarationBacking.acteNaissanceDto.pereNationalite}"          
+                                            <p:selectOneMenu id="pereNationalite" value="#{validerNaissanceBacking.acteNaissanceDto.pereNationalite}"          
                                                              label="Selectionnez" converter="omnifaces.SelectItemsConverter">
                                                 <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez une nationalité --" />
-                                                <f:selectItems value="#{declarationBacking.nationalites}" var="nationalite" 
+                                                <f:selectItems value="#{validerNaissanceBacking.nationalites}" var="nationalite" 
                                                                itemLabel="#{nationalite.libelle}"  
                                                                itemValue="#{nationalite.code}"/>
                                             </p:selectOneMenu>
@@ -303,22 +232,22 @@ xmlns:p="http://primefaces.org/ui">
                                         <div class="p-field p-lg-12">
                                             <p:outputLabel for="pereTypePiece" styleClass="p-d-block">Type pièce</p:outputLabel>
                                             <p:selectOneMenu id="pereTypePiece" converter="omnifaces.SelectItemsConverter" 
-                                                             value="#{declarationBacking.acteNaissanceDto.pereTypePiece}"          
+                                                             value="#{validerNaissanceBacking.acteNaissanceDto.pereTypePiece}"          
                                                              label="Selectionnez">
                                                 <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez un type --" />
-                                                <f:selectItems value="#{declarationBacking.typesPiece}" var="piece" 
+                                                <f:selectItems value="#{validerNaissanceBacking.typesPiece}" var="piece" 
                                                                itemLabel="#{piece.libelle}"  
                                                                itemValue="#{piece.code}"/>
                                             </p:selectOneMenu>
                                         </div>
                                         <div class="p-field p-lg-12">
                                             <p:outputLabel for="pereNumeroPiece" styleClass="p-d-block">Numero pièce</p:outputLabel>
-                                            <p:inputText id="pereNumeroPiece" value="#{declarationBacking.acteNaissanceDto.pereNumeroPiece}"  
+                                            <p:inputText id="pereNumeroPiece" value="#{validerNaissanceBacking.acteNaissanceDto.pereNumeroPiece}"  
                                                          styleClass="p-d-block"/>
                                         </div>
                                         <div class="p-field p-lg-12">
                                             <p:outputLabel for="pereDatePiece" styleClass="p-d-block">Date délivrance pièce</p:outputLabel>
-                                            <p:inputMask id="pereDatePiece" value="#{declarationBacking.acteNaissanceDto.pereDatePiece}"
+                                            <p:inputMask id="pereDatePiece" value="#{validerNaissanceBacking.acteNaissanceDto.pereDatePiece}"
                                                             mask="99/99/9999">
                                                
                                             </p:inputMask>
@@ -327,7 +256,7 @@ xmlns:p="http://primefaces.org/ui">
                                         </div>
                                         <div class="p-field p-lg-12">
                                             <p:outputLabel for="pereLieuPiece" styleClass="p-d-block">Lieu délivrance pièce </p:outputLabel>
-                                            <p:inputText id="pereLieuPiece" value="#{declarationBacking.acteNaissanceDto.pereLieuPiece}"   
+                                            <p:inputText id="pereLieuPiece" value="#{validerNaissanceBacking.acteNaissanceDto.pereLieuPiece}"   
                                                          styleClass="p-d-block"/>
                                         </div>
                                      </div>
@@ -341,70 +270,70 @@ xmlns:p="http://primefaces.org/ui">
                                     <div class="ui-fluid p-formgrid p-grid">
                                          <div class="p-field p-lg-12">
                                              <p:outputLabel for="mereDecede" styleClass="p-d-block">Mère décédé ?</p:outputLabel>
-                                             <p:toggleSwitch id="mereDecede" value="#{declarationBacking.mereDecede}">
+                                             <p:toggleSwitch id="mereDecede" value="#{validerNaissanceBacking.mereDecede}">
                                                  <p:ajax update="mereOutputPanel"/>
                                              </p:toggleSwitch>
                                             <div class="p-field p-lg-12">    
                                                 <p:outputLabel for="mereNom" styleClass="p-d-block">Nom</p:outputLabel>
-                                                <p:inputText id="mereNom" value="#{declarationBacking.acteNaissanceDto.mereNom}"  
-                                                              required="#{declarationBacking.requiredFiliationMere()}"   
+                                                <p:inputText id="mereNom" value="#{validerNaissanceBacking.acteNaissanceDto.mereNom}"  
+                                                              required="#{validerNaissanceBacking.requiredFiliationMere()}"   
                                                               styleClass="p-d-block"/>
                                             </div>
                                             <div class="p-field p-lg-12">
                                                 <p:outputLabel for="merePrenoms" styleClass="p-d-block">Prénoms</p:outputLabel>
-                                                <p:inputText id="merePrenoms" value="#{declarationBacking.acteNaissanceDto.merePrenoms}"
-                                                             required="#{declarationBacking.requiredFiliationMere()}"   
+                                                <p:inputText id="merePrenoms" value="#{validerNaissanceBacking.acteNaissanceDto.merePrenoms}"
+                                                             required="#{validerNaissanceBacking.requiredFiliationMere()}"   
                                                              styleClass="p-d-block"/>
                                             </div>
 
                                             <div class="p-field p-lg-12">
                                                 <p:outputLabel for="mereDateNaissance" styleClass="p-d-block">Date naissance</p:outputLabel>
-                                                <p:inputMask id="mereDateNaissance" value="#{declarationBacking.acteNaissanceDto.mereDateNaissance}"
+                                                <p:inputMask id="mereDateNaissance" value="#{validerNaissanceBacking.acteNaissanceDto.mereDateNaissance}"
                                                     mask="99/99/9999" 
-                                                    required="#{declarationBacking.requiredFiliationMere()}">
+                                                    required="#{validerNaissanceBacking.requiredFiliationMere()}">
                                                     
                                                 </p:inputMask>
                                                 <p:watermark  value="jj/MM/AAAA" for="mereDateNaissance" />    
                                             </div>
                                             <div class="p-field p-lg-12">
                                                 <p:outputLabel for="mereLieuNaissance" styleClass="p-d-block">Lieu de naissance</p:outputLabel>
-                                                <p:inputText id="mereLieuNaissance" value="#{declarationBacking.acteNaissanceDto.mereLieuNaissance}" 
-                                                             required="#{declarationBacking.requiredFiliationMere()}"  
+                                                <p:inputText id="mereLieuNaissance" value="#{validerNaissanceBacking.acteNaissanceDto.mereLieuNaissance}" 
+                                                             required="#{validerNaissanceBacking.requiredFiliationMere()}"  
                                                              styleClass="p-d-block"/>
                                             </div>
                                             <div class="p-field p-lg-12">
-                                                <p:outputLabel for="mereProfession" rendered="#{!declarationBacking.mereDecede}" styleClass="p-d-block">Profession</p:outputLabel>
-                                                <p:inputText id="mereProfession" rendered="#{!declarationBacking.mereDecede}" value="#{declarationBacking.acteNaissanceDto.mereProfession}" 
-                                                             required="#{declarationBacking.requiredFiliationMere()}"
+                                                <p:outputLabel for="mereProfession" rendered="#{!validerNaissanceBacking.mereDecede}" styleClass="p-d-block">Profession</p:outputLabel>
+                                                <p:inputText id="mereProfession" rendered="#{!validerNaissanceBacking.mereDecede}" value="#{validerNaissanceBacking.acteNaissanceDto.mereProfession}" 
+                                                             required="#{validerNaissanceBacking.requiredFiliationMere()}"
                                                              styleClass="p-d-block"/>
                                             </div>
                                             <div class="p-field p-lg-12">
                                             <div class="ui-fluid p-grid">
                                                     <div class="p-field p-lg-6">
-                                                        <p:outputLabel for="mereDateDeces" rendered="#{declarationBacking.mereDecede}" styleClass="p-d-block">Décédé le</p:outputLabel>
-                                                        <p:inputText id="mereDateDeces" rendered="#{declarationBacking.mereDecede}" value="#{declarationBacking.acteNaissanceDto.mereDateDeces}"  
+                                                        <p:outputLabel for="mereDateDeces" rendered="#{validerNaissanceBacking.mereDecede}" styleClass="p-d-block">Décédé le</p:outputLabel>
+                                                        <p:inputText id="mereDateDeces" rendered="#{validerNaissanceBacking.mereDecede}" value="#{validerNaissanceBacking.acteNaissanceDto.mereDateDeces}"  
                                                                  styleClass="p-d-block"/>
                                                     </div>
                                                     <div class="p-field p-lg-6">
-                                                        <p:outputLabel for="mereLieuDeces" rendered="#{declarationBacking.mereDecede}" styleClass="p-d-block">à</p:outputLabel>
-                                                        <p:inputText id="mereLieuDeces" rendered="#{declarationBacking.mereDecede}" value="#{declarationBacking.acteNaissanceDto.mereLieuDeces}"  
+                                                        <p:outputLabel for="mereLieuDeces" rendered="#{validerNaissanceBacking.mereDecede}" styleClass="p-d-block">à</p:outputLabel>
+                                                        <p:inputText id="mereLieuDeces" rendered="#{validerNaissanceBacking.mereDecede}" value="#{validerNaissanceBacking.acteNaissanceDto.mereLieuDeces}"  
                                                                  styleClass="p-d-block"/>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="p-field p-lg-12">
-                                                <p:outputLabel for="mereLocalite" rendered="#{!declarationBacking.mereDecede}" styleClass="p-d-block">Domicile</p:outputLabel>
-                                                <p:inputText id="mereLocalite" rendered="#{!declarationBacking.mereDecede}" value="#{declarationBacking.acteNaissanceDto.mereLocalite}" 
-                                                             required="#{declarationBacking.requiredFiliationMere()}" 
+                                                <p:outputLabel for="mereLocalite" rendered="#{!validerNaissanceBacking.mereDecede}" styleClass="p-d-block">Domicile</p:outputLabel>
+                                                <p:inputText id="mereLocalite" rendered="#{!validerNaissanceBacking.mereDecede}" value="#{validerNaissanceBacking.acteNaissanceDto.mereLocalite}" 
+                                                             required="#{validerNaissanceBacking.requiredFiliationMere()}" 
                                                              styleClass="p-d-block"/>
                                             </div>
                                             <div class="p-field p-lg-12">
                                                 <p:outputLabel for="mereNationalite" styleClass="p-d-block">Nationalité</p:outputLabel>
                                                 <p:selectOneMenu id="mereNationalite" converter="omnifaces.SelectItemsConverter" 
-                                                                 value="#{declarationBacking.acteNaissanceDto.mereNationalite}"          
+                                                                 value="#{validerNaissanceBacking.acteNaissanceDto.mereNationalite}"          
                                                                  label="Selectionnez" >
                                                     <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez une nationalité --" />
-                                                    <f:selectItems value="#{declarationBacking.nationalites}" var="nationalite" 
+                                                    <f:selectItems value="#{validerNaissanceBacking.nationalites}" var="nationalite" 
                                                                    itemLabel="#{nationalite.libelle}"  
                                                                    itemValue="#{nationalite.code}"/>
                                                 </p:selectOneMenu>
@@ -414,10 +343,10 @@ xmlns:p="http://primefaces.org/ui">
                                             <div class="p-field p-lg-12">
                                                 <p:outputLabel for="mereTypePiece" styleClass="p-d-block">Type pièce</p:outputLabel>
                                                 <p:selectOneMenu id="mereTypePiece" converter="omnifaces.SelectItemsConverter" 
-                                                                 value="#{declarationBacking.acteNaissanceDto.mereTypePiece}"          
+                                                                 value="#{validerNaissanceBacking.acteNaissanceDto.mereTypePiece}"          
                                                              label="Selectionnez" >
                                                     <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez un type --" />
-                                                    <f:selectItems value="#{declarationBacking.typesPiece}" var="piece" 
+                                                    <f:selectItems value="#{validerNaissanceBacking.typesPiece}" var="piece" 
                                                                    itemLabel="#{piece.libelle}"  
                                                                    itemValue="#{piece.code}"/>
                                                 </p:selectOneMenu>
@@ -425,12 +354,12 @@ xmlns:p="http://primefaces.org/ui">
                                             </div>
                                             <div class="p-field p-lg-12">
                                                 <p:outputLabel for="mereNumeroPiece" styleClass="p-d-block">Numero pièce</p:outputLabel>
-                                                <p:inputText id="mereNumeroPiece" value="#{declarationBacking.acteNaissanceDto.mereNumeroPiece}"  
+                                                <p:inputText id="mereNumeroPiece" value="#{validerNaissanceBacking.acteNaissanceDto.mereNumeroPiece}"  
                                                              styleClass="p-d-block"/>
                                             </div>
                                             <div class="p-field p-lg-12">
                                                 <p:outputLabel for="mereDatePiece" styleClass="p-d-block">Date délivrance pièce</p:outputLabel>
-                                                <p:inputMask id="mereDatePiece" value="#{declarationBacking.acteNaissanceDto.mereDatePiece}"
+                                                <p:inputMask id="mereDatePiece" value="#{validerNaissanceBacking.acteNaissanceDto.mereDatePiece}"
                                                             mask="99/99/9999">
                                                     
                                                 </p:inputMask>
@@ -438,7 +367,7 @@ xmlns:p="http://primefaces.org/ui">
                                             </div>
                                             <div class="p-field p-lg-12">
                                                 <p:outputLabel for="mereLieuPiece" styleClass="p-d-block">Lieu délivrance pièce </p:outputLabel>
-                                                <p:inputText id="mereLieuPiece" value="#{declarationBacking.acteNaissanceDto.mereLieuPiece}"  
+                                                <p:inputText id="mereLieuPiece" value="#{validerNaissanceBacking.acteNaissanceDto.mereLieuPiece}"  
                                                              styleClass="p-d-block"/>
                                             </div>
 
@@ -460,28 +389,28 @@ xmlns:p="http://primefaces.org/ui">
                         <div class="ui-fluid p-formgrid p-grid">
                             <div class="p-field p-lg-6">
                                 <p:outputLabel for="declarantLienParente" styleClass="p-d-block">Lien parenté </p:outputLabel>
-                                <p:inputText id="declarantLienParente" value="#{declarationBacking.selectedDeclarantLienParente.libelle}" 
+                                <p:inputText id="declarantLienParente" value="#{validerNaissanceBacking.selectedDeclarantLienParente.libelle}" 
                                              styleClass="p-d-block" disabled="true"/>
 
                             </div>
                             <div class="p-field p-lg-6">
                                 <p:outputLabel for="declarantProfession" styleClass="p-d-block">Profession </p:outputLabel>
-                                <p:inputText id="declarantProfession" value="#{declarationBacking.acteNaissanceDto.declarantProfession}" 
+                                <p:inputText id="declarantProfession" value="#{validerNaissanceBacking.acteNaissanceDto.declarantProfession}" 
                                               styleClass="p-d-block"/>
                             </div>
                             <div class="p-field p-lg-6">
                                 <p:outputLabel for="declarantNom" styleClass="p-d-block">Nom</p:outputLabel>
-                                <p:inputText id="declarantNom" value="#{declarationBacking.acteNaissanceDto.declarantNom}" 
+                                <p:inputText id="declarantNom" value="#{validerNaissanceBacking.acteNaissanceDto.declarantNom}" 
                                               styleClass="p-d-block"/>
                             </div>
                             <div class="p-field p-lg-6">
                                 <p:outputLabel for="declarantDomicile" styleClass="p-d-block">Domicile </p:outputLabel>
-                                <p:inputText id="declarantDomicile" value="#{declarationBacking.acteNaissanceDto.declarantLocalite}" 
+                                <p:inputText id="declarantDomicile" value="#{validerNaissanceBacking.acteNaissanceDto.declarantLocalite}" 
                                              styleClass="p-d-block"/>
                             </div>
                             <div class="p-field p-lg-6">
                                 <p:outputLabel for="declarantPrenoms" styleClass="p-d-block">Prénoms </p:outputLabel>
-                                <p:inputText id="declarantPrenoms" value="#{declarationBacking.acteNaissanceDto.declarantProfession}" 
+                                <p:inputText id="declarantPrenoms" value="#{validerNaissanceBacking.acteNaissanceDto.declarantProfession}" 
                                               styleClass="p-d-block"/>
                             </div>
                             <div class="p-field p-lg-6">
@@ -489,17 +418,17 @@ xmlns:p="http://primefaces.org/ui">
                                     <div class="p-lg-6">
                                         <p:outputLabel for="declarantTypePiece" styleClass="p-d-block">Type pièce </p:outputLabel>
                                         <p:selectOneMenu id="declarantTypePiece" converter="omnifaces.SelectItemsConverter" 
-                                                         value="#{declarationBacking.acteNaissanceDto.declarantTypePiece}"          
+                                                         value="#{validerNaissanceBacking.acteNaissanceDto.declarantTypePiece}"          
                                                         label="Selectionnez">
                                            <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez un type --" />
-                                           <f:selectItems value="#{declarationBacking.typesPiece}" var="piece" 
+                                           <f:selectItems value="#{validerNaissanceBacking.typesPiece}" var="piece" 
                                                           itemLabel="#{piece.libelle}"  
                                                           itemValue="#{piece.code}"/>
                                         </p:selectOneMenu>
                                     </div>
                                     <div class="p-lg-6">
                                         <p:outputLabel for="declarantNumeroPiece" styleClass="p-d-block">Numéro pièce </p:outputLabel>
-                                        <p:inputText id="declarantNumeroPiece" value="#{declarationBacking.acteNaissanceDto.declarantNumeroPiece}" 
+                                        <p:inputText id="declarantNumeroPiece" value="#{validerNaissanceBacking.acteNaissanceDto.declarantNumeroPiece}" 
                                               styleClass="p-d-block"/>
                                     </div>
                                 </div>
@@ -509,16 +438,16 @@ xmlns:p="http://primefaces.org/ui">
                                 <div class="ui-fluid p-grid">
                                     <div class="p-lg-6">
                                         <p:outputLabel for="declarantDateNaissance" styleClass="p-d-block">Profession </p:outputLabel>
-                                        <p:inputText id="declarantDateNaissance" value="#{declarationBacking.acteNaissanceDto.declarantDateNaissance}" 
+                                        <p:inputText id="declarantDateNaissance" value="#{validerNaissanceBacking.acteNaissanceDto.declarantDateNaissance}" 
                                               styleClass="p-d-block"/>
                                     </div>
                                     <div class="p-lg-6">
                                         <p:outputLabel for="declarantNationalite" styleClass="p-d-block">Profession </p:outputLabel>
                                         <p:selectOneMenu id="declarantNationalite" converter="omnifaces.SelectItemsConverter" 
-                                                        value="#{declarationBacking.acteNaissanceDto.declarantNationalite}"          
+                                                        value="#{validerNaissanceBacking.acteNaissanceDto.declarantNationalite}"          
                                                         label="Selectionnez">
                                            <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez une nationalité --" />
-                                           <f:selectItems value="#{declarationBacking.nationalites}" var="nationalite" 
+                                           <f:selectItems value="#{validerNaissanceBacking.nationalites}" var="nationalite" 
                                                           itemLabel="#{nationalite.libelle}"  
                                                           itemValue="#{nationalite.code}"/>
                                         </p:selectOneMenu>
@@ -530,12 +459,12 @@ xmlns:p="http://primefaces.org/ui">
                                 <div class="ui-fluid p-grid">
                                     <div class="p-lg-6">
                                         <p:outputLabel for="declarantDateDelivrancePiece" styleClass="p-d-block">Profession </p:outputLabel>
-                                        <p:inputText id="declarantDateDelivrancePiece" value="#{declarationBacking.acteNaissanceDto.declarantDatePiece}" 
+                                        <p:inputText id="declarantDateDelivrancePiece" value="#{validerNaissanceBacking.acteNaissanceDto.declarantDatePiece}" 
                                               styleClass="p-d-block"/>
                                     </div>
                                     <div class="p-lg-6">
                                         <p:outputLabel for="declarantLieuDelivrancePiece" styleClass="p-d-block">Profession </p:outputLabel>
-                                        <p:inputText id="declarantLieuDelivrancePiece" value="#{declarationBacking.acteNaissanceDto.declarantLieuPiece}" 
+                                        <p:inputText id="declarantLieuDelivrancePiece" value="#{validerNaissanceBacking.acteNaissanceDto.declarantLieuPiece}" 
                                               styleClass="p-d-block"/>
                                     </div>
                                 </div>
@@ -550,33 +479,33 @@ xmlns:p="http://primefaces.org/ui">
                         <div class="ui-fluid p-formgrid p-grid">
                             <div class="p-field p-lg-6">
                                 <p:outputLabel for="interpreteLangue" styleClass="p-d-block">Langue </p:outputLabel>
-                                <p:inputText id="interpreteLangue" value="#{declarationBacking.acteNaissanceDto.interpreteLangue}" 
+                                <p:inputText id="interpreteLangue" value="#{validerNaissanceBacking.acteNaissanceDto.interpreteLangue}" 
                                               styleClass="p-d-block"/>
                             </div>
                             <div class="p-field p-lg-6">
                                 <p:outputLabel for="interpreteDateNaissance" styleClass="p-d-block">Date de naissance </p:outputLabel>
-                                <p:inputText id="interpreteDateNaissance" value="#{declarationBacking.acteNaissanceDto.interpreteDateNaissance}" 
+                                <p:inputText id="interpreteDateNaissance" value="#{validerNaissanceBacking.acteNaissanceDto.interpreteDateNaissance}" 
                                               styleClass="p-d-block"/>
                             </div>
                             <div class="p-field p-lg-6">
                                 <p:outputLabel for="interpreteNom" styleClass="p-d-block">Nom </p:outputLabel>
-                                <p:inputText id="interpreteNom" value="#{declarationBacking.acteNaissanceDto.interpreteNom}" 
+                                <p:inputText id="interpreteNom" value="#{validerNaissanceBacking.acteNaissanceDto.interpreteNom}" 
                                               styleClass="p-d-block"/>
                             </div>
                             <div class="p-field p-lg-6">
                                 <p:outputLabel for="interpreteProfession" styleClass="p-d-block">Profession </p:outputLabel>
-                                <p:inputText id="interpreteProfession" value="#{declarationBacking.acteNaissanceDto.interpreteProfession}" 
+                                <p:inputText id="interpreteProfession" value="#{validerNaissanceBacking.acteNaissanceDto.interpreteProfession}" 
                                               styleClass="p-d-block"/>
                             </div>
                             <div class="p-field p-lg-6">
                                 <p:outputLabel for="interpretePrenoms" styleClass="p-d-block">Prénoms </p:outputLabel>
-                                <p:inputText id="interpretePrenoms" value="#{declarationBacking.acteNaissanceDto.interpretePrenoms}" 
+                                <p:inputText id="interpretePrenoms" value="#{validerNaissanceBacking.acteNaissanceDto.interpretePrenoms}" 
                                               styleClass="p-d-block"/>
                             </div>
                             
                             <div class="p-field p-lg-6">
                                 <p:outputLabel for="interpreteDomicile" styleClass="p-d-block">Domicile </p:outputLabel>
-                                <p:inputText id="interpreteDomicile" value="#{declarationBacking.acteNaissanceDto.interpreteDomicile}" 
+                                <p:inputText id="interpreteDomicile" value="#{validerNaissanceBacking.acteNaissanceDto.interpreteDomicile}" 
                                               styleClass="p-d-block"/>
                             </div>
                         </div>
@@ -588,27 +517,27 @@ xmlns:p="http://primefaces.org/ui">
                                 <div class="ui-fluid p-formgrid p-grid">
                                 <div class="p-field p-lg-12">
                                     <p:outputLabel for="temoin1Nom" styleClass="p-d-block">Nom </p:outputLabel>
-                                    <p:inputText id="temoin1Nom" value="#{declarationBacking.acteNaissanceDto.temoinPremierNom}" 
+                                    <p:inputText id="temoin1Nom" value="#{validerNaissanceBacking.acteNaissanceDto.temoinPremierNom}" 
                                               styleClass="p-d-block"/>
                                 </div>
                                 <div class="p-field p-lg-12">
                                    <p:outputLabel for="temoin1Prenoms" styleClass="p-d-block">Prénoms </p:outputLabel>
-                                   <p:inputText id="temoin1Prenoms" value="#{declarationBacking.acteNaissanceDto.temoinPremierPrenoms}" 
+                                   <p:inputText id="temoin1Prenoms" value="#{validerNaissanceBacking.acteNaissanceDto.temoinPremierPrenoms}" 
                                               styleClass="p-d-block"/>
                                 </div>
                                 <div class="p-field p-lg-12">
                                    <p:outputLabel for="temoin1DateNaissance" styleClass="p-d-block">Date naissance </p:outputLabel>
-                                   <p:inputText id="temoin1DateNaissance" value="#{declarationBacking.acteNaissanceDto.temoinPremierDateNaissance}" 
+                                   <p:inputText id="temoin1DateNaissance" value="#{validerNaissanceBacking.acteNaissanceDto.temoinPremierDateNaissance}" 
                                               styleClass="p-d-block"/>
                                 </div>
                                 <div class="p-field p-lg-12">
                                    <p:outputLabel for="temoin1Profession" styleClass="p-d-block">Profession </p:outputLabel>
-                                   <p:inputText id="temoin1Profession" value="#{declarationBacking.acteNaissanceDto.temoinPremierProfession}" 
+                                   <p:inputText id="temoin1Profession" value="#{validerNaissanceBacking.acteNaissanceDto.temoinPremierProfession}" 
                                               styleClass="p-d-block"/>
                                 </div>
                                 <div class="p-field p-lg-12">
                                    <p:outputLabel for="temoin1Domicile" styleClass="p-d-block">Domicile </p:outputLabel>
-                                   <p:inputText id="temoin1Domicile" value="#{declarationBacking.acteNaissanceDto.temoinPremierDomicile}" 
+                                   <p:inputText id="temoin1Domicile" value="#{validerNaissanceBacking.acteNaissanceDto.temoinPremierDomicile}" 
                                               styleClass="p-d-block"/>
                                 </div>
                               </div>
@@ -619,27 +548,27 @@ xmlns:p="http://primefaces.org/ui">
                                 <div class="ui-fluid p-formgrid p-grid">
                                 <div class="p-field p-lg-12">
                                     <p:outputLabel for="temoin2Nom" styleClass="p-d-block">Nom </p:outputLabel>
-                                    <p:inputText id="temoin2Nom" value="#{declarationBacking.acteNaissanceDto.temoinDeuxiemeNom}" 
+                                    <p:inputText id="temoin2Nom" value="#{validerNaissanceBacking.acteNaissanceDto.temoinDeuxiemeNom}" 
                                               styleClass="p-d-block"/>
                                 </div>
                                 <div class="p-field p-lg-12">
                                    <p:outputLabel for="temoin2Prenoms" styleClass="p-d-block">Prénoms </p:outputLabel>
-                                   <p:inputText id="temoin2Prenoms" value="#{declarationBacking.acteNaissanceDto.temoinDeuxiemePrenoms}" 
+                                   <p:inputText id="temoin2Prenoms" value="#{validerNaissanceBacking.acteNaissanceDto.temoinDeuxiemePrenoms}" 
                                               styleClass="p-d-block"/>
                                 </div>
                                 <div class="p-field p-lg-12">
                                    <p:outputLabel for="temoin2DateNaissance" styleClass="p-d-block">Date naissance </p:outputLabel>
-                                   <p:inputText id="temoin2DateNaissance" value="#{declarationBacking.acteNaissanceDto.temoinDeuxiemeDateNaissance}" 
+                                   <p:inputText id="temoin2DateNaissance" value="#{validerNaissanceBacking.acteNaissanceDto.temoinDeuxiemeDateNaissance}" 
                                               styleClass="p-d-block"/>
                                 </div>
                                 <div class="p-field p-lg-12">
                                    <p:outputLabel for="temoin2Profession" styleClass="p-d-block">Profession </p:outputLabel>
-                                   <p:inputText id="temoin2Profession" value="#{declarationBacking.acteNaissanceDto.temoinDeuxiemeProfession}" 
+                                   <p:inputText id="temoin2Profession" value="#{validerNaissanceBacking.acteNaissanceDto.temoinDeuxiemeProfession}" 
                                               styleClass="p-d-block"/>
                                 </div>
                                 <div class="p-field p-lg-12">
                                    <p:outputLabel for="temoin2Domicile" styleClass="p-d-block">Domicile </p:outputLabel>
-                                   <p:inputText id="temoin2Domicile" value="#{declarationBacking.acteNaissanceDto.temoinDeuxiemeDomicile}" 
+                                   <p:inputText id="temoin2Domicile" value="#{validerNaissanceBacking.acteNaissanceDto.temoinDeuxiemeDomicile}" 
                                               styleClass="p-d-block"/>
                                 </div>
                                 </div>
@@ -654,7 +583,7 @@ xmlns:p="http://primefaces.org/ui">
                 <div class="ui-fluid p-formgrid p-grid">
                     <div class="p-field p-lg-4">
                         <p:outputLabel for="dateDeclaration" styleClass="p-d-block">Date déclaration</p:outputLabel>
-                        <p:inputMask id="dateDeclaration" value="#{declarationBacking.acteNaissanceDto.dateDeclaration}"
+                        <p:inputMask id="dateDeclaration" value="#{validerNaissanceBacking.acteNaissanceDto.dateDeclaration}"
                                      mask="99/99/9999" required="true">
                             
                         </p:inputMask>
@@ -662,7 +591,7 @@ xmlns:p="http://primefaces.org/ui">
                     </div>
                     <div class="p-field p-lg-4">
                         <p:outputLabel for="dateDressage" styleClass="p-d-block">Date dressage</p:outputLabel>
-                        <p:inputMask id="dateDressage" value="#{declarationBacking.acteNaissanceDto.dateDressage}"
+                        <p:inputMask id="dateDressage" value="#{validerNaissanceBacking.acteNaissanceDto.dateDressage}"
                                     mask="99/99/9999 99:99:99" required="true">
 
                        </p:inputMask>
@@ -672,11 +601,11 @@ xmlns:p="http://primefaces.org/ui">
                     <div class="p-field p-lg-4">
                         <p:outputLabel for="lienParenteDeclarant">Lien parenté déclarant</p:outputLabel>
                         <p:selectOneRadio id="lienParenteDeclarant" 
-                                          value="#{declarationBacking.acteNaissanceDto.declarantLien}" 
+                                          value="#{validerNaissanceBacking.acteNaissanceDto.declarantLien}" 
                                             converter="omnifaces.SelectItemsConverter"
                                             required="true">
 
-                            <f:selectItems value="#{declarationBacking.liensParenteDeclarant}" var="lien" 
+                            <f:selectItems value="#{validerNaissanceBacking.liensParenteDeclarant}" var="lien" 
                                            itemLabel="#{lien.libelle}" itemValue="#{lien.code}"/>
                             <p:ajax update="contentForm:declTabview:declarantLienParente"/>
                           </p:selectOneRadio>
@@ -688,10 +617,10 @@ xmlns:p="http://primefaces.org/ui">
                 <div class="ui-fluid p-formgrid p-grid">
                     <div class="p-field p-col">
                         <p:outputLabel for="officier" styleClass="p-d-block">Officier</p:outputLabel>
-                        <p:selectOneMenu id="officier" value="#{declarationBacking.selectedOfficierId}"          
+                        <p:selectOneMenu id="officier" value="#{validerNaissanceBacking.selectedOfficierId}"          
                                          label="Selectionnez" required="true">
                             <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez un officier --" />
-                            <f:selectItems value="#{declarationBacking.officiers}" var="officier" 
+                            <f:selectItems value="#{validerNaissanceBacking.officiers}" var="officier" 
                                            itemLabel="#{officier.prenoms} #{officier.nom} [#{officier.titre}]" 
                                            itemValue="#{officier.id}"/>
                         </p:selectOneMenu>
@@ -706,7 +635,7 @@ xmlns:p="http://primefaces.org/ui">
             
             <div class="ui-fluid p-formgrid p-grid">
                 <div class="p-field p-lg-6">
-                    <p:commandButton value="Enregistrer la déclaration" process="@form" action="#{declarationBacking.creer()}"
+                    <p:commandButton value="Enregistrer la déclaration" process="@form" action="#{validerNaissanceBacking.creer()}"
                                      update="@form messageForm"  icon="pi pi-check" 
                                      styleClass="ui-button-outlined"/>
                 </div>

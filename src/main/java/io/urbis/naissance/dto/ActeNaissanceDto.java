@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
@@ -18,10 +19,13 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
+@EqualsAndHashCode
 public class ActeNaissanceDto {
     
     private LocalDateTime created; 
     private LocalDateTime updated; 
+    
+    private String operation;
     
     @NotBlank
     private String id;
