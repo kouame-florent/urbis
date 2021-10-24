@@ -26,7 +26,7 @@ xmlns:p="http://primefaces.org/ui">
             
         </h:form> 
         
-        <h:form id="contenttForm">
+        <h:form id="contentForm">
             <p:toolbar>
                  <p:toolbarGroup>
                      <p:commandButton  value="Créer un registre" action="#{listBacking.showCreerView()}" icon="pi pi-plus" 
@@ -46,7 +46,7 @@ xmlns:p="http://primefaces.org/ui">
                                 converter="omnifaces.SelectItemsConverter"
                                 required="true" columns="5" styleClass="grid-radio">
                   <p:ajax listener="#{listBacking.onTypeRgistreSelect}" 
-                          update="contenttForm:registre"/>
+                          update="contentForm:registre"/>
                   <f:selectItems value="#{listBacking.typesRegistre}" var="type" 
                                  itemLabel="#{type.libelle}" itemValue="#{type}"/>
                 </p:selectOneRadio>
@@ -71,15 +71,15 @@ xmlns:p="http://primefaces.org/ui">
                     <div class="ui-fluid p-formgrid p-grid">
                     <div class="p-field p-col">
                         <p:commandButton id="rechercher" value="Appliquer les filtres" 
-                                         process="@this contenttForm:annee contenttForm:numero"
+                                         process="@this contentForm:annee contentForm:numero"
                                          action="#{listBacking.filtrer()}"
-                                         update="contenttForm:registre"  icon="pi pi-check" 
+                                         update="contentForm:registre"  icon="pi pi-check" 
                                          styleClass="ui-button-outlined"/>
                     </div>
                     <div class="p-field p-col">
-                        <p:commandButton value="Effacer les filtres" icon="pi pi-times" process="@this contenttForm:annee"
+                        <p:commandButton value="Effacer les filtres" icon="pi pi-times" process="@this contentForm:annee"
                                          action="#{listBacking.effacerFiltres()}"
-                                         update="contenttForm:registre contenttForm:annee"  
+                                         update="contentForm:registre contentForm:annee"  
                                          styleClass="ui-button-outlined ui-button-warning" />
                     </div>
                 </div>
@@ -124,17 +124,17 @@ xmlns:p="http://primefaces.org/ui">
                     <h:outputText value="#{registre.officierEtatCivilNomComplet}"/>
                 </p:column>
                 <p:column headerText="Statut"  >
-                    <p:tag styleClass="p-mr-2" severity="#{listBacking.statutSeverity(registre.statut)}" value="#{registre.statut}"/>
+                    <p:tag severity="#{listBacking.statutSeverity(registre.statut)}" value="#{registre.statut}"/>
              
                 </p:column>
                 
                 <p:column width="10%" rendered="false">
                     <p:commandButton  value="Valider" action="#{listBacking.showValiderView(registre)}"
                                       styleClass="ui-button-outlined" process="@this" 
-                                      update="contenttForm:registre" >
+                                      update="contentForm:registre" >
                     <p:ajax event="dialogReturn" 
-                            listener="#{listBacking.returnToCaller}" 
-                                        update=":contenttForm:registre"/>
+                            listener="#{listBacking.onActeValidated}" 
+                                        update=":contentForm:registre"/>
                     <f:setPropertyActionListener value="#{registre}" target="#{listBacking.selectedRegistre}"/>
                 
                 </p:commandButton>
@@ -145,9 +145,10 @@ xmlns:p="http://primefaces.org/ui">
                     <p:menuButton icon="pi pi-ellipsis-h" style="width: 100%;white-space: nowrap;width: auto !important;">
                         <p:menuitem value="Consulter" process="@this" action="#{listBacking.showValiderView(registre)}" icon="pi pi-book"/>
                         <p:menuitem value="Valider" process="@this" action="#{listBacking.showValiderView(registre)}" 
-                                    update="contenttForm:registre" icon="pi pi-ticket" 
+                                    update="contentForm:registre" icon="pi pi-ticket" 
                                     disabled="#{listBacking.disableMenuActiver(registre)}">
-                            <p:ajax event="dialogReturn" listener="#{listBacking.returnToCaller}" update=":contenttForm:registre"/>
+                            <p:ajax event="dialogReturn" listener="#{listBacking.onRegistreValidated}" 
+                                    update=":contentForm:registre messageForm"/>
                             <f:setPropertyActionListener value="#{registre}" target="#{listBacking.selectedRegistre}"/>
                         
                         </p:menuitem>
@@ -156,8 +157,8 @@ xmlns:p="http://primefaces.org/ui">
                                     disabled="#{listBacking.disableMenuModifier(registre)}"/>
                         <p:menuitem value="Cloturer" process="@this" action="#{listBacking.cloturer(registre.id)}"  icon="pi pi-ban"
                                     disabled="#{listBacking.disableMenuCloturer(registre)}" >
-                            <p:ajax event="dialogReturn" listener="#{listBacking.returnToCaller}" 
-                                        update=":contenttForm:registre"/>
+                            <p:ajax event="dialogReturn" listener="#{listBacking.onRegistreValidated}" 
+                                        update=":contentForm:registre messageForm"/>
                             <p:confirm header="Confirmation" 
                                        message="Voulez-vous vraiment cloturer le registre #{registre.numero} de #{registre.annee} ?" 
                                        icon="pi pi-exclamation-triangle"/>
@@ -165,8 +166,8 @@ xmlns:p="http://primefaces.org/ui">
                         <p:menuitem value="Annuler" process="@this" action="#{listBacking.showAnnulerView(registre)}"  
                                     icon="pi pi-undo"
                                     disabled="#{listBacking.disableMenuAnnuler(registre)}">
-                            <p:ajax event="dialogReturn" listener="#{listBacking.returnToCaller}" 
-                                        update=":contenttForm:registre"/>
+                            <p:ajax event="dialogReturn" listener="#{listBacking.onActeValidated}" 
+                                        update=":contentForm:registre messageForm"/>
                             
                         </p:menuitem>
                         <p:divider/>

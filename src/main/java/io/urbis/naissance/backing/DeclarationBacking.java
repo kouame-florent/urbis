@@ -11,7 +11,7 @@ import io.urbis.naissance.api.ModeDeclarationService;
 import io.urbis.naissance.api.SexeService;
 import io.urbis.naissance.api.TypeNaissanceService;
 import io.urbis.naissance.api.TypePieceService;
-import io.urbis.common.BaseBacking;
+import io.urbis.common.util.BaseBacking;
 import io.urbis.registre.api.NationaliteService;
 import io.urbis.registre.api.OfficierService;
 import io.urbis.registre.api.RegistreService;
@@ -37,6 +37,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.validation.ValidationException;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 /**
@@ -156,12 +157,16 @@ public class DeclarationBacking extends BaseBacking implements Serializable{
         acteNaissanceDto.setNumero(numeroActe);
         acteNaissanceDto.setOfficierEtatCivilID(selectedOfficierId);
         
-        acteNaissanceService.create(acteNaissanceDto);
-        resetActeDto();
-        addGlobalMessage("Déclaration enregistrée avec succès", FacesMessage.SEVERITY_INFO);
-        
-        numeroActe = acteNaissanceService.numeroActe(registreID);
-        
+        try{
+            acteNaissanceService.create(acteNaissanceDto);
+            resetActeDto();
+            addGlobalMessage("Déclaration enregistrée avec succès", FacesMessage.SEVERITY_INFO);
+            numeroActe = acteNaissanceService.numeroActe(registreID);
+        }catch(ValidationException ex){
+            LOG.log(Level.INFO,"ERROR MESSAGE: {0}",ex.getMessage());
+            addGlobalMessage(ex.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+        }
+     
     }
     
     public void resetActeDto(){
@@ -224,18 +229,7 @@ public class DeclarationBacking extends BaseBacking implements Serializable{
         return false;
     }
     
-    {
-        /*
-        ENFANT_RECONNU_PERE_PRESENT("Enfant reconnu père present"),
-        ENFANT_LEGITIME("Enfant légitime"),
-        ENFANT_RECONNU_PAR_PROCURATION("Enfant reconnu par procuration"),
-        ENFANT_NATUREL("Enfant naturel"),
-        ENFANT_SANS_MERE("Enfant sans mère/Enfant trouvé"),
-        ENFANT_TROUVE("Enfant trouvé"),
-        ENFANT_ADULTERIN_RECONNU_PAR_ACTE_DE_CONSENTEMENT("Enfant adultérin reconnu par acte de consentement"),
-        ENFANT_ADULTERIN_RECONNU_PAR_PROCURATION("Enfant adultérin reconnu par procuration");
-        */
-    }
+    
 
     public String getRegistreID() {
         return registreID;

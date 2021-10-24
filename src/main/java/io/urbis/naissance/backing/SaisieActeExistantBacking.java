@@ -5,7 +5,7 @@
  */
 package io.urbis.naissance.backing;
 
-import io.urbis.common.BaseBacking;
+import io.urbis.common.util.BaseBacking;
 import io.urbis.naissance.dto.ActeNaissanceDto;
 import io.urbis.naissance.dto.LienDeclarantDto;
 import io.urbis.naissance.dto.ModeDeclarationDto;

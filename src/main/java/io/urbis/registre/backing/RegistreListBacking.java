@@ -5,7 +5,8 @@
  */
 package io.urbis.registre.backing;
 
-import io.urbis.common.BaseBacking;
+
+import io.urbis.common.util.BaseBacking;
 import io.urbis.registre.api.EtatService;
 import io.urbis.registre.api.RegistreService;
 import io.urbis.registre.api.TypeRegistreService;
@@ -41,10 +42,10 @@ import org.primefaces.model.StreamedContent;
  */
 @Named(value = "listBacking")
 @ViewScoped
-public class ListBacking extends BaseBacking implements Serializable{
+public class RegistreListBacking extends BaseBacking implements Serializable{
     
     private static final long serialVersionUID = 1L;
-    private static final Logger LOG = Logger.getLogger(ListBacking.class.getName());
+    private static final Logger LOG = Logger.getLogger(RegistreListBacking.class.getName());
     
     @Inject 
     @RestClient
@@ -143,6 +144,10 @@ public class ListBacking extends BaseBacking implements Serializable{
     
     }
     
+    public void onRegistreValidated(SelectEvent event){
+        addGlobalMessage("Le registre a été validé avec succès", FacesMessage.SEVERITY_INFO);
+    }
+    
     public void showAnnulerView(RegistreDto registreDto){
         LOG.log(Level.INFO, "REGISTRE ID: {0}", registreDto.getId());
         
@@ -162,7 +167,7 @@ public class ListBacking extends BaseBacking implements Serializable{
     public void showSaisieActeExistantview(RegistreDto registreDto){
         var values = List.of(registreDto.getId());
         Map<String, List<String>> params = Map.of("id", values);
-        PrimeFaces.current().dialog().openDynamic("/naissance/saisie", getDialogOptions(98,98,true), params);
+        PrimeFaces.current().dialog().openDynamic("/naissance/saisie-actes-existants", getDialogOptions(98,98,true), params);
     }
     
     public void showActesListView(RegistreDto registreDto){
@@ -224,9 +229,6 @@ public class ListBacking extends BaseBacking implements Serializable{
                 registreDto.getStatut().equals(StatutRegistre.PROJET.name());  
     }
     
-    public void returnToCaller(SelectEvent event){
-        
-    }
     
     public void onCreate(SelectEvent event){
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Création de registre", "Registre crée avec succès");
@@ -280,7 +282,7 @@ public class ListBacking extends BaseBacking implements Serializable{
                 .stream(() -> input).build();
                 
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(ListBacking.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RegistreListBacking.class.getName()).log(Level.SEVERE, null, ex);
         }
        
        return content;

@@ -5,7 +5,7 @@
  */
 package io.urbis.naissance.backing;
 
-import io.urbis.common.BaseBacking;
+import io.urbis.common.util.BaseBacking;
 import io.urbis.naissance.dto.ActeNaissanceDto;
 import io.urbis.registre.api.EtatService;
 import io.urbis.registre.api.RegistreService;
@@ -20,11 +20,14 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.ws.rs.WebApplicationException;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.primefaces.PrimeFaces;
+import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
@@ -34,9 +37,9 @@ import org.primefaces.model.StreamedContent;
  */
 @Named(value = "acteNaissanceListBacking")
 @ViewScoped
-public class ListBacking extends BaseBacking implements Serializable{
+public class ActeNaissanceListBacking extends BaseBacking implements Serializable{
     
-    private static final Logger LOG = Logger.getLogger(ListBacking.class.getName());
+    private static final Logger LOG = Logger.getLogger(ActeNaissanceListBacking.class.getName());
     
     @Inject
     LazyDeclarationDataModel lazyDeclarationDataModel;
@@ -83,17 +86,42 @@ public class ListBacking extends BaseBacking implements Serializable{
                 .stream(() -> input).build();
                 
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(ListBacking.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ActeNaissanceListBacking.class.getName()).log(Level.SEVERE, null, ex);
         }
        
        return content;
+    }
+    
+    public void onActeValidated(SelectEvent event){
+        if(event.getObject() != null){
+            WebApplicationException ex = (WebApplicationException)event.getObject();
+            addGlobalMessage(ex.getMessage(), FacesMessage.SEVERITY_ERROR);
+        }
+        addGlobalMessage("L'acte de naissance a été validé avec succès", FacesMessage.SEVERITY_INFO);
+    }
+    
+    public String statutSeverity(String statut){
+        
+        if(statut.equalsIgnoreCase("PROJET")){
+            return "warning";
+        }
+         
+        if(statut.equalsIgnoreCase("VALIDE")){
+            return "success";
+        }
+        
+        if(statut.equalsIgnoreCase("ANNULE")){
+            return "danger";
+        }
+        
+        return "";
     }
     
     public void showValiderActeView(ActeNaissanceDto dto){
         LOG.log(Level.INFO, "ACTE ID: {0}", dto.getId());
         var values = List.of(dto.getId());
         Map<String, List<String>> params = Map.of("id", values);
-        PrimeFaces.current().dialog().openDynamic("/naissance/valider", getDialogOptions(98,98,true), params);
+        PrimeFaces.current().dialog().openDynamic("/naissance/valider", getDialogOptions(99,99,true), params);
     }
 
     public LazyDeclarationDataModel getLazyDeclarationDataModel() {

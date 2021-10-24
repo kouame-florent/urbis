@@ -23,9 +23,9 @@ xmlns:p="http://primefaces.org/ui">
             <p:growl globalOnly="true" life="15000" showDetail="true"/>        
         </h:form>
        
-        <h:form id="contenttForm">
+        <h:form id="contentForm">
                 
-            <p:dataTable id="registre" widgetVar="acteNaissanceWidget" var="acte" 
+            <p:dataTable id="actesDatatable" widgetVar="acteNaissanceWidget" var="acte" 
                          value="#{acteNaissanceListBacking.lazyDeclarationDataModel}"
                          selection="#{acteNaissanceListBacking.selectedActe}" rowKey="#{acte.id}" paginator="true"
                         rows="25" rowSelectMode="add" paginatorPosition="bottom">
@@ -53,8 +53,12 @@ xmlns:p="http://primefaces.org/ui">
                 <p:column headerText="Numéro acte" >
                     <h:outputText value="#{acte.numero}"/>
                 </p:column>
+                
+                <p:column headerText="Numéro acte" >
+                    <p:tag severity="#{acteNaissanceListBacking.statutSeverity(acte.statut)}" value="#{acte.statut}"/>
+                </p:column>
               
-                <p:column  >
+                <p:column style="width: 2%" >
                     <p:commandButton process="@this" title="Imprimer"
                                      ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" icon="pi pi-print">
                         <f:setPropertyActionListener value="#{acte.id}" target="#{acteNaissanceListBacking.selectedActeID}"/>
@@ -62,11 +66,14 @@ xmlns:p="http://primefaces.org/ui">
                      </p:commandButton>
                 </p:column>
                
-                <p:column  >
+                <p:column  style="width: 2%">
                     <p:menuButton icon="pi pi-ellipsis-h" style="width: 100%;white-space: nowrap;width: auto !important;">
                         <p:menuitem value="Consulter l'acte" process="@this"  icon="pi pi-book"/>
                         <p:menuitem value="Valider l'acte" action="#{acteNaissanceListBacking.showValiderActeView(acte)}" 
-                                    process="@this" icon="pi pi-book"/>
+                                    process="@this" icon="pi pi-book">
+                            <p:ajax event="dialogReturn" listener="#{acteNaissanceListBacking.onActeValidated}" 
+                                        update=":contentForm:actesDatatable"/>
+                        </p:menuitem>
                         <p:menuitem value="Imprimer l'acte" action="#{acteNaissanceListBacking.download()}" process="@this" 
                                     icon="pi pi-book"/>
                     </p:menuButton>

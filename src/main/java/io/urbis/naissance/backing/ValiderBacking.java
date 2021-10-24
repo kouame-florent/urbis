@@ -5,7 +5,7 @@
  */
 package io.urbis.naissance.backing;
 
-import io.urbis.common.BaseBacking;
+import io.urbis.common.util.BaseBacking;
 import io.urbis.naissance.dto.ActeNaissanceDto;
 import io.urbis.naissance.dto.LienDeclarantDto;
 import io.urbis.naissance.dto.ModeDeclarationDto;
@@ -21,6 +21,7 @@ import io.urbis.naissance.api.ModeDeclarationService;
 import io.urbis.naissance.api.SexeService;
 import io.urbis.naissance.api.TypeNaissanceService;
 import io.urbis.naissance.api.TypePieceService;
+import io.urbis.naissance.dto.StatutActeNaissance;
 import io.urbis.registre.dto.RegistreDto;
 import io.urbis.registre.api.NationaliteService;
 import io.urbis.registre.api.OfficierService;
@@ -34,7 +35,9 @@ import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.ws.rs.WebApplicationException;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
+import org.primefaces.PrimeFaces;
 
 /**
  *
@@ -150,98 +153,28 @@ public class ValiderBacking extends BaseBacking implements Serializable{
     }
     
     
-    public void creer(){
-        /*
-        LOG.log(Level.INFO,"Creating acte naissance...");
-         
-        LOG.log(Level.INFO,"ENFANT DATE NAISSANCE: {0}",acteNaissanceDto.getEnfantDateNaissance());
+    public void valider(){
+        acteNaissanceDto.setStatut(StatutActeNaissance.VALIDE.name());
+        acteNaissanceDto.setOperation(Operation.MISE_A_JOUR.name());
+       // try{
+            acteNaissanceService.update(acteNaissanceID, acteNaissanceDto);
+       // }catch(WebApplicationException ex){
+       //     PrimeFaces.current().dialog().closeDynamic(ex);
+       // }
         
-        acteNaissanceDto.setOperation(Operation.DECLARATION_JUGEMENT.name());
-        acteNaissanceDto.setRegistreID(registreID);
-        acteNaissanceDto.setNumero(numeroActe);
-        acteNaissanceDto.setOfficierEtatCivilID(selectedOfficierId);
-        
-        acteNaissanceService.create(acteNaissanceDto);
-        resetActeDto();
-        addGlobalMessage("Déclaration enregistrée avec succès", FacesMessage.SEVERITY_INFO);
-        
-        numeroActe = acteNaissanceService.numeroActe(registreID);
-        */
+        //addGlobalMessage("Acte validé avec succès", FacesMessage.SEVERITY_INFO);
+        PrimeFaces.current().dialog().closeDynamic(null);
     }
     
-    public void resetActeDto(){
-        if(!naissanceMultiple){
-            acteNaissanceDto = new ActeNaissanceDto();
-        }else{
-            if(rang < nombreNaissance){
-                rang += 1;
-                acteNaissanceDto.setEnfantDateNaissance("");
-                acteNaissanceDto.setEnfantLieuNaissance("");
-                acteNaissanceDto.setEnfantLocalite("");
-                acteNaissanceDto.setEnfantNationalite("");
-                acteNaissanceDto.setEnfantNom("");
-                acteNaissanceDto.setEnfantPrenoms("");
-                acteNaissanceDto.setEnfantPrenoms("");
-            }else{
-                acteNaissanceDto = new ActeNaissanceDto();
-                naissanceMultiple = false;
-                nombreNaissance = 0;
-            }
-            
-            
-        }
-        
-    }
+    
     
     private void resetForNaissanceMultiple(ActeNaissanceDto old){
         acteNaissanceDto = new ActeNaissanceDto();
         acteNaissanceDto.setPereDateDeces(old.getPereDateDeces());
     }
     
-    public boolean requiredFiliationPere(){ 
-        if(acteNaissanceDto.getTypeNaissance() != null){
-            return acteNaissanceDto.getTypeNaissance().equals("ENFANT_RECONNU_PERE_PRESENT")
-                || acteNaissanceDto.getTypeNaissance().equals("ENFANT_SANS_MERE")
-                || acteNaissanceDto.getTypeNaissance().equals("ENFANT_RECONNU_PAR_PROCURATION")
-                || acteNaissanceDto.getTypeNaissance().equals("ENFANT_LEGITIME")
-                || acteNaissanceDto.getTypeNaissance().equals("ENFANT_ADULTERIN_RECONNU_PAR_ACTE_DE_CONSENTEMENT")
-                || acteNaissanceDto.getTypeNaissance().equals("ENFANT_ADULTERIN_RECONNU_PAR_PROCURATION");
-        }
-        return false;
-    }
-    
-    public boolean requiredFiliationMere(){
-        if(acteNaissanceDto.getTypeNaissance() != null){
-            return acteNaissanceDto.getTypeNaissance().equals("ENFANT_RECONNU_PERE_PRESENT")
-                || acteNaissanceDto.getTypeNaissance().equals("ENFANT_RECONNU_PAR_PROCURATION")
-                || acteNaissanceDto.getTypeNaissance().equals("ENFANT_NATUREL")
-                || acteNaissanceDto.getTypeNaissance().equals("ENFANT_LEGITIME")
-                || acteNaissanceDto.getTypeNaissance().equals("ENFANT_ADULTERIN_RECONNU_PAR_ACTE_DE_CONSENTEMENT")
-                || acteNaissanceDto.getTypeNaissance().equals("ENFANT_ADULTERIN_RECONNU_PAR_PROCURATION");
-        }
-        return false;
-    }
-    
-    public boolean requiredDeclarant(){
-        if(acteNaissanceDto.getTypeNaissance() != null){
-            return acteNaissanceDto.getTypeNaissance().equals("ENFANT_TROUVE");
-        }
-        return false;
-    }
-    
-    {
-        /*
-        ENFANT_RECONNU_PERE_PRESENT("Enfant reconnu père present"),
-        ENFANT_LEGITIME("Enfant légitime"),
-        ENFANT_RECONNU_PAR_PROCURATION("Enfant reconnu par procuration"),
-        ENFANT_NATUREL("Enfant naturel"),
-        ENFANT_SANS_MERE("Enfant sans mère/Enfant trouvé"),
-        ENFANT_TROUVE("Enfant trouvé"),
-        ENFANT_ADULTERIN_RECONNU_PAR_ACTE_DE_CONSENTEMENT("Enfant adultérin reconnu par acte de consentement"),
-        ENFANT_ADULTERIN_RECONNU_PAR_PROCURATION("Enfant adultérin reconnu par procuration");
-        */
-    }
-
+   
+   
     public String getActeNaissanceID() {
         return acteNaissanceID;
     }

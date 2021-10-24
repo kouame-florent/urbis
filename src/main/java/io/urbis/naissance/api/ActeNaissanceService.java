@@ -5,6 +5,7 @@
  */
 package io.urbis.naissance.api;
 
+import io.urbis.common.util.ExceptionMapper;
 import io.urbis.naissance.dto.ActeNaissanceDto;
 import java.util.List;
 import javax.transaction.Transactional;
@@ -14,6 +15,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
+import org.eclipse.microprofile.rest.client.annotation.RegisterProvider;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 /**
@@ -21,6 +23,7 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
  * @author florent
  */
 @Path("/naissances")
+@RegisterProvider(value = ExceptionMapper.class,priority = 50)
 @RegisterRestClient(baseUri = "http://127.0.0.1:8181")
 public interface ActeNaissanceService {
     
