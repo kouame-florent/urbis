@@ -6,6 +6,14 @@
 package io.urbis.naissance.backing;
 
 import io.urbis.common.util.BaseBacking;
+import io.urbis.mention.api.DecesService;
+import io.urbis.mention.dto.AdoptionDto;
+import io.urbis.mention.dto.DecesDto;
+import io.urbis.mention.dto.DissolutionMariageDto;
+import io.urbis.mention.dto.LegitimationDto;
+import io.urbis.mention.dto.MariageDto;
+import io.urbis.mention.dto.ReconnaissanceDto;
+import io.urbis.mention.dto.RectificationDto;
 import io.urbis.naissance.dto.ActeNaissanceDto;
 import io.urbis.naissance.dto.LienDeclarantDto;
 import io.urbis.naissance.dto.ModeDeclarationDto;
@@ -85,6 +93,10 @@ public class SaisieActeExistantBacking extends BaseBacking implements Serializab
     OfficierService officierService;
     
     @Inject
+    @RestClient
+    DecesService decesService;
+    
+    @Inject
     LazySaisieActeExistantDataModel lazySaisieActeExistantDataModel;
     
     private ViewMode viewMode;
@@ -129,6 +141,14 @@ public class SaisieActeExistantBacking extends BaseBacking implements Serializab
     
     private ActeNaissanceDto acteNaissanceDto;
     
+    private AdoptionDto adoptionDto;
+    private DecesDto decesDto;
+    private DissolutionMariageDto dissolutionMariageDto;
+    private LegitimationDto legitimationDto;
+    private MariageDto mariageDto;
+    private ReconnaissanceDto reconnaissanceDto;
+    private RectificationDto rectificationDto;
+    
    
     public void onload(){
         LOG.log(Level.INFO,"REGISTRE ID: {0}",registreID);
@@ -153,6 +173,9 @@ public class SaisieActeExistantBacking extends BaseBacking implements Serializab
         liensParenteDeclarant = lienDeclarantService.findAll();
         typesPiece = typePieceService.findAll();
         acteNaissanceDto = new ActeNaissanceDto();
+        
+        adoptionDto = new AdoptionDto();
+        decesDto = new DecesDto();
     }
     
     public void onRowSelect(SelectEvent<ActeNaissanceDto> event){
@@ -209,6 +232,15 @@ public class SaisieActeExistantBacking extends BaseBacking implements Serializab
     private void resetForNaissanceMultiple(ActeNaissanceDto old){
         acteNaissanceDto = new ActeNaissanceDto();
         acteNaissanceDto.setPereDateDeces(old.getPereDateDeces());
+    }
+    
+    public void creerMentionAdoption(){
+        acteNaissanceDto.getAdoptionDtos().add(adoptionDto);
+        adoptionDto = new AdoptionDto();
+    }
+     
+    public void creerMentionDeces(){
+       acteNaissanceDto.getDecesDtos().add(decesDto);
     }
 
     public String getRegistreID() {
@@ -388,6 +420,62 @@ public class SaisieActeExistantBacking extends BaseBacking implements Serializab
 
     public ViewMode getViewMode() {
         return viewMode;
+    }
+
+    public AdoptionDto getAdoptionDto() {
+        return adoptionDto;
+    }
+
+    public void setAdoptionDto(AdoptionDto adoptionDto) {
+        this.adoptionDto = adoptionDto;
+    }
+
+    public DecesDto getDecesDto() {
+        return decesDto;
+    }
+
+    public void setDecesDto(DecesDto decesDto) {
+        this.decesDto = decesDto;
+    }
+
+    public DissolutionMariageDto getDissolutionMariageDto() {
+        return dissolutionMariageDto;
+    }
+
+    public void setDissolutionMariageDto(DissolutionMariageDto dissolutionMariageDto) {
+        this.dissolutionMariageDto = dissolutionMariageDto;
+    }
+
+    public LegitimationDto getLegitimationDto() {
+        return legitimationDto;
+    }
+
+    public void setLegitimationDto(LegitimationDto legitimationDto) {
+        this.legitimationDto = legitimationDto;
+    }
+
+    public MariageDto getMariageDto() {
+        return mariageDto;
+    }
+
+    public void setMariageDto(MariageDto mariageDto) {
+        this.mariageDto = mariageDto;
+    }
+
+    public ReconnaissanceDto getReconnaissanceDto() {
+        return reconnaissanceDto;
+    }
+
+    public void setReconnaissanceDto(ReconnaissanceDto reconnaissanceDto) {
+        this.reconnaissanceDto = reconnaissanceDto;
+    }
+
+    public RectificationDto getRectificationDto() {
+        return rectificationDto;
+    }
+
+    public void setRectificationDto(RectificationDto rectificationDto) {
+        this.rectificationDto = rectificationDto;
     }
 
    

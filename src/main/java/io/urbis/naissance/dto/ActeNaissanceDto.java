@@ -6,7 +6,11 @@
 package io.urbis.naissance.dto;
 
 
+import io.urbis.mention.dto.AdoptionDto;
+import io.urbis.mention.dto.DecesDto;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import lombok.Data;
@@ -127,5 +131,8 @@ public class ActeNaissanceDto {
     
     private int registreAnnee;
     private int registreNumero;
+    
+    private List<AdoptionDto> adoptionDtos = new ArrayList<>();
+    private List<DecesDto> decesDtos = new ArrayList<>();
     
 }

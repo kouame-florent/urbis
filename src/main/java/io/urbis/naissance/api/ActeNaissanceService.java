@@ -8,7 +8,6 @@ package io.urbis.naissance.api;
 import io.urbis.common.util.ExceptionMapper;
 import io.urbis.naissance.dto.ActeNaissanceDto;
 import java.util.List;
-import javax.transaction.Transactional;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;

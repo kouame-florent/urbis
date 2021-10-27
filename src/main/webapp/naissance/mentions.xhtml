@@ -1,0 +1,142 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+xmlns:h="http://xmlns.jcp.org/jsf/html"
+xmlns:f="http://xmlns.jcp.org/jsf/core"
+xmlns:p="http://primefaces.org/ui">
+    
+ <ui:composition>
+  
+     <p:tabView id="mentionsTabView">
+         <p:tab title="Adoption">
+             <p:fieldset>
+             <div class="ui-fluid p-formgrid p-grid">
+                 <div class="p-field p-lg-6">
+                     <p:outputLabel for="adoptionDecision" styleClass="p-d-block">Décision</p:outputLabel>
+                     <p:inputTextarea id="adoptionDecision" value="#{saisieActeExistantBacking.adoptionDto.decision}" 
+                                      rows="10"/>
+                 </div>
+                 <div class="p-field p-lg-6">
+                    <p:outputLabel for="officier" styleClass="p-d-block">Officier</p:outputLabel>
+                    <p:selectOneMenu id="officier" value="#{saisieActeExistantBacking.adoptionDto.officierEtatCivilID}"          
+                                     label="Selectionnez">
+                        <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez un officier --" />
+                        <f:selectItems value="#{saisieActeExistantBacking.officiers}" var="officier" 
+                                       itemLabel="#{officier.prenoms} #{officier.nom} [#{officier.titre}]" 
+                                       itemValue="#{officier.id}"/>
+                    </p:selectOneMenu>
+                </div>
+            </div>
+            <div class="ui-fluid p-formgrid p-grid">
+                <div class="p-field p-lg-6">
+                    <p:commandButton value="Enregistrer la mention d'adoption" process="mentionsTabView" 
+                                     action="#{saisieActeExistantBacking.creerMentionAdoption()}"
+                                     update="mentionsTabView messageForm"  icon="pi pi-check" 
+                                     styleClass="ui-button-outlined"/>
+                </div>
+                <div class="p-field p-lg-6">
+                    <p:commandButton value="Annuler" icon="pi pi-times" 
+                                     styleClass="ui-button-outlined ui-button-warning" />
+                </div>
+            </div>
+            <p:dataTable id="mentionAdoptionTable" value="#{saisieActeExistantBacking.acteNaissanceDto.adoptionDtos}" var="adoption">
+               <p:column headerText="Décision">
+                   <h:outputText value="#{adoption.decision}"/>
+               </p:column>
+
+
+            </p:dataTable>
+            </p:fieldset>
+         </p:tab>
+         <p:tab title="Decès">
+            <p:fieldset>
+            <div class="ui-fluid p-formgrid p-grid">
+                <div class="p-field p-lg-6">
+                    <p:outputLabel for="dateDeces" styleClass="p-d-block">Date de naissance</p:outputLabel>
+                    <p:inputMask id="dateDeces" value="#{saisieActeExistantBacking.decesDto.date}"
+                                 mask="99/99/9999" >
+                        <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
+                    </p:inputMask>
+                    <p:watermark  value="JJ/MM/YYYY" for="dateDeces" /> 
+                    <p:message for="dateDeces"/>
+
+                </div>
+                <div class="p-field p-lg-6">
+                    <p:outputLabel for="lieuDeces" styleClass="p-d-block">Lieu décès</p:outputLabel>
+                    <p:inputText id="lieuDeces" value="#{saisieActeExistantBacking.decesDto.lieu}"   
+                                    styleClass="p-d-block"/>
+                </div>
+                <div class="p-field p-lg-6">
+                    <p:outputLabel for="localite" styleClass="p-d-block">sous-préfecture</p:outputLabel>
+                    <p:inputText id="localite" value="#{saisieActeExistantBacking.decesDto.localite}"  
+                                    styleClass="p-d-block"/>
+                </div>
+                <div class="p-field p-lg-6">
+                    <p:outputLabel for="dateDressage" styleClass="p-d-block">Prénoms</p:outputLabel>
+                    <p:inputMask id="dateDressage" value="#{saisieActeExistantBacking.decesDto.dateDressage}"
+                                 mask="99/99/9999" >
+
+                    </p:inputMask>
+                    <p:watermark  value="JJ/MM/YYYY" for="dateDressage" /> 
+                    <p:message for="dateDressage"/>
+                </div>
+                <div class="p-field p-lg-6">
+                     <p:outputLabel for="decesDecision" styleClass="p-d-block">Décision</p:outputLabel>
+                     <p:inputTextarea id="decesDecision" value="#{saisieActeExistantBacking.decesDto.decision}" 
+                                      rows="10"/>
+                 </div>
+
+            </div>
+            <div class="ui-fluid p-formgrid p-grid">
+                <div class="p-field p-lg-6">
+                    <p:commandButton value="Enregistrer la mention d'adoption" process="@form" 
+                                     action="#{saisieActeExistantBacking.creerMentionDeces()}"
+                                     update="mentionsTabView messageForm"  icon="pi pi-check" 
+                                     styleClass="ui-button-outlined"/>
+                </div>
+                <div class="p-field p-lg-6">
+                    <p:commandButton value="Annuler" icon="pi pi-times" 
+                                     styleClass="ui-button-outlined ui-button-warning" />
+                </div>
+            </div>
+            <p:dataTable id="mentionDecesTable" value="#{saisieActeExistantBacking.acteNaissanceDto.adoptionDtos}" var="deces">
+               <p:column headerText="Décision">
+                   <h:outputText value="#{deces.decision}"/>
+               </p:column>
+
+
+            </p:dataTable>
+            </p:fieldset>
+         </p:tab>
+         <p:tab title="Dissolution de mariage">
+             <p:fieldset legend="Decision">
+                 <p:inputTextarea style="width: 75%"/>
+             </p:fieldset>
+         </p:tab>
+         <p:tab title="Légitimation">
+             <p:fieldset legend="Decision">
+                 <p:inputTextarea style="width: 75%"/>
+             </p:fieldset>
+         </p:tab>
+         <p:tab title="Mariage">
+             <p:fieldset legend="Decision">
+                 <p:inputTextarea style="width: 75%"/>
+             </p:fieldset>
+         </p:tab>
+         <p:tab title="Reconnaissance">
+             <p:fieldset legend="Decision">
+                 <p:inputTextarea style="width: 75%"/>
+             </p:fieldset>
+         </p:tab>
+         <p:tab title="Rectification">
+             <p:fieldset legend="Decision">
+                 <p:inputTextarea style="width: 75%"/>
+             </p:fieldset>
+         </p:tab>
+     </p:tabView>
+
+</ui:composition>  
+ 
+</html>
+
