@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+xmlns:h="http://xmlns.jcp.org/jsf/html"
+xmlns:f="http://xmlns.jcp.org/jsf/core"
+xmlns:p="http://primefaces.org/ui">
+    
+ <ui:composition>
+  <p:outputPanel id="commandOutputPanel">
+    <div class="ui-fluid p-formgrid p-grid">
+
+        <div class="p-field p-lg-6">
+
+            <p:commandButton value="Enregistrer l'acte" process="@form" action="#{saisieActeExistantBacking.creer()}"
+                             update="@form messageForm"  icon="pi pi-check" 
+                             styleClass="ui-button-outlined"
+                             rendered="#{saisieActeExistantBacking.viewMode == 'NEW'}"
+                             oncomplete="PF('wizardWgt').loadStep('declaration','back')"/>
+            <p:commandButton value="mettre à jour l'acte" process="@form" action="#{saisieActeExistantBacking.modifier()}"
+                             update="@form messageForm"  icon="pi pi-check" 
+                             styleClass="ui-button-outlined"
+                             rendered="#{saisieActeExistantBacking.viewMode == 'UPDATE'}"
+                             oncomplete="PF('wizardWgt').loadStep('declaration','back')"/>
+
+        </div>
+
+        <div class="p-field p-lg-6">
+            <p:commandButton value="Annuler" icon="pi pi-times" 
+                             styleClass="ui-button-outlined ui-button-warning" />
+        </div>
+    </div>
+   </p:outputPanel>
+
+</ui:composition>  
+ 
+</html>
+

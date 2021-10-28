@@ -26,6 +26,10 @@ public abstract class MentionDto {
   
     @NotBlank(message = "Le champ 'Officier' ne peut être vide")
     private String officierEtatCivilID;
+    private String officierEtatCivilNom;
+    private String officierEtatCivilPrenoms;
+    private String officierEtatCivilQualite;
+    private String officierEtatCivilTitre;
     
     private String acteNaissanceID;
 }

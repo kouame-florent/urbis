@@ -5,7 +5,8 @@
  */
 package io.urbis.naissance.api;
 
-import io.urbis.naissance.dto.MentionDto;
+
+import io.urbis.mention.dto.MentionDto;
 import java.util.List;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.GET;

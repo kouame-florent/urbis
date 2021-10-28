@@ -6,15 +6,12 @@
 package io.urbis.mention.dto;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
-/**
- *
- * @author florent
- */
 @Data
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class DecesDto extends MentionDto {
     
@@ -22,5 +19,6 @@ public class DecesDto extends MentionDto {
     private String lieu;
 
     private String localite;
-    private String dateDressage;
+    private LocalDate dateDressage;
+
 }

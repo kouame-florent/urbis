@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+xmlns:h="http://xmlns.jcp.org/jsf/html"
+xmlns:f="http://xmlns.jcp.org/jsf/core"
+xmlns:p="http://primefaces.org/ui">
+    
+ <ui:composition>
+    <p:fieldset>
+        <div class="ui-fluid p-formgrid p-grid">
+            <div class="p-field p-col">
+                <p:outputLabel for="modeDeclaration" >Mode déclaration</p:outputLabel>
+                <p:selectOneRadio id="modeDeclaration" value="#{saisieActeExistantBacking.acteNaissanceDto.modeDeclaration}" 
+                                    converter="omnifaces.SelectItemsConverter"
+                                    required="true" requiredMessage="Ce champ est obligatoire">
+                    <p:ajax update="contentForm:jugementOutputPanel"/>
+                      <f:selectItems value="#{saisieActeExistantBacking.modesDeclaration}" var="mode" 
+                                     itemLabel="#{mode.libelle}" itemValue="#{mode.code}"/>
+                  </p:selectOneRadio>
+                <p:message for="modeDeclaration"/>
+
+            </div>
+            <div class="p-field p-col">
+                <p:outputLabel for="extraitExtraordinaire" styleClass="p-d-block">Extraits extraordinaires</p:outputLabel>
+                <p:inputText id="extraitExtraordinaire" value="#{saisieActeExistantBacking.extraitsExtraordinaires}"  required="true" styleClass="p-d-block"/>
+
+            </div>
+            <div class="p-field p-col">
+                <p:outputLabel for="copieActe" styleClass="p-d-block">Copies d'acte</p:outputLabel>
+                <p:inputText id="copieActe" value="#{saisieActeExistantBacking.nombreCopies}" required="true" styleClass="p-d-block"/>   
+            </div>
+
+            <div class="p-field p-col">
+                <p:outputLabel for="extraitOrdinaire" styleClass="p-d-block">Extraits ordinaires</p:outputLabel>
+                <p:inputText id="extraitOrdinaire" value="#{saisieActeExistantBacking.extraitsOrdinaires}" required="true" styleClass="p-d-block"/>
+            </div>
+
+        </div>
+
+    </p:fieldset>
+    <p:spacer height="2"/>
+
+    <p:outputPanel id="jugementOutputPanel">
+        <p:outputPanel  rendered="#{saisieActeExistantBacking.acteNaissanceDto.modeDeclaration == 'JUGEMENT'}">
+        <p:fieldset legend="Info jugement">
+            <div class="ui-fluid p-formgrid p-grid">
+                <div class="p-field p-lg-4">
+                    <p:outputLabel for="numeroJugement" styleClass="p-d-block">Numéro jugement</p:outputLabel>
+                    <p:inputText id="numeroJugement" value="#{saisieActeExistantBacking.acteNaissanceDto.jugementNumero}" styleClass="p-d-block"/>
+                </div>
+                <div class="p-field p-lg-4">
+                    <p:outputLabel for="dateJugement" styleClass="p-d-block">Du</p:outputLabel>
+                    <p:inputMask id="dateJugement" value="#{saisieActeExistantBacking.acteNaissanceDto.jugementDate}"
+                        mask="99/99/9999 99:99:99" >
+                    </p:inputMask>
+                    <p:watermark  value="jj/MM/AAAA" for="dateJugement"/>   
+                </div>
+                <div class="p-field p-lg-4">
+                    <p:outputLabel for="tribunalJugement" styleClass="p-d-block">Tribunal</p:outputLabel>
+                    <p:inputText id="tribunalJugement" value="#{saisieActeExistantBacking.acteNaissanceDto.jugementTribunal}" styleClass="p-d-block"/>
+                </div>
+            </div>
+         </p:fieldset>
+         </p:outputPanel>
+    </p:outputPanel>
+            
+
+</ui:composition>  
+ 
+</html>
+

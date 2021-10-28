@@ -92,7 +92,7 @@ xmlns:p="http://primefaces.org/ui">
             </p:fieldset>
             <p:spacer height="2"/>
             <p:outputPanel id="jugementOutputPanel">
-                <p:outputPanel  rendered="#{declarationBacking.selectedModeDeclaration.code == 'JUGEMENT'}">
+                <p:outputPanel  rendered="#{declarationBacking.selectedModeDeclaration == 'JUGEMENT'}">
                 <p:fieldset legend="Info jugement">
                     <div class="ui-fluid p-formgrid p-grid">
                         <div class="p-field p-lg-4">

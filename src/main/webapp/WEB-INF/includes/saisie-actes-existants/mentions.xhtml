@@ -61,7 +61,7 @@ xmlns:p="http://primefaces.org/ui">
                                  mask="99/99/9999" >
                         <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
                     </p:inputMask>
-                    <p:watermark  value="JJ/MM/YYYY" for="dateDeces" /> 
+                    <p:watermark  value="JJ/MM/YYYY" for="dateDeces"/> 
                     <p:message for="dateDeces" showSummary="false" showDetail="true"/>
 
                 </div>
@@ -79,9 +79,9 @@ xmlns:p="http://primefaces.org/ui">
                     <p:outputLabel for="dateDressage" styleClass="p-d-block">Date dressage</p:outputLabel>
                     <p:inputMask id="dateDressage" value="#{saisieActeExistantBacking.decesDto.dateDressage}"
                                  mask="99/99/9999" >
-
+                        <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
                     </p:inputMask>
-                    <p:watermark  value="JJ/MM/YYYY" for="dateDressage" /> 
+                    <p:watermark  value="JJ/MM/YYYY" for="dateDressage"/> 
                     <p:message for="dateDressage"/>
                 </div>
                 <div class="p-field p-lg-6">
@@ -94,8 +94,7 @@ xmlns:p="http://primefaces.org/ui">
                  </div>
                 <div class="p-field p-lg-6">
                     <p:outputLabel for="officierDeces" styleClass="p-d-block">Officier</p:outputLabel>
-                    <p:selectOneMenu id="officierDeces" value="#{saisieActeExistantBacking.decesDto.officierEtatCivilID}"          
-                                     label="Selectionnez">
+                    <p:selectOneMenu id="officierDeces" value="#{saisieActeExistantBacking.decesDto.officierEtatCivilID}">
                         <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez un officier --" />
                         <f:selectItems value="#{saisieActeExistantBacking.officiers}" var="officier" 
                                        itemLabel="#{officier.prenoms} #{officier.nom} [#{officier.titre}]" 
@@ -119,7 +118,17 @@ xmlns:p="http://primefaces.org/ui">
                 </div>
             </div>
             <p:dataTable id="mentionDecesTable" value="#{saisieActeExistantBacking.decesDtos}" var="deces">
-               <p:column headerText="Décision">
+                
+               <p:column headerText="date de naissance" >
+                   <h:outputText value="#{deces.date}"/>
+               </p:column>
+               <p:column headerText="lieu de décès" >
+                   <h:outputText value="#{deces.lieu}"/>
+               </p:column>
+               <p:column headerText="date dressage" >
+                   <h:outputText value="#{deces.dateDressage}"/>
+               </p:column>
+               <p:column headerText="décision" >
                    <h:outputText value="#{deces.decision}"/>
                </p:column>
 

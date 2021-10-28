@@ -62,7 +62,7 @@ xmlns:p="http://primefaces.org/ui">
                         value="#{saisieActeExistantBacking.lazySaisieActeExistantDataModel}"
                         selectionMode="single"
                         selection="#{saisieActeExistantBacking.selectedActe}" rowKey="#{acte.id}" paginator="true"
-                        rows="25" rowSelectMode="add" paginatorPosition="bottom" size="small">
+                        rows="25" paginatorPosition="bottom" size="small">
                     
                     <p:ajax event="rowSelect" listener="#{saisieActeExistantBacking.onRowSelect}" update="@form"/>
                     
@@ -100,9 +100,9 @@ xmlns:p="http://primefaces.org/ui">
             <p:outputPanel>
             <p:toolbar>
                 <p:toolbarGroup>
-                    <p:tag id="modeNouvelAjoutTag" value="MODE: Ajout nouvel acte" severity="success" 
+                    <p:tag id="modeNouvelAjoutTag" value="Ajout nouvel acte" severity="success" 
                            rendered="#{saisieActeExistantBacking.viewMode == 'NEW'}"/>
-                    <p:tag id='modeMiseJourTag' value="MODE: Mise à jour des actes" severity="danger"
+                    <p:tag id='modeMiseJourTag' value="Mise à jour des actes" severity="danger"
                            rendered="#{saisieActeExistantBacking.viewMode == 'UPDATE'}"/>
                     <p:spacer width="5"/>
                     <p:commandButton id="nouvelAnregistrement" value="Passer en mode 'ajout un nouvel acte'" process="@form" 
@@ -119,74 +119,23 @@ xmlns:p="http://primefaces.org/ui">
             </p:outputPanel>
             <p:spacer height="2"/>
             
-            <p:fieldset>
-                <div class="ui-fluid p-formgrid p-grid">
-                    <div class="p-field p-col">
-                        <p:outputLabel for="modeDeclaration" >Mode déclaration</p:outputLabel>
-                        <p:selectOneRadio id="modeDeclaration" value="#{saisieActeExistantBacking.acteNaissanceDto.modeDeclaration}" 
-                                            converter="omnifaces.SelectItemsConverter"
-                                            required="true" requiredMessage="Ce champ est obligatoire">
-                            <p:ajax update="contentForm:jugementOutputPanel"/>
-                              <f:selectItems value="#{saisieActeExistantBacking.modesDeclaration}" var="mode" 
-                                             itemLabel="#{mode.libelle}" itemValue="#{mode.code}"/>
-                          </p:selectOneRadio>
-                        <p:message for="modeDeclaration"/>
-                        
-                    </div>
-                    <div class="p-field p-col">
-                        <p:outputLabel for="extraitExtraordinaire" styleClass="p-d-block">Extraits extraordinaires</p:outputLabel>
-                        <p:inputText id="extraitExtraordinaire" value="#{saisieActeExistantBacking.extraitsExtraordinaires}"  required="true" styleClass="p-d-block"/>
-                      
-                    </div>
-                    <div class="p-field p-col">
-                        <p:outputLabel for="copieActe" styleClass="p-d-block">Copies d'acte</p:outputLabel>
-                        <p:inputText id="copieActe" value="#{saisieActeExistantBacking.nombreCopies}" required="true" styleClass="p-d-block"/>   
-                    </div>
-                        
-                    <div class="p-field p-col">
-                        <p:outputLabel for="extraitOrdinaire" styleClass="p-d-block">Extraits ordinaires</p:outputLabel>
-                        <p:inputText id="extraitOrdinaire" value="#{saisieActeExistantBacking.extraitsOrdinaires}" required="true" styleClass="p-d-block"/>
-                    </div>
-                   
-                </div>
-             
-            </p:fieldset>
-            <p:spacer height="2"/>
             
-            <p:outputPanel id="jugementOutputPanel">
-                <p:outputPanel  rendered="#{saisieActeExistantBacking.selectedModeDeclaration == 'JUGEMENT'}">
-                <p:fieldset legend="Info jugement">
-                    <div class="ui-fluid p-formgrid p-grid">
-                        <div class="p-field p-lg-4">
-                            <p:outputLabel for="numeroJugement" styleClass="p-d-block">Numéro jugement</p:outputLabel>
-                            <p:inputText id="numeroJugement" value="#{saisieActeExistantBacking.acteNaissanceDto.jugementNumero}" styleClass="p-d-block"/>
-                        </div>
-                        <div class="p-field p-lg-4">
-                            <p:outputLabel for="dateJugement" styleClass="p-d-block">Du</p:outputLabel>
-                            <p:inputMask id="dateJugement" value="#{saisieActeExistantBacking.acteNaissanceDto.jugementDate}"
-                                mask="99/99/9999 99:99:99" >
-                            </p:inputMask>
-                            <p:watermark  value="jj/MM/AAAA" for="dateJugement"/>   
-                        </div>
-                        <div class="p-field p-lg-4">
-                            <p:outputLabel for="tribunalJugement" styleClass="p-d-block">Tribunal</p:outputLabel>
-                            <p:inputText id="tribunalJugement" value="#{saisieActeExistantBacking.acteNaissanceDto.jugementTribunal}" styleClass="p-d-block"/>
-                        </div>
-                    </div>
-                 </p:fieldset>
-                 </p:outputPanel>
-            </p:outputPanel>
+            <p:wizard id="acteWizard" widgetVar="wizardWgt" flowListener="#{saisieActeExistantBacking.onFlowProcess}"
+                      nextLabel="suivant" backLabel="précédent">
+                <p:tab id="declaration" title="Déclaration">
+                    
+                    <ui:include src="/WEB-INF/includes/saisie-actes-existants/mode-declaration.xhtml"/>
+           
+                    <p:spacer height="2" />
             
-            <p:spacer height="2" />
-            
-            <p:wizard id="acteWizard" flowListener="#{saisieActeExistantBacking.onFlowProcess(event)}">
-                <p:tab title="Déclaration">
                     <p:outputPanel id="naissanceMultipleOutputPanel" >
                     <div class="ui-fluid p-formgrid p-grid">
-                        <div class="p-field p-lg-2">
-                            <p:outputLabel for="numeroActe" >Numéro acte</p:outputLabel>
-                            <p:inputText id="numeroActe" value="#{saisieActeExistantBacking.acteNaissanceDto.numero}" />
-                       
+                        <div class="p-field p-lg-4">
+                            <p:fieldset>
+                                  <p:outputLabel for="numeroActe" styleClass="p-d-block" style="color: #ffffff">Numéro acte</p:outputLabel>
+                                  <p:inputText id="numeroActe" value="#{saisieActeExistantBacking.acteNaissanceDto.numero}" 
+                                               required="true"/>
+                            </p:fieldset>
                         </div>
                        
                     </div>
@@ -194,21 +143,22 @@ xmlns:p="http://primefaces.org/ui">
                     <p:spacer width="2"/>
                     <p:fieldset>      
                         <p:outputLabel for="typeNaisance" styleClass="p-d-block">Type naissance</p:outputLabel>
-                        <p:selectOneMenu id="typeNaisance" converter="omnifaces.SelectItemsConverter" 
+                        <p:selectOneMenu id="typeNaisance" converter="omnifaces.SelectItemsConverter" required="true"
                                         value="#{saisieActeExistantBacking.acteNaissanceDto.typeNaissance}" styleClass="p-d-block">
                            <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez un type --" />
                            <f:selectItems value="#{saisieActeExistantBacking.typesNaissance}" var="type" 
                                           itemLabel="#{type.libelle}"  
-                                          itemValue="#{type.code}"/>
+                                          itemValue="#{type.code}" />
                         </p:selectOneMenu>
+                        <p:message for="typeNaisance"/>
                     </p:fieldset> 
                     <p:spacer width="2"/>
-                    <ui:include src="le-declare.xhtml"/>
+                    <ui:include src="/WEB-INF/includes/saisie-actes-existants/le-declare.xhtml"/>
                     </p:outputPanel>
                     
                     <p:spacer height="2" />
                     
-                    <ui:include src="filiation.xhtml"/>
+                    <ui:include src="/WEB-INF/includes/saisie-actes-existants/filiation.xhtml"/>
                     
                     <p:fieldset >
                         <div class="ui-fluid p-formgrid p-grid">
@@ -261,41 +211,15 @@ xmlns:p="http://primefaces.org/ui">
 
                     </p:fieldset>
                 </p:tab>
-                <p:tab title="Autres Informations">
-                    <ui:include src="autres-informations.xhtml"/>     
+                <p:tab id="autresInformations" title="Autres Informations">
+                    <ui:include src="/WEB-INF/includes/saisie-actes-existants/autres-informations.xhtml"/>     
                 </p:tab>
-                <p:tab title="Déclaration">
-                    <ui:include src="mentions.xhtml"/> 
+                <p:tab id="mentions" title="Mentions">
+                    <ui:include src="/WEB-INF/includes/saisie-actes-existants/mentions.xhtml"/> 
+                    <ui:include src="/WEB-INF/includes/saisie-actes-existants/commands.xhtml"/>
                 </p:tab>
             </p:wizard>
-          
             
-            <p:fieldset>
-                
-            <p:outputPanel id="commandOutputPanel">
-            <div class="ui-fluid p-formgrid p-grid">
-                
-                <div class="p-field p-lg-6">
-                   
-                    <p:commandButton value="Enregistrer l'acte" process="@form" action="#{saisieActeExistantBacking.creer()}"
-                                     update="@form messageForm"  icon="pi pi-check" 
-                                     styleClass="ui-button-outlined"
-                                     rendered="#{saisieActeExistantBacking.viewMode == 'NEW'}"/>
-                    <p:commandButton value="mettre à jour l'acte" process="@form" action="#{saisieActeExistantBacking.modifier()}"
-                                     update="@form messageForm"  icon="pi pi-check" 
-                                     styleClass="ui-button-outlined"
-                                     rendered="#{saisieActeExistantBacking.viewMode == 'UPDATE'}"/>
-                   
-                </div>
-               
-                <div class="p-field p-lg-6">
-                    <p:commandButton value="Annuler" icon="pi pi-times" 
-                                     styleClass="ui-button-outlined ui-button-warning" />
-                </div>
-            </div>
-           </p:outputPanel>
-          </p:fieldset>
-           
         </h:form>
           
         

@@ -46,6 +46,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
+import javax.validation.ValidationException;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import javax.validation.constraints.NotBlank;
@@ -116,7 +117,7 @@ public class SaisieActeExistantBacking extends BaseBacking implements Serializab
     private ActeNaissanceDto selectedActe;
     
     private List<ModeDeclarationDto> modesDeclaration;
-    private String selectedModeDeclaration;
+    //private String selectedModeDeclaration;
     
     private List<TypeNaissanceDto> typesNaissance;
     private String selectedTypeNaissance;
@@ -137,7 +138,7 @@ public class SaisieActeExistantBacking extends BaseBacking implements Serializab
     private int nombreCopies;
     private int extraitsOrdinaires;
     
-    private int numeroActe;
+   // private int numeroActe;
     
     //private boolean naissanceMultiple;
     private int nombreNaissance;
@@ -164,7 +165,7 @@ public class SaisieActeExistantBacking extends BaseBacking implements Serializab
         LOG.log(Level.INFO,"REGISTRE ID: {0}",registreID);
         registreDto = registreService.findById(registreID);
         LOG.log(Level.INFO,"REGISTRE LIBELLE: {0}",registreDto.getLibelle());
-        numeroActe = acteNaissanceService.numeroActe(registreID);
+       // numeroActe = acteNaissanceService.numeroActe(registreID);
         
         lazySaisieActeExistantDataModel.setRegistreID(registreID);
         
@@ -190,6 +191,7 @@ public class SaisieActeExistantBacking extends BaseBacking implements Serializab
         LOG.log(Level.INFO,"ENFANT NOM: {0}",selectedActe.getEnfantNom());
         LOG.log(Level.INFO,"SELECTED ACTE OFFICIER ID: {0}",selectedActe.getOfficierEtatCivilID());
         acteNaissanceDto = selectedActe;
+        LOG.log(Level.INFO,"SELECTED ACTE NUM: {0}",selectedActe.getNumero());
         //change view mode to render maj commande button
         viewMode = ViewMode.UPDATE;
     }
@@ -200,14 +202,18 @@ public class SaisieActeExistantBacking extends BaseBacking implements Serializab
         LOG.log(Level.INFO,"ENFANT DATE NAISSANCE: {0}",acteNaissanceDto.getEnfantDateNaissance());
         acteNaissanceDto.setOperation(Operation.SAISIE_ACTE_EXISTANT.name());
         acteNaissanceDto.setRegistreID(registreID);
-        //acteNaissanceDto.setNumero(numeroActe);
-        //acteNaissanceDto.setOfficierEtatCivilID(selectedOfficierId);
         
-        String id = acteNaissanceService.create(acteNaissanceDto);
-        LOG.log(Level.INFO,"--- ACTE NAISSANCE ID: {0}",id);
-        creerMentions(id);
-        resetActeDto();
-        addGlobalMessage("Déclaration enregistrée avec succès", FacesMessage.SEVERITY_INFO);
+        
+        try{
+            String id = acteNaissanceService.create(acteNaissanceDto);
+            LOG.log(Level.INFO,"--- ACTE NAISSANCE ID: {0}",id);
+            creerMentions(id);
+            resetActeDto();
+            addGlobalMessage("Déclaration enregistrée avec succès", FacesMessage.SEVERITY_INFO);
+        }catch(ValidationException ex){
+            LOG.log(Level.INFO,"ERROR MESSAGE: {0}",ex.getMessage());
+            addGlobalMessage(ex.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+        }
         
         //numeroActe = acteNaissanceService.numeroActe(registreID);
         
@@ -222,13 +228,11 @@ public class SaisieActeExistantBacking extends BaseBacking implements Serializab
          
         LOG.log(Level.INFO,"ENFANT DATE NAISSANCE: {0}",acteNaissanceDto.getEnfantDateNaissance());
         acteNaissanceDto.setOperation(Operation.MISE_A_JOUR.name());
-        //acteNaissanceDto.setRegistreID(registreID);
-        acteNaissanceDto.setNumero(numeroActe);
-        //acteNaissanceDto.setOfficierEtatCivilID(selectedOfficierId);
-        
+          
         acteNaissanceService.update(acteNaissanceDto.getId(),acteNaissanceDto);
         resetActeDto();
         addGlobalMessage("L'acte a été modifié avec succès", FacesMessage.SEVERITY_INFO);
+        viewMode = ViewMode.NEW;
         
         //numeroActe = acteNaissanceService.numeroActe(registreID);
     }
@@ -258,8 +262,10 @@ public class SaisieActeExistantBacking extends BaseBacking implements Serializab
        Validator validator = factory.getValidator();
        Set<ConstraintViolation<DecesDto>> violations = validator.validate(decesDto);
        if(violations.isEmpty()){
+           LOG.log(Level.INFO,"--MENTION DECES DTO OFFICIER ID {0}",decesDto.getOfficierEtatCivilID());
+           //var dcs = new DecesDto(decesDto);
            decesDtos.add(decesDto);
-           LOG.log(Level.INFO,"DECES DTO SIZE {0}",decesDtos.size());
+           LOG.log(Level.INFO,"--DECES DTO SIZE {0}",decesDtos.size());
            decesDto = new DecesDto();
        }else{
            violations.stream().forEach(v -> {
@@ -271,8 +277,8 @@ public class SaisieActeExistantBacking extends BaseBacking implements Serializab
     
     private void creerMentionDeces(@NotBlank String acteID){
        decesDtos.stream().forEach(d -> {
-            decesDto.setActeNaissanceID(acteID);
-            decesService.create(decesDto);
+            d.setActeNaissanceID(acteID);
+            decesService.create(d);
        });
       
     }
@@ -285,7 +291,9 @@ public class SaisieActeExistantBacking extends BaseBacking implements Serializab
             return "confirm";
         }
         else {
+            
             return event.getNewStep();
+            
         }
     }
 
@@ -336,15 +344,7 @@ public class SaisieActeExistantBacking extends BaseBacking implements Serializab
         this.extraitsOrdinaires = extraitsOrdinaires;
     }
 
-    public int getNumeroActe() {
-        return numeroActe;
-    }
-
-    public void setNumeroActe(int numeroActe) {
-        this.numeroActe = numeroActe;
-    }
-
-
+   
     public List<TypeNaissanceDto> getTypesNaissance() {
         return typesNaissance;
     }
@@ -412,14 +412,7 @@ public class SaisieActeExistantBacking extends BaseBacking implements Serializab
         return officiers;
     }
 
-    public String getSelectedModeDeclaration() {
-        return selectedModeDeclaration;
-    }
-
-    public void setSelectedModeDeclaration(String selectedModeDeclaration) {
-        this.selectedModeDeclaration = selectedModeDeclaration;
-    }
-
+    
     public String getSelectedTypeNaissance() {
         return selectedTypeNaissance;
     }
