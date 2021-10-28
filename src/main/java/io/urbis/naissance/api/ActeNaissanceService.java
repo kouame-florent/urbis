@@ -30,7 +30,7 @@ public interface ActeNaissanceService {
     public ActeNaissanceDto findById(@PathParam("id") String id);
     
     @POST
-    public void create(ActeNaissanceDto acteNaissanceDto);
+    public String create(ActeNaissanceDto acteNaissanceDto);
     
     @PUT @Path("{id}")
     public void update(@PathParam("id")String id, ActeNaissanceDto acteNaissanceDto);

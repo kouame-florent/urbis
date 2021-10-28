@@ -178,7 +178,8 @@ xmlns:p="http://primefaces.org/ui">
             </p:outputPanel>
             
             <p:spacer height="2" />
-            <p:tabView id="declTabview">
+            
+            <p:wizard id="acteWizard" flowListener="#{saisieActeExistantBacking.onFlowProcess(event)}">
                 <p:tab title="Déclaration">
                     <p:outputPanel id="naissanceMultipleOutputPanel" >
                     <div class="ui-fluid p-formgrid p-grid">
@@ -202,229 +203,12 @@ xmlns:p="http://primefaces.org/ui">
                         </p:selectOneMenu>
                     </p:fieldset> 
                     <p:spacer width="2"/>
-                        <ui:include src="le-declare.xhtml"/>
+                    <ui:include src="le-declare.xhtml"/>
                     </p:outputPanel>
+                    
                     <p:spacer height="2" />
-                    <p:fieldset legend="Filiation">
-                        <div class="p-grid">
-                            <div class="p-lg-6">
-                                <p:fieldset legend="Père">
-                                <p:outputPanel id="pereOutputPanel">
-                                <div class="ui-fluid p-formgrid p-grid">
-                                    <div class="p-field p-lg-12">
-                                        <p:outputLabel for="pereDecede" styleClass="p-d-block">Père décédé ?</p:outputLabel>
-                                        <p:toggleSwitch id="pereDecede" value="#{saisieActeExistantBacking.pereDecede}">
-                                            <p:ajax  update="pereOutputPanel"/>
-                                        </p:toggleSwitch>
-                                        <div class="p-field p-lg-12">    
-                                            <p:outputLabel for="pereNom" styleClass="p-d-block">Nom</p:outputLabel>
-                                            <p:inputText id="pereNom" value="#{saisieActeExistantBacking.acteNaissanceDto.pereNom}"  required="true" 
-                                                          styleClass="p-d-block"/>
-                                        </div>
-                                        <div class="p-field p-lg-12">
-                                            <p:outputLabel for="perePrenoms" styleClass="p-d-block">Prénoms</p:outputLabel>
-                                            <p:inputText id="perePrenoms" value="#{saisieActeExistantBacking.acteNaissanceDto.perePrenoms}" required="true"  
-                                                         styleClass="p-d-block"/>
-                                        </div>
-                                        
-                                        <div class="p-field p-lg-12">
-                                            <p:outputLabel for="pereDateNaissance" styleClass="p-d-block">Date de naissance</p:outputLabel>
-                                            <p:inputMask id="pereDateNaissance" value="#{saisieActeExistantBacking.acteNaissanceDto.pereDateNaissance}"
-                                                mask="99/99/9999" required="true">
-                                                
-                                            </p:inputMask>
-                                            <p:watermark  value="jj/MM/AAAA" for="pereDateNaissance" />    
-                                            
-                                        </div>
-                                        <div class="p-field p-lg-12">
-                                            <p:outputLabel for="pereLieuNaissance" styleClass="p-d-block">Lieu de naissance</p:outputLabel>
-                                            <p:inputText id="pereLieuNaissance" value="#{saisieActeExistantBacking.acteNaissanceDto.pereLieuNaissance}"  required="true"  
-                                                         styleClass="p-d-block"/>
-                                        </div>
-                                        <div class="p-field p-lg-12">
-                                            <p:outputLabel for="pereProfession" styleClass="p-d-block" rendered="#{!saisieActeExistantBacking.pereDecede}">Profession</p:outputLabel>
-                                            <p:inputText id="pereProfession" value="#{saisieActeExistantBacking.acteNaissanceDto.pereProfession}"
-                                                         rendered="#{!saisieActeExistantBacking.pereDecede}" required="true" 
-                                                         styleClass="p-d-block"/>
-                                        </div>
-                                        <div class="p-field p-lg-12">
-                                            <div class="ui-fluid p-grid">
-                                                <div class="p-field p-lg-6">
-                                                    <p:outputLabel for="pereDateDeces" rendered="#{saisieActeExistantBacking.pereDecede}" styleClass="p-d-block">Décédé le</p:outputLabel>
-                                                    <p:inputText id="pereDateDeces" rendered="#{saisieActeExistantBacking.pereDecede}" value="#{saisieActeExistantBacking.acteNaissanceDto.pereDateDeces}"  
-                                                             styleClass="p-d-block"/>
-                                                </div>
-                                                <div class="p-field p-lg-6">
-                                                    <p:outputLabel for="pereLieuDeces" rendered="#{saisieActeExistantBacking.pereDecede}" styleClass="p-d-block">à</p:outputLabel>
-                                                    <p:inputText id="pereLieuDeces" rendered="#{saisieActeExistantBacking.pereDecede}" value="#{saisieActeExistantBacking.acteNaissanceDto.pereLieuDeces}"  
-                                                             styleClass="p-d-block"/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="p-field p-lg-12">
-                                            <p:outputLabel for="pereLocalite" rendered="#{!saisieActeExistantBacking.pereDecede}" styleClass="p-d-block">Domicile</p:outputLabel>
-                                            <p:inputText id="pereLocalite" rendered="#{!saisieActeExistantBacking.pereDecede}" 
-                                                         value="#{saisieActeExistantBacking.acteNaissanceDto.pereLocalite}" required="true"  
-                                                         styleClass="p-d-block"/>
-                                        </div>
-                                        <div class="p-field p-lg-12">
-                                            <p:outputLabel for="pereNationalite" styleClass="p-d-block">Nationalité</p:outputLabel>
-                                            <p:selectOneMenu id="pereNationalite" value="#{saisieActeExistantBacking.acteNaissanceDto.pereNationalite}"          
-                                                             label="Selectionnez" converter="omnifaces.SelectItemsConverter">
-                                                <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez une nationalité --" />
-                                                <f:selectItems value="#{saisieActeExistantBacking.nationalites}" var="nationalite" 
-                                                               itemLabel="#{nationalite.libelle}"  
-                                                               itemValue="#{nationalite.code}"/>
-                                            </p:selectOneMenu>
-                                            <p:message for="pereNationalite"/>
-                                            
-                                        </div>
-                                        <div class="p-field p-lg-12">
-                                            <p:outputLabel for="pereTypePiece" styleClass="p-d-block">Type pièce</p:outputLabel>
-                                            <p:selectOneMenu id="pereTypePiece" converter="omnifaces.SelectItemsConverter" 
-                                                             value="#{saisieActeExistantBacking.acteNaissanceDto.pereTypePiece}"          
-                                                             label="Selectionnez">
-                                                <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez un type --" />
-                                                <f:selectItems value="#{saisieActeExistantBacking.typesPiece}" var="piece" 
-                                                               itemLabel="#{piece.libelle}"  
-                                                               itemValue="#{piece.code}"/>
-                                            </p:selectOneMenu>
-                                        </div>
-                                        <div class="p-field p-lg-12">
-                                            <p:outputLabel for="pereNumeroPiece" styleClass="p-d-block">Numero pièce</p:outputLabel>
-                                            <p:inputText id="pereNumeroPiece" value="#{saisieActeExistantBacking.acteNaissanceDto.pereNumeroPiece}"  
-                                                         styleClass="p-d-block"/>
-                                        </div>
-                                        <div class="p-field p-lg-12">
-                                            <p:outputLabel for="pereDatePiece" styleClass="p-d-block">Date délivrance pièce</p:outputLabel>
-                                            <p:inputMask id="pereDatePiece" value="#{saisieActeExistantBacking.acteNaissanceDto.pereDatePiece}"
-                                                            mask="99/99/9999">
-                                               
-                                            </p:inputMask>
-                                            <p:watermark  value="jj/MM/AAAA" for="pereDatePiece" />   
-                                            <p:message for="pereDatePiece"/>
-                                        </div>
-                                        <div class="p-field p-lg-12">
-                                            <p:outputLabel for="pereLieuPiece" styleClass="p-d-block">Lieu délivrance pièce </p:outputLabel>
-                                            <p:inputText id="pereLieuPiece" value="#{saisieActeExistantBacking.acteNaissanceDto.pereLieuPiece}"   
-                                                         styleClass="p-d-block"/>
-                                        </div>
-                                     </div>
-                                </div>
-                                </p:outputPanel>
-                                </p:fieldset>
-                             </div>
-                            <div class="p-lg-6">
-                                <p:fieldset legend="Mère">
-                                    <p:outputPanel id="mereOutputPanel">
-                                    <div class="ui-fluid p-formgrid p-grid">
-                                         <div class="p-field p-lg-12">
-                                             <p:outputLabel for="mereDecede" styleClass="p-d-block">Mère décédé ?</p:outputLabel>
-                                             <p:toggleSwitch id="mereDecede" value="#{saisieActeExistantBacking.mereDecede}">
-                                                 <p:ajax update="mereOutputPanel"/>
-                                             </p:toggleSwitch>
-                                            <div class="p-field p-lg-12">    
-                                                <p:outputLabel for="mereNom" styleClass="p-d-block">Nom</p:outputLabel>
-                                                <p:inputText id="mereNom" value="#{saisieActeExistantBacking.acteNaissanceDto.mereNom}"  required="true"  
-                                                              styleClass="p-d-block"/>
-                                            </div>
-                                            <div class="p-field p-lg-12">
-                                                <p:outputLabel for="merePrenoms" styleClass="p-d-block">Prénoms</p:outputLabel>
-                                                <p:inputText id="merePrenoms" value="#{saisieActeExistantBacking.acteNaissanceDto.merePrenoms}" required="true"  
-                                                             styleClass="p-d-block"/>
-                                            </div>
-
-                                            <div class="p-field p-lg-12">
-                                                <p:outputLabel for="mereDateNaissance" styleClass="p-d-block">Date naissance</p:outputLabel>
-                                                <p:inputMask id="mereDateNaissance" value="#{saisieActeExistantBacking.acteNaissanceDto.mereDateNaissance}"
-                                                    mask="99/99/9999" required="true">
-                                                    
-                                                </p:inputMask>
-                                                <p:watermark  value="jj/MM/AAAA" for="mereDateNaissance" />    
-                                            </div>
-                                            <div class="p-field p-lg-12">
-                                                <p:outputLabel for="mereLieuNaissance" styleClass="p-d-block">Lieu de naissance</p:outputLabel>
-                                                <p:inputText id="mereLieuNaissance" value="#{saisieActeExistantBacking.acteNaissanceDto.mereLieuNaissance}"  required="true"  
-                                                             styleClass="p-d-block"/>
-                                            </div>
-                                            <div class="p-field p-lg-12">
-                                                <p:outputLabel for="mereProfession" rendered="#{!saisieActeExistantBacking.mereDecede}" styleClass="p-d-block">Profession</p:outputLabel>
-                                                <p:inputText id="mereProfession" rendered="#{!saisieActeExistantBacking.mereDecede}" value="#{saisieActeExistantBacking.acteNaissanceDto.mereProfession}" required="true"  
-                                                             styleClass="p-d-block"/>
-                                            </div>
-                                            <div class="p-field p-lg-12">
-                                            <div class="ui-fluid p-grid">
-                                                    <div class="p-field p-lg-6">
-                                                        <p:outputLabel for="mereDateDeces" rendered="#{saisieActeExistantBacking.mereDecede}" styleClass="p-d-block">Décédé le</p:outputLabel>
-                                                        <p:inputText id="mereDateDeces" rendered="#{saisieActeExistantBacking.mereDecede}" value="#{saisieActeExistantBacking.acteNaissanceDto.mereDateDeces}"  
-                                                                 styleClass="p-d-block"/>
-                                                    </div>
-                                                    <div class="p-field p-lg-6">
-                                                        <p:outputLabel for="mereLieuDeces" rendered="#{saisieActeExistantBacking.mereDecede}" styleClass="p-d-block">à</p:outputLabel>
-                                                        <p:inputText id="mereLieuDeces" rendered="#{saisieActeExistantBacking.mereDecede}" value="#{saisieActeExistantBacking.acteNaissanceDto.mereLieuDeces}"  
-                                                                 styleClass="p-d-block"/>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="p-field p-lg-12">
-                                                <p:outputLabel for="mereLocalite" rendered="#{!saisieActeExistantBacking.mereDecede}" styleClass="p-d-block">Domicile</p:outputLabel>
-                                                <p:inputText id="mereLocalite" rendered="#{!saisieActeExistantBacking.mereDecede}" value="#{saisieActeExistantBacking.acteNaissanceDto.mereLocalite}" required="true"  
-                                                             styleClass="p-d-block"/>
-                                            </div>
-                                            <div class="p-field p-lg-12">
-                                                <p:outputLabel for="mereNationalite" styleClass="p-d-block">Nationalité</p:outputLabel>
-                                                <p:selectOneMenu id="mereNationalite" converter="omnifaces.SelectItemsConverter" 
-                                                                 value="#{saisieActeExistantBacking.acteNaissanceDto.mereNationalite}"          
-                                                                 label="Selectionnez" >
-                                                    <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez une nationalité --" />
-                                                    <f:selectItems value="#{saisieActeExistantBacking.nationalites}" var="nationalite" 
-                                                                   itemLabel="#{nationalite.libelle}"  
-                                                                   itemValue="#{nationalite.code}"/>
-                                                </p:selectOneMenu>
-                                                <p:message for="mereNationalite"/>
-
-                                            </div>
-                                            <div class="p-field p-lg-12">
-                                                <p:outputLabel for="mereTypePiece" styleClass="p-d-block">Type pièce</p:outputLabel>
-                                                <p:selectOneMenu id="mereTypePiece" converter="omnifaces.SelectItemsConverter" 
-                                                                 value="#{saisieActeExistantBacking.acteNaissanceDto.mereTypePiece}"          
-                                                             label="Selectionnez" >
-                                                    <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez un type --" />
-                                                    <f:selectItems value="#{saisieActeExistantBacking.typesPiece}" var="piece" 
-                                                                   itemLabel="#{piece.libelle}"  
-                                                                   itemValue="#{piece.code}"/>
-                                                </p:selectOneMenu>
-                                                
-                                            </div>
-                                            <div class="p-field p-lg-12">
-                                                <p:outputLabel for="mereNumeroPiece" styleClass="p-d-block">Numero pièce</p:outputLabel>
-                                                <p:inputText id="mereNumeroPiece" value="#{saisieActeExistantBacking.acteNaissanceDto.mereNumeroPiece}"  
-                                                             styleClass="p-d-block"/>
-                                            </div>
-                                            <div class="p-field p-lg-12">
-                                                <p:outputLabel for="mereDatePiece" styleClass="p-d-block">Date délivrance pièce</p:outputLabel>
-                                                <p:inputMask id="mereDatePiece" value="#{saisieActeExistantBacking.acteNaissanceDto.mereDatePiece}"
-                                                            mask="99/99/9999">
-                                                    
-                                                </p:inputMask>
-                                                <p:watermark  value="jj/MM/AAAA" for="mereDatePiece" />  
-                                                <p:message for="mereDatePiece"/>
-                                            </div>
-                                            <div class="p-field p-lg-12">
-                                                <p:outputLabel for="mereLieuPiece" styleClass="p-d-block">Lieu délivrance pièce </p:outputLabel>
-                                                <p:inputText id="mereLieuPiece" value="#{saisieActeExistantBacking.acteNaissanceDto.mereLieuPiece}"  
-                                                             styleClass="p-d-block"/>
-                                            </div>
-
-                                        </div>
-                                     </div> 
-                                </p:outputPanel>
-                                </p:fieldset>
-                            </div>
-                            
-                        </div>
-                       
-                    </p:fieldset>
+                    
+                    <ui:include src="filiation.xhtml"/>
                     
                     <p:fieldset >
                         <div class="ui-fluid p-formgrid p-grid">
@@ -454,7 +238,7 @@ xmlns:p="http://primefaces.org/ui">
 
                                     <f:selectItems value="#{saisieActeExistantBacking.liensParenteDeclarant}" var="lien" 
                                                    itemLabel="#{lien.libelle}" itemValue="#{lien.code}"/>
-                                    <p:ajax update="contentForm:declTabview:declarantLienParente"/>
+                                    <p:ajax update="contentForm:declarantLienParente"/>
                                   </p:selectOneRadio>
                             </div>
                         </div>
@@ -476,206 +260,16 @@ xmlns:p="http://primefaces.org/ui">
                        </div>
 
                     </p:fieldset>
-                    
                 </p:tab>
-                <p:tab  title="Autre Informations">
-                    <p:fieldset legend="Le déclarant">
-                        <div class="ui-fluid p-formgrid p-grid">
-                            <div class="p-field p-lg-6">
-                                <p:outputLabel for="declarantLienParente" styleClass="p-d-block">Lien parenté </p:outputLabel>
-                                <p:inputText id="declarantLienParente" value="#{saisieActeExistantBacking.selectedDeclarantLienParente.libelle}" 
-                                             styleClass="p-d-block" disabled="true"/>
-
-                            </div>
-                            <div class="p-field p-lg-6">
-                                <p:outputLabel for="declarantProfession" styleClass="p-d-block">Profession </p:outputLabel>
-                                <p:inputText id="declarantProfession" value="#{saisieActeExistantBacking.acteNaissanceDto.declarantProfession}" 
-                                              styleClass="p-d-block"/>
-                            </div>
-                            <div class="p-field p-lg-6">
-                                <p:outputLabel for="declarantNom" styleClass="p-d-block">Nom</p:outputLabel>
-                                <p:inputText id="declarantNom" value="#{saisieActeExistantBacking.acteNaissanceDto.declarantNom}" 
-                                              styleClass="p-d-block"/>
-                            </div>
-                            <div class="p-field p-lg-6">
-                                <p:outputLabel for="declarantDomicile" styleClass="p-d-block">Domicile </p:outputLabel>
-                                <p:inputText id="declarantDomicile" value="#{saisieActeExistantBacking.acteNaissanceDto.declarantLocalite}" 
-                                             styleClass="p-d-block"/>
-                            </div>
-                            <div class="p-field p-lg-6">
-                                <p:outputLabel for="declarantPrenoms" styleClass="p-d-block">Prénoms </p:outputLabel>
-                                <p:inputText id="declarantPrenoms" value="#{saisieActeExistantBacking.acteNaissanceDto.declarantProfession}" 
-                                              styleClass="p-d-block"/>
-                            </div>
-                            <div class="p-field p-lg-6">
-                                <div class="ui-fluid p-grid">
-                                    <div class="p-lg-6">
-                                        <p:outputLabel for="declarantTypePiece" styleClass="p-d-block">Type pièce </p:outputLabel>
-                                        <p:selectOneMenu id="declarantTypePiece" converter="omnifaces.SelectItemsConverter" 
-                                                         value="#{saisieActeExistantBacking.acteNaissanceDto.declarantTypePiece}"          
-                                                        label="Selectionnez">
-                                           <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez un type --" />
-                                           <f:selectItems value="#{saisieActeExistantBacking.typesPiece}" var="piece" 
-                                                          itemLabel="#{piece.libelle}"  
-                                                          itemValue="#{piece.code}"/>
-                                        </p:selectOneMenu>
-                                    </div>
-                                    <div class="p-lg-6">
-                                        <p:outputLabel for="declarantNumeroPiece" styleClass="p-d-block">Numéro pièce </p:outputLabel>
-                                        <p:inputText id="declarantNumeroPiece" value="#{saisieActeExistantBacking.acteNaissanceDto.declarantNumeroPiece}" 
-                                              styleClass="p-d-block"/>
-                                    </div>
-                                </div>
-                                
-                            </div>
-                            <div class="p-field p-lg-6">
-                                <div class="ui-fluid p-grid">
-                                    <div class="p-lg-6">
-                                        <p:outputLabel for="declarantDateNaissance" styleClass="p-d-block">Profession </p:outputLabel>
-                                        <p:inputText id="declarantDateNaissance" value="#{saisieActeExistantBacking.acteNaissanceDto.declarantDateNaissance}" 
-                                              styleClass="p-d-block"/>
-                                    </div>
-                                    <div class="p-lg-6">
-                                        <p:outputLabel for="declarantNationalite" styleClass="p-d-block">Profession </p:outputLabel>
-                                        <p:selectOneMenu id="declarantNationalite" converter="omnifaces.SelectItemsConverter" 
-                                                        value="#{saisieActeExistantBacking.acteNaissanceDto.declarantNationalite}"          
-                                                        label="Selectionnez">
-                                           <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez une nationalité --" />
-                                           <f:selectItems value="#{saisieActeExistantBacking.nationalites}" var="nationalite" 
-                                                          itemLabel="#{nationalite.libelle}"  
-                                                          itemValue="#{nationalite.code}"/>
-                                        </p:selectOneMenu>
-                                    </div>
-                                </div>
-                                    
-                            </div>
-                            <div class="p-field p-lg-6">
-                                <div class="ui-fluid p-grid">
-                                    <div class="p-lg-6">
-                                        <p:outputLabel for="declarantDateDelivrancePiece" styleClass="p-d-block">Profession </p:outputLabel>
-                                        <p:inputText id="declarantDateDelivrancePiece" value="#{saisieActeExistantBacking.acteNaissanceDto.declarantDatePiece}" 
-                                              styleClass="p-d-block"/>
-                                    </div>
-                                    <div class="p-lg-6">
-                                        <p:outputLabel for="declarantLieuDelivrancePiece" styleClass="p-d-block">Profession </p:outputLabel>
-                                        <p:inputText id="declarantLieuDelivrancePiece" value="#{saisieActeExistantBacking.acteNaissanceDto.declarantLieuPiece}" 
-                                              styleClass="p-d-block"/>
-                                    </div>
-                                </div>
-                                
-                            </div>
-                            
-                        </div>
-                    </p:fieldset>
-                    <p:spacer height="2"/>
-                    <p:fieldset legend="Interprète">
-                        <div class="ui-fluid p-formgrid p-grid">
-                            <div class="p-field p-lg-6">
-                                <p:outputLabel for="interpreteLangue" styleClass="p-d-block">Langue </p:outputLabel>
-                                <p:inputText id="interpreteLangue" value="#{saisieActeExistantBacking.acteNaissanceDto.interpreteLangue}" 
-                                              styleClass="p-d-block"/>
-                            </div>
-                            <div class="p-field p-lg-6">
-                                <p:outputLabel for="interpreteDateNaissance" styleClass="p-d-block">Date de naissance </p:outputLabel>
-                                <p:inputText id="interpreteDateNaissance" value="#{saisieActeExistantBacking.acteNaissanceDto.interpreteDateNaissance}" 
-                                              styleClass="p-d-block"/>
-                            </div>
-                            <div class="p-field p-lg-6">
-                                <p:outputLabel for="interpreteNom" styleClass="p-d-block">Nom </p:outputLabel>
-                                <p:inputText id="interpreteNom" value="#{saisieActeExistantBacking.acteNaissanceDto.interpreteNom}" 
-                                              styleClass="p-d-block"/>
-                            </div>
-                            <div class="p-field p-lg-6">
-                                <p:outputLabel for="interpreteProfession" styleClass="p-d-block">Profession </p:outputLabel>
-                                <p:inputText id="interpreteProfession" value="#{saisieActeExistantBacking.acteNaissanceDto.interpreteProfession}" 
-                                              styleClass="p-d-block"/>
-                            </div>
-                            <div class="p-field p-lg-6">
-                                <p:outputLabel for="interpretePrenoms" styleClass="p-d-block">Prénoms </p:outputLabel>
-                                <p:inputText id="interpretePrenoms" value="#{saisieActeExistantBacking.acteNaissanceDto.interpretePrenoms}" 
-                                              styleClass="p-d-block"/>
-                            </div>
-                            
-                            <div class="p-field p-lg-6">
-                                <p:outputLabel for="interpreteDomicile" styleClass="p-d-block">Domicile </p:outputLabel>
-                                <p:inputText id="interpreteDomicile" value="#{saisieActeExistantBacking.acteNaissanceDto.interpreteDomicile}" 
-                                              styleClass="p-d-block"/>
-                            </div>
-                        </div>
-                    </p:fieldset>
-                    <p:spacer height="2"/>
-                    <div class="p-grid">
-                        <div class="p-lg-6">
-                            <p:fieldset legend="Témoin1">
-                                <div class="ui-fluid p-formgrid p-grid">
-                                <div class="p-field p-lg-12">
-                                    <p:outputLabel for="temoin1Nom" styleClass="p-d-block">Nom </p:outputLabel>
-                                    <p:inputText id="temoin1Nom" value="#{saisieActeExistantBacking.acteNaissanceDto.temoinPremierNom}" 
-                                              styleClass="p-d-block"/>
-                                </div>
-                                <div class="p-field p-lg-12">
-                                   <p:outputLabel for="temoin1Prenoms" styleClass="p-d-block">Prénoms </p:outputLabel>
-                                   <p:inputText id="temoin1Prenoms" value="#{saisieActeExistantBacking.acteNaissanceDto.temoinPremierPrenoms}" 
-                                              styleClass="p-d-block"/>
-                                </div>
-                                <div class="p-field p-lg-12">
-                                   <p:outputLabel for="temoin1DateNaissance" styleClass="p-d-block">Date naissance </p:outputLabel>
-                                   <p:inputText id="temoin1DateNaissance" value="#{saisieActeExistantBacking.acteNaissanceDto.temoinPremierDateNaissance}" 
-                                              styleClass="p-d-block"/>
-                                </div>
-                                <div class="p-field p-lg-12">
-                                   <p:outputLabel for="temoin1Profession" styleClass="p-d-block">Profession </p:outputLabel>
-                                   <p:inputText id="temoin1Profession" value="#{saisieActeExistantBacking.acteNaissanceDto.temoinPremierProfession}" 
-                                              styleClass="p-d-block"/>
-                                </div>
-                                <div class="p-field p-lg-12">
-                                   <p:outputLabel for="temoin1Domicile" styleClass="p-d-block">Domicile </p:outputLabel>
-                                   <p:inputText id="temoin1Domicile" value="#{saisieActeExistantBacking.acteNaissanceDto.temoinPremierDomicile}" 
-                                              styleClass="p-d-block"/>
-                                </div>
-                              </div>
-                            </p:fieldset>
-                        </div>
-                        <div class="p-lg-6">
-                            <p:fieldset legend="Témoin2">
-                                <div class="ui-fluid p-formgrid p-grid">
-                                <div class="p-field p-lg-12">
-                                    <p:outputLabel for="temoin2Nom" styleClass="p-d-block">Nom </p:outputLabel>
-                                    <p:inputText id="temoin2Nom" value="#{saisieActeExistantBacking.acteNaissanceDto.temoinDeuxiemeNom}" 
-                                              styleClass="p-d-block"/>
-                                </div>
-                                <div class="p-field p-lg-12">
-                                   <p:outputLabel for="temoin2Prenoms" styleClass="p-d-block">Prénoms </p:outputLabel>
-                                   <p:inputText id="temoin2Prenoms" value="#{saisieActeExistantBacking.acteNaissanceDto.temoinDeuxiemePrenoms}" 
-                                              styleClass="p-d-block"/>
-                                </div>
-                                <div class="p-field p-lg-12">
-                                   <p:outputLabel for="temoin2DateNaissance" styleClass="p-d-block">Date naissance </p:outputLabel>
-                                   <p:inputText id="temoin2DateNaissance" value="#{saisieActeExistantBacking.acteNaissanceDto.temoinDeuxiemeDateNaissance}" 
-                                              styleClass="p-d-block"/>
-                                </div>
-                                <div class="p-field p-lg-12">
-                                   <p:outputLabel for="temoin2Profession" styleClass="p-d-block">Profession </p:outputLabel>
-                                   <p:inputText id="temoin2Profession" value="#{saisieActeExistantBacking.acteNaissanceDto.temoinDeuxiemeProfession}" 
-                                              styleClass="p-d-block"/>
-                                </div>
-                                <div class="p-field p-lg-12">
-                                   <p:outputLabel for="temoin2Domicile" styleClass="p-d-block">Domicile </p:outputLabel>
-                                   <p:inputText id="temoin2Domicile" value="#{saisieActeExistantBacking.acteNaissanceDto.temoinDeuxiemeDomicile}" 
-                                              styleClass="p-d-block"/>
-                                </div>
-                                </div>
-                            </p:fieldset>
-                        </div>
-                    </div>
-                        
-                        
+                <p:tab title="Autres Informations">
+                    <ui:include src="autres-informations.xhtml"/>     
                 </p:tab>
-                <p:tab  title="Mentions">
+                <p:tab title="Déclaration">
                     <ui:include src="mentions.xhtml"/> 
                 </p:tab>
-            </p:tabView>
+            </p:wizard>
           
+            
             <p:fieldset>
                 
             <p:outputPanel id="commandOutputPanel">

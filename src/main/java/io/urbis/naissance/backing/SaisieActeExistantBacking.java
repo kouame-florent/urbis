@@ -34,7 +34,9 @@ import io.urbis.registre.api.NationaliteService;
 import io.urbis.registre.api.OfficierService;
 import io.urbis.registre.api.RegistreService;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -42,7 +44,13 @@ import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
+import javax.validation.constraints.NotBlank;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
+import org.primefaces.event.FlowEvent;
 import org.primefaces.event.SelectEvent;
 
 /**
@@ -141,13 +149,15 @@ public class SaisieActeExistantBacking extends BaseBacking implements Serializab
     
     private ActeNaissanceDto acteNaissanceDto;
     
-    private AdoptionDto adoptionDto;
-    private DecesDto decesDto;
-    private DissolutionMariageDto dissolutionMariageDto;
-    private LegitimationDto legitimationDto;
-    private MariageDto mariageDto;
-    private ReconnaissanceDto reconnaissanceDto;
-    private RectificationDto rectificationDto;
+    private AdoptionDto adoptionDto = new AdoptionDto();
+    private List<AdoptionDto> adoptionDtos = new ArrayList<>();
+    private DecesDto decesDto = new DecesDto();
+    private List<DecesDto> decesDtos = new ArrayList<>();
+    private DissolutionMariageDto dissolutionMariageDto = new DissolutionMariageDto();
+    private LegitimationDto legitimationDto = new LegitimationDto();
+    private MariageDto mariageDto = new MariageDto();
+    private ReconnaissanceDto reconnaissanceDto = new ReconnaissanceDto();
+    private RectificationDto rectificationDto = new RectificationDto();
     
    
     public void onload(){
@@ -174,8 +184,6 @@ public class SaisieActeExistantBacking extends BaseBacking implements Serializab
         typesPiece = typePieceService.findAll();
         acteNaissanceDto = new ActeNaissanceDto();
         
-        adoptionDto = new AdoptionDto();
-        decesDto = new DecesDto();
     }
     
     public void onRowSelect(SelectEvent<ActeNaissanceDto> event){
@@ -195,12 +203,18 @@ public class SaisieActeExistantBacking extends BaseBacking implements Serializab
         //acteNaissanceDto.setNumero(numeroActe);
         //acteNaissanceDto.setOfficierEtatCivilID(selectedOfficierId);
         
-        acteNaissanceService.create(acteNaissanceDto);
+        String id = acteNaissanceService.create(acteNaissanceDto);
+        LOG.log(Level.INFO,"--- ACTE NAISSANCE ID: {0}",id);
+        creerMentions(id);
         resetActeDto();
         addGlobalMessage("Déclaration enregistrée avec succès", FacesMessage.SEVERITY_INFO);
         
         //numeroActe = acteNaissanceService.numeroActe(registreID);
         
+    }
+    
+    private void creerMentions(String acteID){
+        creerMentionDeces(acteID);
     }
     
     public void modifier(){
@@ -234,13 +248,45 @@ public class SaisieActeExistantBacking extends BaseBacking implements Serializab
         acteNaissanceDto.setPereDateDeces(old.getPereDateDeces());
     }
     
-    public void creerMentionAdoption(){
-        acteNaissanceDto.getAdoptionDtos().add(adoptionDto);
-        adoptionDto = new AdoptionDto();
+    public void ajouterMentionAdoption(){
+        
     }
      
-    public void creerMentionDeces(){
-       acteNaissanceDto.getDecesDtos().add(decesDto);
+    public void ajouterMentionDeces(){
+       LOG.log(Level.INFO,"Ajouter mention décès...");
+       ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+       Validator validator = factory.getValidator();
+       Set<ConstraintViolation<DecesDto>> violations = validator.validate(decesDto);
+       if(violations.isEmpty()){
+           decesDtos.add(decesDto);
+           LOG.log(Level.INFO,"DECES DTO SIZE {0}",decesDtos.size());
+           decesDto = new DecesDto();
+       }else{
+           violations.stream().forEach(v -> {
+               addGlobalMessage(v.getMessage(), FacesMessage.SEVERITY_ERROR);
+           });
+       }
+       
+    }
+    
+    private void creerMentionDeces(@NotBlank String acteID){
+       decesDtos.stream().forEach(d -> {
+            decesDto.setActeNaissanceID(acteID);
+            decesService.create(decesDto);
+       });
+      
+    }
+    
+    private boolean skip;
+    
+    public String onFlowProcess(FlowEvent event) {
+        if (skip) {
+            skip = false; //reset in case user goes back
+            return "confirm";
+        }
+        else {
+            return event.getNewStep();
+        }
     }
 
     public String getRegistreID() {
@@ -476,6 +522,22 @@ public class SaisieActeExistantBacking extends BaseBacking implements Serializab
 
     public void setRectificationDto(RectificationDto rectificationDto) {
         this.rectificationDto = rectificationDto;
+    }
+
+    public List<AdoptionDto> getAdoptionDtos() {
+        return adoptionDtos;
+    }
+
+    public void setAdoptionDtos(List<AdoptionDto> adoptionDtos) {
+        this.adoptionDtos = adoptionDtos;
+    }
+
+    public List<DecesDto> getDecesDtos() {
+        return decesDtos;
+    }
+
+    public void setDecesDtos(List<DecesDto> decesDtos) {
+        this.decesDtos = decesDtos;
     }
 
    

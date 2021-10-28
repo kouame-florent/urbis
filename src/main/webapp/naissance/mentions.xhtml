@@ -15,23 +15,26 @@ xmlns:p="http://primefaces.org/ui">
                  <div class="p-field p-lg-6">
                      <p:outputLabel for="adoptionDecision" styleClass="p-d-block">Décision</p:outputLabel>
                      <p:inputTextarea id="adoptionDecision" value="#{saisieActeExistantBacking.adoptionDto.decision}" 
-                                      rows="10"/>
+                                      rows="10">
+                        <f:validateBean disabled="true" />
+                     </p:inputTextarea>
                  </div>
                  <div class="p-field p-lg-6">
-                    <p:outputLabel for="officier" styleClass="p-d-block">Officier</p:outputLabel>
-                    <p:selectOneMenu id="officier" value="#{saisieActeExistantBacking.adoptionDto.officierEtatCivilID}"          
+                    <p:outputLabel for="officierAdoption" styleClass="p-d-block">Officier</p:outputLabel>
+                    <p:selectOneMenu id="officierAdoption" value="#{saisieActeExistantBacking.adoptionDto.officierEtatCivilID}"          
                                      label="Selectionnez">
                         <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez un officier --" />
                         <f:selectItems value="#{saisieActeExistantBacking.officiers}" var="officier" 
                                        itemLabel="#{officier.prenoms} #{officier.nom} [#{officier.titre}]" 
                                        itemValue="#{officier.id}"/>
+                        <f:validateBean disabled="true" />
                     </p:selectOneMenu>
                 </div>
             </div>
             <div class="ui-fluid p-formgrid p-grid">
                 <div class="p-field p-lg-6">
                     <p:commandButton value="Enregistrer la mention d'adoption" process="mentionsTabView" 
-                                     action="#{saisieActeExistantBacking.creerMentionAdoption()}"
+                                     action="#{saisieActeExistantBacking.ajouterMentionAdoption()}"
                                      update="mentionsTabView messageForm"  icon="pi pi-check" 
                                      styleClass="ui-button-outlined"/>
                 </div>
@@ -40,7 +43,7 @@ xmlns:p="http://primefaces.org/ui">
                                      styleClass="ui-button-outlined ui-button-warning" />
                 </div>
             </div>
-            <p:dataTable id="mentionAdoptionTable" value="#{saisieActeExistantBacking.acteNaissanceDto.adoptionDtos}" var="adoption">
+            <p:dataTable id="mentionAdoptionTable" value="#{saisieActeExistantBacking.adoptionDtos}" var="adoption">
                <p:column headerText="Décision">
                    <h:outputText value="#{adoption.decision}"/>
                </p:column>
@@ -59,7 +62,7 @@ xmlns:p="http://primefaces.org/ui">
                         <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
                     </p:inputMask>
                     <p:watermark  value="JJ/MM/YYYY" for="dateDeces" /> 
-                    <p:message for="dateDeces"/>
+                    <p:message for="dateDeces" showSummary="false" showDetail="true"/>
 
                 </div>
                 <div class="p-field p-lg-6">
@@ -73,7 +76,7 @@ xmlns:p="http://primefaces.org/ui">
                                     styleClass="p-d-block"/>
                 </div>
                 <div class="p-field p-lg-6">
-                    <p:outputLabel for="dateDressage" styleClass="p-d-block">Prénoms</p:outputLabel>
+                    <p:outputLabel for="dateDressage" styleClass="p-d-block">Date dressage</p:outputLabel>
                     <p:inputMask id="dateDressage" value="#{saisieActeExistantBacking.decesDto.dateDressage}"
                                  mask="99/99/9999" >
 
@@ -84,14 +87,29 @@ xmlns:p="http://primefaces.org/ui">
                 <div class="p-field p-lg-6">
                      <p:outputLabel for="decesDecision" styleClass="p-d-block">Décision</p:outputLabel>
                      <p:inputTextarea id="decesDecision" value="#{saisieActeExistantBacking.decesDto.decision}" 
-                                      rows="10"/>
+                                      rows="10">
+                         <f:validateBean disabled="true" />
+                     </p:inputTextarea>
+                     <p:message for="decesDecision"/>
                  </div>
+                <div class="p-field p-lg-6">
+                    <p:outputLabel for="officierDeces" styleClass="p-d-block">Officier</p:outputLabel>
+                    <p:selectOneMenu id="officierDeces" value="#{saisieActeExistantBacking.decesDto.officierEtatCivilID}"          
+                                     label="Selectionnez">
+                        <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez un officier --" />
+                        <f:selectItems value="#{saisieActeExistantBacking.officiers}" var="officier" 
+                                       itemLabel="#{officier.prenoms} #{officier.nom} [#{officier.titre}]" 
+                                       itemValue="#{officier.id}"/>
+                        <f:validateBean disabled="true" />
+                    </p:selectOneMenu>
+                    <p:message for="officierDeces"/>
+                </div>
 
             </div>
             <div class="ui-fluid p-formgrid p-grid">
                 <div class="p-field p-lg-6">
-                    <p:commandButton value="Enregistrer la mention d'adoption" process="@form" 
-                                     action="#{saisieActeExistantBacking.creerMentionDeces()}"
+                    <p:commandButton value="Enregistrer la mention de décès" process="mentionsTabView" 
+                                     action="#{saisieActeExistantBacking.ajouterMentionDeces()}"
                                      update="mentionsTabView messageForm"  icon="pi pi-check" 
                                      styleClass="ui-button-outlined"/>
                 </div>
@@ -100,7 +118,7 @@ xmlns:p="http://primefaces.org/ui">
                                      styleClass="ui-button-outlined ui-button-warning" />
                 </div>
             </div>
-            <p:dataTable id="mentionDecesTable" value="#{saisieActeExistantBacking.acteNaissanceDto.adoptionDtos}" var="deces">
+            <p:dataTable id="mentionDecesTable" value="#{saisieActeExistantBacking.decesDtos}" var="deces">
                <p:column headerText="Décision">
                    <h:outputText value="#{deces.decision}"/>
                </p:column>

@@ -6,6 +6,7 @@
 package io.urbis.mention.dto;
 
 import java.time.LocalDateTime;
+import javax.validation.constraints.NotBlank;
 import lombok.Data;
 
 /**
@@ -20,9 +21,11 @@ public abstract class MentionDto {
     private LocalDateTime created = LocalDateTime.now();
     private LocalDateTime updated = LocalDateTime.now();
    
+    @NotBlank(message = "L champ 'Decision' ne peut être vide")
     private String decision;
   
+    @NotBlank(message = "Le champ 'Officier' ne peut être vide")
     private String officierEtatCivilID;
-   
+    
     private String acteNaissanceID;
 }
