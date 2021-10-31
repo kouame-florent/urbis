@@ -6,7 +6,13 @@
 package io.urbis.naissance.backing;
 
 import io.urbis.common.util.BaseBacking;
+import io.urbis.mention.api.AdoptionService;
 import io.urbis.mention.api.DecesService;
+import io.urbis.mention.api.DissolutionService;
+import io.urbis.mention.api.LegitimationService;
+import io.urbis.mention.api.MariageService;
+import io.urbis.mention.api.ReconnaissanceService;
+import io.urbis.mention.api.RectificationService;
 import io.urbis.mention.dto.AdoptionDto;
 import io.urbis.mention.dto.DecesDto;
 import io.urbis.mention.dto.DissolutionMariageDto;
@@ -106,6 +112,30 @@ public class SaisieActeExistantBacking extends BaseBacking implements Serializab
     DecesService decesService;
     
     @Inject
+    @RestClient
+    AdoptionService adoptionService;
+    
+    @Inject
+    @RestClient
+    DissolutionService dissolutionService;
+    
+    @Inject
+    @RestClient
+    LegitimationService legitimationService;
+    
+    @Inject
+    @RestClient
+    MariageService mariageService;
+    
+    @Inject
+    @RestClient
+    ReconnaissanceService reconnaissanceService;
+    
+    @Inject
+    @RestClient
+    RectificationService rectificationService;
+    
+    @Inject
     LazySaisieActeExistantDataModel lazySaisieActeExistantDataModel;
     
     private ViewMode viewMode;
@@ -152,13 +182,24 @@ public class SaisieActeExistantBacking extends BaseBacking implements Serializab
     
     private AdoptionDto adoptionDto = new AdoptionDto();
     private List<AdoptionDto> adoptionDtos = new ArrayList<>();
+    
     private DecesDto decesDto = new DecesDto();
-    private List<DecesDto> decesDtos = new ArrayList<>();
+    private List<DecesDto> decesDtos = new ArrayList<>(); 
+    
     private DissolutionMariageDto dissolutionMariageDto = new DissolutionMariageDto();
-    private LegitimationDto legitimationDto = new LegitimationDto();
+    private List<DissolutionMariageDto> dissolutionMariageDtos = new ArrayList<>();
+    
+    private LegitimationDto legitimationDto = new LegitimationDto();  
+    private List<LegitimationDto> legitimationDtos = new ArrayList<>();
+    
     private MariageDto mariageDto = new MariageDto();
+    private List<MariageDto> mariageDtos = new ArrayList<>();
+    
     private ReconnaissanceDto reconnaissanceDto = new ReconnaissanceDto();
+    private List<ReconnaissanceDto> reconnaissanceDtos = new ArrayList<>();
+    
     private RectificationDto rectificationDto = new RectificationDto();
+    private List<RectificationDto> rectificationDtos = new ArrayList<>();
     
    
     public void onload(){
@@ -219,10 +260,7 @@ public class SaisieActeExistantBacking extends BaseBacking implements Serializab
         
     }
     
-    private void creerMentions(String acteID){
-        creerMentionDeces(acteID);
-    }
-    
+   
     public void modifier(){
         LOG.log(Level.INFO,"Creating acte naissance...");
          
@@ -247,10 +285,12 @@ public class SaisieActeExistantBacking extends BaseBacking implements Serializab
     
     }
     
+    /*
     private void resetForNaissanceMultiple(ActeNaissanceDto old){
         acteNaissanceDto = new ActeNaissanceDto();
         acteNaissanceDto.setPereDateDeces(old.getPereDateDeces());
     }
+*/
     
     public void ajouterMentionAdoption(){
         
@@ -273,6 +313,34 @@ public class SaisieActeExistantBacking extends BaseBacking implements Serializab
            });
        }
        
+    }
+    
+    public void ajouterMentionMariage(){
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+        Set<ConstraintViolation<MariageDto>> violations = validator.validate(mariageDto);
+        if(violations.isEmpty()){
+            mariageDtos.add(mariageDto);
+            mariageDto = new MariageDto();
+        }else{
+            violations.stream().forEach(v -> {
+                addGlobalMessage(v.getMessage(), FacesMessage.SEVERITY_ERROR);
+            });
+        }
+    
+    }
+    
+    private void creerMentions(String acteID){
+        creerMentionMariage(acteID);
+        creerMentionDeces(acteID);
+    }
+    
+    
+    private void creerMentionMariage(@NotBlank String acteID){
+        mariageDtos.stream().forEach(m -> {
+            m.setActeNaissanceID(acteID);
+            mariageService.create(m);
+       });
     }
     
     private void creerMentionDeces(@NotBlank String acteID){
@@ -531,6 +599,46 @@ public class SaisieActeExistantBacking extends BaseBacking implements Serializab
 
     public void setDecesDtos(List<DecesDto> decesDtos) {
         this.decesDtos = decesDtos;
+    }
+
+    public List<DissolutionMariageDto> getDissolutionMariageDtos() {
+        return dissolutionMariageDtos;
+    }
+
+    public void setDissolutionMariageDtos(List<DissolutionMariageDto> dissolutionMariageDtos) {
+        this.dissolutionMariageDtos = dissolutionMariageDtos;
+    }
+
+    public List<LegitimationDto> getLegitimationDtos() {
+        return legitimationDtos;
+    }
+
+    public void setLegitimationDtos(List<LegitimationDto> legitimationDtos) {
+        this.legitimationDtos = legitimationDtos;
+    }
+
+    public List<MariageDto> getMariageDtos() {
+        return mariageDtos;
+    }
+
+    public void setMariageDtos(List<MariageDto> mariageDtos) {
+        this.mariageDtos = mariageDtos;
+    }
+
+    public List<ReconnaissanceDto> getReconnaissanceDtos() {
+        return reconnaissanceDtos;
+    }
+
+    public void setReconnaissanceDtos(List<ReconnaissanceDto> reconnaissanceDtos) {
+        this.reconnaissanceDtos = reconnaissanceDtos;
+    }
+
+    public List<RectificationDto> getRectificationDtos() {
+        return rectificationDtos;
+    }
+
+    public void setRectificationDtos(List<RectificationDto> rectificationDtos) {
+        this.rectificationDtos = rectificationDtos;
     }
 
    

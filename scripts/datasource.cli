@@ -1,0 +1,1 @@
+data-source add --name=urbis --jndi-name=java:jboss/datasources/UrbisDS --driver-name=mariadb --connection-url=jdbc:mariadb://127.0.0.1:3306/urbis  --user-name=root --password=urbis8!

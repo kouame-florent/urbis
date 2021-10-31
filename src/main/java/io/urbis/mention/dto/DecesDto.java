@@ -10,6 +10,10 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+/**
+ *
+ * @author florent
+ */
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)

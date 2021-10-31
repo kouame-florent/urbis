@@ -9,6 +9,99 @@ xmlns:p="http://primefaces.org/ui">
  <ui:composition>
   
      <p:tabView id="mentionsTabView">
+         <p:tab title="Mariage">
+           <p:fieldset>
+            <div class="ui-fluid p-formgrid p-grid">
+                <div class="p-field p-lg-6">
+                    <p:outputLabel for="dateMariage" styleClass="p-d-block">Date du mariage</p:outputLabel>
+                    <p:inputMask id="dateMariage" value="#{saisieActeExistantBacking.mariageDto.date}"
+                                 mask="99/99/9999" >
+                        <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
+                    </p:inputMask>
+                    <p:watermark  value="JJ/MM/YYYY" for="dateMariage"/> 
+                    <p:message for="dateMariage" showSummary="false" showDetail="true"/>
+
+                </div>
+                <div class="p-field p-lg-6">
+                    <p:outputLabel for="lieuMariage" styleClass="p-d-block">Lieu du mariage</p:outputLabel>
+                    <p:inputText id="lieuMariage" value="#{saisieActeExistantBacking.mariageDto.lieu}"   
+                                    styleClass="p-d-block"/>
+                </div>
+               
+                <div class="p-field p-lg-6">
+                    <p:outputLabel for="dateDressageMaraige" styleClass="p-d-block">Date dressage</p:outputLabel>
+                    <p:inputMask id="dateDressageMaraige" value="#{saisieActeExistantBacking.mariageDto.dateDressage}"
+                                 mask="99/99/9999" >
+                        <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
+                    </p:inputMask>
+                    <p:watermark  value="JJ/MM/YYYY" for="dateDressageMaraige"/> 
+                    <p:message for="dateDressageMaraige"/>
+                </div>
+            </div>
+               <p:fieldset legend="Conjoint(e)">
+                <div class="ui-fluid p-formgrid p-grid">
+                     <div class="p-field p-lg-6">
+                         <p:outputLabel for="nom" styleClass="p-d-block">Nom</p:outputLabel>
+                         <p:inputText id="nom" value="#{saisieActeExistantBacking.mariageDto.conjointNom}"  
+                                         styleClass="p-d-block"/>
+                     </div>
+                     <div class="p-field p-lg-6">
+                         <p:outputLabel for="prenoms" styleClass="p-d-block">Prénoms</p:outputLabel>
+                         <p:inputText id="prenoms" value="#{saisieActeExistantBacking.mariageDto.conjointPrenoms}"  
+                                         styleClass="p-d-block"/>
+                     </div>
+                     <div class="p-field p-lg-6">
+                         <p:outputLabel for="profession" styleClass="p-d-block">Profession</p:outputLabel>
+                         <p:inputText id="profession" value="#{saisieActeExistantBacking.mariageDto.conjointProfession}"  
+                                         styleClass="p-d-block"/>
+                     </div>
+                     <div class="p-field p-lg-6">
+                         <p:outputLabel for="domicile" styleClass="p-d-block">Domicile</p:outputLabel>
+                         <p:inputText id="domicile" value="#{saisieActeExistantBacking.mariageDto.conjointDomicile}"  
+                                         styleClass="p-d-block"/>
+                     </div>
+                 </div>  
+            </p:fieldset>
+            <div class="ui-fluid p-formgrid p-grid">
+                <div class="p-field p-lg-6">
+                     <p:outputLabel for="mariageDecision" styleClass="p-d-block">Décision</p:outputLabel>
+                     <p:inputTextarea id="mariageDecision" value="#{saisieActeExistantBacking.mariageDto.decision}" 
+                                      rows="10">
+                         <f:validateBean disabled="true" />
+                     </p:inputTextarea>
+                     <p:message for="mariageDecision"/>
+                 </div>
+                <div class="p-field p-lg-6">
+                    <p:outputLabel for="mariageOfficier" styleClass="p-d-block">Officier</p:outputLabel>
+                    <p:selectOneMenu id="mariageOfficier" value="#{saisieActeExistantBacking.mariageDto.officierEtatCivilID}">
+                        <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez un officier --" />
+                        <f:selectItems value="#{saisieActeExistantBacking.officiers}" var="officier" 
+                                       itemLabel="#{officier.prenoms} #{officier.nom} [#{officier.titre}]" 
+                                       itemValue="#{officier.id}"/>
+                        <f:validateBean disabled="true" />
+                    </p:selectOneMenu>
+                    <p:message for="mariageOfficier"/>
+                </div>
+            </div>
+            <div class="ui-fluid p-formgrid p-grid">
+                <div class="p-field p-lg-12">
+                    <p:commandButton value="Ajouter la mention de mariage" process="mentionsTabView" 
+                                     action="#{saisieActeExistantBacking.ajouterMentionMariage()}"
+                                     update="mentionsTabView messageForm"  icon="pi pi-check-square" 
+                                     styleClass="ui-button-outlined"/>
+                </div>
+                
+            </div>
+               <p:dataTable id="mentionMariageTable" value="#{saisieActeExistantBacking.mariageDtos}" var="mariage">
+               <p:column headerText="date dressage" >
+                   <h:outputText value="#{mariage.dateDressage}"/>
+               </p:column>
+               <p:column headerText="décision" >
+                   <h:outputText value="#{mariage.decision}"/>
+               </p:column>
+            </p:dataTable>
+            </p:fieldset>
+         </p:tab>
          <p:tab title="Adoption">
              <p:fieldset>
              <div class="ui-fluid p-formgrid p-grid">
@@ -44,6 +137,7 @@ xmlns:p="http://primefaces.org/ui">
                 </div>
             </div>
             <p:dataTable id="mentionAdoptionTable" value="#{saisieActeExistantBacking.adoptionDtos}" var="adoption">
+                
                <p:column headerText="Décision">
                    <h:outputText value="#{adoption.decision}"/>
                </p:column>
@@ -146,11 +240,7 @@ xmlns:p="http://primefaces.org/ui">
                  <p:inputTextarea style="width: 75%"/>
              </p:fieldset>
          </p:tab>
-         <p:tab title="Mariage">
-             <p:fieldset legend="Decision">
-                 <p:inputTextarea style="width: 75%"/>
-             </p:fieldset>
-         </p:tab>
+         
          <p:tab title="Reconnaissance">
              <p:fieldset legend="Decision">
                  <p:inputTextarea style="width: 75%"/>

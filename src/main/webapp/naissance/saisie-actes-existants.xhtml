@@ -64,7 +64,8 @@ xmlns:p="http://primefaces.org/ui">
                         selection="#{saisieActeExistantBacking.selectedActe}" rowKey="#{acte.id}" paginator="true"
                         rows="25" paginatorPosition="bottom" size="small">
                     
-                    <p:ajax event="rowSelect" listener="#{saisieActeExistantBacking.onRowSelect}" update="@form"/>
+                    <p:ajax event="rowSelect" listener="#{saisieActeExistantBacking.onRowSelect}"
+                            update=":contentForm:modeAjoutOutputPanel :contentForm:acteWizard"/>
                     
                     <f:facet name="header">
                         Actes de naissance
@@ -97,7 +98,7 @@ xmlns:p="http://primefaces.org/ui">
                
                 </p:dataTable>
             <p:spacer height="4"/>
-            <p:outputPanel>
+            <p:outputPanel id="modeAjoutOutputPanel">
             <p:toolbar>
                 <p:toolbarGroup>
                     <p:tag id="modeNouvelAjoutTag" value="Ajout nouvel acte" severity="success" 

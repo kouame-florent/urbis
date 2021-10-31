@@ -108,7 +108,9 @@ public class RegistreListBacking extends BaseBacking implements Serializable{
     public void effacerFiltres(){
         filterData.setAnnee(0);
         filterData.setNumero(0);
-       // lazyRegistreDataModel.setAnnee(filterData.getAnnee());
+        //lazyRegistreDataModel.setTypeRegistre("naissance");  
+        lazyRegistreDataModel.setAnnee(0);
+        lazyRegistreDataModel.setNumero(0);
     }
     
    
