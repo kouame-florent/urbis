@@ -85,19 +85,28 @@ xmlns:p="http://primefaces.org/ui">
             </div>
             <div class="ui-fluid p-formgrid p-grid">
                 <div class="p-field p-lg-12">
-                    <p:commandButton value="Ajouter la mention de mariage" process="mentionsTabView" 
+                    <p:commandButton value="Enregistrer la mention de mariage" process="mentionsTabView" 
                                      action="#{saisieActeExistantBacking.ajouterMentionMariage()}"
                                      update="mentionsTabView messageForm"  icon="pi pi-check-square" 
                                      styleClass="ui-button-outlined"/>
                 </div>
                 
             </div>
-               <p:dataTable id="mentionMariageTable" value="#{saisieActeExistantBacking.mariageDtos}" var="mariage">
+            <p:dataTable id="mentionMariageTable" value="#{saisieActeExistantBacking.mariageDtos}" var="mariage"
+                        selectionMode="single"
+                        selection="#{saisieActeExistantBacking.selectedMentionMariage}" rowKey="#{mariage.id}">
+                
+                <p:ajax event="rowSelect" listener="#{saisieActeExistantBacking.onMentionMariageRowSelect}"
+                            update=":contentForm:mentionsTabView"/>
+               
                <p:column headerText="date dressage" >
                    <h:outputText value="#{mariage.dateDressage}"/>
                </p:column>
-               <p:column headerText="décision" >
+                <p:column headerText="décision" style="width: 80%" >
                    <h:outputText value="#{mariage.decision}"/>
+               </p:column>
+                <p:column style="width: 5%">
+                   <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-times"/>
                </p:column>
             </p:dataTable>
             </p:fieldset>

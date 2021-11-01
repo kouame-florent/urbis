@@ -8,11 +8,13 @@ package io.urbis.mention.api;
 import io.urbis.mention.dto.AdoptionDto;
 import io.urbis.mention.dto.MariageDto;
 import java.util.List;
+import java.util.Set;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.QueryParam;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 /**
@@ -26,5 +28,5 @@ public interface MariageService {
     public void create(@NotNull MariageDto dto);
     
     @GET
-    public List<MariageDto> findByActeNaissance(@NotBlank String acteNaissanceID);
+    public Set<MariageDto> findByActeNaissance(@QueryParam("acte-naissance-id") @NotBlank String acteNaissanceID);
 }

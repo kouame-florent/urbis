@@ -13,7 +13,7 @@ import lombok.EqualsAndHashCode;
  * @author florent
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true,onlyExplicitlyIncluded = true)
 public class AdoptionDto extends MentionDto{
     
 }

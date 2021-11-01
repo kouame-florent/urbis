@@ -41,6 +41,7 @@ import io.urbis.registre.api.OfficierService;
 import io.urbis.registre.api.RegistreService;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
@@ -146,6 +147,7 @@ public class SaisieActeExistantBacking extends BaseBacking implements Serializab
     
     private ActeNaissanceDto selectedActe;
     
+       
     private List<ModeDeclarationDto> modesDeclaration;
     //private String selectedModeDeclaration;
     
@@ -193,7 +195,8 @@ public class SaisieActeExistantBacking extends BaseBacking implements Serializab
     private List<LegitimationDto> legitimationDtos = new ArrayList<>();
     
     private MariageDto mariageDto = new MariageDto();
-    private List<MariageDto> mariageDtos = new ArrayList<>();
+    private Set<MariageDto> mariageDtos = new HashSet<>();
+    private MariageDto selectedMentionMariage;
     
     private ReconnaissanceDto reconnaissanceDto = new ReconnaissanceDto();
     private List<ReconnaissanceDto> reconnaissanceDtos = new ArrayList<>();
@@ -233,8 +236,13 @@ public class SaisieActeExistantBacking extends BaseBacking implements Serializab
         LOG.log(Level.INFO,"SELECTED ACTE OFFICIER ID: {0}",selectedActe.getOfficierEtatCivilID());
         acteNaissanceDto = selectedActe;
         LOG.log(Level.INFO,"SELECTED ACTE NUM: {0}",selectedActe.getNumero());
+        mariageDtos = mariageService.findByActeNaissance(selectedActe.getId());
         //change view mode to render maj commande button
         viewMode = ViewMode.UPDATE;
+    }
+    
+    public void onMentionMariageRowSelect(SelectEvent<MariageDto> event){
+        mariageDto = selectedMentionMariage;
     }
     
     public void creer(){
@@ -268,6 +276,7 @@ public class SaisieActeExistantBacking extends BaseBacking implements Serializab
         acteNaissanceDto.setOperation(Operation.MISE_A_JOUR.name());
           
         acteNaissanceService.update(acteNaissanceDto.getId(),acteNaissanceDto);
+        creerMentions(acteNaissanceDto.getId());
         resetActeDto();
         addGlobalMessage("L'acte a été modifié avec succès", FacesMessage.SEVERITY_INFO);
         viewMode = ViewMode.NEW;
@@ -320,6 +329,7 @@ public class SaisieActeExistantBacking extends BaseBacking implements Serializab
         Validator validator = factory.getValidator();
         Set<ConstraintViolation<MariageDto>> violations = validator.validate(mariageDto);
         if(violations.isEmpty()){
+            
             mariageDtos.add(mariageDto);
             mariageDto = new MariageDto();
         }else{
@@ -617,14 +627,15 @@ public class SaisieActeExistantBacking extends BaseBacking implements Serializab
         this.legitimationDtos = legitimationDtos;
     }
 
-    public List<MariageDto> getMariageDtos() {
+    public Set<MariageDto> getMariageDtos() {
         return mariageDtos;
     }
 
-    public void setMariageDtos(List<MariageDto> mariageDtos) {
+    public void setMariageDtos(Set<MariageDto> mariageDtos) {
         this.mariageDtos = mariageDtos;
     }
 
+    
     public List<ReconnaissanceDto> getReconnaissanceDtos() {
         return reconnaissanceDtos;
     }
@@ -639,6 +650,14 @@ public class SaisieActeExistantBacking extends BaseBacking implements Serializab
 
     public void setRectificationDtos(List<RectificationDto> rectificationDtos) {
         this.rectificationDtos = rectificationDtos;
+    }
+
+    public MariageDto getSelectedMentionMariage() {
+        return selectedMentionMariage;
+    }
+
+    public void setSelectedMentionMariage(MariageDto selectedMentionMariage) {
+        this.selectedMentionMariage = selectedMentionMariage;
     }
 
    

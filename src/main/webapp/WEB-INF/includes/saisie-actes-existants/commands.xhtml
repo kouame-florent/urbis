@@ -13,12 +13,14 @@ xmlns:p="http://primefaces.org/ui">
 
         <div class="p-field p-lg-6">
 
-            <p:commandButton value="Enregistrer l'acte de naissance" process="@form" action="#{saisieActeExistantBacking.creer()}"
+            <p:commandButton value="Enregistrer l'acte de naissance" process="@form" 
+                             action="#{saisieActeExistantBacking.creer()}"
                              update="@form messageForm"  icon="pi pi-check" 
                              styleClass="ui-button-outlined"
                              rendered="#{saisieActeExistantBacking.viewMode == 'NEW'}"
                              oncomplete="PF('wizardWgt').loadStep('declaration','back')"/>
-            <p:commandButton value="mettre à jour l'acte de naissance" process="@form" action="#{saisieActeExistantBacking.modifier()}"
+            <p:commandButton value="mettre à jour l'acte de naissance" process="@form" 
+                             action="#{saisieActeExistantBacking.modifier()}"
                              update="@form messageForm"  icon="pi pi-check" 
                              styleClass="ui-button-outlined"
                              rendered="#{saisieActeExistantBacking.viewMode == 'UPDATE'}"

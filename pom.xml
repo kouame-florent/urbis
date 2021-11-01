@@ -167,7 +167,7 @@
                         <layer>mariadb-datasource</layer>
                         <layer>mariadb-driver</layer>
                     </layers>
-                    -->
+                    
                     <cli-sessions>
                         <cli-session>
                             <script-files>
@@ -176,6 +176,7 @@
                             <resolve-expressions>true</resolve-expressions>
                         </cli-session>
                     </cli-sessions>
+                    -->
                     <feature-packs>
                         <feature-pack>
                             <location>wildfly@maven(org.jboss.universe:community-universe)#${version.wildfly}</location>
@@ -193,9 +194,7 @@
                         <layer>jaxrs</layer>
                         <layer>microprofile-rest-client</layer>
                         <layer>microprofile-config</layer>
-                        <layer>jpa</layer>
-                        <layer>mariadb-datasource</layer>
-                        <layer>mariadb-driver</layer>
+                        
                     </layers>
                     <excluded-layers>
                         <layer>deployment-scanner</layer>

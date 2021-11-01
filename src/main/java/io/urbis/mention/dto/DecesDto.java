@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true,onlyExplicitlyIncluded = true)
 public class DecesDto extends MentionDto {
     
     private LocalDate date;

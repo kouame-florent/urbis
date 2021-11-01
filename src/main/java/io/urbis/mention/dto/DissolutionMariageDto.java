@@ -15,7 +15,7 @@ import lombok.EqualsAndHashCode;
  * @author florent
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true,onlyExplicitlyIncluded = true)
 public class DissolutionMariageDto extends MentionDto{
     private LocalDate dateJugement;
     

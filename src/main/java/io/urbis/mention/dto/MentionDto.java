@@ -7,20 +7,28 @@ package io.urbis.mention.dto;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.UUID;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  *
  * @author florent
  */
 @Data
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public abstract class MentionDto {
    
     private LocalDateTime created; 
     private LocalDateTime updated; 
     
-    @NotBlank(message = "L champ 'Decision' ne peut être vide")
+    @EqualsAndHashCode.Include
+    @NotNull
+    private String id = UUID.randomUUID().toString();;
+    
+    @NotBlank(message = "Le champ 'Decision' ne peut être vide")
     private String decision;
     
     private LocalDate dateDressage;
