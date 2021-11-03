@@ -16,6 +16,7 @@ import io.urbis.registre.dto.LocaliteDto;
 import io.urbis.naissance.dto.OfficierEtatCivilDto;
 import io.urbis.registre.dto.RegistreDto;
 import io.urbis.registre.dto.TribunalDto;
+import io.urbis.registre.dto.TypeRegistre;
 import io.urbis.registre.dto.TypeRegistreDto;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -79,6 +80,7 @@ public class CreerSerieBacking implements Serializable{
     
     private int nombreDeFeuillets;
     private int annee;
+    private String libelle;
     private LocaliteDto currentLocalite;
     private CentreDto currentCentre;
     private TribunalDto currentTribunal;
@@ -102,6 +104,23 @@ public class CreerSerieBacking implements Serializable{
        // anneeCourante = registreService.anneeCourante();
        // numeroRegistre = registreService.numeroRegistre(selectedType.getCode());
        // numeroPremierActe = registreService.numeroPremierActe(selectedType.getCode());
+    }
+    
+    public boolean renderedLibelle(){
+        if(selectedType != null){
+            return selectedType.getCode().equals(TypeRegistre.SPECIAL_NAISSANCE.name())
+                || selectedType.getCode().equals(TypeRegistre.SPECIAL_DECES.name());
+        }
+        return false;
+    
+    }
+    
+    public boolean requiredLibelle(){
+        if(selectedType != null){
+            return selectedType.getCode().equals(TypeRegistre.SPECIAL_NAISSANCE.name())
+                || selectedType.getCode().equals(TypeRegistre.SPECIAL_DECES.name());
+        }
+        return false;
     }
     
     
@@ -147,6 +166,10 @@ public class CreerSerieBacking implements Serializable{
         }
         
        PrimeFaces.current().dialog().closeDynamic("");
+    }
+    
+    private String registreLibelle(TypeRegistreDto type){
+        return "";
     }
     
     private void clear(){
@@ -237,5 +260,15 @@ public class CreerSerieBacking implements Serializable{
     public void setAnnee(int annee) {
         this.annee = annee;
     }
+
+    public String getLibelle() {
+        return libelle;
+    }
+
+    public void setLibelle(String libelle) {
+        this.libelle = libelle;
+    }
+    
+    
    
 }

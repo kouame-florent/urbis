@@ -5,27 +5,30 @@
  */
 package io.urbis.mention.api;
 
-import io.urbis.mention.dto.AdoptionDto;
-import io.urbis.mention.dto.LegitimationDto;
+import io.urbis.mention.dto.RectificationDto;
 import java.util.List;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 /**
  *
  * @author florent
  */
-@Path("/mentions/legitimations")
+@Path("/mentions/rectifications")
 @RegisterRestClient(baseUri = "http://127.0.0.1:8181")
-public interface LegitimationService {
-    
+public interface MentionRectificationService {
     @POST
-    public void create(@NotNull LegitimationDto dto);
+    public void create(@NotNull RectificationDto dto);
     
     @GET
-    public List<LegitimationDto> findByActeNaissance(@NotBlank String acteNaissanceID);
+    public List<RectificationDto> findByActeNaissance(@NotBlank String acteNaissanceID);
+    
+    @DELETE @Path("{id}")
+    public void delete(@PathParam("id") String id);
 }

@@ -1,0 +1,491 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+xmlns:h="http://xmlns.jcp.org/jsf/html"
+xmlns:f="http://xmlns.jcp.org/jsf/core"
+xmlns:p="http://primefaces.org/ui">
+    
+ <ui:composition>
+  
+     <p:tabView id="mentionsTabView">
+         <p:tab title="Mariage">
+           <p:fieldset>
+            <div class="ui-fluid p-formgrid p-grid">
+                <div class="p-field p-lg-6">
+                    <p:outputLabel for="mariageDate" styleClass="p-d-block">Date du mariage</p:outputLabel>
+                    <p:inputMask id="mariageDate" value="#{editionBacking.mariageDto.date}"
+                                 mask="99/99/9999" >
+                        <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
+                    </p:inputMask>
+                    <p:watermark  value="JJ/MM/YYYY" for="mariageDate"/> 
+                    <p:message for="mariageDate" showSummary="false" showDetail="true"/>
+
+                </div>
+                <div class="p-field p-lg-6">
+                    <p:outputLabel for="mariageLieu" styleClass="p-d-block">Lieu du mariage</p:outputLabel>
+                    <p:inputText id="mariageLieu" value="#{editionBacking.mariageDto.lieu}"   
+                                    styleClass="p-d-block"/>
+                </div>
+               
+                <div class="p-field p-lg-6">
+                    <p:outputLabel for="maraigeDateDressage" styleClass="p-d-block">Date dressage</p:outputLabel>
+                    <p:inputMask id="maraigeDateDressage" value="#{editionBacking.mariageDto.dateDressage}"
+                                 mask="99/99/9999" >
+                        <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
+                    </p:inputMask>
+                    <p:watermark  value="JJ/MM/YYYY" for="maraigeDateDressage"/> 
+                    <p:message for="maraigeDateDressage"/>
+                </div>
+            </div>
+               <p:fieldset legend="Conjoint(e)">
+                <div class="ui-fluid p-formgrid p-grid">
+                     <div class="p-field p-lg-6">
+                         <p:outputLabel for="maraigeConjointNom" styleClass="p-d-block">Nom</p:outputLabel>
+                         <p:inputText id="maraigeConjointNom" value="#{editionBacking.mariageDto.conjointNom}"  
+                                         styleClass="p-d-block"/>
+                     </div>
+                     <div class="p-field p-lg-6">
+                         <p:outputLabel for="maraigeConjointPrenoms" styleClass="p-d-block">Prénoms</p:outputLabel>
+                         <p:inputText id="maraigeConjointPrenoms" value="#{editionBacking.mariageDto.conjointPrenoms}"  
+                                         styleClass="p-d-block"/>
+                     </div>
+                     <div class="p-field p-lg-6">
+                         <p:outputLabel for="maraigeConjointProfession" styleClass="p-d-block">Profession</p:outputLabel>
+                         <p:inputText id="maraigeConjointProfession" value="#{editionBacking.mariageDto.conjointProfession}"  
+                                         styleClass="p-d-block"/>
+                     </div>
+                     <div class="p-field p-lg-6">
+                         <p:outputLabel for="maraigeConjointDomicile" styleClass="p-d-block">Domicile</p:outputLabel>
+                         <p:inputText id="maraigeConjointDomicile" value="#{editionBacking.mariageDto.conjointDomicile}"  
+                                         styleClass="p-d-block"/>
+                     </div>
+                 </div>  
+            </p:fieldset>
+            <div class="ui-fluid p-formgrid p-grid">
+                <div class="p-field p-lg-6">
+                     <p:outputLabel for="mariageDecision" styleClass="p-d-block">Décision</p:outputLabel>
+                     <p:inputTextarea id="mariageDecision" value="#{editionBacking.mariageDto.decision}" 
+                                      rows="10">
+                         <f:validateBean disabled="true" />
+                     </p:inputTextarea>
+                     <p:message for="mariageDecision"/>
+                 </div>
+                <div class="p-field p-lg-6">
+                    <p:outputLabel for="mariageOfficier" styleClass="p-d-block">Officier</p:outputLabel>
+                    <p:selectOneMenu id="mariageOfficier" value="#{editionBacking.mariageDto.officierEtatCivilID}">
+                        <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez un officier --" />
+                        <f:selectItems value="#{editionBacking.officiers}" var="officier" 
+                                       itemLabel="#{officier.prenoms} #{officier.nom} [#{officier.titre}]" 
+                                       itemValue="#{officier.id}"/>
+                        <f:validateBean disabled="true" />
+                    </p:selectOneMenu>
+                  
+                </div>
+            </div>
+            <div class="ui-fluid p-formgrid p-grid">
+                <div class="p-field p-lg-12">
+                    <p:commandButton value="Enregistrer la mention de mariage" process="mentionsTabView" 
+                                     action="#{editionBacking.ajouterMentionMariage()}"
+                                     update="mentionsTabView messageForm"  icon="pi pi-check-square" 
+                                     styleClass="ui-button-outlined"/>
+                </div>
+                
+            </div>
+            <p:dataTable id="mentionMariageTable" value="#{editionBacking.mariageDtos}" var="mariage"
+                        selectionMode="single"
+                        selection="#{editionBacking.selectedMentionMariage}" rowKey="#{mariage.id}">
+                
+                <p:ajax event="rowSelect" listener="#{editionBacking.onMentionMariageRowSelect}"
+                            update=":contentForm:mentionsTabView"/>
+               
+               <p:column headerText="date dressage" >
+                   <h:outputText value="#{mariage.dateDressage}"/>
+               </p:column>
+                <p:column headerText="décision" style="width: 80%" >
+                   <h:outputText value="#{mariage.decision}"/>
+               </p:column>
+                <p:column style="width: 5%">
+                    <p:commandButton  process="@this" 
+                                      action="#{editionBacking.deleteMentionMariage(mariage)}"  
+                                      update="mentionMariageTable"
+                                      class="ui-button-outlined ui-button-warning" icon="pi pi-times">
+                        <p:confirm header="Confirmation" message="Voulez-vous vraiment supprimer la mention ?" 
+                                   icon="pi pi-exclamation-triangle"/>
+                    </p:commandButton>
+               </p:column>
+            </p:dataTable> 
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="450">
+                <p:commandButton value="Non"  styleClass="ui-confirmdialog-no ui-button-flat"/>
+                <p:commandButton value="Oui"  styleClass="ui-confirmdialog-yes" />
+            </p:confirmDialog>
+            </p:fieldset>
+         </p:tab>
+         
+         <p:tab title="Adoption">
+             <p:fieldset>
+             <div class="ui-fluid p-formgrid p-grid">
+                 <div class="p-field p-lg-12">
+                    <p:outputLabel for="adoptionDateDressage" styleClass="p-d-block">Date dressage</p:outputLabel>
+                    <p:inputMask id="adoptionDateDressage" value="#{editionBacking.mariageDto.dateDressage}"
+                                 mask="99/99/9999" >
+                        <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
+                    </p:inputMask>
+                    <p:watermark  value="JJ/MM/YYYY" for="adoptionDateDressage"/> 
+                    <p:message for="adoptionDateDressage"/>
+                 </div>
+                 <div class="p-field p-lg-6">
+                     <p:outputLabel for="adoptionDecision" styleClass="p-d-block">Décision</p:outputLabel>
+                     <p:inputTextarea id="adoptionDecision" value="#{editionBacking.adoptionDto.decision}" 
+                                      rows="10">
+                        <f:validateBean disabled="true" />
+                     </p:inputTextarea>
+                 </div>
+                 <div class="p-field p-lg-6">
+                    <p:outputLabel for="adoptionOfficier" styleClass="p-d-block">Officier</p:outputLabel>
+                    <p:selectOneMenu id="adoptionOfficier" value="#{editionBacking.adoptionDto.officierEtatCivilID}"          
+                                     label="Selectionnez">
+                        <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez un officier --" />
+                        <f:selectItems value="#{editionBacking.officiers}" var="officier" 
+                                       itemLabel="#{officier.prenoms} #{officier.nom} [#{officier.titre}]" 
+                                       itemValue="#{officier.id}"/>
+                        <f:validateBean disabled="true" />
+                    </p:selectOneMenu>
+                </div>
+            </div>
+            <div class="ui-fluid p-formgrid p-grid">
+                <div class="p-field p-lg-12">
+                    <p:commandButton value="Enregistrer la mention d'adoption" process="mentionsTabView" 
+                                     action="#{editionBacking.ajouterMentionAdoption()}"
+                                     update="mentionsTabView messageForm"  icon="pi pi-check" 
+                                     styleClass="ui-button-outlined"/>
+                </div>
+                
+            </div>
+            <p:dataTable id="mentionAdoptionTable" value="#{editionBacking.adoptionDtos}" var="adoption">
+               <p:column headerText="date dressage" >
+                   <h:outputText value="#{adoption.dateDressage}"/>
+               </p:column>
+               <p:column headerText="Décision">
+                   <h:outputText value="#{adoption.decision}"/>
+               </p:column>
+               <p:column style="width: 5%">
+                   <p:commandButton class="ui-button-outlined ui-button-warning" icon="pi pi-times"/>
+               </p:column>
+
+            </p:dataTable>
+            </p:fieldset>
+         </p:tab>
+         
+         <p:tab title="Decès">
+            <p:fieldset>
+            <div class="ui-fluid p-formgrid p-grid">
+                <div class="p-field p-lg-6">
+                    <p:outputLabel for="decesDate" styleClass="p-d-block">Date de naissance</p:outputLabel>
+                    <p:inputMask id="decesDate" value="#{editionBacking.decesDto.date}"
+                                 mask="99/99/9999" >
+                        <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
+                    </p:inputMask>
+                    <p:watermark  value="JJ/MM/YYYY" for="decesDate"/> 
+                    <p:message for="decesDate" showSummary="false" showDetail="true"/>
+
+                </div>
+                <div class="p-field p-lg-6">
+                    <p:outputLabel for="decesLieu" styleClass="p-d-block">Lieu décès</p:outputLabel>
+                    <p:inputText id="decesLieu" value="#{editionBacking.decesDto.lieu}"   
+                                    styleClass="p-d-block"/>
+                </div>
+                <div class="p-field p-lg-6">
+                    <p:outputLabel for="deceslieuLocalite" styleClass="p-d-block">sous-préfecture</p:outputLabel>
+                    <p:inputText id="deceslieuLocalite" value="#{editionBacking.decesDto.localite}"  
+                                    styleClass="p-d-block"/>
+                </div>
+                <div class="p-field p-lg-6">
+                    <p:outputLabel for="deceslieuDateDressage" styleClass="p-d-block">Date dressage</p:outputLabel>
+                    <p:inputMask id="deceslieuDateDressage" value="#{editionBacking.decesDto.dateDressage}"
+                                 mask="99/99/9999" >
+                        <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
+                    </p:inputMask>
+                    <p:watermark  value="JJ/MM/YYYY" for="deceslieuDateDressage"/> 
+                    <p:message for="deceslieuDateDressage"/>
+                </div>
+                <div class="p-field p-lg-6">
+                     <p:outputLabel for="decesDecision" styleClass="p-d-block">Décision</p:outputLabel>
+                     <p:inputTextarea id="decesDecision" value="#{editionBacking.decesDto.decision}" 
+                                      rows="10">
+                         <f:validateBean disabled="true" />
+                     </p:inputTextarea>
+                     <p:message for="decesDecision"/>
+                 </div>
+                <div class="p-field p-lg-6">
+                    <p:outputLabel for="decesOfficier" styleClass="p-d-block">Officier</p:outputLabel>
+                    <p:selectOneMenu id="decesOfficier" value="#{editionBacking.decesDto.officierEtatCivilID}">
+                        <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez un officier --" />
+                        <f:selectItems value="#{editionBacking.officiers}" var="officier" 
+                                       itemLabel="#{officier.prenoms} #{officier.nom} [#{officier.titre}]" 
+                                       itemValue="#{officier.id}"/>
+                        <f:validateBean disabled="true" />
+                    </p:selectOneMenu>
+                    <p:message for="decesOfficier"/>
+                </div>
+
+            </div>
+            <div class="ui-fluid p-formgrid p-grid">
+                <div class="p-field p-lg-12">
+                    <p:commandButton value="Enregistrer la mention de décès" process="mentionsTabView" 
+                                     action="#{editionBacking.ajouterMentionDeces()}"
+                                     update="mentionsTabView messageForm"  icon="pi pi-check" 
+                                     styleClass="ui-button-outlined"/>
+                </div>
+               
+            </div>
+            <p:dataTable id="mentionDecesTable" value="#{editionBacking.decesDtos}" var="deces">
+                
+               <p:column headerText="date de naissance" >
+                   <h:outputText value="#{deces.date}"/>
+               </p:column>
+               <p:column headerText="lieu de décès" >
+                   <h:outputText value="#{deces.lieu}"/>
+               </p:column>
+               <p:column headerText="date dressage" >
+                   <h:outputText value="#{deces.dateDressage}"/>
+               </p:column>
+               <p:column headerText="décision" >
+                   <h:outputText value="#{deces.decision}"/>
+               </p:column>
+               <p:column style="width: 5%">
+                   <p:commandButton class="ui-button-outlined ui-button-warning" icon="pi pi-times"/>
+               </p:column>
+
+            </p:dataTable>
+            </p:fieldset>
+         </p:tab>
+         
+         <p:tab title="Dissolution de mariage">
+             <p:fieldset>
+             <div class="ui-fluid p-formgrid p-grid">
+                 <div class="p-field p-lg-12">
+                    <p:outputLabel for="dissolutionDateDressage" styleClass="p-d-block">Date dressage</p:outputLabel>
+                    <p:inputMask id="dissolutionDateDressage" value="#{editionBacking.dissolutionMariageDto.dateDressage}"
+                                 mask="99/99/9999" >
+                        <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
+                    </p:inputMask>
+                    <p:watermark  value="JJ/MM/YYYY" for="dissolutionDateDressage"/> 
+                    <p:message for="dissolutionDateDressage"/>
+                 </div>
+                 <div class="p-field p-lg-6">
+                     <p:outputLabel for="dissolutionDecision" styleClass="p-d-block">Décision</p:outputLabel>
+                     <p:inputTextarea id="dissolutionDecision" value="#{editionBacking.dissolutionMariageDto.decision}" 
+                                      rows="10">
+                        <f:validateBean disabled="true" />
+                     </p:inputTextarea>
+                 </div>
+                 <div class="p-field p-lg-6">
+                    <p:outputLabel for="dissolutionOfficier" styleClass="p-d-block">Officier</p:outputLabel>
+                    <p:selectOneMenu id="dissolutionOfficier" value="#{editionBacking.dissolutionMariageDto.officierEtatCivilID}"          
+                                     label="Selectionnez">
+                        <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez un officier --" />
+                        <f:selectItems value="#{editionBacking.officiers}" var="officier" 
+                                       itemLabel="#{officier.prenoms} #{officier.nom} [#{officier.titre}]" 
+                                       itemValue="#{officier.id}"/>
+                        <f:validateBean disabled="true" />
+                    </p:selectOneMenu>
+                </div>
+            </div>
+            <div class="ui-fluid p-formgrid p-grid">
+                <div class="p-field p-lg-12">
+                    <p:commandButton value="Enregistrer la mention d'adoption" process="mentionsTabView" 
+                                     action="#{editionBacking.ajouterMentionDissolution()}"
+                                     update="mentionsTabView messageForm"  icon="pi pi-check" 
+                                     styleClass="ui-button-outlined"/>
+                </div>
+                
+            </div>
+            <p:dataTable id="mentionDissolutionTable" value="#{editionBacking.dissolutionMariageDtos}" var="dissolution">
+               <p:column headerText="date dressage" >
+                   <h:outputText value="#{dissolution.dateDressage}"/>
+               </p:column>
+               <p:column headerText="Décision">
+                   <h:outputText value="#{dissolution.decision}"/>
+               </p:column>
+               <p:column style="width: 5%">
+                   <p:commandButton class="ui-button-outlined ui-button-warning" icon="pi pi-times"/>
+               </p:column>
+
+            </p:dataTable>
+            </p:fieldset>
+         </p:tab>
+         
+         <p:tab title="Légitimation">
+             <p:fieldset>
+             <div class="ui-fluid p-formgrid p-grid">
+                 <div class="p-field p-lg-12">
+                    <p:outputLabel for="legitimationDateDressage" styleClass="p-d-block">Date dressage</p:outputLabel>
+                    <p:inputMask id="legitimationDateDressage" value="#{editionBacking.legitimationDto.dateDressage}"
+                                 mask="99/99/9999" >
+                        <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
+                    </p:inputMask>
+                    <p:watermark  value="JJ/MM/YYYY" for="legitimationDateDressage"/> 
+                    <p:message for="legitimationDateDressage"/>
+                 </div>
+                 <div class="p-field p-lg-6">
+                     <p:outputLabel for="legitimationDecision" styleClass="p-d-block">Décision</p:outputLabel>
+                     <p:inputTextarea id="legitimationDecision" value="#{editionBacking.legitimationDto.decision}" 
+                                      rows="10">
+                        <f:validateBean disabled="true" />
+                     </p:inputTextarea>
+                 </div>
+                 <div class="p-field p-lg-6">
+                    <p:outputLabel for="legitimationOfficier" styleClass="p-d-block">Officier</p:outputLabel>
+                    <p:selectOneMenu id="legitimationOfficier" value="#{editionBacking.legitimationDto.officierEtatCivilID}"          
+                                     label="Selectionnez">
+                        <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez un officier --" />
+                        <f:selectItems value="#{editionBacking.officiers}" var="officier" 
+                                       itemLabel="#{officier.prenoms} #{officier.nom} [#{officier.titre}]" 
+                                       itemValue="#{officier.id}"/>
+                        <f:validateBean disabled="true" />
+                    </p:selectOneMenu>
+                </div>
+            </div>
+            <div class="ui-fluid p-formgrid p-grid">
+                <div class="p-field p-lg-12">
+                    <p:commandButton value="Enregistrer la mention d'adoption" process="mentionsTabView" 
+                                     action="#{editionBacking.ajouterMentionLegitimation()}"
+                                     update="mentionsTabView messageForm"  icon="pi pi-check" 
+                                     styleClass="ui-button-outlined"/>
+                </div>
+                
+            </div>
+            <p:dataTable id="mentionLegitimationTable" value="#{editionBacking.legitimationDtos}" var="legitimation">
+               <p:column headerText="date dressage" >
+                   <h:outputText value="#{legitimation.dateDressage}"/>
+               </p:column>
+               <p:column headerText="Décision">
+                   <h:outputText value="#{legitimation.decision}"/>
+               </p:column>
+               <p:column style="width: 5%">
+                   <p:commandButton class="ui-button-outlined ui-button-warning" icon="pi pi-times"/>
+               </p:column>
+
+            </p:dataTable>
+            </p:fieldset>
+         </p:tab>
+         
+         <p:tab title="Reconnaissance">
+             <p:fieldset>
+             <div class="ui-fluid p-formgrid p-grid">
+                 <div class="p-field p-lg-12">
+                    <p:outputLabel for="reconnaissanceDateDressage" styleClass="p-d-block">Date dressage</p:outputLabel>
+                    <p:inputMask id="reconnaissanceDateDressage" value="#{editionBacking.reconnaissanceDto.dateDressage}"
+                                 mask="99/99/9999" >
+                        <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
+                    </p:inputMask>
+                    <p:watermark  value="JJ/MM/YYYY" for="reconnaissanceDateDressage"/> 
+                    <p:message for="reconnaissanceDateDressage"/>
+                 </div>
+                 <div class="p-field p-lg-6">
+                     <p:outputLabel for="reconnaissanceDecision" styleClass="p-d-block">Décision</p:outputLabel>
+                     <p:inputTextarea id="reconnaissanceDecision" value="#{editionBacking.reconnaissanceDto.decision}" 
+                                      rows="10">
+                        <f:validateBean disabled="true" />
+                     </p:inputTextarea>
+                 </div>
+                 <div class="p-field p-lg-6">
+                    <p:outputLabel for="reconnaissanceOfficier" styleClass="p-d-block">Officier</p:outputLabel>
+                    <p:selectOneMenu id="reconnaissanceOfficier" value="#{editionBacking.reconnaissanceDto.officierEtatCivilID}"          
+                                     label="Selectionnez">
+                        <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez un officier --" />
+                        <f:selectItems value="#{editionBacking.officiers}" var="officier" 
+                                       itemLabel="#{officier.prenoms} #{officier.nom} [#{officier.titre}]" 
+                                       itemValue="#{officier.id}"/>
+                        <f:validateBean disabled="true" />
+                    </p:selectOneMenu>
+                </div>
+            </div>
+            <div class="ui-fluid p-formgrid p-grid">
+                <div class="p-field p-lg-12">
+                    <p:commandButton value="Enregistrer la mention d'adoption" process="mentionsTabView" 
+                                     action="#{editionBacking.ajouterMentionReconnaissance()}"
+                                     update="mentionsTabView messageForm"  icon="pi pi-check" 
+                                     styleClass="ui-button-outlined"/>
+                </div>
+                
+            </div>
+            <p:dataTable id="mentionReconnaissanceTable" value="#{editionBacking.reconnaissanceDtos}" var="reconnaissance">
+               <p:column headerText="date dressage" >
+                   <h:outputText value="#{reconnaissance.dateDressage}"/>
+               </p:column>
+               <p:column headerText="Décision">
+                   <h:outputText value="#{reconnaissance.decision}"/>
+               </p:column>
+               <p:column style="width: 5%">
+                   <p:commandButton class="ui-button-outlined ui-button-warning" icon="pi pi-times"/>
+               </p:column>
+
+            </p:dataTable>
+            </p:fieldset>
+         </p:tab>
+         
+         <p:tab title="Rectification">
+             <p:fieldset>
+             <div class="ui-fluid p-formgrid p-grid">
+                 <div class="p-field p-lg-12">
+                    <p:outputLabel for="rectificationDateDressage" styleClass="p-d-block">Date dressage</p:outputLabel>
+                    <p:inputMask id="rectificationDateDressage" value="#{editionBacking.rectificationDto.dateDressage}"
+                                 mask="99/99/9999" >
+                        <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
+                    </p:inputMask>
+                    <p:watermark  value="JJ/MM/YYYY" for="rectificationDateDressage"/> 
+                    <p:message for="rectificationDateDressage"/>
+                 </div>
+                 <div class="p-field p-lg-6">
+                     <p:outputLabel for="rectificationDecision" styleClass="p-d-block">Décision</p:outputLabel>
+                     <p:inputTextarea id="rectificationDecision" value="#{editionBacking.rectificationDto.decision}" 
+                                      rows="10">
+                        <f:validateBean disabled="true" />
+                     </p:inputTextarea>
+                 </div>
+                 <div class="p-field p-lg-6">
+                    <p:outputLabel for="rectificationOfficier" styleClass="p-d-block">Officier</p:outputLabel>
+                    <p:selectOneMenu id="rectificationOfficier" value="#{editionBacking.rectificationDto.officierEtatCivilID}"          
+                                     label="Selectionnez">
+                        <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez un officier --" />
+                        <f:selectItems value="#{editionBacking.officiers}" var="officier" 
+                                       itemLabel="#{officier.prenoms} #{officier.nom} [#{officier.titre}]" 
+                                       itemValue="#{officier.id}"/>
+                        <f:validateBean disabled="true" />
+                    </p:selectOneMenu>
+                </div>
+            </div>
+            <div class="ui-fluid p-formgrid p-grid">
+                <div class="p-field p-lg-12">
+                    <p:commandButton value="Enregistrer la mention d'adoption" process="mentionsTabView" 
+                                     action="#{editionBacking.ajouterMentionRectification()}"
+                                     update="mentionsTabView messageForm"  icon="pi pi-check" 
+                                     styleClass="ui-button-outlined"/>
+                </div>
+                
+            </div>
+            <p:dataTable id="mentionRectificationTable" value="#{editionBacking.rectificationDtos}" var="adoption">
+               <p:column headerText="date dressage" >
+                   <h:outputText value="#{rectification.dateDressage}"/>
+               </p:column>
+               <p:column headerText="Décision">
+                   <h:outputText value="#{rectification.decision}"/>
+               </p:column>
+               <p:column style="width: 5%">
+                   <p:commandButton class="ui-button-outlined ui-button-warning" icon="pi pi-times"/>
+               </p:column>
+
+            </p:dataTable>
+            </p:fieldset>
+         </p:tab>
+         
+         
+         
+     </p:tabView>
+
+</ui:composition>  
+ 
+</html>
+

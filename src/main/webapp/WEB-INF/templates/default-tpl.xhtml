@@ -17,37 +17,33 @@ xmlns:p="http://primefaces.org/ui">
     <h:body>
         
         <div class="p-grid">
-            <div class="p-col-12" style="background: #007AD9;padding: 0;margin: 0;border: 0">
+            <div class="p-lg-12" style="background: #007AD9;">
                 <ui:insert name="header">
-                   - <ui:include src="header.xhtml"/> 
+                    <ui:include src="header.xhtml"/> 
                  </ui:insert>
             </div>
-            <div class="p-col-12">
+            <div class="p-lg-12">
                 <div class="p-grid">
-                    <div class="p-col-2">
-                        <ui:insert name="menu">
-                            <ui:include src="menu.xhtml"/>
-                        </ui:insert>
-                    </div>
-                    <div class="p-col">
+                    
+                    <div class="p-lg-12">
                          <ui:insert name="content" />
-                    </div>
+                   </div>
                 </div>
             </div>
         </div>
-      
-         
+        
         <!-- shows ajax task dialog -->
-        <p:ajaxStatus onstart="PF('statusDialog').show()" 
-                      onsuccess="PF('statusDialog').hide()" rendered="false"/>
-        <p:dialog widgetVar="statusDialog" modal="true" draggable="false" 
-                  closable="false" resizable="false" 
-                  showHeader="false" appendTo="@(body)">
-            <p:panelGrid columns="1" styleClass="ui-noborder ui-panelgrid-blank">
-                <h:outputText value="Traitement en cours..."/>
-                <p:graphicImage library="images" name="loading.gif"/>
-            </p:panelGrid>
-        </p:dialog>
+       <p:ajaxStatus onstart="PF('statusDialog').show()" 
+                     onsuccess="PF('statusDialog').hide()" rendered="false"/>
+       <p:dialog widgetVar="statusDialog" modal="true" draggable="false" 
+                 closable="false" resizable="false" 
+                 showHeader="false" appendTo="@(body)">
+           <p:panelGrid columns="1" styleClass="ui-noborder ui-panelgrid-blank">
+               <h:outputText value="Traitement en cours..."/>
+               <p:graphicImage library="images" name="loading.gif"/>
+           </p:panelGrid>
+       </p:dialog>
+        
      
     </h:body>
 

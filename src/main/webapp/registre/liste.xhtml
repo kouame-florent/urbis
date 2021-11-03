@@ -60,6 +60,7 @@ xmlns:p="http://primefaces.org/ui">
                            <p:outputLabel for="annee" styleClass="p-d-block">Année</p:outputLabel>
                            <p:inputMask id="annee" value="#{listBacking.filterData.annee}" mask="9999" maxlength="4"
                                           styleClass="p-d-block"/>
+                          
 
                         </div>
                         <div class="p-field p-col">
@@ -166,7 +167,7 @@ xmlns:p="http://primefaces.org/ui">
                         <p:menuitem value="Annuler" process="@this" action="#{listBacking.showAnnulerView(registre)}"  
                                     icon="pi pi-undo"
                                     disabled="#{listBacking.disableMenuAnnuler(registre)}">
-                            <p:ajax event="dialogReturn" listener="#{listBacking.onActeValidated}" 
+                            <p:ajax event="dialogReturn" 
                                         update=":contentForm:registre messageForm"/>
                             
                         </p:menuitem>
@@ -189,12 +190,11 @@ xmlns:p="http://primefaces.org/ui">
                 </p:column>
                 
                 </p:dataTable>
-            
             <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
-                <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
-                <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" />
+                <p:commandButton value="Oui"  styleClass="ui-confirmdialog-no ui-button-flat"/>
+                <p:commandButton value="Non"  styleClass="ui-confirmdialog-yes" />
             </p:confirmDialog>
-
+          
         </h:form>
           
         

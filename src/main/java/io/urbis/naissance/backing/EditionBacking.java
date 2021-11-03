@@ -6,18 +6,12 @@
 package io.urbis.naissance.backing;
 
 import io.urbis.common.util.BaseBacking;
-import io.urbis.mention.api.AdoptionService;
-import io.urbis.mention.api.DecesService;
-import io.urbis.mention.api.DissolutionService;
-import io.urbis.mention.api.LegitimationService;
-import io.urbis.mention.api.MariageService;
-import io.urbis.mention.api.ReconnaissanceService;
-import io.urbis.mention.api.RectificationService;
 import io.urbis.mention.dto.AdoptionDto;
 import io.urbis.mention.dto.DecesDto;
 import io.urbis.mention.dto.DissolutionMariageDto;
 import io.urbis.mention.dto.LegitimationDto;
 import io.urbis.mention.dto.MariageDto;
+import io.urbis.mention.dto.MentionDto;
 import io.urbis.mention.dto.ReconnaissanceDto;
 import io.urbis.mention.dto.RectificationDto;
 import io.urbis.naissance.dto.ActeNaissanceDto;
@@ -60,16 +54,23 @@ import javax.validation.constraints.NotBlank;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.primefaces.event.FlowEvent;
 import org.primefaces.event.SelectEvent;
+import io.urbis.mention.api.MentionAdoptionService;
+import io.urbis.mention.api.MentionDecesService;
+import io.urbis.mention.api.MentionDissolutionService;
+import io.urbis.mention.api.MentionReconnaissanceService;
+import io.urbis.mention.api.MentionRectificationService;
+import io.urbis.mention.api.MentionMariageService;
+import io.urbis.mention.api.MentionLegitimationService;
 
 /**
  *
  * @author florent
  */
-@Named(value = "saisieActeExistantBacking")
+@Named(value = "editionBacking")
 @ViewScoped
-public class SaisieActeExistantBacking extends BaseBacking implements Serializable{
+public class EditionBacking extends BaseBacking implements Serializable{
     
-    private static final Logger LOG = Logger.getLogger(SaisieActeExistantBacking.class.getName());
+    private static final Logger LOG = Logger.getLogger(EditionBacking.class.getName());
     
     
     @Inject 
@@ -110,31 +111,31 @@ public class SaisieActeExistantBacking extends BaseBacking implements Serializab
     
     @Inject
     @RestClient
-    DecesService decesService;
+    MentionDecesService mentionDecesService;
     
     @Inject
     @RestClient
-    AdoptionService adoptionService;
+    MentionAdoptionService mentionAdoptionService;
     
     @Inject
     @RestClient
-    DissolutionService dissolutionService;
+    MentionDissolutionService mentionDissolutionService;
     
     @Inject
     @RestClient
-    LegitimationService legitimationService;
+    MentionLegitimationService mentionLegitimationService;
     
     @Inject
     @RestClient
-    MariageService mariageService;
+    MentionMariageService mentionMariageService;
     
     @Inject
     @RestClient
-    ReconnaissanceService reconnaissanceService;
+    MentionReconnaissanceService reconnaissanceService;
     
     @Inject
     @RestClient
-    RectificationService rectificationService;
+    MentionRectificationService rectificationService;
     
     @Inject
     LazySaisieActeExistantDataModel lazySaisieActeExistantDataModel;
@@ -144,6 +145,9 @@ public class SaisieActeExistantBacking extends BaseBacking implements Serializab
     
     private String registreID;
     private RegistreDto registreDto;
+    
+    private String operationParam;
+    private Operation operation;
     
     private ActeNaissanceDto selectedActe;
     
@@ -209,9 +213,15 @@ public class SaisieActeExistantBacking extends BaseBacking implements Serializab
         LOG.log(Level.INFO,"REGISTRE ID: {0}",registreID);
         registreDto = registreService.findById(registreID);
         LOG.log(Level.INFO,"REGISTRE LIBELLE: {0}",registreDto.getLibelle());
-       // numeroActe = acteNaissanceService.numeroActe(registreID);
-        
+      
+        operation = Operation.fromString(operationParam);
         lazySaisieActeExistantDataModel.setRegistreID(registreID);
+             
+        LOG.log(Level.INFO,"--- CURRENT OPERATION : {0}",operation.name());
+        if(operation == Operation.DECLARATION_JUGEMENT){
+            int numeroActe = acteNaissanceService.numeroActe(registreID);
+            acteNaissanceDto.setNumero(numeroActe);
+        }
         
     }
     
@@ -227,6 +237,7 @@ public class SaisieActeExistantBacking extends BaseBacking implements Serializab
         nationalites = nationaliteService.findAll();
         liensParenteDeclarant = lienDeclarantService.findAll();
         typesPiece = typePieceService.findAll();
+        
         acteNaissanceDto = new ActeNaissanceDto();
         
     }
@@ -236,7 +247,7 @@ public class SaisieActeExistantBacking extends BaseBacking implements Serializab
         LOG.log(Level.INFO,"SELECTED ACTE OFFICIER ID: {0}",selectedActe.getOfficierEtatCivilID());
         acteNaissanceDto = selectedActe;
         LOG.log(Level.INFO,"SELECTED ACTE NUM: {0}",selectedActe.getNumero());
-        mariageDtos = mariageService.findByActeNaissance(selectedActe.getId());
+        mariageDtos = mentionMariageService.findByActeNaissance(selectedActe.getId());
         //change view mode to render maj commande button
         viewMode = ViewMode.UPDATE;
     }
@@ -245,11 +256,18 @@ public class SaisieActeExistantBacking extends BaseBacking implements Serializab
         mariageDto = selectedMentionMariage;
     }
     
+    public void deleteMentionMariage(MariageDto dto){
+        LOG.log(Level.INFO,"Deleting mention mariage...");
+        mentionMariageService.delete(dto.getId());
+        mariageDtos.remove(dto);
+    }
+   
+    
     public void creer(){
         LOG.log(Level.INFO,"Creating acte naissance...");
          
         LOG.log(Level.INFO,"ENFANT DATE NAISSANCE: {0}",acteNaissanceDto.getEnfantDateNaissance());
-        acteNaissanceDto.setOperation(Operation.SAISIE_ACTE_EXISTANT.name());
+        acteNaissanceDto.setOperation(operation.name());
         acteNaissanceDto.setRegistreID(registreID);
         
         
@@ -291,6 +309,10 @@ public class SaisieActeExistantBacking extends BaseBacking implements Serializab
     
     public void resetActeDto(){
         acteNaissanceDto = new ActeNaissanceDto();
+        if(operation == Operation.DECLARATION_JUGEMENT && viewMode == ViewMode.NEW){
+            int numeroActe = acteNaissanceService.numeroActe(registreID);
+            acteNaissanceDto.setNumero(numeroActe);
+        }
     
     }
     
@@ -302,7 +324,78 @@ public class SaisieActeExistantBacking extends BaseBacking implements Serializab
 */
     
     public void ajouterMentionAdoption(){
-        
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+        Set<ConstraintViolation<AdoptionDto>> violations = validator.validate(adoptionDto);
+        if(violations.isEmpty()){
+            
+            adoptionDtos.add(adoptionDto);
+            adoptionDto = new AdoptionDto();
+        }else{
+            violations.stream().forEach(v -> {
+                addGlobalMessage(v.getMessage(), FacesMessage.SEVERITY_ERROR);
+            });
+        }
+    }
+    
+    public void ajouterMentionDissolution(){
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+        Set<ConstraintViolation<DissolutionMariageDto>> violations = validator.validate(dissolutionMariageDto);
+        if(violations.isEmpty()){
+            
+            dissolutionMariageDtos.add(dissolutionMariageDto);
+            dissolutionMariageDto = new DissolutionMariageDto();
+        }else{
+            violations.stream().forEach(v -> {
+                addGlobalMessage(v.getMessage(), FacesMessage.SEVERITY_ERROR);
+            });
+        }
+    }
+    
+    public void ajouterMentionReconnaissance(){
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+        Set<ConstraintViolation<ReconnaissanceDto>> violations = validator.validate(reconnaissanceDto);
+        if(violations.isEmpty()){
+            
+            reconnaissanceDtos.add(reconnaissanceDto);
+            reconnaissanceDto = new ReconnaissanceDto();
+        }else{
+            violations.stream().forEach(v -> {
+                addGlobalMessage(v.getMessage(), FacesMessage.SEVERITY_ERROR);
+            });
+        }
+    }
+    
+    public void ajouterMentionLegitimation(){
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+        Set<ConstraintViolation<LegitimationDto>> violations = validator.validate(legitimationDto);
+        if(violations.isEmpty()){
+            
+            legitimationDtos.add(legitimationDto);
+            legitimationDto = new LegitimationDto();
+        }else{
+            violations.stream().forEach(v -> {
+                addGlobalMessage(v.getMessage(), FacesMessage.SEVERITY_ERROR);
+            });
+        }
+    }
+    
+    public void ajouterMentionRectification(){
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+        Set<ConstraintViolation<RectificationDto>> violations = validator.validate(rectificationDto);
+        if(violations.isEmpty()){
+            
+            rectificationDtos.add(rectificationDto);
+            rectificationDto = new RectificationDto();
+        }else{
+            violations.stream().forEach(v -> {
+                addGlobalMessage(v.getMessage(), FacesMessage.SEVERITY_ERROR);
+            });
+        }
     }
      
     public void ajouterMentionDeces(){
@@ -335,6 +428,7 @@ public class SaisieActeExistantBacking extends BaseBacking implements Serializab
         }else{
             violations.stream().forEach(v -> {
                 addGlobalMessage(v.getMessage(), FacesMessage.SEVERITY_ERROR);
+                
             });
         }
     
@@ -349,14 +443,14 @@ public class SaisieActeExistantBacking extends BaseBacking implements Serializab
     private void creerMentionMariage(@NotBlank String acteID){
         mariageDtos.stream().forEach(m -> {
             m.setActeNaissanceID(acteID);
-            mariageService.create(m);
+            mentionMariageService.create(m);
        });
     }
     
     private void creerMentionDeces(@NotBlank String acteID){
        decesDtos.stream().forEach(d -> {
             d.setActeNaissanceID(acteID);
-            decesService.create(d);
+            mentionDecesService.create(d);
        });
       
     }
@@ -366,7 +460,7 @@ public class SaisieActeExistantBacking extends BaseBacking implements Serializab
     public String onFlowProcess(FlowEvent event) {
         if (skip) {
             skip = false; //reset in case user goes back
-            return "confirm";
+            return "mariage";
         }
         else {
             
@@ -659,6 +753,16 @@ public class SaisieActeExistantBacking extends BaseBacking implements Serializab
     public void setSelectedMentionMariage(MariageDto selectedMentionMariage) {
         this.selectedMentionMariage = selectedMentionMariage;
     }
+
+    public String getOperationParam() {
+        return operationParam;
+    }
+
+    public void setOperationParam(String operationParam) {
+        this.operationParam = operationParam;
+    }
+
+    
 
    
 }

@@ -6,25 +6,32 @@
 package io.urbis.mention.api;
 
 import io.urbis.mention.dto.AdoptionDto;
-import io.urbis.mention.dto.RectificationDto;
+import io.urbis.mention.dto.MariageDto;
 import java.util.List;
+import java.util.Set;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.QueryParam;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 /**
  *
  * @author florent
  */
-@Path("/mentions/rectifications")
+@Path("/mentions/mariages")
 @RegisterRestClient(baseUri = "http://127.0.0.1:8181")
-public interface RectificationService {
+public interface MentionMariageService {
     @POST
-    public void create(@NotNull RectificationDto dto);
+    public void create(@NotNull MariageDto dto);
     
     @GET
-    public List<RectificationDto> findByActeNaissance(@NotBlank String acteNaissanceID);
+    public Set<MariageDto> findByActeNaissance(@QueryParam("acte-naissance-id") @NotBlank String acteNaissanceID);
+    
+    @DELETE @Path("{id}")
+    public void delete(@PathParam("id") String id);
 }

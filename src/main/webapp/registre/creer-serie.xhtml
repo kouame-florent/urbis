@@ -7,20 +7,25 @@ xmlns:f="http://xmlns.jcp.org/jsf/core"
 xmlns:p="http://primefaces.org/ui">
     
  <ui:composition template="/WEB-INF/templates/dialog-tpl.xhtml">
+     
+     <ui:define name="title">
+         Création de series de registres
+     </ui:define>
     
     <ui:define name="content">
         <h:form id="messageForm">
                 <p:growl globalOnly="true" life="15000"/>        
         </h:form>
              
-        <h:form id="contenttForm">
+        <h:form id="contentForm">
      
             <p:fieldset legend="Type de registres">
                 <p:selectOneRadio id="console" value="#{creerSerieBacking.selectedType}" 
                                   converter="omnifaces.SelectItemsConverter"
                                   required="true">
                     <p:ajax listener="#{creerSerieBacking.onTypeRgistreSelect}" 
-                            update="contenttForm:commune contenttForm:centre contenttForm:tribunal"/>
+                            update="contentForm:commune contentForm:centre contentForm:tribunal 
+                             contentForm:libelleOutputPanel"/>
                     <f:selectItems value="#{creerSerieBacking.typesRegistre}" var="type" 
                                    itemLabel="#{type.libelle}" itemValue="#{type}"/>
                 </p:selectOneRadio>
@@ -51,6 +56,22 @@ xmlns:p="http://primefaces.org/ui">
                 </div>
 
             </p:fieldset>
+            <p:outputPanel id="libelleOutputPanel">
+                <p:outputPanel  rendered="#{creerSerieBacking.renderedLibelle()}">
+                    <p:fieldset>
+                        <div class="ui-fluid p-formgrid p-grid">
+                            <div class="p-field p-lg-6">
+
+                                <p:outputLabel for="libelle" styleClass="p-d-block" 
+                                               style="color: #ffffff">Libellé du registre</p:outputLabel>
+                                <p:inputText id="libelle" value="#{creerSerieBacking.libelle}" 
+                                             required="#{creerSerieBacking.requiredLibelle()}"/>
+                            </div>
+
+                        </div>
+                    </p:fieldset>
+                  </p:outputPanel>
+            </p:outputPanel>
              <p:spacer height="2"/>
             <p:fieldset legend="Officier d'état civil">
                 <div class="ui-fluid p-formgrid p-grid">

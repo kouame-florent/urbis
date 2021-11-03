@@ -7,6 +7,7 @@ package io.urbis.registre.backing;
 
 
 import io.urbis.common.util.BaseBacking;
+import io.urbis.naissance.dto.Operation;
 import io.urbis.registre.api.EtatService;
 import io.urbis.registre.api.RegistreService;
 import io.urbis.registre.api.TypeRegistreService;
@@ -126,13 +127,13 @@ public class RegistreListBacking extends BaseBacking implements Serializable{
     }
     
     public void showCreerView(){
-        Map<String,Object> options = getDialogOptions(90, 90, true);
+        Map<String,Object> options = getDialogOptions(99, 99, true);
         options.put("resizable", false);
         PrimeFaces.current().dialog().openDynamic("creer", options, null);
     }
     
     public void showCreerSerieView(){
-        Map<String,Object> options = getDialogOptions(90, 90, true);
+        Map<String,Object> options = getDialogOptions(99, 99, true);
         options.put("resizable", false);
         PrimeFaces.current().dialog().openDynamic("creer-serie", options, null);
     }
@@ -161,15 +162,17 @@ public class RegistreListBacking extends BaseBacking implements Serializable{
     
     public void showDeclarationView(RegistreDto registreDto){
         LOG.log(Level.INFO, "REGISTRE ID: {0}", registreDto.getId());
-        var values = List.of(registreDto.getId());
-        Map<String, List<String>> params = Map.of("id", values);
-        PrimeFaces.current().dialog().openDynamic("/naissance/declaration", getDialogOptions(98,98,true), params);
+        var ids = List.of(registreDto.getId());
+        var operations = List.of(Operation.DECLARATION_JUGEMENT.name());
+        Map<String, List<String>> params = Map.of("id", ids,"operation",operations);
+        PrimeFaces.current().dialog().openDynamic("/naissance/edittion", getDialogOptions(98,98,true), params);
     }
     
     public void showSaisieActeExistantview(RegistreDto registreDto){
-        var values = List.of(registreDto.getId());
-        Map<String, List<String>> params = Map.of("id", values);
-        PrimeFaces.current().dialog().openDynamic("/naissance/saisie-actes-existants", getDialogOptions(98,98,true), params);
+        var ids = List.of(registreDto.getId());
+        var operations = List.of(Operation.SAISIE_ACTE_EXISTANT.name());
+        Map<String, List<String>> params = Map.of("id", ids,"operation",operations);
+        PrimeFaces.current().dialog().openDynamic("/naissance/edittion", getDialogOptions(98,98,true), params);
     }
     
     public void showActesListView(RegistreDto registreDto){

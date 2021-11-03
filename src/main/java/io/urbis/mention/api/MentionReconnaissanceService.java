@@ -5,26 +5,30 @@
  */
 package io.urbis.mention.api;
 
-import io.urbis.mention.dto.DecesDto;
+import io.urbis.mention.dto.ReconnaissanceDto;
 import java.util.List;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 /**
  *
  * @author florent
  */
-@Path("/mentions/deces")
+@Path("/mentions/reconnaissances")
 @RegisterRestClient(baseUri = "http://127.0.0.1:8181")
-public interface DecesService {
-    
+public interface MentionReconnaissanceService {
     @POST
-    public void create(@NotNull DecesDto dto);
+    public void create(@NotNull ReconnaissanceDto dto);
     
     @GET
-    public List<DecesDto> findByActeNaissance(@NotBlank String acteNaissanceID);
+    public List<ReconnaissanceDto> findByActeNaissance(@NotBlank String acteNaissanceID);
+    
+    @DELETE @Path("{id}")
+    public void delete(@PathParam("id") String id);
 }

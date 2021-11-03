@@ -5,19 +5,23 @@
  */
 package io.urbis.registre.dto;
 
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response;
+
 /**
  *
  * @author florent
  */
 public enum TypeRegistre {
     
-    NAISSANCE("Registre de naissance"),
-    MARIAGE("Registre de mariage"),
-    DECES("Registre de decès"),
-    DIVERS("Registre d'actes divers"),
-    SPECIAL_NAISSANCE("Registre spécial de naissance");
+    NAISSANCE("Naissance"),
+    MARIAGE("Mariage"),
+    DIVERS("Divers"),
+    DECES("Décès"),
+    SPECIAL_NAISSANCE("Spécial de naissance"),
+    SPECIAL_DECES("Spécial de décès");
     
-    public String libelle;
+    private final String libelle;
     
     private TypeRegistre(String libelle){
         this.libelle = libelle;
@@ -25,6 +29,19 @@ public enum TypeRegistre {
 
     public String getLibelle() {
         return libelle;
+    }
+    
+    public static TypeRegistre fromString(String typeString){
+        for(var t : TypeRegistre.values()){
+            if(t.name().equalsIgnoreCase(typeString)){
+                return TypeRegistre.valueOf(t.name());
+            }
+        }
+        System.out.printf("CANNOT GET ENUM TYPE REGISTRE FROM: %s", typeString);
+        Response res = Response.status(Response.Status.BAD_REQUEST)
+                   .entity(new IllegalArgumentException(typeString)).build();
+        throw new WebApplicationException(res);
+         
     }
     
 }
