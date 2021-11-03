@@ -74,6 +74,8 @@ xmlns:p="http://primefaces.org/ui">
                             <p:ajax event="dialogReturn" listener="#{acteNaissanceListBacking.onActeValidated}" 
                                         update=":contentForm:actesDatatable"/>
                         </p:menuitem>
+                        <p:menuitem value="Modifier l'acte" action="#{acteNaissanceListBacking.showModifierActeview(acte)}" 
+                                    process="@this"  icon="pi pi-book"/>
                         <p:menuitem value="Imprimer l'acte" action="#{acteNaissanceListBacking.download()}" process="@this" 
                                     icon="pi pi-book"/>
                     </p:menuButton>

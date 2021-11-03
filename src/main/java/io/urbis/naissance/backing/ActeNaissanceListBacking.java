@@ -7,6 +7,7 @@ package io.urbis.naissance.backing;
 
 import io.urbis.common.util.BaseBacking;
 import io.urbis.naissance.dto.ActeNaissanceDto;
+import io.urbis.naissance.dto.Operation;
 import io.urbis.registre.api.EtatService;
 import io.urbis.registre.api.RegistreService;
 import io.urbis.registre.dto.RegistreDto;
@@ -98,6 +99,14 @@ public class ActeNaissanceListBacking extends BaseBacking implements Serializabl
             addGlobalMessage(ex.getMessage(), FacesMessage.SEVERITY_ERROR);
         }
         addGlobalMessage("L'acte de naissance a été validé avec succès", FacesMessage.SEVERITY_INFO);
+    }
+    
+    public void showModifierActeview(ActeNaissanceDto dto){
+        var ids = List.of(registreID);
+        var operations = List.of(Operation.MODIFICATION.name());
+        var acteIds = List.of(dto.getId());
+        Map<String, List<String>> params = Map.of("id", ids,"acte-id",acteIds,"operation",operations);
+        PrimeFaces.current().dialog().openDynamic("/naissance/edittion", getDialogOptions(98,98,true), params);
     }
     
     public String statutSeverity(String statut){

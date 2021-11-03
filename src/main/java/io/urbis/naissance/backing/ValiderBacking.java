@@ -155,7 +155,7 @@ public class ValiderBacking extends BaseBacking implements Serializable{
     
     public void valider(){
         acteNaissanceDto.setStatut(StatutActeNaissance.VALIDE.name());
-        acteNaissanceDto.setOperation(Operation.MISE_A_JOUR.name());
+        acteNaissanceDto.setOperation(Operation.MODIFICATION.name());
        // try{
             acteNaissanceService.update(acteNaissanceID, acteNaissanceDto);
        // }catch(WebApplicationException ex){

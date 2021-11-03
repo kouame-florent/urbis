@@ -146,6 +146,8 @@ public class EditionBacking extends BaseBacking implements Serializable{
     private String registreID;
     private RegistreDto registreDto;
     
+    private String acteNaissanceID;
+    
     private String operationParam;
     private Operation operation;
     
@@ -209,21 +211,7 @@ public class EditionBacking extends BaseBacking implements Serializable{
     private List<RectificationDto> rectificationDtos = new ArrayList<>();
     
    
-    public void onload(){
-        LOG.log(Level.INFO,"REGISTRE ID: {0}",registreID);
-        registreDto = registreService.findById(registreID);
-        LOG.log(Level.INFO,"REGISTRE LIBELLE: {0}",registreDto.getLibelle());
-      
-        operation = Operation.fromString(operationParam);
-        lazySaisieActeExistantDataModel.setRegistreID(registreID);
-             
-        LOG.log(Level.INFO,"--- CURRENT OPERATION : {0}",operation.name());
-        if(operation == Operation.DECLARATION_JUGEMENT){
-            int numeroActe = acteNaissanceService.numeroActe(registreID);
-            acteNaissanceDto.setNumero(numeroActe);
-        }
-        
-    }
+   
     
     @PostConstruct
     public void init(){
@@ -239,6 +227,28 @@ public class EditionBacking extends BaseBacking implements Serializable{
         typesPiece = typePieceService.findAll();
         
         acteNaissanceDto = new ActeNaissanceDto();
+        
+    }
+    
+     public void onload(){
+        LOG.log(Level.INFO,"REGISTRE ID: {0}",registreID);
+        registreDto = registreService.findById(registreID);
+        LOG.log(Level.INFO,"REGISTRE LIBELLE: {0}",registreDto.getLibelle());
+      
+        operation = Operation.fromString(operationParam);
+        lazySaisieActeExistantDataModel.setRegistreID(registreID);
+             
+        LOG.log(Level.INFO,"--- CURRENT OPERATION : {0}",operation.name());
+        if(operation == Operation.DECLARATION_JUGEMENT){
+            int numeroActe = acteNaissanceService.numeroActe(registreID);
+            acteNaissanceDto.setNumero(numeroActe);
+        }
+        
+        if(operation == Operation.MODIFICATION){
+            acteNaissanceDto = acteNaissanceService.findById(acteNaissanceID);
+            viewMode = ViewMode.UPDATE;
+            selectedActe = acteNaissanceDto;
+        }
         
     }
     
@@ -291,7 +301,7 @@ public class EditionBacking extends BaseBacking implements Serializable{
         LOG.log(Level.INFO,"Creating acte naissance...");
          
         LOG.log(Level.INFO,"ENFANT DATE NAISSANCE: {0}",acteNaissanceDto.getEnfantDateNaissance());
-        acteNaissanceDto.setOperation(Operation.MISE_A_JOUR.name());
+        acteNaissanceDto.setOperation(Operation.MODIFICATION.name());
           
         acteNaissanceService.update(acteNaissanceDto.getId(),acteNaissanceDto);
         creerMentions(acteNaissanceDto.getId());
@@ -760,6 +770,14 @@ public class EditionBacking extends BaseBacking implements Serializable{
 
     public void setOperationParam(String operationParam) {
         this.operationParam = operationParam;
+    }
+
+    public String getActeNaissanceID() {
+        return acteNaissanceID;
+    }
+
+    public void setActeNaissanceID(String acteNaissanceID) {
+        this.acteNaissanceID = acteNaissanceID;
     }
 
     

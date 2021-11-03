@@ -15,7 +15,7 @@ import javax.ws.rs.core.Response;
 public enum Operation {
     DECLARATION_JUGEMENT,
     SAISIE_ACTE_EXISTANT,
-    MISE_A_JOUR;
+    MODIFICATION;
     
     public static Operation fromString(String operation){
         for(var t : Operation.values()){
