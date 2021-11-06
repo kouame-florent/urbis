@@ -36,8 +36,7 @@ public class LazySaisieActeExistantDataModel extends LazyDataModel<ActeNaissance
     
     @Override
     public List<ActeNaissanceDto> load(int offset, int pageSize, Map<String, SortMeta> sortBy, Map<String, FilterMeta> filterBy) {
-        LOG.log(Level.INFO,"Loading the lazy car data between {0} and {1}", new Object[]{offset, offset+pageSize} );
-        
+        LOG.log(Level.INFO,"Loading the lazy data between {0} and {1}", new Object[]{offset, offset+pageSize} );
         actes = acteNaissanceService.findWithFilters(offset, pageSize,registreID);
         LOG.log(Level.INFO,"LOADED DATA SIZE: {0}", actes.size());
         int count = acteNaissanceService.count();

@@ -7,7 +7,6 @@ package io.urbis.registre.dto;
 
 import java.time.LocalDateTime;
 import javax.validation.constraints.Size;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -17,7 +16,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
+//@AllArgsConstructor
 public class RegistreDto {
     
     private String id ;

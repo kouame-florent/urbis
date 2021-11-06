@@ -175,7 +175,7 @@ public class DeclarationBacking extends BaseBacking implements Serializable{
         }else{
             if(rang < nombreNaissance){
                 rang += 1;
-                acteNaissanceDto.setEnfantDateNaissance("");
+                acteNaissanceDto.setEnfantDateNaissance(null);
                 acteNaissanceDto.setEnfantLieuNaissance("");
                 acteNaissanceDto.setEnfantLocalite("");
                 acteNaissanceDto.setEnfantNationalite("");

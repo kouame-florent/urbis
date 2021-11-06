@@ -43,7 +43,7 @@ import org.primefaces.PrimeFaces;
  *
  * @author florent
  */
-@Named(value = "validerNaissanceBacking")
+@Named(value = "acteNaissanceValiderBacking")
 @ViewScoped
 public class ValiderBacking extends BaseBacking implements Serializable{
     private static final Logger LOG = Logger.getLogger(DeclarationBacking.class.getName());

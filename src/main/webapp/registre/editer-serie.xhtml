@@ -20,13 +20,13 @@ xmlns:p="http://primefaces.org/ui">
         <h:form id="contentForm">
      
             <p:fieldset legend="Type de registres">
-                <p:selectOneRadio id="console" value="#{creerSerieBacking.selectedType}" 
+                <p:selectOneRadio id="console" value="#{registreEditerSerieBacking.selectedType}" 
                                   converter="omnifaces.SelectItemsConverter"
                                   required="true">
-                    <p:ajax listener="#{creerSerieBacking.onTypeRgistreSelect}" 
+                    <p:ajax listener="#{registreEditerSerieBacking.onTypeRgistreSelect}" 
                             update="contentForm:commune contentForm:centre contentForm:tribunal 
                              contentForm:libelleOutputPanel"/>
-                    <f:selectItems value="#{creerSerieBacking.typesRegistre}" var="type" 
+                    <f:selectItems value="#{registreEditerSerieBacking.typesRegistre}" var="type" 
                                    itemLabel="#{type.libelle}" itemValue="#{type}"/>
                 </p:selectOneRadio>
                 
@@ -36,19 +36,19 @@ xmlns:p="http://primefaces.org/ui">
                 <div class="ui-fluid p-formgrid p-grid">
                     <div class="p-field p-col">
                     <p:outputLabel for="commune" styleClass="p-d-block">Commune</p:outputLabel>
-                    <p:inputText id="commune" value="#{creerSerieBacking.currentLocalite.libelle}"
+                    <p:inputText id="commune" value="#{registreEditerSerieBacking.currentLocalite.libelle}"
                                  disabled="true" required="true" styleClass="p-d-block"/>
 
                     </div>
                     <div class="p-field p-col">
                         <p:outputLabel for="centre" styleClass="p-d-block">Centre</p:outputLabel>
-                        <p:inputText id="centre" value="#{creerSerieBacking.currentCentre.libelle}"
+                        <p:inputText id="centre" value="#{registreEditerSerieBacking.currentCentre.libelle}"
                                      disabled="true"  required="true" styleClass="p-d-block"/>
 
                     </div>
                     <div class="p-field p-col">
                         <p:outputLabel for="tribunal" styleClass="p-d-block">Tribunal</p:outputLabel>
-                        <p:inputText id="tribunal" value="#{creerSerieBacking.currentTribunal.libelle}" disabled="true"
+                        <p:inputText id="tribunal" value="#{registreEditerSerieBacking.currentTribunal.libelle}" disabled="true"
                                    required="true"  styleClass="p-d-block"/>
 
                     </div>
@@ -57,15 +57,15 @@ xmlns:p="http://primefaces.org/ui">
 
             </p:fieldset>
             <p:outputPanel id="libelleOutputPanel">
-                <p:outputPanel  rendered="#{creerSerieBacking.renderedLibelle()}">
+                <p:outputPanel  rendered="#{registreEditerSerieBacking.renderedLibelle()}">
                     <p:fieldset>
                         <div class="ui-fluid p-formgrid p-grid">
                             <div class="p-field p-lg-6">
 
                                 <p:outputLabel for="libelle" styleClass="p-d-block" 
                                                style="color: #ffffff">Libellé du registre</p:outputLabel>
-                                <p:inputText id="libelle" value="#{creerSerieBacking.libelle}" 
-                                             required="#{creerSerieBacking.requiredLibelle()}"/>
+                                <p:inputText id="libelle" value="#{registreEditerSerieBacking.libelle}" 
+                                             required="#{registreEditerSerieBacking.requiredLibelle()}"/>
                             </div>
 
                         </div>
@@ -77,11 +77,11 @@ xmlns:p="http://primefaces.org/ui">
                 <div class="ui-fluid p-formgrid p-grid">
                     <div class="p-field p-col">
                         <p:outputLabel for="officier" styleClass="p-d-block">Officier</p:outputLabel>
-                        <p:selectOneMenu id="officier" value="#{creerSerieBacking.selectedOfficierId}"          
+                        <p:selectOneMenu id="officier" value="#{registreEditerSerieBacking.selectedOfficierId}"          
                                          label="Selectionnez" required="true">
 
                             <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez un officier --" />
-                            <f:selectItems value="#{creerSerieBacking.officiers}" var="officier" 
+                            <f:selectItems value="#{registreEditerSerieBacking.officiers}" var="officier" 
                                            itemLabel="#{officier.prenoms} #{officier.nom} [#{officier.titre}]" 
                                            itemValue="#{officier.id}"/>
                         </p:selectOneMenu>
@@ -98,25 +98,25 @@ xmlns:p="http://primefaces.org/ui">
                  <div class="ui-fluid p-formgrid p-grid">
                      <div class="p-field p-col">
                         <p:outputLabel for="annee" styleClass="p-d-block">Année</p:outputLabel>
-                        <p:inputMask id="annee" value="#{creerSerieBacking.annee}" mask="9999" maxlength="4"
+                        <p:inputMask id="annee" value="#{registreEditerSerieBacking.annee}" mask="9999" maxlength="4"
                                      required="true" styleClass="p-d-block"/>
                         
                     </div>
                      <div class="p-field p-col">
                         <p:outputLabel for="premier"  styleClass="p-d-block">Numero du premier registre</p:outputLabel>
-                        <p:inputNumber id="premier" value="#{creerSerieBacking.premier}"  maxlength="5" 
+                        <p:inputNumber id="premier" value="#{registreEditerSerieBacking.premier}"  maxlength="5" 
                                      required="true" styleClass="p-d-block"/>
 
                     </div>
                     <div class="p-field p-col">
                             <p:outputLabel for="dernier"  styleClass="p-d-block">Numero du dernier registre</p:outputLabel>
-                            <p:inputNumber id="dernier" value="#{creerSerieBacking.dernier}"  maxlength="5" 
+                            <p:inputNumber id="dernier" value="#{registreEditerSerieBacking.dernier}"  maxlength="5" 
                                          required="true" styleClass="p-d-block"/>
 
                     </div>
                      <div class="p-field p-col">
                         <p:outputLabel for="nombreFeuillets" styleClass="p-d-block">Nombre de feuillets</p:outputLabel>
-                        <p:inputNumber id="nombreFeuillets" value="#{creerSerieBacking.nombreDeFeuillets}" maxlength="5" 
+                        <p:inputNumber id="nombreFeuillets" value="#{registreEditerSerieBacking.nombreDeFeuillets}" maxlength="5" 
                                      required="true" styleClass="p-d-block"/>
 
                     </div>
@@ -126,7 +126,7 @@ xmlns:p="http://primefaces.org/ui">
            <p:spacer height="2"/>
             <div class="ui-fluid p-formgrid p-grid">
                 <div class="p-field p-col">
-                    <p:commandButton id="creer" value="Créer la serie" process="@form" action="#{creerSerieBacking.creer()}"
+                    <p:commandButton id="creer" value="Créer la serie" process="@form" action="#{registreEditerSerieBacking.creer()}"
                                      update="@form"  icon="pi pi-check" styleClass="ui-button-outlined"/>
                 </div>
                 <div class="p-field p-col">

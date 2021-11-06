@@ -36,11 +36,11 @@ import org.primefaces.model.StreamedContent;
  *
  * @author florent
  */
-@Named(value = "acteNaissanceListBacking")
+@Named(value = "acteNaissanceListerBacking")
 @ViewScoped
-public class ActeNaissanceListBacking extends BaseBacking implements Serializable{
+public class ListerBacking extends BaseBacking implements Serializable{
     
-    private static final Logger LOG = Logger.getLogger(ActeNaissanceListBacking.class.getName());
+    private static final Logger LOG = Logger.getLogger(ListerBacking.class.getName());
     
     @Inject
     LazyDeclarationDataModel lazyDeclarationDataModel;
@@ -87,7 +87,7 @@ public class ActeNaissanceListBacking extends BaseBacking implements Serializabl
                 .stream(() -> input).build();
                 
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(ActeNaissanceListBacking.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ListerBacking.class.getName()).log(Level.SEVERE, null, ex);
         }
        
        return content;
@@ -106,7 +106,7 @@ public class ActeNaissanceListBacking extends BaseBacking implements Serializabl
         var operations = List.of(Operation.MODIFICATION.name());
         var acteIds = List.of(dto.getId());
         Map<String, List<String>> params = Map.of("id", ids,"acte-id",acteIds,"operation",operations);
-        PrimeFaces.current().dialog().openDynamic("/naissance/edittion", getDialogOptions(98,98,true), params);
+        PrimeFaces.current().dialog().openDynamic("/naissance/editer", getDialogOptions(98,98,true), params);
     }
     
     public String statutSeverity(String statut){

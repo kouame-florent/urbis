@@ -22,7 +22,7 @@ import org.primefaces.PrimeFaces;
  *
  * @author florent
  */
-@Named(value = "annulerBacking")
+@Named(value = "registreAnnulerBacking")
 @ViewScoped
 public class AnnulerBacking implements Serializable{
     

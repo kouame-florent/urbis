@@ -16,66 +16,66 @@ xmlns:p="http://primefaces.org/ui">
                 <div class="ui-fluid p-formgrid p-grid">
                     <div class="p-field p-lg-12">
                         <p:outputLabel for="pereDecede" styleClass="p-d-block">Père décédé ?</p:outputLabel>
-                        <p:toggleSwitch id="pereDecede" value="#{editionBacking.pereDecede}">
+                        <p:toggleSwitch id="pereDecede" value="#{acteNaissanceEditerBacking.pereDecede}">
                             <p:ajax  update="pereOutputPanel"/>
                         </p:toggleSwitch>
                         <div class="p-field p-lg-12">    
                             <p:outputLabel for="pereNom" styleClass="p-d-block">Nom</p:outputLabel>
-                            <p:inputText id="pereNom" value="#{editionBacking.acteNaissanceDto.pereNom}"  required="true" 
+                            <p:inputText id="pereNom" value="#{acteNaissanceEditerBacking.acteNaissanceDto.pereNom}"  required="true" 
                                           styleClass="p-d-block"/>
                         </div>
                         <div class="p-field p-lg-12">
                             <p:outputLabel for="perePrenoms" styleClass="p-d-block">Prénoms</p:outputLabel>
-                            <p:inputText id="perePrenoms" value="#{editionBacking.acteNaissanceDto.perePrenoms}" required="true"  
+                            <p:inputText id="perePrenoms" value="#{acteNaissanceEditerBacking.acteNaissanceDto.perePrenoms}" required="true"  
                                          styleClass="p-d-block"/>
                         </div>
 
                         <div class="p-field p-lg-12">
                             <p:outputLabel for="pereDateNaissance" styleClass="p-d-block">Date de naissance</p:outputLabel>
-                            <p:inputMask id="pereDateNaissance" value="#{editionBacking.acteNaissanceDto.pereDateNaissance}"
+                            <p:inputMask id="pereDateNaissance" value="#{acteNaissanceEditerBacking.acteNaissanceDto.pereDateNaissance}"
                                 mask="99/99/9999" required="true">
-
+                                <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
                             </p:inputMask>
                             <p:watermark  value="jj/MM/AAAA" for="pereDateNaissance" />    
 
                         </div>
                         <div class="p-field p-lg-12">
                             <p:outputLabel for="pereLieuNaissance" styleClass="p-d-block">Lieu de naissance</p:outputLabel>
-                            <p:inputText id="pereLieuNaissance" value="#{editionBacking.acteNaissanceDto.pereLieuNaissance}"  required="true"  
+                            <p:inputText id="pereLieuNaissance" value="#{acteNaissanceEditerBacking.acteNaissanceDto.pereLieuNaissance}"  required="true"  
                                          styleClass="p-d-block"/>
                         </div>
                         <div class="p-field p-lg-12">
-                            <p:outputLabel for="pereProfession" styleClass="p-d-block" rendered="#{!editionBacking.pereDecede}">Profession</p:outputLabel>
-                            <p:inputText id="pereProfession" value="#{editionBacking.acteNaissanceDto.pereProfession}"
-                                         rendered="#{!editionBacking.pereDecede}" required="true" 
+                            <p:outputLabel for="pereProfession" styleClass="p-d-block" rendered="#{!acteNaissanceEditerBacking.pereDecede}">Profession</p:outputLabel>
+                            <p:inputText id="pereProfession" value="#{acteNaissanceEditerBacking.acteNaissanceDto.pereProfession}"
+                                         rendered="#{!acteNaissanceEditerBacking.pereDecede}" required="true" 
                                          styleClass="p-d-block"/>
                         </div>
                         <div class="p-field p-lg-12">
                             <div class="ui-fluid p-grid">
                                 <div class="p-field p-lg-6">
-                                    <p:outputLabel for="pereDateDeces" rendered="#{editionBacking.pereDecede}" styleClass="p-d-block">Décédé le</p:outputLabel>
-                                    <p:inputText id="pereDateDeces" rendered="#{editionBacking.pereDecede}" value="#{editionBacking.acteNaissanceDto.pereDateDeces}"  
+                                    <p:outputLabel for="pereDateDeces" rendered="#{acteNaissanceEditerBacking.pereDecede}" styleClass="p-d-block">Décédé le</p:outputLabel>
+                                    <p:inputText id="pereDateDeces" rendered="#{acteNaissanceEditerBacking.pereDecede}" value="#{acteNaissanceEditerBacking.acteNaissanceDto.pereDateDeces}"  
                                              styleClass="p-d-block"/>
                                 </div>
                                 <div class="p-field p-lg-6">
-                                    <p:outputLabel for="pereLieuDeces" rendered="#{editionBacking.pereDecede}" styleClass="p-d-block">à</p:outputLabel>
-                                    <p:inputText id="pereLieuDeces" rendered="#{editionBacking.pereDecede}" value="#{editionBacking.acteNaissanceDto.pereLieuDeces}"  
+                                    <p:outputLabel for="pereLieuDeces" rendered="#{acteNaissanceEditerBacking.pereDecede}" styleClass="p-d-block">à</p:outputLabel>
+                                    <p:inputText id="pereLieuDeces" rendered="#{acteNaissanceEditerBacking.pereDecede}" value="#{acteNaissanceEditerBacking.acteNaissanceDto.pereLieuDeces}"  
                                              styleClass="p-d-block"/>
                                 </div>
                             </div>
                         </div>
                         <div class="p-field p-lg-12">
-                            <p:outputLabel for="pereLocalite" rendered="#{!editionBacking.pereDecede}" styleClass="p-d-block">Domicile</p:outputLabel>
-                            <p:inputText id="pereLocalite" rendered="#{!editionBacking.pereDecede}" 
-                                         value="#{editionBacking.acteNaissanceDto.pereLocalite}" required="true"  
+                            <p:outputLabel for="pereLocalite" rendered="#{!acteNaissanceEditerBacking.pereDecede}" styleClass="p-d-block">Domicile</p:outputLabel>
+                            <p:inputText id="pereLocalite" rendered="#{!acteNaissanceEditerBacking.pereDecede}" 
+                                         value="#{acteNaissanceEditerBacking.acteNaissanceDto.pereLocalite}" required="true"  
                                          styleClass="p-d-block"/>
                         </div>
                         <div class="p-field p-lg-12">
                             <p:outputLabel for="pereNationalite" styleClass="p-d-block">Nationalité</p:outputLabel>
-                            <p:selectOneMenu id="pereNationalite" value="#{editionBacking.acteNaissanceDto.pereNationalite}"          
+                            <p:selectOneMenu id="pereNationalite" value="#{acteNaissanceEditerBacking.acteNaissanceDto.pereNationalite}"          
                                              label="Selectionnez" converter="omnifaces.SelectItemsConverter">
                                 <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez une nationalité --" />
-                                <f:selectItems value="#{editionBacking.nationalites}" var="nationalite" 
+                                <f:selectItems value="#{acteNaissanceEditerBacking.nationalites}" var="nationalite" 
                                                itemLabel="#{nationalite.libelle}"  
                                                itemValue="#{nationalite.code}"/>
                             </p:selectOneMenu>
@@ -85,31 +85,31 @@ xmlns:p="http://primefaces.org/ui">
                         <div class="p-field p-lg-12">
                             <p:outputLabel for="pereTypePiece" styleClass="p-d-block">Type pièce</p:outputLabel>
                             <p:selectOneMenu id="pereTypePiece" converter="omnifaces.SelectItemsConverter" 
-                                             value="#{editionBacking.acteNaissanceDto.pereTypePiece}"          
+                                             value="#{acteNaissanceEditerBacking.acteNaissanceDto.pereTypePiece}"          
                                              label="Selectionnez">
                                 <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez un type --" />
-                                <f:selectItems value="#{editionBacking.typesPiece}" var="piece" 
+                                <f:selectItems value="#{acteNaissanceEditerBacking.typesPiece}" var="piece" 
                                                itemLabel="#{piece.libelle}"  
                                                itemValue="#{piece.code}"/>
                             </p:selectOneMenu>
                         </div>
                         <div class="p-field p-lg-12">
                             <p:outputLabel for="pereNumeroPiece" styleClass="p-d-block">Numero pièce</p:outputLabel>
-                            <p:inputText id="pereNumeroPiece" value="#{editionBacking.acteNaissanceDto.pereNumeroPiece}"  
+                            <p:inputText id="pereNumeroPiece" value="#{acteNaissanceEditerBacking.acteNaissanceDto.pereNumeroPiece}"  
                                          styleClass="p-d-block"/>
                         </div>
                         <div class="p-field p-lg-12">
                             <p:outputLabel for="pereDatePiece" styleClass="p-d-block">Date délivrance pièce</p:outputLabel>
-                            <p:inputMask id="pereDatePiece" value="#{editionBacking.acteNaissanceDto.pereDatePiece}"
+                            <p:inputMask id="pereDatePiece" value="#{acteNaissanceEditerBacking.acteNaissanceDto.pereDatePiece}"
                                             mask="99/99/9999">
-
+                                <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
                             </p:inputMask>
                             <p:watermark  value="jj/MM/AAAA" for="pereDatePiece" />   
                             <p:message for="pereDatePiece"/>
                         </div>
                         <div class="p-field p-lg-12">
                             <p:outputLabel for="pereLieuPiece" styleClass="p-d-block">Lieu délivrance pièce </p:outputLabel>
-                            <p:inputText id="pereLieuPiece" value="#{editionBacking.acteNaissanceDto.pereLieuPiece}"   
+                            <p:inputText id="pereLieuPiece" value="#{acteNaissanceEditerBacking.acteNaissanceDto.pereLieuPiece}"   
                                          styleClass="p-d-block"/>
                         </div>
                      </div>
@@ -123,64 +123,64 @@ xmlns:p="http://primefaces.org/ui">
                     <div class="ui-fluid p-formgrid p-grid">
                          <div class="p-field p-lg-12">
                              <p:outputLabel for="mereDecede" styleClass="p-d-block">Mère décédé ?</p:outputLabel>
-                             <p:toggleSwitch id="mereDecede" value="#{editionBacking.mereDecede}">
+                             <p:toggleSwitch id="mereDecede" value="#{acteNaissanceEditerBacking.mereDecede}">
                                  <p:ajax update="mereOutputPanel"/>
                              </p:toggleSwitch>
                             <div class="p-field p-lg-12">    
                                 <p:outputLabel for="mereNom" styleClass="p-d-block">Nom</p:outputLabel>
-                                <p:inputText id="mereNom" value="#{editionBacking.acteNaissanceDto.mereNom}"  required="true"  
+                                <p:inputText id="mereNom" value="#{acteNaissanceEditerBacking.acteNaissanceDto.mereNom}"  required="true"  
                                               styleClass="p-d-block"/>
                             </div>
                             <div class="p-field p-lg-12">
                                 <p:outputLabel for="merePrenoms" styleClass="p-d-block">Prénoms</p:outputLabel>
-                                <p:inputText id="merePrenoms" value="#{editionBacking.acteNaissanceDto.merePrenoms}" required="true"  
+                                <p:inputText id="merePrenoms" value="#{acteNaissanceEditerBacking.acteNaissanceDto.merePrenoms}" required="true"  
                                              styleClass="p-d-block"/>
                             </div>
 
                             <div class="p-field p-lg-12">
                                 <p:outputLabel for="mereDateNaissance" styleClass="p-d-block">Date naissance</p:outputLabel>
-                                <p:inputMask id="mereDateNaissance" value="#{editionBacking.acteNaissanceDto.mereDateNaissance}"
+                                <p:inputMask id="mereDateNaissance" value="#{acteNaissanceEditerBacking.acteNaissanceDto.mereDateNaissance}"
                                     mask="99/99/9999" required="true">
-
+                                    <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
                                 </p:inputMask>
                                 <p:watermark  value="jj/MM/AAAA" for="mereDateNaissance" />    
                             </div>
                             <div class="p-field p-lg-12">
                                 <p:outputLabel for="mereLieuNaissance" styleClass="p-d-block">Lieu de naissance</p:outputLabel>
-                                <p:inputText id="mereLieuNaissance" value="#{editionBacking.acteNaissanceDto.mereLieuNaissance}"  required="true"  
+                                <p:inputText id="mereLieuNaissance" value="#{acteNaissanceEditerBacking.acteNaissanceDto.mereLieuNaissance}"  required="true"  
                                              styleClass="p-d-block"/>
                             </div>
                             <div class="p-field p-lg-12">
-                                <p:outputLabel for="mereProfession" rendered="#{!editionBacking.mereDecede}" styleClass="p-d-block">Profession</p:outputLabel>
-                                <p:inputText id="mereProfession" rendered="#{!editionBacking.mereDecede}" value="#{editionBacking.acteNaissanceDto.mereProfession}" required="true"  
+                                <p:outputLabel for="mereProfession" rendered="#{!acteNaissanceEditerBacking.mereDecede}" styleClass="p-d-block">Profession</p:outputLabel>
+                                <p:inputText id="mereProfession" rendered="#{!acteNaissanceEditerBacking.mereDecede}" value="#{acteNaissanceEditerBacking.acteNaissanceDto.mereProfession}" required="true"  
                                              styleClass="p-d-block"/>
                             </div>
                             <div class="p-field p-lg-12">
                             <div class="ui-fluid p-grid">
                                     <div class="p-field p-lg-6">
-                                        <p:outputLabel for="mereDateDeces" rendered="#{editionBacking.mereDecede}" styleClass="p-d-block">Décédé le</p:outputLabel>
-                                        <p:inputText id="mereDateDeces" rendered="#{editionBacking.mereDecede}" value="#{editionBacking.acteNaissanceDto.mereDateDeces}"  
+                                        <p:outputLabel for="mereDateDeces" rendered="#{acteNaissanceEditerBacking.mereDecede}" styleClass="p-d-block">Décédé le</p:outputLabel>
+                                        <p:inputText id="mereDateDeces" rendered="#{acteNaissanceEditerBacking.mereDecede}" value="#{acteNaissanceEditerBacking.acteNaissanceDto.mereDateDeces}"  
                                                  styleClass="p-d-block"/>
                                     </div>
                                     <div class="p-field p-lg-6">
-                                        <p:outputLabel for="mereLieuDeces" rendered="#{editionBacking.mereDecede}" styleClass="p-d-block">à</p:outputLabel>
-                                        <p:inputText id="mereLieuDeces" rendered="#{editionBacking.mereDecede}" value="#{editionBacking.acteNaissanceDto.mereLieuDeces}"  
+                                        <p:outputLabel for="mereLieuDeces" rendered="#{acteNaissanceEditerBacking.mereDecede}" styleClass="p-d-block">à</p:outputLabel>
+                                        <p:inputText id="mereLieuDeces" rendered="#{acteNaissanceEditerBacking.mereDecede}" value="#{acteNaissanceEditerBacking.acteNaissanceDto.mereLieuDeces}"  
                                                  styleClass="p-d-block"/>
                                     </div>
                                 </div>
                             </div>
                             <div class="p-field p-lg-12">
-                                <p:outputLabel for="mereLocalite" rendered="#{!editionBacking.mereDecede}" styleClass="p-d-block">Domicile</p:outputLabel>
-                                <p:inputText id="mereLocalite" rendered="#{!editionBacking.mereDecede}" value="#{editionBacking.acteNaissanceDto.mereLocalite}" required="true"  
+                                <p:outputLabel for="mereLocalite" rendered="#{!acteNaissanceEditerBacking.mereDecede}" styleClass="p-d-block">Domicile</p:outputLabel>
+                                <p:inputText id="mereLocalite" rendered="#{!acteNaissanceEditerBacking.mereDecede}" value="#{acteNaissanceEditerBacking.acteNaissanceDto.mereLocalite}" required="true"  
                                              styleClass="p-d-block"/>
                             </div>
                             <div class="p-field p-lg-12">
                                 <p:outputLabel for="mereNationalite" styleClass="p-d-block">Nationalité</p:outputLabel>
                                 <p:selectOneMenu id="mereNationalite" converter="omnifaces.SelectItemsConverter" 
-                                                 value="#{editionBacking.acteNaissanceDto.mereNationalite}"          
+                                                 value="#{acteNaissanceEditerBacking.acteNaissanceDto.mereNationalite}"          
                                                  label="Selectionnez" >
                                     <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez une nationalité --" />
-                                    <f:selectItems value="#{editionBacking.nationalites}" var="nationalite" 
+                                    <f:selectItems value="#{acteNaissanceEditerBacking.nationalites}" var="nationalite" 
                                                    itemLabel="#{nationalite.libelle}"  
                                                    itemValue="#{nationalite.code}"/>
                                 </p:selectOneMenu>
@@ -190,10 +190,10 @@ xmlns:p="http://primefaces.org/ui">
                             <div class="p-field p-lg-12">
                                 <p:outputLabel for="mereTypePiece" styleClass="p-d-block">Type pièce</p:outputLabel>
                                 <p:selectOneMenu id="mereTypePiece" converter="omnifaces.SelectItemsConverter" 
-                                                 value="#{editionBacking.acteNaissanceDto.mereTypePiece}"          
+                                                 value="#{acteNaissanceEditerBacking.acteNaissanceDto.mereTypePiece}"          
                                              label="Selectionnez" >
                                     <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez un type --" />
-                                    <f:selectItems value="#{editionBacking.typesPiece}" var="piece" 
+                                    <f:selectItems value="#{acteNaissanceEditerBacking.typesPiece}" var="piece" 
                                                    itemLabel="#{piece.libelle}"  
                                                    itemValue="#{piece.code}"/>
                                 </p:selectOneMenu>
@@ -201,21 +201,21 @@ xmlns:p="http://primefaces.org/ui">
                             </div>
                             <div class="p-field p-lg-12">
                                 <p:outputLabel for="mereNumeroPiece" styleClass="p-d-block">Numero pièce</p:outputLabel>
-                                <p:inputText id="mereNumeroPiece" value="#{editionBacking.acteNaissanceDto.mereNumeroPiece}"  
+                                <p:inputText id="mereNumeroPiece" value="#{acteNaissanceEditerBacking.acteNaissanceDto.mereNumeroPiece}"  
                                              styleClass="p-d-block"/>
                             </div>
                             <div class="p-field p-lg-12">
                                 <p:outputLabel for="mereDatePiece" styleClass="p-d-block">Date délivrance pièce</p:outputLabel>
-                                <p:inputMask id="mereDatePiece" value="#{editionBacking.acteNaissanceDto.mereDatePiece}"
+                                <p:inputMask id="mereDatePiece" value="#{acteNaissanceEditerBacking.acteNaissanceDto.mereDatePiece}"
                                             mask="99/99/9999">
-
+                                    <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
                                 </p:inputMask>
                                 <p:watermark  value="jj/MM/AAAA" for="mereDatePiece" />  
                                 <p:message for="mereDatePiece"/>
                             </div>
                             <div class="p-field p-lg-12">
                                 <p:outputLabel for="mereLieuPiece" styleClass="p-d-block">Lieu délivrance pièce </p:outputLabel>
-                                <p:inputText id="mereLieuPiece" value="#{editionBacking.acteNaissanceDto.mereLieuPiece}"  
+                                <p:inputText id="mereLieuPiece" value="#{acteNaissanceEditerBacking.acteNaissanceDto.mereLieuPiece}"  
                                              styleClass="p-d-block"/>
                             </div>
 

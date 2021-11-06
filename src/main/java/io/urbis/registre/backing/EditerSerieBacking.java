@@ -37,13 +37,13 @@ import org.primefaces.PrimeFaces;
  *
  * @author florent
  */
-@Named(value = "creerSerieBacking")
+@Named(value = "registreEditerSerieBacking")
 @ViewScoped
-public class CreerSerieBacking implements Serializable{
+public class EditerSerieBacking implements Serializable{
     
     private static final long serialVersionUID = 1L;
     
-    private static final Logger LOG = Logger.getLogger(CreerSerieBacking.class.getName());
+    private static final Logger LOG = Logger.getLogger(EditerSerieBacking.class.getName());
     
     @Inject 
     @RestClient
@@ -88,10 +88,13 @@ public class CreerSerieBacking implements Serializable{
     private List<OfficierEtatCivilDto> officiers = new ArrayList<>();
     private String selectedOfficierId;
     
+   // private RegistreDto registreDto;
+    
     @PostConstruct
     public void init(){
        typesRegistre = typeRegistreService.findAll();
        officiers = officierService.findAll();
+      // registreDto = new RegistreDto();
     }
     
     
@@ -127,23 +130,46 @@ public class CreerSerieBacking implements Serializable{
     public void creer(){
         if(dernier < premier){
             FacesMessage message = new FacesMessage("le numero du dernier registre doit etre inférieur au premier");
-            facesContext.addMessage("contenttForm:creer",message);
+            facesContext.addMessage("contentForm:creer",message);
         }
         if(dernier == 0){
             FacesMessage message = new FacesMessage("le numero du premier registre ne peut être '0'");
-            facesContext.addMessage("contenttForm:creer",message);
+            facesContext.addMessage("contentForm:creer",message);
         }
         for (int i = premier; i <= dernier; i++ ){
             LOG.log(Level.INFO, "CREATING REGISTRE ...");
             //int numeroRegistre = registreService.numeroRegistre(selectedType.getCode(),anneeCourante);
             int numeroPremierActe = registreService.numeroPremierActe(selectedType.getCode(),annee);
             LOG.log(Level.INFO, "NUMERO PREMIER ACTE: {0}", numeroPremierActe);
+            
+            RegistreDto registreDto = new RegistreDto();
+            
+            registreDto.setTypeRegistre(selectedType.getCode());
+            registreDto.setLibelle(selectedType.getLibelle());
+            registreDto.setLocalite(currentLocalite.getLibelle());
+            registreDto.setLocaliteID(currentLocalite.getId());
+            registreDto.setCentre(currentCentre.getLibelle());
+            registreDto.setCentreID(currentCentre.getId());
+            registreDto.setAnnee(annee);
+            registreDto.setNumero(i);
+            registreDto.setTribunal(currentTribunal.getLibelle());
+            registreDto.setTribunalID(currentTribunal.getId());
+            registreDto.setOfficierEtatCivilID(selectedOfficierId);
+            registreDto.setNumeroPremierActe(numeroPremierActe);
+            registreDto.setNumeroDernierActe(nombreDeFeuillets + numeroPremierActe - 1);
+            registreDto.setNombreDeFeuillets(nombreDeFeuillets);
+            registreDto.setNombreActe(0);
+            registreDto.setStatut("");
+            registreDto.setDateAnnulation(null);
+            registreDto.setMotifAnnulation("");
+            
+            /*
             var reg = new RegistreDto(
                     "", 
                     null, 
                     null,
                     selectedType.getCode(), 
-                    selectedType.getLibelle(),
+                    registreLibelle(selectedType),
                     currentLocalite.getLibelle(), 
                     currentLocalite.getId(), 
                     currentCentre.getLibelle(), 
@@ -161,15 +187,19 @@ public class CreerSerieBacking implements Serializable{
                     "", 
                     null, 
                     "");
-            
-            RegistreDto regRes = registreService.create(reg);
+            */
+            RegistreDto regRes = registreService.create(registreDto);
         }
         
        PrimeFaces.current().dialog().closeDynamic("");
     }
     
     private String registreLibelle(TypeRegistreDto type){
-        return "";
+        if(type.getCode().equals(TypeRegistre.SPECIAL_NAISSANCE.name()) 
+                || type.getCode().equals(TypeRegistre.SPECIAL_DECES.name())){
+            return libelle;
+        }
+        return type.getLibelle();
     }
     
     private void clear(){
@@ -268,7 +298,7 @@ public class CreerSerieBacking implements Serializable{
     public void setLibelle(String libelle) {
         this.libelle = libelle;
     }
-    
+
     
    
 }

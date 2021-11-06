@@ -5,6 +5,7 @@
  */
 package io.urbis.registre.backing;
 
+import io.urbis.common.util.ViewMode;
 import io.urbis.registre.api.CentreService;
 import io.urbis.registre.api.LocaliteService;
 import io.urbis.registre.api.OfficierService;
@@ -33,13 +34,13 @@ import org.primefaces.PrimeFaces;
  *
  * @author florent
  */
-@Named(value = "creerBacking")
+@Named(value = "registreEditerBacking")
 @ViewScoped
-public class CreerBacking implements Serializable{
+public class EditerBacking implements Serializable{
     
     private static final long serialVersionUID = 1L;
     
-    private static final Logger LOG = Logger.getLogger(CreerBacking.class.getName());
+    private static final Logger LOG = Logger.getLogger(EditerBacking.class.getName());
     
     @Inject 
     @RestClient
@@ -65,6 +66,9 @@ public class CreerBacking implements Serializable{
     @RestClient
     OfficierService officierService;
     
+   // private String registreID;
+   // private String modeParam;
+    
     private List<TypeRegistreDto> typesRegistre;
     private TypeRegistreDto selectedType;
     
@@ -79,12 +83,30 @@ public class CreerBacking implements Serializable{
     private List<OfficierEtatCivilDto> officiers = new ArrayList<>();
     private String selectedOfficierId;
     
+    //private ViewMode viewMode; 
+    
+    private RegistreDto registreDto;
+    
     
     @PostConstruct
     public void init(){
        typesRegistre = typeRegistreService.findAll();
        officiers = officierService.findAll();
+       registreDto = new RegistreDto();
     }
+    
+    /*
+    public void onload(){
+        LOG.log(Level.INFO, "REGISTRE ID: {0}", registreID);
+        LOG.log(Level.INFO, "VIEW MODE: {0}", modeParam);
+        
+        if(modeParam != null && !modeParam.isEmpty()){
+            viewMode = ViewMode.valueOf(modeParam);
+            registreDto = registreService.findById(registreID);
+        }
+        
+    }
+    */
     
     
     public void onTypeRgistreSelect(){
@@ -120,7 +142,34 @@ public class CreerBacking implements Serializable{
     
     public void creer(){
         LOG.log(Level.INFO, "CREATING REGISTRE ...");
-        var reg = new RegistreDto(
+        
+       
+       
+       //registreDto.setId(registre.id);
+       //registreDto.setCreated(registre.created);
+       //registreDto.setUpdated(registre.updated);
+       registreDto.setTypeRegistre(selectedType.getCode());
+       registreDto.setLibelle(selectedType.getLibelle());
+       registreDto.setLocalite(currentLocalite.getLibelle());
+       registreDto.setLocaliteID(currentLocalite.getId());
+       registreDto.setCentre(currentCentre.getLibelle());
+       registreDto.setCentreID(currentCentre.getId());
+       registreDto.setAnnee(annee);
+       registreDto.setNumero(numeroRegistre);
+       registreDto.setTribunal(currentTribunal.getLibelle());
+       registreDto.setTribunalID(currentTribunal.getId());
+       //registreDto.setOfficierEtatCivilNomComplet(registre.officierEtatCivil.prenoms + " " + registre.officierEtatCivil.nom);
+       registreDto.setOfficierEtatCivilID(selectedOfficierId);
+       registreDto.setNumeroPremierActe(numeroPremierActe);
+       registreDto.setNumeroDernierActe(nombreDeFeuillets + numeroPremierActe - 1);
+       registreDto.setNombreDeFeuillets(nombreDeFeuillets);
+       registreDto.setNombreActe(0);
+       registreDto.setStatut("");
+       registreDto.setDateAnnulation(null);
+       registreDto.setMotifAnnulation("");
+       
+        /*
+        var regi = new RegistreDto(
                 "", 
                 null, 
                 null,
@@ -143,8 +192,9 @@ public class CreerBacking implements Serializable{
                 "", 
                 null, 
                 "");
+        */
         
-        RegistreDto regRes = registreService.create(reg);
+        RegistreDto regRes = registreService.create(registreDto);
         PrimeFaces.current().dialog().closeDynamic("");
     }
 
@@ -219,6 +269,16 @@ public class CreerBacking implements Serializable{
         this.nombreDeFeuillets = nombreDeFeuillets;
     }
 
+    
+    public RegistreDto getRegistreDto() {
+        return registreDto;
+    }
+
+    public void setRegistreDto(RegistreDto registreDto) {
+        this.registreDto = registreDto;
+    }
+
+    
     
     
 }

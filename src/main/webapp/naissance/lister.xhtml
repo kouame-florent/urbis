@@ -15,8 +15,8 @@ xmlns:p="http://primefaces.org/ui">
     <ui:define name="content">
         
         <f:metadata>
-            <f:viewParam name="id" value="#{acteNaissanceListBacking.registreID}" />
-            <f:viewAction action="#{acteNaissanceListBacking.onload}" />
+            <f:viewParam name="id" value="#{acteNaissanceListerBacking.registreID}" />
+            <f:viewAction action="#{acteNaissanceListerBacking.onload}" />
         </f:metadata>
         
         <h:form id="messageForm">
@@ -25,9 +25,9 @@ xmlns:p="http://primefaces.org/ui">
        
         <h:form id="contentForm">
                 
-            <p:dataTable id="actesDatatable" widgetVar="acteNaissanceWidget" var="acte" 
-                         value="#{acteNaissanceListBacking.lazyDeclarationDataModel}"
-                         selection="#{acteNaissanceListBacking.selectedActe}" rowKey="#{acte.id}" paginator="true"
+            <p:dataTable id="actesDatatable"  var="acte" 
+                         value="#{acteNaissanceListerBacking.lazyDeclarationDataModel}"
+                         selection="#{acteNaissanceListerBacking.selectedActe}" rowKey="#{acte.id}" paginator="true"
                         rows="25" rowSelectMode="add" paginatorPosition="bottom">
                 
                 
@@ -55,28 +55,28 @@ xmlns:p="http://primefaces.org/ui">
                 </p:column>
                 
                 <p:column headerText="Numéro acte" >
-                    <p:tag severity="#{acteNaissanceListBacking.statutSeverity(acte.statut)}" value="#{acte.statut}"/>
+                    <p:tag severity="#{acteNaissanceListerBacking.statutSeverity(acte.statut)}" value="#{acte.statut}"/>
                 </p:column>
               
                 <p:column style="width: 2%" >
                     <p:commandButton process="@this" title="Imprimer"
                                      ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" icon="pi pi-print">
-                        <f:setPropertyActionListener value="#{acte.id}" target="#{acteNaissanceListBacking.selectedActeID}"/>
-                        <p:fileDownload value="#{acteNaissanceListBacking.download()}"/>
+                        <f:setPropertyActionListener value="#{acte.id}" target="#{acteNaissanceListerBacking.selectedActeID}"/>
+                        <p:fileDownload value="#{acteNaissanceListerBacking.download()}"/>
                      </p:commandButton>
                 </p:column>
                
                 <p:column  style="width: 2%">
                     <p:menuButton icon="pi pi-ellipsis-h" style="width: 100%;white-space: nowrap;width: auto !important;">
                         <p:menuitem value="Consulter l'acte" process="@this"  icon="pi pi-book"/>
-                        <p:menuitem value="Valider l'acte" action="#{acteNaissanceListBacking.showValiderActeView(acte)}" 
+                        <p:menuitem value="Valider l'acte" action="#{acteNaissanceListerBacking.showValiderActeView(acte)}" 
                                     process="@this" icon="pi pi-book">
-                            <p:ajax event="dialogReturn" listener="#{acteNaissanceListBacking.onActeValidated}" 
+                            <p:ajax event="dialogReturn" listener="#{acteNaissanceListerBacking.onActeValidated}" 
                                         update=":contentForm:actesDatatable"/>
                         </p:menuitem>
-                        <p:menuitem value="Modifier l'acte" action="#{acteNaissanceListBacking.showModifierActeview(acte)}" 
+                        <p:menuitem value="Modifier l'acte" action="#{acteNaissanceListerBacking.showModifierActeview(acte)}" 
                                     process="@this"  icon="pi pi-book"/>
-                        <p:menuitem value="Imprimer l'acte" action="#{acteNaissanceListBacking.download()}" process="@this" 
+                        <p:menuitem value="Imprimer l'acte" action="#{acteNaissanceListerBacking.download()}" process="@this" 
                                     icon="pi pi-book"/>
                     </p:menuButton>
                 </p:column>

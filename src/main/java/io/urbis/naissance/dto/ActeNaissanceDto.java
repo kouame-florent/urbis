@@ -6,11 +6,8 @@
 package io.urbis.naissance.dto;
 
 
-import io.urbis.mention.dto.AdoptionDto;
-import io.urbis.mention.dto.DecesDto;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import lombok.Data;
@@ -39,7 +36,7 @@ public class ActeNaissanceDto {
     @Min(1)
     private int numero;
     
-    private String enfantDateNaissance;
+    private LocalDateTime enfantDateNaissance;
     private String enfantLieuNaissance;
     private String enfantSexe;
     private String enfantLocalite;
@@ -47,8 +44,8 @@ public class ActeNaissanceDto {
     private String enfantPrenoms;
     private String enfantNationalite;  
 
-    private String dateDeclaration;
-    private String dateDressage;
+    private LocalDate dateDeclaration;
+    private LocalDateTime dateDressage;
    // private String dateEnregistrement;
     
     private String jugementDate;

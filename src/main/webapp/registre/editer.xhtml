@@ -13,6 +13,7 @@ xmlns:p="http://primefaces.org/ui">
      </ui:define>
     
     <ui:define name="content">
+         
         <h:form id="messageForm">
                 <p:growl globalOnly="true" life="15000"/>        
         </h:form>
@@ -20,11 +21,11 @@ xmlns:p="http://primefaces.org/ui">
         <h:form id="contenttForm">
      
             <p:fieldset legend="Type de registres">
-                <p:selectOneRadio id="typeRegistre" value="#{creerBacking.selectedType}" 
+                <p:selectOneRadio id="typeRegistre" value="#{registreEditerBacking.selectedType}" 
                                   converter="omnifaces.SelectItemsConverter"
                                   required="true">
-                    <p:ajax listener="#{creerBacking.onTypeRgistreSelect}" update="@form"/>
-                    <f:selectItems value="#{creerBacking.typesRegistre}" var="type" 
+                    <p:ajax listener="#{registreEditerBacking.onTypeRgistreSelect}" update="@form"/>
+                    <f:selectItems value="#{registreEditerBacking.typesRegistre}" var="type" 
                                    itemLabel="#{type.libelle}" itemValue="#{type}"/>
                 </p:selectOneRadio>
                 
@@ -34,25 +35,25 @@ xmlns:p="http://primefaces.org/ui">
                 <div class="ui-fluid p-formgrid p-grid">
                 <div class="p-field p-col">
                 <p:outputLabel for="commune" styleClass="p-d-block">Commune</p:outputLabel>
-                <p:inputText id="commune" value="#{creerBacking.currentLocalite.libelle}"
+                <p:inputText id="commune" value="#{registreEditerBacking.currentLocalite.libelle}"
                              disabled="true" required="true" styleClass="p-d-block"/>
 
                 </div>
                 <div class="p-field p-col">
                     <p:outputLabel for="centre" styleClass="p-d-block">Centre</p:outputLabel>
-                    <p:inputText id="centre" value="#{creerBacking.currentCentre.libelle}"
+                    <p:inputText id="centre" value="#{registreEditerBacking.currentCentre.libelle}"
                                  disabled="true"  required="true" styleClass="p-d-block"/>
 
                 </div>
                 <div class="p-field p-col">
                     <p:outputLabel for="annee" styleClass="p-d-block">Année</p:outputLabel>
-                    <p:inputText id="annee" value="#{creerBacking.annee}" required="true" maxlength="5"
+                    <p:inputText id="annee" value="#{registreEditerBacking.annee}" required="true" maxlength="5" 
                                    styleClass="p-d-block"/>
 
                 </div>
                 <div class="p-field p-col">
                     <p:outputLabel for="numero" styleClass="p-d-block">Numéro</p:outputLabel>
-                    <p:inputText id="numero" value="#{creerBacking.numeroRegistre}" required="true" maxlength="5" 
+                    <p:inputText id="numero" value="#{registreEditerBacking.numeroRegistre}" required="true" maxlength="5" 
                                     styleClass="p-d-block"/>
 
                 </div>
@@ -63,21 +64,20 @@ xmlns:p="http://primefaces.org/ui">
             <p:spacer height="2"/>
             <p:fieldset legend="Actes">
                 <div class="ui-fluid p-formgrid p-grid">
-                     <div class="p-field p-col">
+                    <div class="p-field p-col">
+                        <p:outputLabel for="numeroPremierActe"  styleClass="p-d-block">Numéro premier acte</p:outputLabel>
+                        <p:inputText id="numeroPremierActe" value="#{registreEditerBacking.numeroPremierActe}" 
+                                     maxlength="5" required="true" disabled="true" styleClass="p-d-block"/>
+
+                    </div>
+                    <div class="p-field p-col">
                         <p:outputLabel for="nombreFeuillets" styleClass="p-d-block">Nombre de feuillets</p:outputLabel>
-                        <p:inputText id="nombreFeuillets" value="#{creerBacking.nombreDeFeuillets}" required="true"
+                        <p:inputText id="nombreFeuillets" value="#{registreEditerBacking.nombreDeFeuillets}" required="true"
                                      maxlength="5" styleClass="p-d-block">
                           
                         </p:inputText>
 
                     </div>
-                    <div class="p-field p-col">
-                        <p:outputLabel for="numeroPremierActe"  styleClass="p-d-block">Numéro premier acte</p:outputLabel>
-                        <p:inputText id="numeroPremierActe" value="#{creerBacking.numeroPremierActe}" 
-                                     maxlength="5" required="true" disabled="true" styleClass="p-d-block"/>
-
-                    </div>
-                    
 
                 </div>
 
@@ -87,7 +87,7 @@ xmlns:p="http://primefaces.org/ui">
                 <div class="ui-fluid p-formgrid p-grid">
                     <div class="p-field p-col">
                         <p:outputLabel for="tribunal" styleClass="p-d-block">Tribunal</p:outputLabel>
-                        <p:inputText id="tribunal" value="#{creerBacking.currentTribunal.libelle}" disabled="true"
+                        <p:inputText id="tribunal" value="#{registreEditerBacking.currentTribunal.libelle}" disabled="true"
                                    required="true"  styleClass="p-d-block"/>
 
                     </div>
@@ -100,11 +100,11 @@ xmlns:p="http://primefaces.org/ui">
                 <div class="ui-fluid p-formgrid p-grid">
                     <div class="p-field p-col">
                         <p:outputLabel for="officier" styleClass="p-d-block">Officier</p:outputLabel>
-                        <p:selectOneMenu id="officier" value="#{creerBacking.selectedOfficierId}"          
+                        <p:selectOneMenu id="officier" value="#{registreEditerBacking.selectedOfficierId}"          
                                          label="Selectionnez" required="true">
-                            <p:ajax listener="#{creerBacking.onOfficierSelect}"/>
+                            <p:ajax listener="#{registreEditerBacking.onOfficierSelect}"/>
                             <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez un officier --" />
-                            <f:selectItems value="#{creerBacking.officiers}" var="officier" 
+                            <f:selectItems value="#{registreEditerBacking.officiers}" var="officier" 
                                            itemLabel="#{officier.prenoms} #{officier.nom} [#{officier.titre}]" 
                                            itemValue="#{officier.id}"/>
                         </p:selectOneMenu>
@@ -119,7 +119,7 @@ xmlns:p="http://primefaces.org/ui">
             <p:spacer height="2"/>
             <div class="ui-fluid p-formgrid p-grid">
                 <div class="p-field p-col">
-                    <p:commandButton value="Creer" process="@form" action="#{creerBacking.creer()}"
+                    <p:commandButton value="Creer" process="@form" action="#{registreEditerBacking.creer()}"
                                      update="@form"  icon="pi pi-check" styleClass="ui-button-outlined"/>
                 </div>
                 <div class="p-field p-col">

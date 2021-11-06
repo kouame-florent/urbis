@@ -15,8 +15,8 @@ xmlns:p="http://primefaces.org/ui">
     <ui:define name="content">
         
         <f:metadata>
-            <f:viewParam name="id" value="#{annulerBacking.registreID}" />
-            <f:viewAction action="#{annulerBacking.onload}" />
+            <f:viewParam name="id" value="#{registreAnnulerBacking.registreID}" />
+            <f:viewAction action="#{registreAnnulerBacking.onload}" />
         </f:metadata>
         
         <h:form id="messageForm">
@@ -31,14 +31,14 @@ xmlns:p="http://primefaces.org/ui">
                 <div class="p-field p-grid">
                     <p:outputLabel for="localite" styleClass="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Localité:</p:outputLabel>     
                     <div class="p-col-12 p-md-10">
-                        <p:outputLabel id="localite" value="#{annulerBacking.registreDto.localite}" />
+                        <p:outputLabel id="localite" value="#{registreAnnulerBacking.registreDto.localite}" />
                     </div>
                 </div>
                 
                 <div class="p-field p-grid">
                     <p:outputLabel for="centre" styleClass="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Centre:</p:outputLabel>
                     <div class="p-col-12 p-md-10">
-                        <p:outputLabel id="centre" value="#{annulerBacking.registreDto.centre}"/>
+                        <p:outputLabel id="centre" value="#{registreAnnulerBacking.registreDto.centre}"/>
                     </div>
                     
                 </div>
@@ -46,7 +46,7 @@ xmlns:p="http://primefaces.org/ui">
                 <div class="p-field p-grid">
                     <p:outputLabel for="tribunal" styleClass="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Centre:</p:outputLabel>
                     <div class="p-col-12 p-md-10">
-                        <p:outputLabel id="tribunal" value="#{annulerBacking.registreDto.tribunal}"/>
+                        <p:outputLabel id="tribunal" value="#{registreAnnulerBacking.registreDto.tribunal}"/>
                     </div>
                     
                 </div>
@@ -54,14 +54,14 @@ xmlns:p="http://primefaces.org/ui">
                 <div class="p-field p-grid">
                     <p:outputLabel for="annee" styleClass="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Année:</p:outputLabel>
                     <div class="p-col-12 p-md-10">
-                        <p:outputLabel id="annee" value="#{annulerBacking.registreDto.annee}" />
+                        <p:outputLabel id="annee" value="#{registreAnnulerBacking.registreDto.annee}" />
                     </div>
                     
                 </div>
                 <div class="p-field p-grid">
                     <p:outputLabel for="numero" styleClass="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Numéro:</p:outputLabel>
                     <div class="p-col-12 p-md-10">
-                        <p:outputLabel id="numero" value="#{annulerBacking.registreDto.numero}" />
+                        <p:outputLabel id="numero" value="#{registreAnnulerBacking.registreDto.numero}" />
                     </div>
                     
                 </div>
@@ -70,7 +70,7 @@ xmlns:p="http://primefaces.org/ui">
                     <p:outputLabel for="numeroPremierActe" styleClass="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Numéro premier acte:
                     </p:outputLabel>
                     <div class="p-col-12 p-md-10">
-                        <p:outputLabel id="numeroPremierActe" value="#{annulerBacking.registreDto.numeroPremierActe}" />
+                        <p:outputLabel id="numeroPremierActe" value="#{registreAnnulerBacking.registreDto.numeroPremierActe}" />
                     </div>
                 </div>
                 
@@ -78,7 +78,7 @@ xmlns:p="http://primefaces.org/ui">
                     <p:outputLabel for="numeroDernierActe" styleClass="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Numéro dernier acte:
                     </p:outputLabel>
                     <div class="p-col-12 p-md-10">
-                        <p:outputLabel id="numeroDernierActe" value="#{annulerBacking.registreDto.numeroDernierActe}" />
+                        <p:outputLabel id="numeroDernierActe" value="#{registreAnnulerBacking.registreDto.numeroDernierActe}" />
                     </div>
                     
                 </div>
@@ -87,7 +87,7 @@ xmlns:p="http://primefaces.org/ui">
                     <p:outputLabel for="nombreFeuillets" styleClass="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Nombre de feuillets:
                     </p:outputLabel>
                     <div class="p-col-12 p-md-10">
-                        <p:outputLabel id="nombreFeuillets" value="#{annulerBacking.registreDto.nombreDeFeuillets}" />
+                        <p:outputLabel id="nombreFeuillets" value="#{registreAnnulerBacking.registreDto.nombreDeFeuillets}" />
                     </div>
                     
                 </div>
@@ -95,7 +95,7 @@ xmlns:p="http://primefaces.org/ui">
                     <p:outputLabel for="officier" styleClass="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Officier:
                     </p:outputLabel>
                     <div class="p-col-12 p-md-10">
-                        <p:outputLabel id="officier" value="#{annulerBacking.registreDto.officierEtatCivilNomComplet}" />
+                        <p:outputLabel id="officier" value="#{registreAnnulerBacking.registreDto.officierEtatCivilNomComplet}" />
                     </div>
                     
                 </div>
@@ -104,7 +104,7 @@ xmlns:p="http://primefaces.org/ui">
                     <p:outputLabel for="motif" styleClass="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Motif annulation:
                     </p:outputLabel>
                     <div class="p-col-12 p-md-10">
-                        <p:inputTextarea id="motif" required="true" value="#{annulerBacking.registreDto.motifAnnulation}"/>
+                        <p:inputTextarea id="motif" required="true" value="#{registreAnnulerBacking.registreDto.motifAnnulation}"/>
                         
                     </div>
                     
@@ -116,7 +116,7 @@ xmlns:p="http://primefaces.org/ui">
             </p:panel>
             <div class="ui-fluid p-formgrid p-grid">
                  <div class="p-field p-col">
-                     <p:commandButton value="Annuler"  action="#{annulerBacking.annuler()}" styleClass="ui-button-outlined"/>
+                     <p:commandButton value="Annuler"  action="#{registreAnnulerBacking.annuler()}" styleClass="ui-button-outlined"/>
                 </div>
             </div>
       

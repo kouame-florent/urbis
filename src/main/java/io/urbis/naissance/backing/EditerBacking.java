@@ -5,13 +5,13 @@
  */
 package io.urbis.naissance.backing;
 
+import io.urbis.common.util.ViewMode;
 import io.urbis.common.util.BaseBacking;
 import io.urbis.mention.dto.AdoptionDto;
 import io.urbis.mention.dto.DecesDto;
 import io.urbis.mention.dto.DissolutionMariageDto;
 import io.urbis.mention.dto.LegitimationDto;
 import io.urbis.mention.dto.MariageDto;
-import io.urbis.mention.dto.MentionDto;
 import io.urbis.mention.dto.ReconnaissanceDto;
 import io.urbis.mention.dto.RectificationDto;
 import io.urbis.naissance.dto.ActeNaissanceDto;
@@ -66,11 +66,11 @@ import io.urbis.mention.api.MentionLegitimationService;
  *
  * @author florent
  */
-@Named(value = "editionBacking")
+@Named(value = "acteNaissanceEditerBacking")
 @ViewScoped
-public class EditionBacking extends BaseBacking implements Serializable{
+public class EditerBacking extends BaseBacking implements Serializable{
     
-    private static final Logger LOG = Logger.getLogger(EditionBacking.class.getName());
+    private static final Logger LOG = Logger.getLogger(EditerBacking.class.getName());
     
     
     @Inject 
@@ -231,7 +231,7 @@ public class EditionBacking extends BaseBacking implements Serializable{
     }
     
      public void onload(){
-        LOG.log(Level.INFO,"REGISTRE ID: {0}",registreID);
+        LOG.log(Level.INFO,"LOAD REGISTRE ID: {0}",registreID);
         registreDto = registreService.findById(registreID);
         LOG.log(Level.INFO,"REGISTRE LIBELLE: {0}",registreDto.getLibelle());
       
@@ -280,7 +280,6 @@ public class EditionBacking extends BaseBacking implements Serializable{
         acteNaissanceDto.setOperation(operation.name());
         acteNaissanceDto.setRegistreID(registreID);
         
-        
         try{
             String id = acteNaissanceService.create(acteNaissanceDto);
             LOG.log(Level.INFO,"--- ACTE NAISSANCE ID: {0}",id);
@@ -317,12 +316,17 @@ public class EditionBacking extends BaseBacking implements Serializable{
         viewMode = ViewMode.NEW;
     }
     
-    public void resetActeDto(){
+    private void resetActeDto(){
         acteNaissanceDto = new ActeNaissanceDto();
         if(operation == Operation.DECLARATION_JUGEMENT && viewMode == ViewMode.NEW){
             int numeroActe = acteNaissanceService.numeroActe(registreID);
             acteNaissanceDto.setNumero(numeroActe);
         }
+        selectedActe = null;
+    
+    }
+    
+    private void resetMentions(){
     
     }
     

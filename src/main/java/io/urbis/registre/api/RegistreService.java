@@ -8,6 +8,7 @@ package io.urbis.registre.api;
 import io.urbis.registre.dto.RegistreDto;
 import io.urbis.registre.dto.RegistrePatchDto;
 import java.util.List;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.PATCH;
 import javax.ws.rs.POST;
@@ -40,6 +41,10 @@ public interface RegistreService {
     
     @GET @Path("{id}")
     public RegistreDto findById(@PathParam("id") String id);
+    
+    
+    @DELETE @Path("{id}")
+    public void delete(@PathParam("id") String id);
     
     @GET @Path("/count/{type}")
     public int count(@PathParam("type") String typeRegistre,@QueryParam("annee") int annee,

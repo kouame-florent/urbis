@@ -15,8 +15,8 @@ xmlns:p="http://primefaces.org/ui">
     <ui:define name="content">
         
         <f:metadata>
-            <f:viewParam name="id" value="#{validerNaissanceBacking.acteNaissanceID}" />
-            <f:viewAction action="#{validerNaissanceBacking.onload}" />
+            <f:viewParam name="id" value="#{acteNaissanceValiderBacking.acteNaissanceID}" />
+            <f:viewAction action="#{acteNaissanceValiderBacking.onload}" />
         </f:metadata>
         
         <h:form id="messageForm">
@@ -31,25 +31,25 @@ xmlns:p="http://primefaces.org/ui">
                <div class="ui-fluid p-formgrid p-grid">
                    <div class="p-field p-col">
                    <p:outputLabel for="localite" styleClass="p-d-block">Commune</p:outputLabel>
-                   <p:inputText id="localite" value="#{validerNaissanceBacking.registreDto.localite}"
+                   <p:inputText id="localite" value="#{acteNaissanceValiderBacking.registreDto.localite}"
                                 disabled="true" required="true" styleClass="p-d-block"/>
 
                    </div>
                    <div class="p-field p-col">
                        <p:outputLabel for="centre" styleClass="p-d-block">Centre</p:outputLabel>
-                       <p:inputText id="centre" value="#{validerNaissanceBacking.registreDto.centre}"
+                       <p:inputText id="centre" value="#{acteNaissanceValiderBacking.registreDto.centre}"
                                     disabled="true"  required="true" styleClass="p-d-block"/>
 
                    </div>
                    <div class="p-field p-col">
                        <p:outputLabel for="annee" styleClass="p-d-block">Année</p:outputLabel>
-                       <p:inputText id="annee" value="#{validerNaissanceBacking.registreDto.annee}" required="true"
+                       <p:inputText id="annee" value="#{acteNaissanceValiderBacking.registreDto.annee}" required="true"
                                     disabled="true" styleClass="p-d-block"/>
 
                    </div>
                    <div class="p-field p-col">
                        <p:outputLabel for="numero" styleClass="p-d-block">Numéro</p:outputLabel>
-                       <p:inputText id="numero" value="#{validerNaissanceBacking.registreDto.numero}"  required="true" 
+                       <p:inputText id="numero" value="#{acteNaissanceValiderBacking.registreDto.numero}"  required="true" 
                                     disabled="true"   styleClass="p-d-block"/>
 
                    </div>
@@ -69,7 +69,7 @@ xmlns:p="http://primefaces.org/ui">
                         <div class="p-field p-lg-2">
                             <p:outputLabel for="numeroActe" >Numéro acte: </p:outputLabel>
                             <p:spacer width="5"/>
-                            <p:outputLabel id="numeroActe" value="#{validerNaissanceBacking.acteNaissanceDto.numero}" />
+                            <p:outputLabel id="numeroActe" value="#{acteNaissanceValiderBacking.acteNaissanceDto.numero}" />
                        
                         </div>
                        
@@ -81,34 +81,34 @@ xmlns:p="http://primefaces.org/ui">
                         <div class="ui-fluid">
                             <div class="p-field p-grid">
                                 <p:outputLabel for="dateNaissance" class="p-lg-3">Date de naissance:</p:outputLabel>
-                                <p:outputLabel id="dateNaissance" class="p-lg-9" value="#{validerNaissanceBacking.acteNaissanceDto.enfantDateNaissance}"/>
+                                <p:outputLabel id="dateNaissance" class="p-lg-9" value="#{acteNaissanceValiderBacking.acteNaissanceDto.enfantDateNaissance}"/>
                                
                             </div>
                             <div class="p-field p-grid">
                                 <p:outputLabel for="nom" class="p-lg-3">Nom:</p:outputLabel>
-                                <p:outputLabel id="nom" class="p-lg-9" value="#{validerNaissanceBacking.acteNaissanceDto.enfantNom}"/>
+                                <p:outputLabel id="nom" class="p-lg-9" value="#{acteNaissanceValiderBacking.acteNaissanceDto.enfantNom}"/>
                                
                             </div>
                             <div class="p-field p-grid">
                                 <p:outputLabel for="lieuNaissance" class="p-lg-3">Lieu de naissance:</p:outputLabel>
-                                <p:outputLabel id="lieuNaissance" class="p-lg-9" value="#{validerNaissanceBacking.acteNaissanceDto.enfantLieuNaissance}"/>
+                                <p:outputLabel id="lieuNaissance" class="p-lg-9" value="#{acteNaissanceValiderBacking.acteNaissanceDto.enfantLieuNaissance}"/>
                               
                             </div>
                             <div class="p-field p-grid">
                                 <p:outputLabel for="prenoms" class="p-lg-3">Prénoms:</p:outputLabel>
-                                <p:outputLabel id="prenoms" value="#{validerNaissanceBacking.acteNaissanceDto.enfantPrenoms}"  
+                                <p:outputLabel id="prenoms" value="#{acteNaissanceValiderBacking.acteNaissanceDto.enfantPrenoms}"  
                                                 class="p-lg-9"/>
                               
                             </div>
                              <div class="p-field p-grid">
                                 <p:outputLabel for="localite" class="p-lg-3">Localité:</p:outputLabel>
-                                <p:outputLabel id="localite" value="#{validerNaissanceBacking.acteNaissanceDto.enfantLocalite}"  
+                                <p:outputLabel id="localite" value="#{acteNaissanceValiderBacking.acteNaissanceDto.enfantLocalite}"  
                                                 class="p-lg-9"/>
                             
                             </div>
                              <div class="p-field p-grid"> 
                                      <p:outputLabel for="sexe" class="p-lg-3">Sexe:</p:outputLabel>
-                                     <p:outputLabel id="sexe" class="p-lg-9" value="#{validerNaissanceBacking.acteNaissanceDto.enfantSexe}"/>
+                                     <p:outputLabel id="sexe" class="p-lg-9" value="#{acteNaissanceValiderBacking.acteNaissanceDto.enfantSexe}"/>
                            
                             </div>
                             
@@ -128,75 +128,75 @@ xmlns:p="http://primefaces.org/ui">
                                         
                                         <div class="p-field p-grid">    
                                             <p:outputLabel for="pereNom" class="p-lg-4">Nom:</p:outputLabel>
-                                            <p:outputLabel id="pereNom" value="#{validerNaissanceBacking.acteNaissanceDto.pereNom}" 
+                                            <p:outputLabel id="pereNom" value="#{acteNaissanceValiderBacking.acteNaissanceDto.pereNom}" 
                                                            class="p-lg-8"/>
                                            
                                         </div>
                                         <div class="p-field p-grid">
                                             <p:outputLabel for="perePrenoms" class="p-lg-4">Prénoms:</p:outputLabel>
-                                            <p:outputLabel id="perePrenoms" value="#{validerNaissanceBacking.acteNaissanceDto.perePrenoms}" 
+                                            <p:outputLabel id="perePrenoms" value="#{acteNaissanceValiderBacking.acteNaissanceDto.perePrenoms}" 
                                                            class="p-lg-8"/>
                                             
                                         </div>
                                         
                                         <div class="p-field p-grid">
                                             <p:outputLabel for="pereDateNaissance" class="p-lg-4">Date de naissance:</p:outputLabel>
-                                            <p:outputLabel id="pereDateNaissance" class="p-lg-8" value="#{validerNaissanceBacking.acteNaissanceDto.pereDateNaissance}"/>
+                                            <p:outputLabel id="pereDateNaissance" class="p-lg-8" value="#{acteNaissanceValiderBacking.acteNaissanceDto.pereDateNaissance}"/>
                                            
                                            
                                         </div>
                                         <div class="p-field p-grid">
                                             <p:outputLabel for="pereLieuNaissance" class="p-lg-4">Lieu de naissance:</p:outputLabel>
-                                            <p:outputLabel id="pereLieuNaissance" value="#{validerNaissanceBacking.acteNaissanceDto.pereLieuNaissance}"  
+                                            <p:outputLabel id="pereLieuNaissance" value="#{acteNaissanceValiderBacking.acteNaissanceDto.pereLieuNaissance}"  
                                                            class="p-lg-8"/>
                                            
                                         </div>
                                         <div class="p-field p-grid">
-                                            <p:outputLabel for="pereProfession" class="p-lg-4" rendered="#{!validerNaissanceBacking.pereDecede}">Profession:</p:outputLabel>
-                                            <p:outputLabel id="pereProfession" value="#{validerNaissanceBacking.acteNaissanceDto.pereProfession}"
-                                                         rendered="#{!validerNaissanceBacking.pereDecede}"  class="p-lg-8"/>
+                                            <p:outputLabel for="pereProfession" class="p-lg-4" rendered="#{!acteNaissanceValiderBacking.pereDecede}">Profession:</p:outputLabel>
+                                            <p:outputLabel id="pereProfession" value="#{acteNaissanceValiderBacking.acteNaissanceDto.pereProfession}"
+                                                         rendered="#{!acteNaissanceValiderBacking.pereDecede}"  class="p-lg-8"/>
                                             
                                         </div>
                                         <div class="p-field p-grid">
                                              <p:outputLabel for="pereDateDeces" class="p-lg-4">Décédé le:</p:outputLabel>
-                                             <p:outputLabel id="pereDateDeces"  value="#{validerNaissanceBacking.acteNaissanceDto.pereDateDeces}"  
+                                             <p:outputLabel id="pereDateDeces"  value="#{acteNaissanceValiderBacking.acteNaissanceDto.pereDateDeces}"  
                                                              class="p-lg-8"/>
                                         </div>
                                         <div class="p-field p-grid">
                                             <p:outputLabel for="pereLieuDeces"  class="p-lg-4">à:</p:outputLabel>
-                                            <p:outputLabel id="pereLieuDeces"  value="#{validerNaissanceBacking.acteNaissanceDto.pereLieuDeces}"  
+                                            <p:outputLabel id="pereLieuDeces"  value="#{acteNaissanceValiderBacking.acteNaissanceDto.pereLieuDeces}"  
                                                              class="p-lg-8"/>
                                         </div>
                                        
                                         <div class="p-field p-grid">
                                             <p:outputLabel for="pereLocalite"  class="p-lg-4">Domicile:</p:outputLabel>
-                                            <p:outputLabel id="pereLocalite"   value="#{validerNaissanceBacking.acteNaissanceDto.pereLocalite}" 
+                                            <p:outputLabel id="pereLocalite"   value="#{acteNaissanceValiderBacking.acteNaissanceDto.pereLocalite}" 
                                                            class="p-lg-8"/>
                                           
                                         </div>
                                         <div class="p-field p-grid">
                                             <p:outputLabel for="pereNationalite" class="p-lg-4">Nationalité:</p:outputLabel>
-                                            <p:outputLabel id="pereNationalite" class="p-lg-8" value="#{validerNaissanceBacking.acteNaissanceDto.pereNationalite}" />
+                                            <p:outputLabel id="pereNationalite" class="p-lg-8" value="#{acteNaissanceValiderBacking.acteNaissanceDto.pereNationalite}" />
                                         </div>
                                         <div class="p-field p-grid">
                                             <p:outputLabel for="pereTypePiece" class="p-lg-4">Type pièce:</p:outputLabel>
-                                            <p:outputLabel id="pereTypePiece" class="p-lg-8" value="#{validerNaissanceBacking.acteNaissanceDto.pereTypePiece}"/> 
+                                            <p:outputLabel id="pereTypePiece" class="p-lg-8" value="#{acteNaissanceValiderBacking.acteNaissanceDto.pereTypePiece}"/> 
                                          
                                         </div>
                                         <div class="p-field p-grid">
                                             <p:outputLabel for="pereNumeroPiece" class="p-lg-4">Numero pièce:</p:outputLabel>
-                                            <p:outputLabel id="pereNumeroPiece" value="#{validerNaissanceBacking.acteNaissanceDto.pereNumeroPiece}"  
+                                            <p:outputLabel id="pereNumeroPiece" value="#{acteNaissanceValiderBacking.acteNaissanceDto.pereNumeroPiece}"  
                                                          class="p-lg-8"/>
                                           
                                         </div>
                                         <div class="p-field p-grid">
                                             <p:outputLabel for="pereDatePiece" class="p-lg-4">Date délivrance pièce:</p:outputLabel>
-                                            <p:outputLabel id="pereDatePiece" class="p-lg-8" value="#{validerNaissanceBacking.acteNaissanceDto.pereDatePiece}"/>
+                                            <p:outputLabel id="pereDatePiece" class="p-lg-8" value="#{acteNaissanceValiderBacking.acteNaissanceDto.pereDatePiece}"/>
                                            
                                         </div>
                                         <div class="p-field p-grid">
                                             <p:outputLabel for="pereLieuPiece" class="p-lg-4">Lieu délivrance pièce: </p:outputLabel>
-                                            <p:outputLabel id="pereLieuPiece" value="#{validerNaissanceBacking.acteNaissanceDto.pereLieuPiece}"   
+                                            <p:outputLabel id="pereLieuPiece" value="#{acteNaissanceValiderBacking.acteNaissanceDto.pereLieuPiece}"   
                                                          class="p-lg-8"/>
                                         </div>
                                      </div>
@@ -212,68 +212,68 @@ xmlns:p="http://primefaces.org/ui">
                                              
                                             <div class="p-field p-grid">    
                                                 <p:outputLabel for="mereNom" class="p-lg-4">Nom:</p:outputLabel>
-                                                <p:outputLabel id="mereNom" value="#{validerNaissanceBacking.acteNaissanceDto.mereNom}"  
+                                                <p:outputLabel id="mereNom" value="#{acteNaissanceValiderBacking.acteNaissanceDto.mereNom}"  
                                                                class="p-lg-8"/>
                                             </div>
                                             <div class="p-field p-grid">
                                                 <p:outputLabel for="merePrenoms" class="p-lg-4">Prénoms:</p:outputLabel>
-                                                <p:outputLabel id="merePrenoms" value="#{validerNaissanceBacking.acteNaissanceDto.merePrenoms}"
+                                                <p:outputLabel id="merePrenoms" value="#{acteNaissanceValiderBacking.acteNaissanceDto.merePrenoms}"
                                                                class="p-lg-8"/>
                                             </div>
 
                                             <div class="p-field p-grid">
                                                 <p:outputLabel for="mereDateNaissance" class="p-lg-4">Date naissance:</p:outputLabel>
-                                                <p:outputLabel id="mereDateNaissance" class="p-lg-8" value="#{validerNaissanceBacking.acteNaissanceDto.mereDateNaissance}"/>
+                                                <p:outputLabel id="mereDateNaissance" class="p-lg-8" value="#{acteNaissanceValiderBacking.acteNaissanceDto.mereDateNaissance}"/>
                                             </div>
                                             <div class="p-field p-grid">
                                                 <p:outputLabel for="mereLieuNaissance" class="p-lg-4">Lieu de naissance:</p:outputLabel>
-                                                <p:outputLabel id="mereLieuNaissance" value="#{validerNaissanceBacking.acteNaissanceDto.mereLieuNaissance}" 
+                                                <p:outputLabel id="mereLieuNaissance" value="#{acteNaissanceValiderBacking.acteNaissanceDto.mereLieuNaissance}" 
                                                              class="p-lg-8"/>
                                             </div>
                                             <div class="p-field p-grid">
                                                 <p:outputLabel for="mereProfession"  class="p-lg-4">Profession:</p:outputLabel>
-                                                <p:outputLabel id="mereProfession"  value="#{validerNaissanceBacking.acteNaissanceDto.mereProfession}" 
+                                                <p:outputLabel id="mereProfession"  value="#{acteNaissanceValiderBacking.acteNaissanceDto.mereProfession}" 
                                                                class="p-lg-8"/>
                                             </div>
                                              <div class="p-field p-grid">
                                                  <p:outputLabel for="mereDateDeces"  class="p-lg-4">Décédé le:</p:outputLabel>
-                                                 <p:outputLabel id="mereDateDeces"  value="#{validerNaissanceBacking.acteNaissanceDto.mereDateDeces}"  
+                                                 <p:outputLabel id="mereDateDeces"  value="#{acteNaissanceValiderBacking.acteNaissanceDto.mereDateDeces}"  
                                                                  class="p-lg-8"/>
                                              </div>
                                              <div class="p-field p-grid">
                                                  <p:outputLabel for="mereLieuDeces" class="p-lg-4">à:</p:outputLabel>
-                                                 <p:outputLabel id="mereLieuDeces"  value="#{validerNaissanceBacking.acteNaissanceDto.mereLieuDeces}"  
+                                                 <p:outputLabel id="mereLieuDeces"  value="#{acteNaissanceValiderBacking.acteNaissanceDto.mereLieuDeces}"  
                                                                  class="p-lg-8"/>
                                              </div>
                                             
                                             <div class="p-field p-grid">
                                                 <p:outputLabel for="mereLocalite"  class="p-lg-4">Domicile</p:outputLabel>
-                                                <p:outputLabel id="mereLocalite"  value="#{validerNaissanceBacking.acteNaissanceDto.mereLocalite}" 
+                                                <p:outputLabel id="mereLocalite"  value="#{acteNaissanceValiderBacking.acteNaissanceDto.mereLocalite}" 
                                                                class="p-lg-8"/>
                                             </div>
                                             <div class="p-field p-grid">
                                                 <p:outputLabel for="mereNationalite" class="p-lg-4">Nationalité</p:outputLabel>
-                                                <p:outputLabel id="mereNationalite" class="p-lg-8" value="#{validerNaissanceBacking.acteNaissanceDto.mereNationalite}"     />
+                                                <p:outputLabel id="mereNationalite" class="p-lg-8" value="#{acteNaissanceValiderBacking.acteNaissanceDto.mereNationalite}"     />
                                
                                             </div>
                                             <div class="p-field p-grid">
                                                 <p:outputLabel for="mereTypePiece" class="p-lg-4">Type pièce</p:outputLabel>
-                                                <p:outputLabel id="mereTypePiece"  class="p-lg-8" value="#{validerNaissanceBacking.acteNaissanceDto.mereTypePiece}" />
+                                                <p:outputLabel id="mereTypePiece"  class="p-lg-8" value="#{acteNaissanceValiderBacking.acteNaissanceDto.mereTypePiece}" />
                                                 
                                             </div>
                                             <div class="p-field p-grid">
                                                 <p:outputLabel for="mereNumeroPiece" class="p-lg-4">Numero pièce</p:outputLabel>
-                                                <p:outputLabel id="mereNumeroPiece" value="#{validerNaissanceBacking.acteNaissanceDto.mereNumeroPiece}"  
+                                                <p:outputLabel id="mereNumeroPiece" value="#{acteNaissanceValiderBacking.acteNaissanceDto.mereNumeroPiece}"  
                                                              class="p-lg-8"/>
                                             </div>
                                             <div class="p-field p-grid">
                                                 <p:outputLabel for="mereDatePiece" class="p-lg-4">Date délivrance pièce</p:outputLabel>
-                                                <p:outputLabel id="mereDatePiece" class="p-lg-8" value="#{validerNaissanceBacking.acteNaissanceDto.mereDatePiece}"/>
+                                                <p:outputLabel id="mereDatePiece" class="p-lg-8" value="#{acteNaissanceValiderBacking.acteNaissanceDto.mereDatePiece}"/>
                                                     
                                              </div>
                                             <div class="p-field p-grid">
                                                 <p:outputLabel for="mereLieuPiece" class="p-lg-4">Lieu délivrance pièce </p:outputLabel>
-                                                <p:outputLabel id="mereLieuPiece" value="#{validerNaissanceBacking.acteNaissanceDto.mereLieuPiece}"  
+                                                <p:outputLabel id="mereLieuPiece" value="#{acteNaissanceValiderBacking.acteNaissanceDto.mereLieuPiece}"  
                                                              class="p-lg-8"/>
                                             </div>
 
@@ -295,61 +295,61 @@ xmlns:p="http://primefaces.org/ui">
                         <div class="ui-fluid">
                             <div class="p-field p-grid">
                                 <p:outputLabel for="declarantLienParente" class="p-lg-3">Lien parenté: </p:outputLabel>
-                                <p:outputLabel id="declarantLienParente" value="#{validerNaissanceBacking.acteNaissanceDto.declarantLien}" 
+                                <p:outputLabel id="declarantLienParente" value="#{acteNaissanceValiderBacking.acteNaissanceDto.declarantLien}" 
                                              class="p-lg-9" />
 
                             </div>
                             <div class="p-field p-grid">
                                 <p:outputLabel for="declarantNom" class="p-lg-3">Nom:</p:outputLabel>
-                                <p:outputLabel id="declarantNom" value="#{validerNaissanceBacking.acteNaissanceDto.declarantNom}" 
+                                <p:outputLabel id="declarantNom" value="#{acteNaissanceValiderBacking.acteNaissanceDto.declarantNom}" 
                                               class="p-lg-9"/>
                             </div>
                             <div class="p-field p-grid">
                                 <p:outputLabel for="declarantPrenoms" class="p-lg-3">Prénoms: </p:outputLabel>
-                                <p:outputLabel id="declarantPrenoms" value="#{validerNaissanceBacking.acteNaissanceDto.declarantProfession}" 
+                                <p:outputLabel id="declarantPrenoms" value="#{acteNaissanceValiderBacking.acteNaissanceDto.declarantProfession}" 
                                               class="p-lg-9"/>
                             </div>
                             <div class="p-field p-grid">
                                  <p:outputLabel for="declarantDateNaissance" class="p-lg-3">Date naissance: </p:outputLabel>
-                                 <p:outputLabel id="declarantDateNaissance" value="#{validerNaissanceBacking.acteNaissanceDto.declarantDateNaissance}" 
+                                 <p:outputLabel id="declarantDateNaissance" value="#{acteNaissanceValiderBacking.acteNaissanceDto.declarantDateNaissance}" 
                                               class="p-lg-9"/>
                             </div>
                             <div class="p-field p-grid">
                                 <p:outputLabel for="declarantNationalite" class="p-lg-3">Nationalité: </p:outputLabel>
-                                <p:outputLabel id="declarantNationalite" class="p-lg-9" value="#{validerNaissanceBacking.acteNaissanceDto.declarantNationalite}"/>
+                                <p:outputLabel id="declarantNationalite" class="p-lg-9" value="#{acteNaissanceValiderBacking.acteNaissanceDto.declarantNationalite}"/>
                                 
                             </div>
                             <div class="p-field p-grid">
                                 <p:outputLabel for="declarantProfession" class="p-lg-3">Profession: </p:outputLabel>
-                                <p:outputLabel id="declarantProfession" value="#{validerNaissanceBacking.acteNaissanceDto.declarantProfession}" 
+                                <p:outputLabel id="declarantProfession" value="#{acteNaissanceValiderBacking.acteNaissanceDto.declarantProfession}" 
                                               class="p-lg-9"/>
                             </div>
                             
                             <div class="p-field p-grid">
                                 <p:outputLabel for="declarantDomicile" class="p-lg-3">Domicile: </p:outputLabel>
-                                <p:outputLabel id="declarantDomicile" value="#{validerNaissanceBacking.acteNaissanceDto.declarantLocalite}" 
+                                <p:outputLabel id="declarantDomicile" value="#{acteNaissanceValiderBacking.acteNaissanceDto.declarantLocalite}" 
                                              class="p-lg-9"/>
                             </div>
                             
                             <div class="p-field p-grid">
                                 <p:outputLabel for="declarantTypePiece" class="p-lg-3">Type pièce: </p:outputLabel>
-                                <p:outputLabel id="declarantTypePiece" class="p-lg-9" value="#{validerNaissanceBacking.acteNaissanceDto.declarantTypePiece}"/>
+                                <p:outputLabel id="declarantTypePiece" class="p-lg-9" value="#{acteNaissanceValiderBacking.acteNaissanceDto.declarantTypePiece}"/>
                                 
                             </div>
                             <div class="p-field p-grid">
                                 <p:outputLabel for="declarantNumeroPiece" class="p-lg-3">Numéro pièce: </p:outputLabel>
-                                <p:outputLabel id="declarantNumeroPiece" value="#{validerNaissanceBacking.acteNaissanceDto.declarantNumeroPiece}" 
+                                <p:outputLabel id="declarantNumeroPiece" value="#{acteNaissanceValiderBacking.acteNaissanceDto.declarantNumeroPiece}" 
                                               class="p-lg-9"/>
                             </div>
                             
                             <div class="p-field p-grid">
                                 <p:outputLabel for="declarantDateDelivrancePiece" class="p-lg-3">Date délivrance pièce: </p:outputLabel>
-                                <p:outputLabel id="declarantDateDelivrancePiece" value="#{validerNaissanceBacking.acteNaissanceDto.declarantDatePiece}" 
+                                <p:outputLabel id="declarantDateDelivrancePiece" value="#{acteNaissanceValiderBacking.acteNaissanceDto.declarantDatePiece}" 
                                               class="p-lg-9"/>
                             </div>
                             <div class="p-field p-grid">
                                 <p:outputLabel for="declarantLieuDelivrancePiece" class="p-lg-3">Lieu délivrance pièce: </p:outputLabel>
-                                <p:outputLabel id="declarantLieuDelivrancePiece" value="#{validerNaissanceBacking.acteNaissanceDto.declarantLieuPiece}" 
+                                <p:outputLabel id="declarantLieuDelivrancePiece" value="#{acteNaissanceValiderBacking.acteNaissanceDto.declarantLieuPiece}" 
                                               class="p-lg-9"/>
                             </div>
                             
@@ -361,33 +361,33 @@ xmlns:p="http://primefaces.org/ui">
                         <div class="ui-fluid">
                             <div class="p-field p-grid">
                                 <p:outputLabel for="interpreteLangue" class="p-lg-3">Langue: </p:outputLabel>
-                                <p:outputLabel id="interpreteLangue" value="#{validerNaissanceBacking.acteNaissanceDto.interpreteLangue}" 
+                                <p:outputLabel id="interpreteLangue" value="#{acteNaissanceValiderBacking.acteNaissanceDto.interpreteLangue}" 
                                               class="p-lg-9"/>
                             </div>
                             <div class="p-field p-grid">
                                 <p:outputLabel for="interpreteDateNaissance" class="p-lg-3">Date de naissance: </p:outputLabel>
-                                <p:outputLabel id="interpreteDateNaissance" value="#{validerNaissanceBacking.acteNaissanceDto.interpreteDateNaissance}" 
+                                <p:outputLabel id="interpreteDateNaissance" value="#{acteNaissanceValiderBacking.acteNaissanceDto.interpreteDateNaissance}" 
                                               class="p-lg-9"/>
                             </div>
                             <div class="p-field p-grid">
                                 <p:outputLabel for="interpreteNom" class="p-lg-3">Nom: </p:outputLabel>
-                                <p:outputLabel id="interpreteNom" value="#{validerNaissanceBacking.acteNaissanceDto.interpreteNom}" 
+                                <p:outputLabel id="interpreteNom" value="#{acteNaissanceValiderBacking.acteNaissanceDto.interpreteNom}" 
                                               class="p-lg-9"/>
                             </div>
                             <div class="p-field p-grid">
                                 <p:outputLabel for="interpreteProfession" class="p-lg-3">Profession: </p:outputLabel>
-                                <p:outputLabel id="interpreteProfession" value="#{validerNaissanceBacking.acteNaissanceDto.interpreteProfession}" 
+                                <p:outputLabel id="interpreteProfession" value="#{acteNaissanceValiderBacking.acteNaissanceDto.interpreteProfession}" 
                                               class="p-lg-9"/>
                             </div>
                             <div class="p-field p-grid">
                                 <p:outputLabel for="interpretePrenoms" class="p-lg-3">Prénoms: </p:outputLabel>
-                                <p:outputLabel id="interpretePrenoms" value="#{validerNaissanceBacking.acteNaissanceDto.interpretePrenoms}" 
+                                <p:outputLabel id="interpretePrenoms" value="#{acteNaissanceValiderBacking.acteNaissanceDto.interpretePrenoms}" 
                                               class="p-lg-9"/>
                             </div>
                             
                             <div class="p-field p-grid">
                                 <p:outputLabel for="interpreteDomicile" class="p-lg-3">Domicile: </p:outputLabel>
-                                <p:outputLabel id="interpreteDomicile" value="#{validerNaissanceBacking.acteNaissanceDto.interpreteDomicile}" 
+                                <p:outputLabel id="interpreteDomicile" value="#{acteNaissanceValiderBacking.acteNaissanceDto.interpreteDomicile}" 
                                               class="p-lg-9"/>
                             </div>
                         </div>
@@ -399,27 +399,27 @@ xmlns:p="http://primefaces.org/ui">
                                 <div class="ui-fluid">
                                 <div class="p-field p-grid">
                                     <p:outputLabel for="temoin1Nom" class="p-lg-4">Nom: </p:outputLabel>
-                                    <p:outputLabel id="temoin1Nom" value="#{validerNaissanceBacking.acteNaissanceDto.temoinPremierNom}" 
+                                    <p:outputLabel id="temoin1Nom" value="#{acteNaissanceValiderBacking.acteNaissanceDto.temoinPremierNom}" 
                                               class="p-lg-8"/>
                                 </div>
                                 <div class="p-field p-grid">
                                    <p:outputLabel for="temoin1Prenoms" class="p-lg-4">Prénoms: </p:outputLabel>
-                                   <p:outputLabel id="temoin1Prenoms" value="#{validerNaissanceBacking.acteNaissanceDto.temoinPremierPrenoms}" 
+                                   <p:outputLabel id="temoin1Prenoms" value="#{acteNaissanceValiderBacking.acteNaissanceDto.temoinPremierPrenoms}" 
                                               class="p-lg-8"/>
                                 </div>
                                 <div class="p-field p-grid">
                                    <p:outputLabel for="temoin1DateNaissance" class="p-lg-4">Date naissance: </p:outputLabel>
-                                   <p:outputLabel id="temoin1DateNaissance" value="#{validerNaissanceBacking.acteNaissanceDto.temoinPremierDateNaissance}" 
+                                   <p:outputLabel id="temoin1DateNaissance" value="#{acteNaissanceValiderBacking.acteNaissanceDto.temoinPremierDateNaissance}" 
                                               class="p-lg-8"/>
                                 </div>
                                 <div class="p-field p-grid">
                                    <p:outputLabel for="temoin1Profession" class="p-lg-4">Profession: </p:outputLabel>
-                                   <p:outputLabel id="temoin1Profession" value="#{validerNaissanceBacking.acteNaissanceDto.temoinPremierProfession}" 
+                                   <p:outputLabel id="temoin1Profession" value="#{acteNaissanceValiderBacking.acteNaissanceDto.temoinPremierProfession}" 
                                               class="p-lg-8"/>
                                 </div>
                                 <div class="p-field p-grid">
                                    <p:outputLabel for="temoin1Domicile" class="p-lg-4">Domicile: </p:outputLabel>
-                                   <p:outputLabel id="temoin1Domicile" value="#{validerNaissanceBacking.acteNaissanceDto.temoinPremierDomicile}" 
+                                   <p:outputLabel id="temoin1Domicile" value="#{acteNaissanceValiderBacking.acteNaissanceDto.temoinPremierDomicile}" 
                                               class="p-lg-8"/>
                                 </div>
                               </div>
@@ -430,27 +430,27 @@ xmlns:p="http://primefaces.org/ui">
                                 <div class="ui-fluid">
                                 <div class="p-field p-grid">
                                     <p:outputLabel for="temoin2Nom" class="p-lg-4">Nom: </p:outputLabel>
-                                    <p:outputLabel id="temoin2Nom" value="#{validerNaissanceBacking.acteNaissanceDto.temoinDeuxiemeNom}" 
+                                    <p:outputLabel id="temoin2Nom" value="#{acteNaissanceValiderBacking.acteNaissanceDto.temoinDeuxiemeNom}" 
                                               class="p-lg-8"/>
                                 </div>
                                 <div class="p-field p-grid">
                                    <p:outputLabel for="temoin2Prenoms" class="p-lg-4">Prénoms: </p:outputLabel>
-                                   <p:outputLabel id="temoin2Prenoms" value="#{validerNaissanceBacking.acteNaissanceDto.temoinDeuxiemePrenoms}" 
+                                   <p:outputLabel id="temoin2Prenoms" value="#{acteNaissanceValiderBacking.acteNaissanceDto.temoinDeuxiemePrenoms}" 
                                               class="p-lg-8"/>
                                 </div>
                                 <div class="p-field p-grid">
                                    <p:outputLabel for="temoin2DateNaissance" class="p-lg-4">Date naissance: </p:outputLabel>
-                                   <p:outputLabel id="temoin2DateNaissance" value="#{validerNaissanceBacking.acteNaissanceDto.temoinDeuxiemeDateNaissance}" 
+                                   <p:outputLabel id="temoin2DateNaissance" value="#{acteNaissanceValiderBacking.acteNaissanceDto.temoinDeuxiemeDateNaissance}" 
                                               class="p-lg-8"/>
                                 </div>
                                 <div class="p-field p-grid">
                                    <p:outputLabel for="temoin2Profession" class="p-lg-4">Profession: </p:outputLabel>
-                                   <p:outputLabel id="temoin2Profession" value="#{validerNaissanceBacking.acteNaissanceDto.temoinDeuxiemeProfession}" 
+                                   <p:outputLabel id="temoin2Profession" value="#{acteNaissanceValiderBacking.acteNaissanceDto.temoinDeuxiemeProfession}" 
                                               class="p-lg-8"/>
                                 </div>
                                 <div class="p-field p-grid">
                                    <p:outputLabel for="temoin2Domicile" class="p-lg-4">Domicile: </p:outputLabel>
-                                   <p:outputLabel id="temoin2Domicile" value="#{validerNaissanceBacking.acteNaissanceDto.temoinDeuxiemeDomicile}" 
+                                   <p:outputLabel id="temoin2Domicile" value="#{acteNaissanceValiderBacking.acteNaissanceDto.temoinDeuxiemeDomicile}" 
                                               class="p-lg-8"/>
                                 </div>
                                 </div>
@@ -465,11 +465,11 @@ xmlns:p="http://primefaces.org/ui">
                 <div class="ui-fluid">
                     <div class="p-field p-grid">
                         <p:outputLabel for="dateDeclaration" class="p-lg-4">Date déclaration</p:outputLabel>
-                        <p:outputLabel id="dateDeclaration" class="p-lg-8" value="#{validerNaissanceBacking.acteNaissanceDto.dateDeclaration}"/>
+                        <p:outputLabel id="dateDeclaration" class="p-lg-8" value="#{acteNaissanceValiderBacking.acteNaissanceDto.dateDeclaration}"/>
                     </div>
                     <div class="p-field p-grid">
                         <p:outputLabel for="dateDressage" class="p-lg-4">Date dressage</p:outputLabel>
-                        <p:outputLabel id="dateDressage" class="p-lg-8" value="#{validerNaissanceBacking.acteNaissanceDto.dateDressage}"/>
+                        <p:outputLabel id="dateDressage" class="p-lg-8" value="#{acteNaissanceValiderBacking.acteNaissanceDto.dateDressage}"/>
      
                     </div>
                     
@@ -481,9 +481,9 @@ xmlns:p="http://primefaces.org/ui">
                     <div class="p-field p-grid">
                         <p:outputLabel for="officier" class="p-lg-2">Officier:</p:outputLabel>
                         <p:outputLabel id="officier" class="p-lg-4"
-                                       value="#{validerNaissanceBacking.acteNaissanceDto.officierEtatCivilPrenoms} #{validerNaissanceBacking.acteNaissanceDto.officierEtatCivilNom}" />
+                                       value="#{acteNaissanceValiderBacking.acteNaissanceDto.officierEtatCivilPrenoms} #{acteNaissanceValiderBacking.acteNaissanceDto.officierEtatCivilNom}" />
                         <p:outputLabel  class="p-lg"
-                                       value="#{validerNaissanceBacking.acteNaissanceDto.officierEtatCivilTitre}" />
+                                       value="#{acteNaissanceValiderBacking.acteNaissanceDto.officierEtatCivilTitre}" />
                        
                     </div>
                     
@@ -495,7 +495,7 @@ xmlns:p="http://primefaces.org/ui">
             <div class="ui-fluid p-formgrid p-grid">
                 <div class="p-field p-lg-12">
                     <p:commandButton value="Valider l'acte de naissance" process="@form" 
-                                     action="#{validerNaissanceBacking.valider()}"
+                                     action="#{acteNaissanceValiderBacking.valider()}"
                                      update="@form messageForm"  icon="pi pi-check" 
                                      styleClass="ui-button-outlined"/>
                 </div>

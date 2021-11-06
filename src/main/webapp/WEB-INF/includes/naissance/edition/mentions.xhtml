@@ -14,7 +14,7 @@ xmlns:p="http://primefaces.org/ui">
             <div class="ui-fluid p-formgrid p-grid">
                 <div class="p-field p-lg-6">
                     <p:outputLabel for="mariageDate" styleClass="p-d-block">Date du mariage</p:outputLabel>
-                    <p:inputMask id="mariageDate" value="#{editionBacking.mariageDto.date}"
+                    <p:inputMask id="mariageDate" value="#{acteNaissanceEditerBacking.mariageDto.date}"
                                  mask="99/99/9999" >
                         <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
                     </p:inputMask>
@@ -24,17 +24,17 @@ xmlns:p="http://primefaces.org/ui">
                 </div>
                 <div class="p-field p-lg-6">
                     <p:outputLabel for="mariageLieu" styleClass="p-d-block">Lieu du mariage</p:outputLabel>
-                    <p:inputText id="mariageLieu" value="#{editionBacking.mariageDto.lieu}"   
+                    <p:inputText id="mariageLieu" value="#{acteNaissanceEditerBacking.mariageDto.lieu}"   
                                     styleClass="p-d-block"/>
                 </div>
                
                 <div class="p-field p-lg-6">
-                    <p:outputLabel for="maraigeDateDressage" styleClass="p-d-block">Date dressage</p:outputLabel>
-                    <p:inputMask id="maraigeDateDressage" value="#{editionBacking.mariageDto.dateDressage}"
+                    <p:outputLabel for="mariageDateDressage" styleClass="p-d-block">Date dressage</p:outputLabel>
+                    <p:inputMask id="mariageDateDressage" value="#{acteNaissanceEditerBacking.mariageDto.dateDressage}"
                                  mask="99/99/9999" >
                         <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
                     </p:inputMask>
-                    <p:watermark  value="JJ/MM/YYYY" for="maraigeDateDressage"/> 
+                    
                     <p:message for="maraigeDateDressage"/>
                 </div>
             </div>
@@ -42,22 +42,22 @@ xmlns:p="http://primefaces.org/ui">
                 <div class="ui-fluid p-formgrid p-grid">
                      <div class="p-field p-lg-6">
                          <p:outputLabel for="maraigeConjointNom" styleClass="p-d-block">Nom</p:outputLabel>
-                         <p:inputText id="maraigeConjointNom" value="#{editionBacking.mariageDto.conjointNom}"  
+                         <p:inputText id="maraigeConjointNom" value="#{acteNaissanceEditerBacking.mariageDto.conjointNom}"  
                                          styleClass="p-d-block"/>
                      </div>
                      <div class="p-field p-lg-6">
                          <p:outputLabel for="maraigeConjointPrenoms" styleClass="p-d-block">Prénoms</p:outputLabel>
-                         <p:inputText id="maraigeConjointPrenoms" value="#{editionBacking.mariageDto.conjointPrenoms}"  
+                         <p:inputText id="maraigeConjointPrenoms" value="#{acteNaissanceEditerBacking.mariageDto.conjointPrenoms}"  
                                          styleClass="p-d-block"/>
                      </div>
                      <div class="p-field p-lg-6">
                          <p:outputLabel for="maraigeConjointProfession" styleClass="p-d-block">Profession</p:outputLabel>
-                         <p:inputText id="maraigeConjointProfession" value="#{editionBacking.mariageDto.conjointProfession}"  
+                         <p:inputText id="maraigeConjointProfession" value="#{acteNaissanceEditerBacking.mariageDto.conjointProfession}"  
                                          styleClass="p-d-block"/>
                      </div>
                      <div class="p-field p-lg-6">
                          <p:outputLabel for="maraigeConjointDomicile" styleClass="p-d-block">Domicile</p:outputLabel>
-                         <p:inputText id="maraigeConjointDomicile" value="#{editionBacking.mariageDto.conjointDomicile}"  
+                         <p:inputText id="maraigeConjointDomicile" value="#{acteNaissanceEditerBacking.mariageDto.conjointDomicile}"  
                                          styleClass="p-d-block"/>
                      </div>
                  </div>  
@@ -65,7 +65,7 @@ xmlns:p="http://primefaces.org/ui">
             <div class="ui-fluid p-formgrid p-grid">
                 <div class="p-field p-lg-6">
                      <p:outputLabel for="mariageDecision" styleClass="p-d-block">Décision</p:outputLabel>
-                     <p:inputTextarea id="mariageDecision" value="#{editionBacking.mariageDto.decision}" 
+                     <p:inputTextarea id="mariageDecision" value="#{acteNaissanceEditerBacking.mariageDto.decision}" 
                                       rows="10">
                          <f:validateBean disabled="true" />
                      </p:inputTextarea>
@@ -73,9 +73,9 @@ xmlns:p="http://primefaces.org/ui">
                  </div>
                 <div class="p-field p-lg-6">
                     <p:outputLabel for="mariageOfficier" styleClass="p-d-block">Officier</p:outputLabel>
-                    <p:selectOneMenu id="mariageOfficier" value="#{editionBacking.mariageDto.officierEtatCivilID}">
+                    <p:selectOneMenu id="mariageOfficier" value="#{acteNaissanceEditerBacking.mariageDto.officierEtatCivilID}">
                         <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez un officier --" />
-                        <f:selectItems value="#{editionBacking.officiers}" var="officier" 
+                        <f:selectItems value="#{acteNaissanceEditerBacking.officiers}" var="officier" 
                                        itemLabel="#{officier.prenoms} #{officier.nom} [#{officier.titre}]" 
                                        itemValue="#{officier.id}"/>
                         <f:validateBean disabled="true" />
@@ -86,17 +86,17 @@ xmlns:p="http://primefaces.org/ui">
             <div class="ui-fluid p-formgrid p-grid">
                 <div class="p-field p-lg-12">
                     <p:commandButton value="Enregistrer la mention de mariage" process="mentionsTabView" 
-                                     action="#{editionBacking.ajouterMentionMariage()}"
+                                     action="#{acteNaissanceEditerBacking.ajouterMentionMariage()}"
                                      update="mentionsTabView messageForm"  icon="pi pi-check-square" 
                                      styleClass="ui-button-outlined"/>
                 </div>
                 
             </div>
-            <p:dataTable id="mentionMariageTable" value="#{editionBacking.mariageDtos}" var="mariage"
+            <p:dataTable id="mentionMariageTable" value="#{acteNaissanceEditerBacking.mariageDtos}" var="mariage"
                         selectionMode="single"
-                        selection="#{editionBacking.selectedMentionMariage}" rowKey="#{mariage.id}">
+                        selection="#{acteNaissanceEditerBacking.selectedMentionMariage}" rowKey="#{mariage.id}">
                 
-                <p:ajax event="rowSelect" listener="#{editionBacking.onMentionMariageRowSelect}"
+                <p:ajax event="rowSelect" listener="#{acteNaissanceEditerBacking.onMentionMariageRowSelect}"
                             update=":contentForm:mentionsTabView"/>
                
                <p:column headerText="date dressage" >
@@ -107,7 +107,7 @@ xmlns:p="http://primefaces.org/ui">
                </p:column>
                 <p:column style="width: 5%">
                     <p:commandButton  process="@this" 
-                                      action="#{editionBacking.deleteMentionMariage(mariage)}"  
+                                      action="#{acteNaissanceEditerBacking.deleteMentionMariage(mariage)}"  
                                       update="mentionMariageTable"
                                       class="ui-button-outlined ui-button-warning" icon="pi pi-times">
                         <p:confirm header="Confirmation" message="Voulez-vous vraiment supprimer la mention ?" 
@@ -127,26 +127,26 @@ xmlns:p="http://primefaces.org/ui">
              <div class="ui-fluid p-formgrid p-grid">
                  <div class="p-field p-lg-12">
                     <p:outputLabel for="adoptionDateDressage" styleClass="p-d-block">Date dressage</p:outputLabel>
-                    <p:inputMask id="adoptionDateDressage" value="#{editionBacking.mariageDto.dateDressage}"
+                    <p:inputMask id="adoptionDateDressage" value="#{acteNaissanceEditerBacking.mariageDto.dateDressage}"
                                  mask="99/99/9999" >
                         <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
                     </p:inputMask>
-                    <p:watermark  value="JJ/MM/YYYY" for="adoptionDateDressage"/> 
+                    
                     <p:message for="adoptionDateDressage"/>
                  </div>
                  <div class="p-field p-lg-6">
                      <p:outputLabel for="adoptionDecision" styleClass="p-d-block">Décision</p:outputLabel>
-                     <p:inputTextarea id="adoptionDecision" value="#{editionBacking.adoptionDto.decision}" 
+                     <p:inputTextarea id="adoptionDecision" value="#{acteNaissanceEditerBacking.adoptionDto.decision}" 
                                       rows="10">
                         <f:validateBean disabled="true" />
                      </p:inputTextarea>
                  </div>
                  <div class="p-field p-lg-6">
                     <p:outputLabel for="adoptionOfficier" styleClass="p-d-block">Officier</p:outputLabel>
-                    <p:selectOneMenu id="adoptionOfficier" value="#{editionBacking.adoptionDto.officierEtatCivilID}"          
+                    <p:selectOneMenu id="adoptionOfficier" value="#{acteNaissanceEditerBacking.adoptionDto.officierEtatCivilID}"          
                                      label="Selectionnez">
                         <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez un officier --" />
-                        <f:selectItems value="#{editionBacking.officiers}" var="officier" 
+                        <f:selectItems value="#{acteNaissanceEditerBacking.officiers}" var="officier" 
                                        itemLabel="#{officier.prenoms} #{officier.nom} [#{officier.titre}]" 
                                        itemValue="#{officier.id}"/>
                         <f:validateBean disabled="true" />
@@ -156,13 +156,13 @@ xmlns:p="http://primefaces.org/ui">
             <div class="ui-fluid p-formgrid p-grid">
                 <div class="p-field p-lg-12">
                     <p:commandButton value="Enregistrer la mention d'adoption" process="mentionsTabView" 
-                                     action="#{editionBacking.ajouterMentionAdoption()}"
+                                     action="#{acteNaissanceEditerBacking.ajouterMentionAdoption()}"
                                      update="mentionsTabView messageForm"  icon="pi pi-check" 
                                      styleClass="ui-button-outlined"/>
                 </div>
                 
             </div>
-            <p:dataTable id="mentionAdoptionTable" value="#{editionBacking.adoptionDtos}" var="adoption">
+            <p:dataTable id="mentionAdoptionTable" value="#{acteNaissanceEditerBacking.adoptionDtos}" var="adoption">
                <p:column headerText="date dressage" >
                    <h:outputText value="#{adoption.dateDressage}"/>
                </p:column>
@@ -182,36 +182,36 @@ xmlns:p="http://primefaces.org/ui">
             <div class="ui-fluid p-formgrid p-grid">
                 <div class="p-field p-lg-6">
                     <p:outputLabel for="decesDate" styleClass="p-d-block">Date de naissance</p:outputLabel>
-                    <p:inputMask id="decesDate" value="#{editionBacking.decesDto.date}"
+                    <p:inputMask id="decesDate" value="#{acteNaissanceEditerBacking.decesDto.date}"
                                  mask="99/99/9999" >
                         <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
                     </p:inputMask>
-                    <p:watermark  value="JJ/MM/YYYY" for="decesDate"/> 
+                    
                     <p:message for="decesDate" showSummary="false" showDetail="true"/>
 
                 </div>
                 <div class="p-field p-lg-6">
                     <p:outputLabel for="decesLieu" styleClass="p-d-block">Lieu décès</p:outputLabel>
-                    <p:inputText id="decesLieu" value="#{editionBacking.decesDto.lieu}"   
+                    <p:inputText id="decesLieu" value="#{acteNaissanceEditerBacking.decesDto.lieu}"   
                                     styleClass="p-d-block"/>
                 </div>
                 <div class="p-field p-lg-6">
                     <p:outputLabel for="deceslieuLocalite" styleClass="p-d-block">sous-préfecture</p:outputLabel>
-                    <p:inputText id="deceslieuLocalite" value="#{editionBacking.decesDto.localite}"  
+                    <p:inputText id="deceslieuLocalite" value="#{acteNaissanceEditerBacking.decesDto.localite}"  
                                     styleClass="p-d-block"/>
                 </div>
                 <div class="p-field p-lg-6">
                     <p:outputLabel for="deceslieuDateDressage" styleClass="p-d-block">Date dressage</p:outputLabel>
-                    <p:inputMask id="deceslieuDateDressage" value="#{editionBacking.decesDto.dateDressage}"
+                    <p:inputMask id="deceslieuDateDressage" value="#{acteNaissanceEditerBacking.decesDto.dateDressage}"
                                  mask="99/99/9999" >
                         <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
                     </p:inputMask>
-                    <p:watermark  value="JJ/MM/YYYY" for="deceslieuDateDressage"/> 
+                    
                     <p:message for="deceslieuDateDressage"/>
                 </div>
                 <div class="p-field p-lg-6">
                      <p:outputLabel for="decesDecision" styleClass="p-d-block">Décision</p:outputLabel>
-                     <p:inputTextarea id="decesDecision" value="#{editionBacking.decesDto.decision}" 
+                     <p:inputTextarea id="decesDecision" value="#{acteNaissanceEditerBacking.decesDto.decision}" 
                                       rows="10">
                          <f:validateBean disabled="true" />
                      </p:inputTextarea>
@@ -219,9 +219,9 @@ xmlns:p="http://primefaces.org/ui">
                  </div>
                 <div class="p-field p-lg-6">
                     <p:outputLabel for="decesOfficier" styleClass="p-d-block">Officier</p:outputLabel>
-                    <p:selectOneMenu id="decesOfficier" value="#{editionBacking.decesDto.officierEtatCivilID}">
+                    <p:selectOneMenu id="decesOfficier" value="#{acteNaissanceEditerBacking.decesDto.officierEtatCivilID}">
                         <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez un officier --" />
-                        <f:selectItems value="#{editionBacking.officiers}" var="officier" 
+                        <f:selectItems value="#{acteNaissanceEditerBacking.officiers}" var="officier" 
                                        itemLabel="#{officier.prenoms} #{officier.nom} [#{officier.titre}]" 
                                        itemValue="#{officier.id}"/>
                         <f:validateBean disabled="true" />
@@ -233,13 +233,13 @@ xmlns:p="http://primefaces.org/ui">
             <div class="ui-fluid p-formgrid p-grid">
                 <div class="p-field p-lg-12">
                     <p:commandButton value="Enregistrer la mention de décès" process="mentionsTabView" 
-                                     action="#{editionBacking.ajouterMentionDeces()}"
+                                     action="#{acteNaissanceEditerBacking.ajouterMentionDeces()}"
                                      update="mentionsTabView messageForm"  icon="pi pi-check" 
                                      styleClass="ui-button-outlined"/>
                 </div>
                
             </div>
-            <p:dataTable id="mentionDecesTable" value="#{editionBacking.decesDtos}" var="deces">
+            <p:dataTable id="mentionDecesTable" value="#{acteNaissanceEditerBacking.decesDtos}" var="deces">
                 
                <p:column headerText="date de naissance" >
                    <h:outputText value="#{deces.date}"/>
@@ -266,26 +266,26 @@ xmlns:p="http://primefaces.org/ui">
              <div class="ui-fluid p-formgrid p-grid">
                  <div class="p-field p-lg-12">
                     <p:outputLabel for="dissolutionDateDressage" styleClass="p-d-block">Date dressage</p:outputLabel>
-                    <p:inputMask id="dissolutionDateDressage" value="#{editionBacking.dissolutionMariageDto.dateDressage}"
+                    <p:inputMask id="dissolutionDateDressage" value="#{acteNaissanceEditerBacking.dissolutionMariageDto.dateDressage}"
                                  mask="99/99/9999" >
                         <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
                     </p:inputMask>
-                    <p:watermark  value="JJ/MM/YYYY" for="dissolutionDateDressage"/> 
+                    
                     <p:message for="dissolutionDateDressage"/>
                  </div>
                  <div class="p-field p-lg-6">
                      <p:outputLabel for="dissolutionDecision" styleClass="p-d-block">Décision</p:outputLabel>
-                     <p:inputTextarea id="dissolutionDecision" value="#{editionBacking.dissolutionMariageDto.decision}" 
+                     <p:inputTextarea id="dissolutionDecision" value="#{acteNaissanceEditerBacking.dissolutionMariageDto.decision}" 
                                       rows="10">
                         <f:validateBean disabled="true" />
                      </p:inputTextarea>
                  </div>
                  <div class="p-field p-lg-6">
                     <p:outputLabel for="dissolutionOfficier" styleClass="p-d-block">Officier</p:outputLabel>
-                    <p:selectOneMenu id="dissolutionOfficier" value="#{editionBacking.dissolutionMariageDto.officierEtatCivilID}"          
+                    <p:selectOneMenu id="dissolutionOfficier" value="#{acteNaissanceEditerBacking.dissolutionMariageDto.officierEtatCivilID}"          
                                      label="Selectionnez">
                         <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez un officier --" />
-                        <f:selectItems value="#{editionBacking.officiers}" var="officier" 
+                        <f:selectItems value="#{acteNaissanceEditerBacking.officiers}" var="officier" 
                                        itemLabel="#{officier.prenoms} #{officier.nom} [#{officier.titre}]" 
                                        itemValue="#{officier.id}"/>
                         <f:validateBean disabled="true" />
@@ -295,13 +295,13 @@ xmlns:p="http://primefaces.org/ui">
             <div class="ui-fluid p-formgrid p-grid">
                 <div class="p-field p-lg-12">
                     <p:commandButton value="Enregistrer la mention d'adoption" process="mentionsTabView" 
-                                     action="#{editionBacking.ajouterMentionDissolution()}"
+                                     action="#{acteNaissanceEditerBacking.ajouterMentionDissolution()}"
                                      update="mentionsTabView messageForm"  icon="pi pi-check" 
                                      styleClass="ui-button-outlined"/>
                 </div>
                 
             </div>
-            <p:dataTable id="mentionDissolutionTable" value="#{editionBacking.dissolutionMariageDtos}" var="dissolution">
+            <p:dataTable id="mentionDissolutionTable" value="#{acteNaissanceEditerBacking.dissolutionMariageDtos}" var="dissolution">
                <p:column headerText="date dressage" >
                    <h:outputText value="#{dissolution.dateDressage}"/>
                </p:column>
@@ -321,26 +321,26 @@ xmlns:p="http://primefaces.org/ui">
              <div class="ui-fluid p-formgrid p-grid">
                  <div class="p-field p-lg-12">
                     <p:outputLabel for="legitimationDateDressage" styleClass="p-d-block">Date dressage</p:outputLabel>
-                    <p:inputMask id="legitimationDateDressage" value="#{editionBacking.legitimationDto.dateDressage}"
+                    <p:inputMask id="legitimationDateDressage" value="#{acteNaissanceEditerBacking.legitimationDto.dateDressage}"
                                  mask="99/99/9999" >
                         <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
                     </p:inputMask>
-                    <p:watermark  value="JJ/MM/YYYY" for="legitimationDateDressage"/> 
+                    
                     <p:message for="legitimationDateDressage"/>
                  </div>
                  <div class="p-field p-lg-6">
                      <p:outputLabel for="legitimationDecision" styleClass="p-d-block">Décision</p:outputLabel>
-                     <p:inputTextarea id="legitimationDecision" value="#{editionBacking.legitimationDto.decision}" 
+                     <p:inputTextarea id="legitimationDecision" value="#{acteNaissanceEditerBacking.legitimationDto.decision}" 
                                       rows="10">
                         <f:validateBean disabled="true" />
                      </p:inputTextarea>
                  </div>
                  <div class="p-field p-lg-6">
                     <p:outputLabel for="legitimationOfficier" styleClass="p-d-block">Officier</p:outputLabel>
-                    <p:selectOneMenu id="legitimationOfficier" value="#{editionBacking.legitimationDto.officierEtatCivilID}"          
+                    <p:selectOneMenu id="legitimationOfficier" value="#{acteNaissanceEditerBacking.legitimationDto.officierEtatCivilID}"          
                                      label="Selectionnez">
                         <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez un officier --" />
-                        <f:selectItems value="#{editionBacking.officiers}" var="officier" 
+                        <f:selectItems value="#{acteNaissanceEditerBacking.officiers}" var="officier" 
                                        itemLabel="#{officier.prenoms} #{officier.nom} [#{officier.titre}]" 
                                        itemValue="#{officier.id}"/>
                         <f:validateBean disabled="true" />
@@ -350,13 +350,13 @@ xmlns:p="http://primefaces.org/ui">
             <div class="ui-fluid p-formgrid p-grid">
                 <div class="p-field p-lg-12">
                     <p:commandButton value="Enregistrer la mention d'adoption" process="mentionsTabView" 
-                                     action="#{editionBacking.ajouterMentionLegitimation()}"
+                                     action="#{acteNaissanceEditerBacking.ajouterMentionLegitimation()}"
                                      update="mentionsTabView messageForm"  icon="pi pi-check" 
                                      styleClass="ui-button-outlined"/>
                 </div>
                 
             </div>
-            <p:dataTable id="mentionLegitimationTable" value="#{editionBacking.legitimationDtos}" var="legitimation">
+            <p:dataTable id="mentionLegitimationTable" value="#{acteNaissanceEditerBacking.legitimationDtos}" var="legitimation">
                <p:column headerText="date dressage" >
                    <h:outputText value="#{legitimation.dateDressage}"/>
                </p:column>
@@ -376,26 +376,26 @@ xmlns:p="http://primefaces.org/ui">
              <div class="ui-fluid p-formgrid p-grid">
                  <div class="p-field p-lg-12">
                     <p:outputLabel for="reconnaissanceDateDressage" styleClass="p-d-block">Date dressage</p:outputLabel>
-                    <p:inputMask id="reconnaissanceDateDressage" value="#{editionBacking.reconnaissanceDto.dateDressage}"
+                    <p:inputMask id="reconnaissanceDateDressage" value="#{acteNaissanceEditerBacking.reconnaissanceDto.dateDressage}"
                                  mask="99/99/9999" >
                         <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
                     </p:inputMask>
-                    <p:watermark  value="JJ/MM/YYYY" for="reconnaissanceDateDressage"/> 
+                    
                     <p:message for="reconnaissanceDateDressage"/>
                  </div>
                  <div class="p-field p-lg-6">
                      <p:outputLabel for="reconnaissanceDecision" styleClass="p-d-block">Décision</p:outputLabel>
-                     <p:inputTextarea id="reconnaissanceDecision" value="#{editionBacking.reconnaissanceDto.decision}" 
+                     <p:inputTextarea id="reconnaissanceDecision" value="#{acteNaissanceEditerBacking.reconnaissanceDto.decision}" 
                                       rows="10">
                         <f:validateBean disabled="true" />
                      </p:inputTextarea>
                  </div>
                  <div class="p-field p-lg-6">
                     <p:outputLabel for="reconnaissanceOfficier" styleClass="p-d-block">Officier</p:outputLabel>
-                    <p:selectOneMenu id="reconnaissanceOfficier" value="#{editionBacking.reconnaissanceDto.officierEtatCivilID}"          
+                    <p:selectOneMenu id="reconnaissanceOfficier" value="#{acteNaissanceEditerBacking.reconnaissanceDto.officierEtatCivilID}"          
                                      label="Selectionnez">
                         <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez un officier --" />
-                        <f:selectItems value="#{editionBacking.officiers}" var="officier" 
+                        <f:selectItems value="#{acteNaissanceEditerBacking.officiers}" var="officier" 
                                        itemLabel="#{officier.prenoms} #{officier.nom} [#{officier.titre}]" 
                                        itemValue="#{officier.id}"/>
                         <f:validateBean disabled="true" />
@@ -405,13 +405,13 @@ xmlns:p="http://primefaces.org/ui">
             <div class="ui-fluid p-formgrid p-grid">
                 <div class="p-field p-lg-12">
                     <p:commandButton value="Enregistrer la mention d'adoption" process="mentionsTabView" 
-                                     action="#{editionBacking.ajouterMentionReconnaissance()}"
+                                     action="#{acteNaissanceEditerBacking.ajouterMentionReconnaissance()}"
                                      update="mentionsTabView messageForm"  icon="pi pi-check" 
                                      styleClass="ui-button-outlined"/>
                 </div>
                 
             </div>
-            <p:dataTable id="mentionReconnaissanceTable" value="#{editionBacking.reconnaissanceDtos}" var="reconnaissance">
+            <p:dataTable id="mentionReconnaissanceTable" value="#{acteNaissanceEditerBacking.reconnaissanceDtos}" var="reconnaissance">
                <p:column headerText="date dressage" >
                    <h:outputText value="#{reconnaissance.dateDressage}"/>
                </p:column>
@@ -431,26 +431,26 @@ xmlns:p="http://primefaces.org/ui">
              <div class="ui-fluid p-formgrid p-grid">
                  <div class="p-field p-lg-12">
                     <p:outputLabel for="rectificationDateDressage" styleClass="p-d-block">Date dressage</p:outputLabel>
-                    <p:inputMask id="rectificationDateDressage" value="#{editionBacking.rectificationDto.dateDressage}"
+                    <p:inputMask id="rectificationDateDressage" value="#{acteNaissanceEditerBacking.rectificationDto.dateDressage}"
                                  mask="99/99/9999" >
                         <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
                     </p:inputMask>
-                    <p:watermark  value="JJ/MM/YYYY" for="rectificationDateDressage"/> 
+                    
                     <p:message for="rectificationDateDressage"/>
                  </div>
                  <div class="p-field p-lg-6">
                      <p:outputLabel for="rectificationDecision" styleClass="p-d-block">Décision</p:outputLabel>
-                     <p:inputTextarea id="rectificationDecision" value="#{editionBacking.rectificationDto.decision}" 
+                     <p:inputTextarea id="rectificationDecision" value="#{acteNaissanceEditerBacking.rectificationDto.decision}" 
                                       rows="10">
                         <f:validateBean disabled="true" />
                      </p:inputTextarea>
                  </div>
                  <div class="p-field p-lg-6">
                     <p:outputLabel for="rectificationOfficier" styleClass="p-d-block">Officier</p:outputLabel>
-                    <p:selectOneMenu id="rectificationOfficier" value="#{editionBacking.rectificationDto.officierEtatCivilID}"          
+                    <p:selectOneMenu id="rectificationOfficier" value="#{acteNaissanceEditerBacking.rectificationDto.officierEtatCivilID}"          
                                      label="Selectionnez">
                         <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez un officier --" />
-                        <f:selectItems value="#{editionBacking.officiers}" var="officier" 
+                        <f:selectItems value="#{acteNaissanceEditerBacking.officiers}" var="officier" 
                                        itemLabel="#{officier.prenoms} #{officier.nom} [#{officier.titre}]" 
                                        itemValue="#{officier.id}"/>
                         <f:validateBean disabled="true" />
@@ -460,13 +460,13 @@ xmlns:p="http://primefaces.org/ui">
             <div class="ui-fluid p-formgrid p-grid">
                 <div class="p-field p-lg-12">
                     <p:commandButton value="Enregistrer la mention d'adoption" process="mentionsTabView" 
-                                     action="#{editionBacking.ajouterMentionRectification()}"
+                                     action="#{acteNaissanceEditerBacking.ajouterMentionRectification()}"
                                      update="mentionsTabView messageForm"  icon="pi pi-check" 
                                      styleClass="ui-button-outlined"/>
                 </div>
                 
             </div>
-            <p:dataTable id="mentionRectificationTable" value="#{editionBacking.rectificationDtos}" var="adoption">
+            <p:dataTable id="mentionRectificationTable" value="#{acteNaissanceEditerBacking.rectificationDtos}" var="adoption">
                <p:column headerText="date dressage" >
                    <h:outputText value="#{rectification.dateDressage}"/>
                </p:column>

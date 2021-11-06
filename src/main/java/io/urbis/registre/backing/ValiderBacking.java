@@ -24,7 +24,7 @@ import org.primefaces.PrimeFaces;
  *
  * @author florent
  */
-@Named(value = "validerBacking")
+@Named(value = "registreValiderBacking")
 @ViewScoped
 public class ValiderBacking implements Serializable{
     

@@ -6,7 +6,9 @@
 package io.urbis.common.util;
 
 import java.io.ByteArrayInputStream;
+import java.util.logging.Logger;
 import javax.annotation.Priority;
+import javax.persistence.EntityNotFoundException;
 import javax.validation.ValidationException;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
@@ -18,21 +20,23 @@ import org.eclipse.microprofile.rest.client.ext.ResponseExceptionMapper;
  */
 @Priority(4000)
 public class ExceptionMapper implements ResponseExceptionMapper<RuntimeException>{
+    
+    private static final Logger LOG = Logger.getLogger(ExceptionMapper.class.getName());
 
     @Override
     public RuntimeException toThrowable(Response response) {
          int status = response.getStatus();
          
         String msg = getBody(response); // see below
-        
-        //response.getEntity().toString();
 
         RuntimeException re ;
         switch (status) {
           case 412: re = new ValidationException(msg);
           break;
+          case 404: re = new EntityNotFoundException(msg);
+          break;
           default:
-            re = new WebApplicationException(status);
+            re = new WebApplicationException(msg,status);
         }
         return re;
     }

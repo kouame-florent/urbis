@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+xmlns:h="http://xmlns.jcp.org/jsf/html"
+xmlns:f="http://xmlns.jcp.org/jsf/core"
+xmlns:p="http://primefaces.org/ui">
+    
+<ui:composition>
+    <p:dataTable id="actesDataTable" var="acte" 
+            value="#{acteNaissanceEditerBacking.lazySaisieActeExistantDataModel}"
+            selectionMode="single"
+            selection="#{acteNaissanceEditerBacking.selectedActe}" rowKey="#{acte.id}" paginator="true"
+            rows="25" paginatorPosition="bottom" size="small"
+            emptyMessage="Aucun acte dans le registre">
+
+        <p:ajax event="rowSelect" listener="#{acteNaissanceEditerBacking.onRowSelect}"
+                    update=":contentForm:modeAjoutOutputPanel :contentForm:acteWizard"/>
+
+        <f:facet name="header">
+            Actes de naissance
+        </f:facet>
+
+        <p:column headerText="Nom"  >
+            <h:outputText value="#{acte.enfantNom}"/>
+        </p:column>
+        <p:column headerText="Prénoms"  >
+            <h:outputText value="#{acte.enfantPrenoms}"/>
+        </p:column>
+
+         <p:column headerText="Date naissance"  >
+            <h:outputText value="#{acte.enfantDateNaissance}"/>
+        </p:column>
+
+        <p:column headerText="Année registre" >
+            <h:outputText value="#{acte.registreAnnee}"/>
+        </p:column>
+
+        <p:column headerText="Numéro registre" >
+            <h:outputText value="#{acte.registreNumero}"/>
+        </p:column>
+
+        <p:column headerText="Numéro acte" >
+            <h:outputText value="#{acte.numero}"/>
+        </p:column>
+
+
+    </p:dataTable>
+</ui:composition>  
+ 
+</html>
+

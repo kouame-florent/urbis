@@ -1,0 +1,256 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+xmlns:h="http://xmlns.jcp.org/jsf/html"
+xmlns:f="http://xmlns.jcp.org/jsf/core"
+xmlns:p="http://primefaces.org/ui">
+    
+ <ui:composition template="/WEB-INF/templates/default-tpl.xhtml">
+    
+    <ui:define name="content">
+        <h:form id="messageForm">
+            <p:growl globalOnly="true" life="15000" showDetail="true"/>        
+        </h:form>
+        
+        <h:form id="downloadForm" >
+            <p:toolbar>
+                <p:toolbarGroup align="right" rendered="false">
+                    <p:commandButton value="download" process="@this" 
+                                      ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);">
+                         <p:fileDownload value="#{registreListerBacking.download()}"/>
+                     </p:commandButton>
+                </p:toolbarGroup>
+            </p:toolbar>
+               
+            
+        </h:form> 
+        
+        <h:form id="contentForm">
+            <p:toolbar>
+                 <p:toolbarGroup>
+                     <p:commandButton  value="Créer un registre" action="#{registreListerBacking.showCreerView()}" icon="pi pi-plus" 
+                                       process="@this" style="margin-right: .5rem" styleClass="ui-button-outlined">   
+                         <p:ajax event="dialogReturn" listener="#{registreListerBacking.onSerieCreated}" update="messageForm @form"/>
+                    </p:commandButton>
+                     <p:commandButton value="Créer une serie de registres" action="#{registreListerBacking.showCreerSerieView()}" icon="pi pi-plus" 
+                                      process="@this" style="margin-right: .5rem" styleClass="ui-button-outlined"> 
+                         <p:ajax event="dialogReturn" listener="#{registreListerBacking.onCreate}" update="messageForm @form"/>
+                    </p:commandButton>
+                     
+                </p:toolbarGroup>
+            </p:toolbar>
+            <p:spacer height="2"/>
+            <p:fieldset legend="Type de registres">
+                <p:selectOneRadio id="console" value="#{registreListerBacking.selectedType}" 
+                                converter="omnifaces.SelectItemsConverter"
+                                required="true" columns="5" styleClass="grid-radio">
+                  <p:ajax listener="#{registreListerBacking.onTypeRgistreSelect}" 
+                          update="contentForm:registre"/>
+                  <f:selectItems value="#{registreListerBacking.typesRegistre}" var="type" 
+                                 itemLabel="#{type.libelle}" itemValue="#{type}"/>
+                </p:selectOneRadio>
+                
+                    
+            </p:fieldset>
+            <p:spacer height="2"/>
+            <p:fieldset legend="Filtres">
+                <div class="ui-fluid p-formgrid p-grid">
+                        <div class="p-field p-col">
+                           <p:outputLabel for="annee" styleClass="p-d-block">Année</p:outputLabel>
+                           <p:inputMask id="annee" value="#{registreListerBacking.filterData.annee}" mask="9999" maxlength="4"
+                                          styleClass="p-d-block"/>
+                          
+
+                        </div>
+                        <div class="p-field p-col">
+                           <p:outputLabel for="numero" styleClass="p-d-block">Numéro</p:outputLabel>
+                           <p:inputText id="numero" value="#{registreListerBacking.filterData.numero}" styleClass="p-d-block"/>
+
+                        </div>
+                    </div>
+                    <div class="ui-fluid p-formgrid p-grid">
+                    <div class="p-field p-col">
+                        <p:commandButton id="rechercher" value="Appliquer les filtres" 
+                                         process="@this contentForm:annee contentForm:numero"
+                                         action="#{registreListerBacking.filtrer()}"
+                                         update="contentForm:registre"  icon="pi pi-check" 
+                                         styleClass="ui-button-outlined"/>
+                    </div>
+                    <div class="p-field p-col">
+                        <p:commandButton value="Effacer les filtres" icon="pi pi-times" process="@this contentForm:annee"
+                                         action="#{registreListerBacking.effacerFiltres()}"
+                                         update="contentForm:registre contentForm:annee contentForm:numero"  
+                                         styleClass="ui-button-outlined ui-button-warning" />
+                    </div>
+                </div>
+            </p:fieldset>
+            
+           
+                 
+            <p:dataTable id="registre" widgetVar="registreWidget" var="registre" value="#{registreListerBacking.lazyRegistreDataModel}"
+                      selection="#{registreListerBacking.selectedRegistre}" rowKey="#{registre.id}" paginator="true"
+                      rows="25" rowSelectMode="add" paginatorPosition="bottom">
+                
+                <f:facet name="header">
+                    <div class="products-table-header">
+                        <span style="font-weight: bold">
+                            #{registreListerBacking.selectedType eq null ? '': registreListerBacking.selectedType.libelle}
+                        </span>
+
+                    </div>
+                </f:facet>
+                
+                <p:column headerText="Année" >
+                    <h:outputText value="#{registre.annee}"/>
+                </p:column>
+                <p:column headerText="Numéro"  >
+                    <h:outputText value="#{registre.numero}"/>
+                </p:column>
+                <p:column headerText="Libellé" rendered="#{registreListerBacking.renderRegistreLibelle()}">
+                    <h:outputText value="#{registre.libelle}"/>
+                </p:column>
+                <p:column headerText="Date d'ouverture" width="10%" >
+                    <h:outputText value="#{registre.created}">
+                        <f:convertDateTime type="localDateTime" pattern="dd-MM-yyyy" />
+                    </h:outputText>
+                </p:column>
+                 <p:column headerText="N° 1er" >
+                    <h:outputText value="#{registre.numeroPremierActe}"/>
+                </p:column>
+                 <p:column headerText="N° Dernier" >
+                     <h:outputText value="#{registre.numeroDernierActe}"/>
+                </p:column>
+                <p:column headerText="Nombre d'actes" >
+                    <h:outputText value="#{registre.nombreActe}"/>
+                </p:column>
+                <p:column headerText="Officier" width="15%">
+                    <h:outputText value="#{registre.officierEtatCivilNomComplet}"/>
+                </p:column>
+                <p:column headerText="Statut"  >
+                    <p:tag severity="#{registreListerBacking.statutSeverity(registre.statut)}" value="#{registre.statut}"/>
+             
+                </p:column>
+                
+                <p:column width="10%" rendered="false">
+                    <p:commandButton  value="Valider" action="#{registreListerBacking.showValiderView(registre)}"
+                                      styleClass="ui-button-outlined" process="@this" 
+                                      update="contentForm:registre" >
+                    <p:ajax event="dialogReturn" 
+                            listener="#{registreListerBacking.onActeValidated}" 
+                                        update=":contentForm:registre"/>
+                    <f:setPropertyActionListener value="#{registre}" target="#{registreListerBacking.selectedRegistre}"/>
+                
+                </p:commandButton>
+             
+                </p:column>
+                <p:column width="5%">
+                    
+                    <p:menuButton icon="pi pi-ellipsis-h" style="width: 100%;white-space: nowrap;width: auto !important;">
+                        <p:menuitem value="Consulter" process="@this" action="#{registreListerBacking.showValiderView(registre)}" icon="pi pi-book"/>
+                        <p:menuitem value="Valider" process="@this" action="#{registreListerBacking.showValiderView(registre)}" 
+                                    update="contentForm:registre" icon="pi pi-ticket" 
+                                    disabled="#{registreListerBacking.disableMenuActiver(registre)}">
+                            <p:ajax event="dialogReturn" listener="#{registreListerBacking.onRegistreValidated}" 
+                                    update=":contentForm:registre messageForm"/>
+                            <f:setPropertyActionListener value="#{registre}" target="#{registreListerBacking.selectedRegistre}"/>
+                        
+                        </p:menuitem>
+                       <p:menuitem value="Cloturer" process="@this" action="#{registreListerBacking.cloturer(registre.id)}"  
+                                   icon="pi pi-ban" update="contentForm:registre"
+                                   disabled="#{registreListerBacking.disableMenuCloturer(registre)}" >
+                            
+                            <p:confirm header="Confirmation" 
+                                       message="Voulez-vous vraiment cloturer le registre #{registre.numero} de #{registre.annee} ?" 
+                                       icon="pi pi-exclamation-triangle"/>
+                        </p:menuitem>
+                        <p:menuitem value="Annuler" process="@this" action="#{registreListerBacking.showAnnulerView(registre)}"  
+                                    icon="pi pi-undo"
+                                    disabled="#{registreListerBacking.disableMenuAnnuler(registre)}">
+                            <p:ajax event="dialogReturn" 
+                                        update=":contentForm:registre messageForm"/>
+                            
+                        </p:menuitem>
+                        <p:divider/>
+                        <p:menuitem value="Liste des actes" process="@this"  icon="pi pi-file"
+                                    action="#{registreListerBacking.showActesListView(registre)}"
+                                    disabled="#{registreListerBacking.disableMenuListActe(registre)}"
+                                    rendered="#{registreListerBacking.renderActeNaissanceMenus(registre)}"/>
+                        <p:menuitem value="Declaration jugement" process="@this"  icon="pi pi-folder-open" ajax="false"
+                                    action="#{registreListerBacking.showDeclarationView(registre)}"  
+                                    disabled="#{registreListerBacking.disableMenuDeclarationActe(registre)}"
+                                    rendered="#{registreListerBacking.renderActeNaissanceMenus(registre)}"/>
+                        <p:menuitem value="Saisie actes naissances existants" process="@this" 
+                                    action="#{registreListerBacking.showSaisieActeExistantview(registre)}" icon="pi pi-folder"
+                                    disabled="#{registreListerBacking.disableSaisieActesExistants(registre)}"
+                                    rendered="#{registreListerBacking.renderActeNaissanceMenus(registre)}"/>
+                        
+                        <p:menuitem value="Liste des actes" process="@this"  icon="pi pi-file"
+                                    action="#{registreListerBacking.showActesListView(registre)}"
+                                    disabled="#{registreListerBacking.disableMenuDeclarationActe(registre)}"
+                                    rendered="#{registreListerBacking.renderActeSpecialNaissance(registre)}"/>
+                        <p:menuitem value="Declaration jugement" process="@this"  icon="pi pi-folder-open"
+                                    action="#{registreListerBacking.showDeclarationView(registre)}"  
+                                    disabled="#{registreListerBacking.disableMenuDeclarationActe(registre)}"
+                                    rendered="#{registreListerBacking.renderActeSpecialNaissance(registre)}"/>
+                         
+                        <p:divider/>
+                        <p:menuitem value="Delete" process="@this" action="#{registreListerBacking.supprimer(registre.id)}"  
+                                   icon="pi pi-ban" update="contentForm:registre">
+                            
+                            <p:confirm header="Confirmation" 
+                                       message="Voulez-vous vraiment supprimer le registre #{registre.numero} de #{registre.annee} ?" 
+                                       icon="pi pi-exclamation-triangle"/>
+                        </p:menuitem>
+                        <p:menuitem value="supprimer"  process="@this" icon="pi pi-times"
+                                    oncomplete="PF('supprimerConfirmDialog').show()">
+                            <f:setPropertyActionListener value="#{registre}" target="#{registreListerBacking.selectedRegistre}"/>
+                        </p:menuitem>
+                    </p:menuButton>
+                </p:column>
+                
+                </p:dataTable>
+            
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+                <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+                <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" />
+            </p:confirmDialog>
+            
+            <p:dialog widgetVar="supprimerConfirmDialog"  showEffect="fade" hideEffect="fade" responsive="true" width="450">
+                <p class="p-m-0">
+                    Voulez-vous vraiment supprimer le registre  ?
+                </p>
+                    <f:facet name="footer">
+                        <p:commandButton action="#{registreListerBacking.supprimer(registreListerBacking.selectedRegistre)}" 
+                                         value="Oui" 
+                                         styleClass="ui-confirmdialog-no ui-button-flat" style="width: 6rem" 
+                                         update="contentForm:registre"
+                                         oncomplete="PF('supprimerConfirmDialog').hide()"/>
+                        <p:commandButton onclick="PF('supprimerConfirmDialog').hide()" value="Non" styleClass="ui-confirmdialog-yes" />
+                    </f:facet>
+                    
+            </p:dialog>
+            <p:dialog widgetVar="cloturerConfirmDialog"  showEffect="fade" hideEffect="fade" responsive="true" width="450">
+                <p class="p-m-0">
+                    Voulez-vous vraiment supprimer le registre?
+                </p>
+                    <f:facet name="footer">
+                        <p:commandButton action="#{registreListerBacking.cloturer(registreListerBacking.selectedRegistre.id)}" 
+                                         value="Oui" 
+                                         styleClass="ui-confirmdialog-no ui-button-flat" style="width: 6rem" 
+                                         update="contentForm:registre"
+                                         oncomplete="PF('cloturerConfirmDialog').hide()"/>
+                        <p:commandButton onclick="PF('supprimerConfirmDialog').hide()" value="Non" styleClass="ui-confirmdialog-yes" />
+                    </f:facet>
+                    
+            </p:dialog>
+          
+        </h:form>
+          
+        
+    </ui:define>
+
+</ui:composition>  
+ 
+</html>
+

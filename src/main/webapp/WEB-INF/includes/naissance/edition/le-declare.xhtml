@@ -12,43 +12,43 @@ xmlns:p="http://primefaces.org/ui">
         <div class="ui-fluid p-formgrid p-grid">
             <div class="p-field p-lg-6">
                 <p:outputLabel for="dateNaissance" styleClass="p-d-block">Date de naissance</p:outputLabel>
-                <p:inputMask id="dateNaissance" value="#{editionBacking.acteNaissanceDto.enfantDateNaissance}"
+                <p:inputMask id="dateNaissance" value="#{acteNaissanceEditerBacking.acteNaissanceDto.enfantDateNaissance}"
                              mask="99/99/9999 99:99:99" required="true">
-
+                    <f:convertDateTime locale="fr_FR" type="localDateTime" pattern="dd/MM/yyyy HH:mm:ss"/>
                 </p:inputMask>
-                <p:watermark  value="JJ/MM/YYYY" for="dateNaissance" /> 
+                
                 <p:message for="dateNaissance"/>
 
             </div>
             <div class="p-field p-lg-6">
                 <p:outputLabel for="nom" styleClass="p-d-block">Nom</p:outputLabel>
-                <p:inputText id="nom" value="#{editionBacking.acteNaissanceDto.enfantNom}" required="true"  
+                <p:inputText id="nom" value="#{acteNaissanceEditerBacking.acteNaissanceDto.enfantNom}" required="true"  
                                 styleClass="p-d-block"/>
             </div>
             <div class="p-field p-lg-6">
                 <p:outputLabel for="lieuNaissance" styleClass="p-d-block">Lieu de naissance</p:outputLabel>
-                <p:inputText id="lieuNaissance" value="#{editionBacking.acteNaissanceDto.enfantLieuNaissance}" required="true"  
+                <p:inputText id="lieuNaissance" value="#{acteNaissanceEditerBacking.acteNaissanceDto.enfantLieuNaissance}" required="true"  
                                 styleClass="p-d-block"/>
             </div>
             <div class="p-field p-lg-6">
                 <p:outputLabel for="prenoms" styleClass="p-d-block">Prénoms</p:outputLabel>
-                <p:inputText id="prenoms" value="#{editionBacking.acteNaissanceDto.enfantPrenoms}" required="true"  
+                <p:inputText id="prenoms" value="#{acteNaissanceEditerBacking.acteNaissanceDto.enfantPrenoms}" required="true"  
                                 styleClass="p-d-block"/>
             </div>
              <div class="p-field p-lg-6">
                 <p:outputLabel for="localiteNaissance" styleClass="p-d-block">Localité</p:outputLabel>
-                <p:inputText id="localiteNaissance" value="#{editionBacking.acteNaissanceDto.enfantLocalite}" required="true"  
+                <p:inputText id="localiteNaissance" value="#{acteNaissanceEditerBacking.acteNaissanceDto.enfantLocalite}" required="true"  
                                 styleClass="p-d-block"/>
             </div>
              <div class="p-field p-lg-6"> 
                  <div class="ui-fluid  p-grid">
                  <div class="p-field p-lg-12">
                      <p:outputLabel for="sexe" styleClass="p-d-block">Sexe</p:outputLabel>
-                     <p:selectOneRadio id="sexe" value="#{editionBacking.acteNaissanceDto.enfantSexe}" 
+                     <p:selectOneRadio id="sexe" value="#{acteNaissanceEditerBacking.acteNaissanceDto.enfantSexe}" 
                                         converter="omnifaces.SelectItemsConverter"
                                         required="true">
 
-                            <f:selectItems value="#{editionBacking.sexes}" var="sexe" 
+                            <f:selectItems value="#{acteNaissanceEditerBacking.sexes}" var="sexe" 
                                            itemLabel="#{sexe.libelle}" itemValue="#{sexe.code}"/>
                        </p:selectOneRadio>
                  </div>
