@@ -5,7 +5,7 @@
  */
 package io.urbis.mention.api;
 
-import io.urbis.mention.dto.ReconnaissanceDto;
+import io.urbis.mention.dto.MentionReconnaissanceDto;
 import java.util.List;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -14,6 +14,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.QueryParam;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 /**
@@ -24,10 +25,10 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 @RegisterRestClient(baseUri = "http://127.0.0.1:8181")
 public interface MentionReconnaissanceService {
     @POST
-    public void create(@NotNull ReconnaissanceDto dto);
+    public void create(@NotNull MentionReconnaissanceDto dto);
     
     @GET
-    public List<ReconnaissanceDto> findByActeNaissance(@NotBlank String acteNaissanceID);
+    public List<MentionReconnaissanceDto> findByActeNaissance(@QueryParam("acte-naissance-id") @NotBlank String acteNaissanceID);
     
     @DELETE @Path("{id}")
     public void delete(@PathParam("id") String id);

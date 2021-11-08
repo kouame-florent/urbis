@@ -6,26 +6,31 @@
 package io.urbis.naissance.dto;
 
 
+import io.urbis.mention.dto.MentionAdoptionDto;
+import io.urbis.mention.dto.MentionDecesDto;
+import io.urbis.mention.dto.MentionMariageDto;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
  *
  * @author florent
  */
+
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode
 public class ActeNaissanceDto {
     
     private LocalDateTime created; 
     private LocalDateTime updated; 
     
+    @NotBlank
     private String operation;
     
     @NotBlank
@@ -48,7 +53,7 @@ public class ActeNaissanceDto {
     private LocalDateTime dateDressage;
    // private String dateEnregistrement;
     
-    private String jugementDate;
+    private LocalDate jugementDate;
     private String jugementNumero;
     private String jugementTribunal;
     
@@ -60,13 +65,13 @@ public class ActeNaissanceDto {
     private String pereProfession;
     private String pereLieuNaissance;
     private String pereNationalite;
-    private String pereDateNaissance;
-    private String pereDateDeces;
+    private LocalDate pereDateNaissance;
+    private LocalDate pereDateDeces;
     private String pereLieuDeces;
     private String pereLocalite;
     private String pereTypePiece;
     private String pereNumeroPiece;
-    private String pereDatePiece;
+    private LocalDate pereDatePiece;
     private String pereLieuPiece;
     
     private String mereNom;
@@ -74,13 +79,13 @@ public class ActeNaissanceDto {
     private String mereProfession;
     private String mereLieuNaissance;
     private String mereNationalite;
-    private String mereDateNaissance;
-    private String mereDateDeces;
+    private LocalDate mereDateNaissance;
+    private LocalDate mereDateDeces;
     private String mereLieuDeces;
     private String mereLocalite;
     private String mereTypePiece;
     private String mereNumeroPiece;
-    private String mereDatePiece;
+    private LocalDate mereDatePiece;
     private String mereLieuPiece;
     
     private String declarantLien;
@@ -89,31 +94,31 @@ public class ActeNaissanceDto {
     private String declarantProfession;
     private String declarantLieuNaissance;
     private String declarantNationalite;
-    private String declarantDateNaissance;
+    private LocalDate declarantDateNaissance;
     private String declarantLocalite;
     private String declarantTypePiece;
     private String declarantNumeroPiece;
-    private String declarantDatePiece;
+    private LocalDate declarantDatePiece;
     private String declarantLieuPiece;
     
-    public String interpreteNom;
-    public String interpretePrenoms;
-    public String interpreteProfession;
-    public String interpreteDateNaissance;
-    public String interpreteDomicile;
-    public String interpreteLangue;
+    private String interpreteNom;
+    private String interpretePrenoms;
+    private String interpreteProfession;
+    private LocalDate interpreteDateNaissance;
+    private String interpreteDomicile;
+    private String interpreteLangue;
     
-    public String temoinPremierNom;
-    public String temoinPremierPrenoms;
-    public String temoinPremierDateNaissance;
-    public String temoinPremierProfession;
-    public String temoinPremierDomicile;
+    private String temoinPremierNom;
+    private String temoinPremierPrenoms;
+    private LocalDate temoinPremierDateNaissance;
+    private String temoinPremierProfession;
+    private String temoinPremierDomicile;
     
-    public String temoinDeuxiemeNom;
-    public String temoinDeuxiemePrenoms;
-    public String temoinDeuxiemeDateNaissance;
-    public String temoinDeuxiemeProfession;
-    public String temoinDeuxiemeDomicile;
+    private String temoinDeuxiemeNom;
+    private String temoinDeuxiemePrenoms;
+    private LocalDate temoinDeuxiemeDateNaissance;
+    private String temoinDeuxiemeProfession;
+    private String temoinDeuxiemeDomicile;
   
     private String statut;
     private String motifAnnulation;
@@ -129,7 +134,7 @@ public class ActeNaissanceDto {
     private int registreAnnee;
     private int registreNumero;
     
-    //private List<AdoptionDto> adoptionDtos = new ArrayList<>();
-    //private List<DecesDto> decesDtos = new ArrayList<>();
-    
+    private Set<MentionMariageDto> MentionMariageDtos = new HashSet<>();
+    private Set<MentionAdoptionDto> MentionAdoptionDtos = new HashSet<>();
+    private Set<MentionDecesDto> MentionDecesDtos = new HashSet<>();
 }

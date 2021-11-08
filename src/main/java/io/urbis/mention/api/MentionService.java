@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package io.urbis.naissance.api;
+package io.urbis.mention.api;
 
 
 import io.urbis.mention.dto.MentionDto;

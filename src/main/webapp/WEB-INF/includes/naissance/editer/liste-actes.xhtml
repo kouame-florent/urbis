@@ -29,7 +29,9 @@ xmlns:p="http://primefaces.org/ui">
         </p:column>
 
          <p:column headerText="Date naissance"  >
-            <h:outputText value="#{acte.enfantDateNaissance}"/>
+             <h:outputText value="#{acte.enfantDateNaissance}">
+                 <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy" dateStyle="short"/>
+             </h:outputText>
         </p:column>
 
         <p:column headerText="Année registre" >

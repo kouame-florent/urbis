@@ -8,21 +8,20 @@ package io.urbis.mention.dto;
 import java.time.LocalDate;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 
 /**
  *
  * @author florent
  */
 @Data
-@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true,onlyExplicitlyIncluded = true)
-public class DecesDto extends MentionDto {
+public class MentionMariageDto extends MentionDto{
     
+    
+    private String lieu;  
     private LocalDate date;
-    private String lieu;
-
-    private String localite;
-    private LocalDate dateDressage;
-
+    private String conjointNom;
+    private String conjointPrenoms;
+    private String conjointDomicile;
+    private String conjointProfession;
 }

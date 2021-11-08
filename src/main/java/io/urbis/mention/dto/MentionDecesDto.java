@@ -5,15 +5,24 @@
  */
 package io.urbis.mention.dto;
 
+import java.time.LocalDate;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 /**
  *
  * @author florent
  */
 @Data
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true,onlyExplicitlyIncluded = true)
-public class AdoptionDto extends MentionDto{
+public class MentionDecesDto extends MentionDto {
     
+    private LocalDate date;
+    private String lieu;
+
+    private String localite;
+    private LocalDate dateDressage;
+
 }

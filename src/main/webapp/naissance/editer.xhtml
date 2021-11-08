@@ -72,7 +72,7 @@ xmlns:p="http://primefaces.org/ui">
 
            </p:fieldset>
             <p:spacer height="2" />
-                <ui:include src="/WEB-INF/includes/naissance/edition/liste-actes.xhtml"/>
+                <ui:include src="/WEB-INF/includes/naissance/editer/liste-actes.xhtml"/>
             <p:spacer height="2"/>
             <p:outputPanel id="modeAjoutOutputPanel">
             <p:toolbar>
@@ -102,7 +102,7 @@ xmlns:p="http://primefaces.org/ui">
                       nextLabel="suivant" backLabel="précédent">
                 <p:tab id="declaration" title="Déclaration">
                     
-                    <ui:include src="/WEB-INF/includes/naissance/edition/mode-declaration.xhtml"/>
+                    <ui:include src="/WEB-INF/includes/naissance/editer/mode-declaration.xhtml"/>
            
                     <p:spacer height="2" />
             
@@ -131,12 +131,12 @@ xmlns:p="http://primefaces.org/ui">
                         <p:message for="typeNaisance"/>
                     </p:fieldset> 
                     <p:spacer width="2"/>
-                    <ui:include src="/WEB-INF/includes/naissance/edition/le-declare.xhtml"/>
+                    <ui:include src="/WEB-INF/includes/naissance/editer/le-declare.xhtml"/>
                     </p:outputPanel>
                     
                     <p:spacer height="2" />
                     
-                    <ui:include src="/WEB-INF/includes/naissance/edition/filiation.xhtml"/>
+                    <ui:include src="/WEB-INF/includes/naissance/editer/filiation.xhtml"/>
                     
                     <p:fieldset >
                         <div class="ui-fluid p-formgrid p-grid">
@@ -190,11 +190,11 @@ xmlns:p="http://primefaces.org/ui">
                     </p:fieldset>
                 </p:tab>
                 <p:tab id="autresInformations" title="Autres Informations">
-                    <ui:include src="/WEB-INF/includes/naissance/edition/autres-informations.xhtml"/>     
+                    <ui:include src="/WEB-INF/includes/naissance/editer/autres-informations.xhtml"/>     
                 </p:tab>
                 <p:tab id="mentions" title="Mentions" >
-                    <ui:include src="/WEB-INF/includes/naissance/edition/mentions.xhtml"/> 
-                    <ui:include src="/WEB-INF/includes/naissance/edition/commands.xhtml"/>
+                    <ui:include src="/WEB-INF/includes/naissance/editer/mentions.xhtml"/> 
+                    <ui:include src="/WEB-INF/includes/naissance/editer/commands.xhtml"/>
                 </p:tab>
             </p:wizard>
             

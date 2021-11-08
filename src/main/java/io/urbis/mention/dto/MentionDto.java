@@ -31,6 +31,7 @@ public abstract class MentionDto {
     @NotBlank(message = "Le champ 'Decision' ne peut être vide")
     private String decision;
     
+    @NotNull
     private LocalDate dateDressage;
   
     @NotBlank(message = "Le champ 'Officier' ne peut être vide")

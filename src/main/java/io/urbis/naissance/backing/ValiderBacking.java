@@ -6,6 +6,20 @@
 package io.urbis.naissance.backing;
 
 import io.urbis.common.util.BaseBacking;
+import io.urbis.mention.api.MentionAdoptionService;
+import io.urbis.mention.api.MentionDecesService;
+import io.urbis.mention.api.MentionDissolutionService;
+import io.urbis.mention.api.MentionLegitimationService;
+import io.urbis.mention.api.MentionMariageService;
+import io.urbis.mention.api.MentionReconnaissanceService;
+import io.urbis.mention.api.MentionRectificationService;
+import io.urbis.mention.dto.MentionAdoptionDto;
+import io.urbis.mention.dto.MentionDecesDto;
+import io.urbis.mention.dto.MentionDissolutionMariageDto;
+import io.urbis.mention.dto.MentionLegitimationDto;
+import io.urbis.mention.dto.MentionMariageDto;
+import io.urbis.mention.dto.MentionReconnaissanceDto;
+import io.urbis.mention.dto.MentionRectificationDto;
 import io.urbis.naissance.dto.ActeNaissanceDto;
 import io.urbis.naissance.dto.LienDeclarantDto;
 import io.urbis.naissance.dto.ModeDeclarationDto;
@@ -27,7 +41,10 @@ import io.urbis.registre.api.NationaliteService;
 import io.urbis.registre.api.OfficierService;
 import io.urbis.registre.api.RegistreService;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -46,11 +63,12 @@ import org.primefaces.PrimeFaces;
 @Named(value = "acteNaissanceValiderBacking")
 @ViewScoped
 public class ValiderBacking extends BaseBacking implements Serializable{
-    private static final Logger LOG = Logger.getLogger(DeclarationBacking.class.getName());
+    private static final Logger LOG = Logger.getLogger(ValiderBacking.class.getName());
     
+    /*
     @Inject 
     @RestClient
-    RegistreService registreService;
+    OfficierService officierService;
     
     @Inject
     @RestClient
@@ -75,6 +93,7 @@ public class ValiderBacking extends BaseBacking implements Serializable{
     @Inject
     @RestClient
     LienDeclarantService lienDeclarantService;
+    */
     
     @Inject
     @RestClient
@@ -82,14 +101,44 @@ public class ValiderBacking extends BaseBacking implements Serializable{
     
     @Inject 
     @RestClient
-    OfficierService officierService;
+    RegistreService registreService;
+    
+    @Inject
+    @RestClient
+    MentionDecesService mentionDecesService;
+    
+    @Inject
+    @RestClient
+    MentionAdoptionService mentionAdoptionService;
+    
+    @Inject
+    @RestClient
+    MentionDissolutionService mentionDissolutionService;
+    
+    @Inject
+    @RestClient
+    MentionLegitimationService mentionLegitimationService;
+    
+    @Inject
+    @RestClient
+    MentionMariageService mentionMariageService;
+    
+    @Inject
+    @RestClient
+    MentionReconnaissanceService mentionReconnaissanceService;
+    
+    @Inject
+    @RestClient
+    MentionRectificationService mentionRectificationService;
+    
      
-    
-    
     private String acteNaissanceID;
     private ActeNaissanceDto acteNaissanceDto;
     
     private RegistreDto registreDto;
+    
+    /*
+   
     
     private List<ModeDeclarationDto> modesDeclaration;
     private String selectedModeDeclaration;
@@ -122,10 +171,32 @@ public class ValiderBacking extends BaseBacking implements Serializable{
     
     private boolean pereDecede;
     private boolean mereDecede;
+    */
     
    // private ActeNaissanceDto acteNaissanceDto;
     
+    private List<MentionAdoptionDto> adoptionDtos = new ArrayList<>();
+    
+    private List<MentionDecesDto> decesDtos = new ArrayList<>(); 
+    
+    private List<MentionDissolutionMariageDto> dissolutionMariageDtos = new ArrayList<>();
+      
+    private List<MentionLegitimationDto> legitimationDtos = new ArrayList<>();
+    
+    private Set<MentionMariageDto> mariageDtos = new HashSet<>();
+    
+    private List<MentionReconnaissanceDto> reconnaissanceDtos = new ArrayList<>();
+    
+    private List<MentionRectificationDto> rectificationDtos = new ArrayList<>();
+    
    
+    
+    @PostConstruct
+    public void init(){
+        
+    }
+    
+    
     public void onload(){
         LOG.log(Level.INFO,"ACTE ID: {0}",acteNaissanceID);
         acteNaissanceDto = acteNaissanceService.findById(acteNaissanceID);
@@ -133,23 +204,14 @@ public class ValiderBacking extends BaseBacking implements Serializable{
         //LOG.log(Level.INFO,"REGISTRE LIBELLE: {0}",registreDto.getLibelle());
         //numeroActe = acteNaissanceService.numeroActe(registreID);
         
-    }
-    
-    @PostConstruct
-    public void init(){
-        sexes = sexeService.findAll();
-        nationalites = nationaliteService.findAll();
-        officiers = officierService.findAll();
-        /*
-       
-        modesDeclaration = modeDeclarationService.findAll();
-        typesNaissance = typeNaissanceService.findAll();
+        adoptionDtos = mentionAdoptionService.findByActeNaissance(acteNaissanceID);
+        dissolutionMariageDtos = mentionDissolutionService.findByActeNaissance(acteNaissanceID);
+        decesDtos = mentionDecesService.findByActeNaissance(acteNaissanceID);
+        legitimationDtos = mentionLegitimationService.findByActeNaissance(acteNaissanceID);
+        mariageDtos = mentionMariageService.findByActeNaissance(acteNaissanceID);
+        reconnaissanceDtos = mentionReconnaissanceService.findByActeNaissance(acteNaissanceID);
+        rectificationDtos = mentionRectificationService.findByActeNaissance(acteNaissanceID);
         
-        
-        liensParenteDeclarant = lienDeclarantService.findAll();
-        typesPiece = typePieceService.findAll();
-        acteNaissanceDto = new ActeNaissanceDto();
-        */
     }
     
     
@@ -167,14 +229,14 @@ public class ValiderBacking extends BaseBacking implements Serializable{
     }
     
     
-    
+    /*
     private void resetForNaissanceMultiple(ActeNaissanceDto old){
         acteNaissanceDto = new ActeNaissanceDto();
         acteNaissanceDto.setPereDateDeces(old.getPereDateDeces());
     }
-    
+    */
    
-   
+   /*
     public String getActeNaissanceID() {
         return acteNaissanceID;
     }
@@ -343,6 +405,61 @@ public class ValiderBacking extends BaseBacking implements Serializable{
 
     public void setRegistreDto(RegistreDto registreDto) {
         this.registreDto = registreDto;
+    }
+    */
+
+    public String getActeNaissanceID() {
+        return acteNaissanceID;
+    }
+
+    public void setActeNaissanceID(String acteNaissanceID) {
+        this.acteNaissanceID = acteNaissanceID;
+    }
+
+    public ActeNaissanceDto getActeNaissanceDto() {
+        return acteNaissanceDto;
+    }
+
+    public void setActeNaissanceDto(ActeNaissanceDto acteNaissanceDto) {
+        this.acteNaissanceDto = acteNaissanceDto;
+    }
+
+    public RegistreDto getRegistreDto() {
+        return registreDto;
+    }
+
+    public void setRegistreDto(RegistreDto registreDto) {
+        this.registreDto = registreDto;
+    }
+    
+    
+    
+    public List<MentionAdoptionDto> getAdoptionDtos() {
+        return adoptionDtos;
+    }
+
+    public List<MentionDecesDto> getDecesDtos() {
+        return decesDtos;
+    }
+
+    public List<MentionDissolutionMariageDto> getDissolutionMariageDtos() {
+        return dissolutionMariageDtos;
+    }
+
+    public List<MentionLegitimationDto> getLegitimationDtos() {
+        return legitimationDtos;
+    }
+
+    public Set<MentionMariageDto> getMariageDtos() {
+        return mariageDtos;
+    }
+
+    public List<MentionReconnaissanceDto> getReconnaissanceDtos() {
+        return reconnaissanceDtos;
+    }
+
+    public List<MentionRectificationDto> getRectificationDtos() {
+        return rectificationDtos;
     }
     
     

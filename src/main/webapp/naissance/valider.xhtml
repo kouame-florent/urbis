@@ -27,7 +27,7 @@ xmlns:p="http://primefaces.org/ui">
             
             <p:focus context="contentForm"/>
            
-            <p:fieldset legend="Référence registre">
+            <p:fieldset legend="Référence registre" >
                <div class="ui-fluid p-formgrid p-grid">
                    <div class="p-field p-col">
                    <p:outputLabel for="localite" styleClass="p-d-block">Commune</p:outputLabel>
@@ -57,16 +57,14 @@ xmlns:p="http://primefaces.org/ui">
                </div>
 
            </p:fieldset>
-            <p:spacer height="2" />
-           
             
             
             <p:spacer height="2" />
-            <p:tabView id="declTabview">
+            <p:tabView id="declTabview" >
                 <p:tab title="Déclaration">
                     <p:outputPanel id="naissanceMultipleOutputPanel" >
                     <div class="ui-fluid p-formgrid p-grid">
-                        <div class="p-field p-lg-2">
+                        <div class="p-field p-lg-2" style="font-size: large;font-weight: bold">
                             <p:outputLabel for="numeroActe" >Numéro acte: </p:outputLabel>
                             <p:spacer width="5"/>
                             <p:outputLabel id="numeroActe" value="#{acteNaissanceValiderBacking.acteNaissanceDto.numero}" />
@@ -152,9 +150,9 @@ xmlns:p="http://primefaces.org/ui">
                                            
                                         </div>
                                         <div class="p-field p-grid">
-                                            <p:outputLabel for="pereProfession" class="p-lg-4" rendered="#{!acteNaissanceValiderBacking.pereDecede}">Profession:</p:outputLabel>
+                                            <p:outputLabel for="pereProfession" class="p-lg-4" >Profession:</p:outputLabel>
                                             <p:outputLabel id="pereProfession" value="#{acteNaissanceValiderBacking.acteNaissanceDto.pereProfession}"
-                                                         rendered="#{!acteNaissanceValiderBacking.pereDecede}"  class="p-lg-8"/>
+                                                           class="p-lg-8"/>
                                             
                                         </div>
                                         <div class="p-field p-grid">
@@ -286,6 +284,41 @@ xmlns:p="http://primefaces.org/ui">
                         </div>
                         </p:outputPanel>
                     </p:fieldset>
+                    <p:spacer height="2"/>
+                    
+                    <p:fieldset >
+                        <div class="ui-fluid">
+                            <div class="p-field p-grid">
+                                <p:outputLabel for="dateDeclaration" class="p-lg-4">Date déclaration</p:outputLabel>
+                                <p:outputLabel id="dateDeclaration" class="p-lg-8" value="#{acteNaissanceValiderBacking.acteNaissanceDto.dateDeclaration}"/>
+                            </div>
+                            <div class="p-field p-grid">
+                                <p:outputLabel for="dateDressage" class="p-lg-4">Date dressage</p:outputLabel>
+                                <p:outputLabel id="dateDressage" class="p-lg-8" value="#{acteNaissanceValiderBacking.acteNaissanceDto.dateDressage}"/>
+
+                            </div>
+
+                        </div>
+
+                    </p:fieldset>
+                    
+                    <p:spacer height="2"/>
+                     <p:fieldset legend="Officier d'état civil">
+                        <div class="ui-fluid">
+                            <div class="p-field p-grid">
+                                <p:outputLabel for="officier" class="p-lg-2">Officier:</p:outputLabel>
+                                <p:outputLabel id="officier" class="p-lg-4"
+                                               value="#{acteNaissanceValiderBacking.acteNaissanceDto.officierEtatCivilPrenoms} #{acteNaissanceValiderBacking.acteNaissanceDto.officierEtatCivilNom}" />
+                                <p:outputLabel  class="p-lg"
+                                               value="#{acteNaissanceValiderBacking.acteNaissanceDto.officierEtatCivilTitre}" />
+
+                            </div>
+
+
+                        </div>
+
+                    </p:fieldset>
+                    
                     
                     
                 </p:tab>
@@ -460,37 +493,12 @@ xmlns:p="http://primefaces.org/ui">
                         
                         
                 </p:tab>
+                <p:tab title="Mentions">
+                    <ui:include src="/WEB-INF/includes/naissance/valider/mentions.xhtml"/>
+                </p:tab>
             </p:tabView>
-            <p:fieldset >
-                <div class="ui-fluid">
-                    <div class="p-field p-grid">
-                        <p:outputLabel for="dateDeclaration" class="p-lg-4">Date déclaration</p:outputLabel>
-                        <p:outputLabel id="dateDeclaration" class="p-lg-8" value="#{acteNaissanceValiderBacking.acteNaissanceDto.dateDeclaration}"/>
-                    </div>
-                    <div class="p-field p-grid">
-                        <p:outputLabel for="dateDressage" class="p-lg-4">Date dressage</p:outputLabel>
-                        <p:outputLabel id="dateDressage" class="p-lg-8" value="#{acteNaissanceValiderBacking.acteNaissanceDto.dateDressage}"/>
-     
-                    </div>
-                    
-                </div>
-
-            </p:fieldset>
-            <p:fieldset legend="Officier d'état civil">
-                <div class="ui-fluid">
-                    <div class="p-field p-grid">
-                        <p:outputLabel for="officier" class="p-lg-2">Officier:</p:outputLabel>
-                        <p:outputLabel id="officier" class="p-lg-4"
-                                       value="#{acteNaissanceValiderBacking.acteNaissanceDto.officierEtatCivilPrenoms} #{acteNaissanceValiderBacking.acteNaissanceDto.officierEtatCivilNom}" />
-                        <p:outputLabel  class="p-lg"
-                                       value="#{acteNaissanceValiderBacking.acteNaissanceDto.officierEtatCivilTitre}" />
-                       
-                    </div>
-                    
-
-                </div>
-
-            </p:fieldset>
+            
+           
             
             <div class="ui-fluid p-formgrid p-grid">
                 <div class="p-field p-lg-12">

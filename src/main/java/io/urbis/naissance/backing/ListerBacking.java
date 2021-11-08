@@ -54,13 +54,13 @@ public class ListerBacking extends BaseBacking implements Serializable{
     EtatService etatService;
     
     private String registreID;
-    private RegistreDto registreDto;
+   // private RegistreDto registreDto;
     
     String selectedActeID;
     
     public void onload(){
         LOG.log(Level.INFO,"REGISTRE ID: {0}",registreID);
-        registreDto = registreService.findById(registreID);
+       // registreDto = registreService.findById(registreID);
         lazyDeclarationDataModel.setRegistreID(registreID);
     }
     
@@ -106,7 +106,7 @@ public class ListerBacking extends BaseBacking implements Serializable{
         var operations = List.of(Operation.MODIFICATION.name());
         var acteIds = List.of(dto.getId());
         Map<String, List<String>> params = Map.of("id", ids,"acte-id",acteIds,"operation",operations);
-        PrimeFaces.current().dialog().openDynamic("/naissance/editer", getDialogOptions(98,98,true), params);
+        PrimeFaces.current().dialog().openDynamic("/naissance/editer", getDialogOptions(96,96,true), params);
     }
     
     public String statutSeverity(String statut){
@@ -130,7 +130,7 @@ public class ListerBacking extends BaseBacking implements Serializable{
         LOG.log(Level.INFO, "ACTE ID: {0}", dto.getId());
         var values = List.of(dto.getId());
         Map<String, List<String>> params = Map.of("id", values);
-        PrimeFaces.current().dialog().openDynamic("/naissance/valider", getDialogOptions(99,99,true), params);
+        PrimeFaces.current().dialog().openDynamic("/naissance/valider", getDialogOptions(96,96,true), params);
     }
 
     public LazyDeclarationDataModel getLazyDeclarationDataModel() {

@@ -5,7 +5,7 @@
  */
 package io.urbis.mention.api;
 
-import io.urbis.mention.dto.LegitimationDto;
+import io.urbis.mention.dto.MentionLegitimationDto;
 import java.util.List;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -14,6 +14,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.QueryParam;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 /**
@@ -25,10 +26,10 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 public interface MentionLegitimationService {
     
     @POST
-    public void create(@NotNull LegitimationDto dto);
+    public void create(@NotNull MentionLegitimationDto dto);
     
     @GET
-    public List<LegitimationDto> findByActeNaissance(@NotBlank String acteNaissanceID);
+    public List<MentionLegitimationDto> findByActeNaissance(@QueryParam("acte-naissance-id") @NotBlank String acteNaissanceID);
     
     @DELETE @Path("{id}")
     public void delete(@PathParam("id") String id);

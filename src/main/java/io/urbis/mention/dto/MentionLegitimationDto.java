@@ -14,6 +14,6 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true,onlyExplicitlyIncluded = true)
-public class LegitimationDto extends MentionDto{
+public class MentionLegitimationDto extends MentionDto{
     
 }

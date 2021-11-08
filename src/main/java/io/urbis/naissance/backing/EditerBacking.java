@@ -7,13 +7,13 @@ package io.urbis.naissance.backing;
 
 import io.urbis.common.util.ViewMode;
 import io.urbis.common.util.BaseBacking;
-import io.urbis.mention.dto.AdoptionDto;
-import io.urbis.mention.dto.DecesDto;
-import io.urbis.mention.dto.DissolutionMariageDto;
-import io.urbis.mention.dto.LegitimationDto;
-import io.urbis.mention.dto.MariageDto;
-import io.urbis.mention.dto.ReconnaissanceDto;
-import io.urbis.mention.dto.RectificationDto;
+import io.urbis.mention.dto.MentionAdoptionDto;
+import io.urbis.mention.dto.MentionDecesDto;
+import io.urbis.mention.dto.MentionDissolutionMariageDto;
+import io.urbis.mention.dto.MentionLegitimationDto;
+import io.urbis.mention.dto.MentionMariageDto;
+import io.urbis.mention.dto.MentionReconnaissanceDto;
+import io.urbis.mention.dto.MentionRectificationDto;
 import io.urbis.naissance.dto.ActeNaissanceDto;
 import io.urbis.naissance.dto.LienDeclarantDto;
 import io.urbis.naissance.dto.ModeDeclarationDto;
@@ -131,11 +131,11 @@ public class EditerBacking extends BaseBacking implements Serializable{
     
     @Inject
     @RestClient
-    MentionReconnaissanceService reconnaissanceService;
+    MentionReconnaissanceService mentionReconnaissanceService;
     
     @Inject
     @RestClient
-    MentionRectificationService rectificationService;
+    MentionRectificationService mentionRectificationService;
     
     @Inject
     LazySaisieActeExistantDataModel lazySaisieActeExistantDataModel;
@@ -188,27 +188,27 @@ public class EditerBacking extends BaseBacking implements Serializable{
     
     private ActeNaissanceDto acteNaissanceDto;
     
-    private AdoptionDto adoptionDto = new AdoptionDto();
-    private List<AdoptionDto> adoptionDtos = new ArrayList<>();
+    private MentionAdoptionDto adoptionDto = new MentionAdoptionDto();
+    private List<MentionAdoptionDto> adoptionDtos = new ArrayList<>();
     
-    private DecesDto decesDto = new DecesDto();
-    private List<DecesDto> decesDtos = new ArrayList<>(); 
+    private MentionDecesDto decesDto = new MentionDecesDto();
+    private List<MentionDecesDto> decesDtos = new ArrayList<>(); 
     
-    private DissolutionMariageDto dissolutionMariageDto = new DissolutionMariageDto();
-    private List<DissolutionMariageDto> dissolutionMariageDtos = new ArrayList<>();
+    private MentionDissolutionMariageDto dissolutionMariageDto = new MentionDissolutionMariageDto();
+    private List<MentionDissolutionMariageDto> dissolutionMariageDtos = new ArrayList<>();
     
-    private LegitimationDto legitimationDto = new LegitimationDto();  
-    private List<LegitimationDto> legitimationDtos = new ArrayList<>();
+    private MentionLegitimationDto legitimationDto = new MentionLegitimationDto();  
+    private List<MentionLegitimationDto> legitimationDtos = new ArrayList<>();
     
-    private MariageDto mariageDto = new MariageDto();
-    private Set<MariageDto> mariageDtos = new HashSet<>();
-    private MariageDto selectedMentionMariage;
+    private MentionMariageDto mariageDto = new MentionMariageDto();
+   // private Set<MariageDto> mariageDtos = new HashSet<>();
+    private MentionMariageDto selectedMentionMariage;
     
-    private ReconnaissanceDto reconnaissanceDto = new ReconnaissanceDto();
-    private List<ReconnaissanceDto> reconnaissanceDtos = new ArrayList<>();
+    private MentionReconnaissanceDto reconnaissanceDto = new MentionReconnaissanceDto();
+    private List<MentionReconnaissanceDto> reconnaissanceDtos = new ArrayList<>();
     
-    private RectificationDto rectificationDto = new RectificationDto();
-    private List<RectificationDto> rectificationDtos = new ArrayList<>();
+    private MentionRectificationDto rectificationDto = new MentionRectificationDto();
+    private List<MentionRectificationDto> rectificationDtos = new ArrayList<>();
     
    
    
@@ -257,19 +257,20 @@ public class EditerBacking extends BaseBacking implements Serializable{
         LOG.log(Level.INFO,"SELECTED ACTE OFFICIER ID: {0}",selectedActe.getOfficierEtatCivilID());
         acteNaissanceDto = selectedActe;
         LOG.log(Level.INFO,"SELECTED ACTE NUM: {0}",selectedActe.getNumero());
-        mariageDtos = mentionMariageService.findByActeNaissance(selectedActe.getId());
+       // mariageDtos = mentionMariageService.findByActeNaissance(selectedActe.getId());
         //change view mode to render maj commande button
         viewMode = ViewMode.UPDATE;
     }
     
-    public void onMentionMariageRowSelect(SelectEvent<MariageDto> event){
+    public void onMentionMariageRowSelect(SelectEvent<MentionMariageDto> event){
         mariageDto = selectedMentionMariage;
     }
     
-    public void deleteMentionMariage(MariageDto dto){
+    public void deleteMentionMariage(MentionMariageDto dto){
         LOG.log(Level.INFO,"Deleting mention mariage...");
-        mentionMariageService.delete(dto.getId());
-        mariageDtos.remove(dto);
+        acteNaissanceDto.getMentionMariageDtos().remove(dto);
+        //mentionMariageService.delete(dto.getId());
+        //mariageDtos.remove(dto);
     }
    
     
@@ -283,7 +284,7 @@ public class EditerBacking extends BaseBacking implements Serializable{
         try{
             String id = acteNaissanceService.create(acteNaissanceDto);
             LOG.log(Level.INFO,"--- ACTE NAISSANCE ID: {0}",id);
-            creerMentions(id);
+            //creerMentions(id);
             resetActeDto();
             addGlobalMessage("Déclaration enregistrée avec succès", FacesMessage.SEVERITY_INFO);
         }catch(ValidationException ex){
@@ -303,7 +304,7 @@ public class EditerBacking extends BaseBacking implements Serializable{
         acteNaissanceDto.setOperation(Operation.MODIFICATION.name());
           
         acteNaissanceService.update(acteNaissanceDto.getId(),acteNaissanceDto);
-        creerMentions(acteNaissanceDto.getId());
+        //creerMentions(acteNaissanceDto.getId());
         resetActeDto();
         addGlobalMessage("L'acte a été modifié avec succès", FacesMessage.SEVERITY_INFO);
         viewMode = ViewMode.NEW;
@@ -340,11 +341,11 @@ public class EditerBacking extends BaseBacking implements Serializable{
     public void ajouterMentionAdoption(){
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
-        Set<ConstraintViolation<AdoptionDto>> violations = validator.validate(adoptionDto);
+        Set<ConstraintViolation<MentionAdoptionDto>> violations = validator.validate(adoptionDto);
         if(violations.isEmpty()){
             
             adoptionDtos.add(adoptionDto);
-            adoptionDto = new AdoptionDto();
+            adoptionDto = new MentionAdoptionDto();
         }else{
             violations.stream().forEach(v -> {
                 addGlobalMessage(v.getMessage(), FacesMessage.SEVERITY_ERROR);
@@ -355,11 +356,11 @@ public class EditerBacking extends BaseBacking implements Serializable{
     public void ajouterMentionDissolution(){
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
-        Set<ConstraintViolation<DissolutionMariageDto>> violations = validator.validate(dissolutionMariageDto);
+        Set<ConstraintViolation<MentionDissolutionMariageDto>> violations = validator.validate(dissolutionMariageDto);
         if(violations.isEmpty()){
             
             dissolutionMariageDtos.add(dissolutionMariageDto);
-            dissolutionMariageDto = new DissolutionMariageDto();
+            dissolutionMariageDto = new MentionDissolutionMariageDto();
         }else{
             violations.stream().forEach(v -> {
                 addGlobalMessage(v.getMessage(), FacesMessage.SEVERITY_ERROR);
@@ -370,11 +371,11 @@ public class EditerBacking extends BaseBacking implements Serializable{
     public void ajouterMentionReconnaissance(){
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
-        Set<ConstraintViolation<ReconnaissanceDto>> violations = validator.validate(reconnaissanceDto);
+        Set<ConstraintViolation<MentionReconnaissanceDto>> violations = validator.validate(reconnaissanceDto);
         if(violations.isEmpty()){
             
             reconnaissanceDtos.add(reconnaissanceDto);
-            reconnaissanceDto = new ReconnaissanceDto();
+            reconnaissanceDto = new MentionReconnaissanceDto();
         }else{
             violations.stream().forEach(v -> {
                 addGlobalMessage(v.getMessage(), FacesMessage.SEVERITY_ERROR);
@@ -385,11 +386,11 @@ public class EditerBacking extends BaseBacking implements Serializable{
     public void ajouterMentionLegitimation(){
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
-        Set<ConstraintViolation<LegitimationDto>> violations = validator.validate(legitimationDto);
+        Set<ConstraintViolation<MentionLegitimationDto>> violations = validator.validate(legitimationDto);
         if(violations.isEmpty()){
             
             legitimationDtos.add(legitimationDto);
-            legitimationDto = new LegitimationDto();
+            legitimationDto = new MentionLegitimationDto();
         }else{
             violations.stream().forEach(v -> {
                 addGlobalMessage(v.getMessage(), FacesMessage.SEVERITY_ERROR);
@@ -400,11 +401,11 @@ public class EditerBacking extends BaseBacking implements Serializable{
     public void ajouterMentionRectification(){
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
-        Set<ConstraintViolation<RectificationDto>> violations = validator.validate(rectificationDto);
+        Set<ConstraintViolation<MentionRectificationDto>> violations = validator.validate(rectificationDto);
         if(violations.isEmpty()){
             
             rectificationDtos.add(rectificationDto);
-            rectificationDto = new RectificationDto();
+            rectificationDto = new MentionRectificationDto();
         }else{
             violations.stream().forEach(v -> {
                 addGlobalMessage(v.getMessage(), FacesMessage.SEVERITY_ERROR);
@@ -416,13 +417,13 @@ public class EditerBacking extends BaseBacking implements Serializable{
        LOG.log(Level.INFO,"Ajouter mention décès...");
        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
        Validator validator = factory.getValidator();
-       Set<ConstraintViolation<DecesDto>> violations = validator.validate(decesDto);
+       Set<ConstraintViolation<MentionDecesDto>> violations = validator.validate(decesDto);
        if(violations.isEmpty()){
            LOG.log(Level.INFO,"--MENTION DECES DTO OFFICIER ID {0}",decesDto.getOfficierEtatCivilID());
-           //var dcs = new DecesDto(decesDto);
+           //var dcs = new MentionDecesDto(decesDto);
            decesDtos.add(decesDto);
            LOG.log(Level.INFO,"--DECES DTO SIZE {0}",decesDtos.size());
-           decesDto = new DecesDto();
+           decesDto = new MentionDecesDto();
        }else{
            violations.stream().forEach(v -> {
                addGlobalMessage(v.getMessage(), FacesMessage.SEVERITY_ERROR);
@@ -434,11 +435,13 @@ public class EditerBacking extends BaseBacking implements Serializable{
     public void ajouterMentionMariage(){
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
-        Set<ConstraintViolation<MariageDto>> violations = validator.validate(mariageDto);
+        Set<ConstraintViolation<MentionMariageDto>> violations = validator.validate(mariageDto);
         if(violations.isEmpty()){
             
-            mariageDtos.add(mariageDto);
-            mariageDto = new MariageDto();
+           // mariageDtos.add(mariageDto);
+           // mariageDto.setActeNaissanceID(selectedActe.getId());
+            acteNaissanceDto.getMentionMariageDtos().add(mariageDto);
+            mariageDto = new MentionMariageDto();
         }else{
             violations.stream().forEach(v -> {
                 addGlobalMessage(v.getMessage(), FacesMessage.SEVERITY_ERROR);
@@ -449,17 +452,20 @@ public class EditerBacking extends BaseBacking implements Serializable{
     }
     
     private void creerMentions(String acteID){
+        /*
         creerMentionMariage(acteID);
         creerMentionDeces(acteID);
+        */
     }
     
-    
+    /*
     private void creerMentionMariage(@NotBlank String acteID){
         mariageDtos.stream().forEach(m -> {
             m.setActeNaissanceID(acteID);
             mentionMariageService.create(m);
        });
     }
+*/
     
     private void creerMentionDeces(@NotBlank String acteID){
        decesDtos.stream().forEach(d -> {
@@ -647,124 +653,117 @@ public class EditerBacking extends BaseBacking implements Serializable{
         return viewMode;
     }
 
-    public AdoptionDto getAdoptionDto() {
+    public MentionAdoptionDto getAdoptionDto() {
         return adoptionDto;
     }
 
-    public void setAdoptionDto(AdoptionDto adoptionDto) {
+    public void setAdoptionDto(MentionAdoptionDto adoptionDto) {
         this.adoptionDto = adoptionDto;
     }
 
-    public DecesDto getDecesDto() {
+    public MentionDecesDto getDecesDto() {
         return decesDto;
     }
 
-    public void setDecesDto(DecesDto decesDto) {
+    public void setDecesDto(MentionDecesDto decesDto) {
         this.decesDto = decesDto;
     }
 
-    public DissolutionMariageDto getDissolutionMariageDto() {
+    public MentionDissolutionMariageDto getDissolutionMariageDto() {
         return dissolutionMariageDto;
     }
 
-    public void setDissolutionMariageDto(DissolutionMariageDto dissolutionMariageDto) {
+    public void setDissolutionMariageDto(MentionDissolutionMariageDto dissolutionMariageDto) {
         this.dissolutionMariageDto = dissolutionMariageDto;
     }
 
-    public LegitimationDto getLegitimationDto() {
+    public MentionLegitimationDto getLegitimationDto() {
         return legitimationDto;
     }
 
-    public void setLegitimationDto(LegitimationDto legitimationDto) {
+    public void setLegitimationDto(MentionLegitimationDto legitimationDto) {
         this.legitimationDto = legitimationDto;
     }
 
-    public MariageDto getMariageDto() {
+    public MentionMariageDto getMariageDto() {
         return mariageDto;
     }
 
-    public void setMariageDto(MariageDto mariageDto) {
+    public void setMariageDto(MentionMariageDto mariageDto) {
         this.mariageDto = mariageDto;
     }
 
-    public ReconnaissanceDto getReconnaissanceDto() {
+    public MentionReconnaissanceDto getReconnaissanceDto() {
         return reconnaissanceDto;
     }
 
-    public void setReconnaissanceDto(ReconnaissanceDto reconnaissanceDto) {
+    public void setReconnaissanceDto(MentionReconnaissanceDto reconnaissanceDto) {
         this.reconnaissanceDto = reconnaissanceDto;
     }
 
-    public RectificationDto getRectificationDto() {
+    public MentionRectificationDto getRectificationDto() {
         return rectificationDto;
     }
 
-    public void setRectificationDto(RectificationDto rectificationDto) {
+    public void setRectificationDto(MentionRectificationDto rectificationDto) {
         this.rectificationDto = rectificationDto;
     }
 
-    public List<AdoptionDto> getAdoptionDtos() {
+    public List<MentionAdoptionDto> getAdoptionDtos() {
         return adoptionDtos;
     }
 
-    public void setAdoptionDtos(List<AdoptionDto> adoptionDtos) {
+    public void setAdoptionDtos(List<MentionAdoptionDto> adoptionDtos) {
         this.adoptionDtos = adoptionDtos;
     }
 
-    public List<DecesDto> getDecesDtos() {
+    public List<MentionDecesDto> getDecesDtos() {
         return decesDtos;
     }
 
-    public void setDecesDtos(List<DecesDto> decesDtos) {
+    public void setDecesDtos(List<MentionDecesDto> decesDtos) {
         this.decesDtos = decesDtos;
     }
 
-    public List<DissolutionMariageDto> getDissolutionMariageDtos() {
+    public List<MentionDissolutionMariageDto> getDissolutionMariageDtos() {
         return dissolutionMariageDtos;
     }
 
-    public void setDissolutionMariageDtos(List<DissolutionMariageDto> dissolutionMariageDtos) {
+    public void setDissolutionMariageDtos(List<MentionDissolutionMariageDto> dissolutionMariageDtos) {
         this.dissolutionMariageDtos = dissolutionMariageDtos;
     }
 
-    public List<LegitimationDto> getLegitimationDtos() {
+    public List<MentionLegitimationDto> getLegitimationDtos() {
         return legitimationDtos;
     }
 
-    public void setLegitimationDtos(List<LegitimationDto> legitimationDtos) {
+    public void setLegitimationDtos(List<MentionLegitimationDto> legitimationDtos) {
         this.legitimationDtos = legitimationDtos;
     }
 
-    public Set<MariageDto> getMariageDtos() {
-        return mariageDtos;
-    }
-
-    public void setMariageDtos(Set<MariageDto> mariageDtos) {
-        this.mariageDtos = mariageDtos;
-    }
-
+   
     
-    public List<ReconnaissanceDto> getReconnaissanceDtos() {
+    public List<MentionReconnaissanceDto> getReconnaissanceDtos() {
         return reconnaissanceDtos;
     }
 
-    public void setReconnaissanceDtos(List<ReconnaissanceDto> reconnaissanceDtos) {
+    public void setReconnaissanceDtos(List<MentionReconnaissanceDto> reconnaissanceDtos) {
         this.reconnaissanceDtos = reconnaissanceDtos;
     }
 
-    public List<RectificationDto> getRectificationDtos() {
+    public List<MentionRectificationDto> getRectificationDtos() {
         return rectificationDtos;
     }
 
-    public void setRectificationDtos(List<RectificationDto> rectificationDtos) {
+    public void setRectificationDtos(List<MentionRectificationDto> rectificationDtos) {
         this.rectificationDtos = rectificationDtos;
     }
 
-    public MariageDto getSelectedMentionMariage() {
+    public MentionMariageDto getSelectedMentionMariage() {
         return selectedMentionMariage;
     }
 
-    public void setSelectedMentionMariage(MariageDto selectedMentionMariage) {
+    public void setSelectedMentionMariage(MentionMariageDto selectedMentionMariage) {
         this.selectedMentionMariage = selectedMentionMariage;
     }
 

@@ -5,8 +5,8 @@
  */
 package io.urbis.mention.api;
 
-import io.urbis.mention.dto.AdoptionDto;
-import io.urbis.mention.dto.MariageDto;
+import io.urbis.mention.dto.MentionAdoptionDto;
+import io.urbis.mention.dto.MentionMariageDto;
 import java.util.List;
 import java.util.Set;
 import javax.validation.constraints.NotBlank;
@@ -27,10 +27,10 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 @RegisterRestClient(baseUri = "http://127.0.0.1:8181")
 public interface MentionMariageService {
     @POST
-    public void create(@NotNull MariageDto dto);
+    public void create(@NotNull MentionMariageDto dto);
     
     @GET
-    public Set<MariageDto> findByActeNaissance(@QueryParam("acte-naissance-id") @NotBlank String acteNaissanceID);
+    public Set<MentionMariageDto> findByActeNaissance(@QueryParam("acte-naissance-id") @NotBlank String acteNaissanceID);
     
     @DELETE @Path("{id}")
     public void delete(@PathParam("id") String id);

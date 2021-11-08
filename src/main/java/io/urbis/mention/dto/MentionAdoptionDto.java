@@ -5,7 +5,6 @@
  */
 package io.urbis.mention.dto;
 
-import java.time.LocalDate;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -15,13 +14,6 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true,onlyExplicitlyIncluded = true)
-public class MariageDto extends MentionDto{
+public class MentionAdoptionDto extends MentionDto{
     
-    
-    private String lieu;  
-    private LocalDate date;
-    private String conjointNom;
-    private String conjointPrenoms;
-    private String conjointDomicile;
-    private String conjointProfession;
 }

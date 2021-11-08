@@ -17,15 +17,18 @@ xmlns:p="http://primefaces.org/ui">
                     <p:inputMask id="mariageDate" value="#{acteNaissanceEditerBacking.mariageDto.date}"
                                  mask="99/99/9999" >
                         <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
+                        <f:validateBean disabled="true" />
                     </p:inputMask>
-                    <p:watermark  value="JJ/MM/YYYY" for="mariageDate"/> 
+                    
                     <p:message for="mariageDate" showSummary="false" showDetail="true"/>
 
                 </div>
                 <div class="p-field p-lg-6">
                     <p:outputLabel for="mariageLieu" styleClass="p-d-block">Lieu du mariage</p:outputLabel>
                     <p:inputText id="mariageLieu" value="#{acteNaissanceEditerBacking.mariageDto.lieu}"   
-                                    styleClass="p-d-block"/>
+                                 styleClass="p-d-block">
+                        <f:validateBean disabled="true" />
+                    </p:inputText>
                 </div>
                
                 <div class="p-field p-lg-6">
@@ -33,9 +36,10 @@ xmlns:p="http://primefaces.org/ui">
                     <p:inputMask id="mariageDateDressage" value="#{acteNaissanceEditerBacking.mariageDto.dateDressage}"
                                  mask="99/99/9999" >
                         <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
-                    </p:inputMask>
+                        <f:validateBean disabled="true" />
+                    </p:inputMask> 
                     
-                    <p:message for="maraigeDateDressage"/>
+                    <p:message for="mariageDateDressage"/>
                 </div>
             </div>
                <p:fieldset legend="Conjoint(e)">
@@ -43,22 +47,30 @@ xmlns:p="http://primefaces.org/ui">
                      <div class="p-field p-lg-6">
                          <p:outputLabel for="maraigeConjointNom" styleClass="p-d-block">Nom</p:outputLabel>
                          <p:inputText id="maraigeConjointNom" value="#{acteNaissanceEditerBacking.mariageDto.conjointNom}"  
-                                         styleClass="p-d-block"/>
+                                      styleClass="p-d-block">
+                             <f:validateBean disabled="true"/>
+                         </p:inputText>
                      </div>
                      <div class="p-field p-lg-6">
                          <p:outputLabel for="maraigeConjointPrenoms" styleClass="p-d-block">Prénoms</p:outputLabel>
                          <p:inputText id="maraigeConjointPrenoms" value="#{acteNaissanceEditerBacking.mariageDto.conjointPrenoms}"  
-                                         styleClass="p-d-block"/>
+                                      styleClass="p-d-block">
+                             <f:validateBean disabled="true" />
+                         </p:inputText>
                      </div>
                      <div class="p-field p-lg-6">
                          <p:outputLabel for="maraigeConjointProfession" styleClass="p-d-block">Profession</p:outputLabel>
                          <p:inputText id="maraigeConjointProfession" value="#{acteNaissanceEditerBacking.mariageDto.conjointProfession}"  
-                                         styleClass="p-d-block"/>
+                                      styleClass="p-d-block">
+                             <f:validateBean disabled="true" />
+                         </p:inputText>
                      </div>
                      <div class="p-field p-lg-6">
                          <p:outputLabel for="maraigeConjointDomicile" styleClass="p-d-block">Domicile</p:outputLabel>
                          <p:inputText id="maraigeConjointDomicile" value="#{acteNaissanceEditerBacking.mariageDto.conjointDomicile}"  
-                                         styleClass="p-d-block"/>
+                                      styleClass="p-d-block">
+                             <f:validateBean disabled="true" />
+                         </p:inputText>
                      </div>
                  </div>  
             </p:fieldset>
@@ -85,14 +97,14 @@ xmlns:p="http://primefaces.org/ui">
             </div>
             <div class="ui-fluid p-formgrid p-grid">
                 <div class="p-field p-lg-12">
-                    <p:commandButton value="Enregistrer la mention de mariage" process="mentionsTabView" 
+                    <p:commandButton value="Ajouter la mention de mariage" process="mentionsTabView" 
                                      action="#{acteNaissanceEditerBacking.ajouterMentionMariage()}"
                                      update="mentionsTabView messageForm"  icon="pi pi-check-square" 
                                      styleClass="ui-button-outlined"/>
                 </div>
                 
             </div>
-            <p:dataTable id="mentionMariageTable" value="#{acteNaissanceEditerBacking.mariageDtos}" var="mariage"
+               <p:dataTable id="mentionMariageTable" value="#{acteNaissanceEditerBacking.acteNaissanceDto.mentionMariageDtos}" var="mariage"
                         selectionMode="single"
                         selection="#{acteNaissanceEditerBacking.selectedMentionMariage}" rowKey="#{mariage.id}">
                 
@@ -110,7 +122,7 @@ xmlns:p="http://primefaces.org/ui">
                                       action="#{acteNaissanceEditerBacking.deleteMentionMariage(mariage)}"  
                                       update="mentionMariageTable"
                                       class="ui-button-outlined ui-button-warning" icon="pi pi-times">
-                        <p:confirm header="Confirmation" message="Voulez-vous vraiment supprimer la mention ?" 
+                        <p:confirm header="Confirmation" message="Voulez-vous vraiment retirer la mention ?" 
                                    icon="pi pi-exclamation-triangle"/>
                     </p:commandButton>
                </p:column>
@@ -127,9 +139,10 @@ xmlns:p="http://primefaces.org/ui">
              <div class="ui-fluid p-formgrid p-grid">
                  <div class="p-field p-lg-12">
                     <p:outputLabel for="adoptionDateDressage" styleClass="p-d-block">Date dressage</p:outputLabel>
-                    <p:inputMask id="adoptionDateDressage" value="#{acteNaissanceEditerBacking.mariageDto.dateDressage}"
+                    <p:inputMask id="adoptionDateDressage" value="#{acteNaissanceEditerBacking.adoptionDto.dateDressage}"
                                  mask="99/99/9999" >
                         <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
+                        <f:validateBean disabled="true" />
                     </p:inputMask>
                     
                     <p:message for="adoptionDateDressage"/>
@@ -155,7 +168,7 @@ xmlns:p="http://primefaces.org/ui">
             </div>
             <div class="ui-fluid p-formgrid p-grid">
                 <div class="p-field p-lg-12">
-                    <p:commandButton value="Enregistrer la mention d'adoption" process="mentionsTabView" 
+                    <p:commandButton value="Ajouter la mention d'adoption" process="mentionsTabView" 
                                      action="#{acteNaissanceEditerBacking.ajouterMentionAdoption()}"
                                      update="mentionsTabView messageForm"  icon="pi pi-check" 
                                      styleClass="ui-button-outlined"/>
@@ -185,6 +198,7 @@ xmlns:p="http://primefaces.org/ui">
                     <p:inputMask id="decesDate" value="#{acteNaissanceEditerBacking.decesDto.date}"
                                  mask="99/99/9999" >
                         <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
+                        <f:validateBean disabled="true" />
                     </p:inputMask>
                     
                     <p:message for="decesDate" showSummary="false" showDetail="true"/>
@@ -193,18 +207,23 @@ xmlns:p="http://primefaces.org/ui">
                 <div class="p-field p-lg-6">
                     <p:outputLabel for="decesLieu" styleClass="p-d-block">Lieu décès</p:outputLabel>
                     <p:inputText id="decesLieu" value="#{acteNaissanceEditerBacking.decesDto.lieu}"   
-                                    styleClass="p-d-block"/>
+                                 styleClass="p-d-block">
+                        <f:validateBean disabled="true" />
+                    </p:inputText>
                 </div>
                 <div class="p-field p-lg-6">
                     <p:outputLabel for="deceslieuLocalite" styleClass="p-d-block">sous-préfecture</p:outputLabel>
                     <p:inputText id="deceslieuLocalite" value="#{acteNaissanceEditerBacking.decesDto.localite}"  
-                                    styleClass="p-d-block"/>
+                                 styleClass="p-d-block">
+                        <f:validateBean disabled="true" />
+                    </p:inputText>
                 </div>
                 <div class="p-field p-lg-6">
                     <p:outputLabel for="deceslieuDateDressage" styleClass="p-d-block">Date dressage</p:outputLabel>
                     <p:inputMask id="deceslieuDateDressage" value="#{acteNaissanceEditerBacking.decesDto.dateDressage}"
                                  mask="99/99/9999" >
                         <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
+                        <f:validateBean disabled="true" />
                     </p:inputMask>
                     
                     <p:message for="deceslieuDateDressage"/>
@@ -232,7 +251,7 @@ xmlns:p="http://primefaces.org/ui">
             </div>
             <div class="ui-fluid p-formgrid p-grid">
                 <div class="p-field p-lg-12">
-                    <p:commandButton value="Enregistrer la mention de décès" process="mentionsTabView" 
+                    <p:commandButton value="Ajouter la mention de décès" process="mentionsTabView" 
                                      action="#{acteNaissanceEditerBacking.ajouterMentionDeces()}"
                                      update="mentionsTabView messageForm"  icon="pi pi-check" 
                                      styleClass="ui-button-outlined"/>
@@ -269,6 +288,7 @@ xmlns:p="http://primefaces.org/ui">
                     <p:inputMask id="dissolutionDateDressage" value="#{acteNaissanceEditerBacking.dissolutionMariageDto.dateDressage}"
                                  mask="99/99/9999" >
                         <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
+                        <f:validateBean disabled="true" />
                     </p:inputMask>
                     
                     <p:message for="dissolutionDateDressage"/>
@@ -294,7 +314,7 @@ xmlns:p="http://primefaces.org/ui">
             </div>
             <div class="ui-fluid p-formgrid p-grid">
                 <div class="p-field p-lg-12">
-                    <p:commandButton value="Enregistrer la mention d'adoption" process="mentionsTabView" 
+                    <p:commandButton value="Ajouter la mention d'adoption" process="mentionsTabView" 
                                      action="#{acteNaissanceEditerBacking.ajouterMentionDissolution()}"
                                      update="mentionsTabView messageForm"  icon="pi pi-check" 
                                      styleClass="ui-button-outlined"/>
@@ -324,6 +344,7 @@ xmlns:p="http://primefaces.org/ui">
                     <p:inputMask id="legitimationDateDressage" value="#{acteNaissanceEditerBacking.legitimationDto.dateDressage}"
                                  mask="99/99/9999" >
                         <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
+                        <f:validateBean disabled="true" />
                     </p:inputMask>
                     
                     <p:message for="legitimationDateDressage"/>
@@ -349,7 +370,7 @@ xmlns:p="http://primefaces.org/ui">
             </div>
             <div class="ui-fluid p-formgrid p-grid">
                 <div class="p-field p-lg-12">
-                    <p:commandButton value="Enregistrer la mention d'adoption" process="mentionsTabView" 
+                    <p:commandButton value="Ajouter la mention d'adoption" process="mentionsTabView" 
                                      action="#{acteNaissanceEditerBacking.ajouterMentionLegitimation()}"
                                      update="mentionsTabView messageForm"  icon="pi pi-check" 
                                      styleClass="ui-button-outlined"/>
@@ -379,6 +400,7 @@ xmlns:p="http://primefaces.org/ui">
                     <p:inputMask id="reconnaissanceDateDressage" value="#{acteNaissanceEditerBacking.reconnaissanceDto.dateDressage}"
                                  mask="99/99/9999" >
                         <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
+                        <f:validateBean disabled="true" />
                     </p:inputMask>
                     
                     <p:message for="reconnaissanceDateDressage"/>
@@ -404,7 +426,7 @@ xmlns:p="http://primefaces.org/ui">
             </div>
             <div class="ui-fluid p-formgrid p-grid">
                 <div class="p-field p-lg-12">
-                    <p:commandButton value="Enregistrer la mention d'adoption" process="mentionsTabView" 
+                    <p:commandButton value="Ajouter la mention d'adoption" process="mentionsTabView" 
                                      action="#{acteNaissanceEditerBacking.ajouterMentionReconnaissance()}"
                                      update="mentionsTabView messageForm"  icon="pi pi-check" 
                                      styleClass="ui-button-outlined"/>
@@ -434,6 +456,7 @@ xmlns:p="http://primefaces.org/ui">
                     <p:inputMask id="rectificationDateDressage" value="#{acteNaissanceEditerBacking.rectificationDto.dateDressage}"
                                  mask="99/99/9999" >
                         <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
+                        <f:validateBean disabled="true" />
                     </p:inputMask>
                     
                     <p:message for="rectificationDateDressage"/>
@@ -459,7 +482,7 @@ xmlns:p="http://primefaces.org/ui">
             </div>
             <div class="ui-fluid p-formgrid p-grid">
                 <div class="p-field p-lg-12">
-                    <p:commandButton value="Enregistrer la mention d'adoption" process="mentionsTabView" 
+                    <p:commandButton value="Ajouter la mention d'adoption" process="mentionsTabView" 
                                      action="#{acteNaissanceEditerBacking.ajouterMentionRectification()}"
                                      update="mentionsTabView messageForm"  icon="pi pi-check" 
                                      styleClass="ui-button-outlined"/>

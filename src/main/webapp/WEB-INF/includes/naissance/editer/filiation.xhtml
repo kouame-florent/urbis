@@ -33,10 +33,10 @@ xmlns:p="http://primefaces.org/ui">
                         <div class="p-field p-lg-12">
                             <p:outputLabel for="pereDateNaissance" styleClass="p-d-block">Date de naissance</p:outputLabel>
                             <p:inputMask id="pereDateNaissance" value="#{acteNaissanceEditerBacking.acteNaissanceDto.pereDateNaissance}"
-                                mask="99/99/9999" required="true">
+                                 mask="99/99/9999" required="true">
                                 <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
                             </p:inputMask>
-                            <p:watermark  value="jj/MM/AAAA" for="pereDateNaissance" />    
+                            
 
                         </div>
                         <div class="p-field p-lg-12">
@@ -54,8 +54,11 @@ xmlns:p="http://primefaces.org/ui">
                             <div class="ui-fluid p-grid">
                                 <div class="p-field p-lg-6">
                                     <p:outputLabel for="pereDateDeces" rendered="#{acteNaissanceEditerBacking.pereDecede}" styleClass="p-d-block">Décédé le</p:outputLabel>
-                                    <p:inputText id="pereDateDeces" rendered="#{acteNaissanceEditerBacking.pereDecede}" value="#{acteNaissanceEditerBacking.acteNaissanceDto.pereDateDeces}"  
-                                             styleClass="p-d-block"/>
+                                    <p:inputMask id="pereDateDeces" rendered="#{acteNaissanceEditerBacking.pereDecede}" 
+                                                  value="#{acteNaissanceEditerBacking.acteNaissanceDto.pereDateDeces}"
+                                        mask="99/99/9999" required="true" styleClass="p-d-block">
+                                       <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
+                                   </p:inputMask>
                                 </div>
                                 <div class="p-field p-lg-6">
                                     <p:outputLabel for="pereLieuDeces" rendered="#{acteNaissanceEditerBacking.pereDecede}" styleClass="p-d-block">à</p:outputLabel>
@@ -159,8 +162,11 @@ xmlns:p="http://primefaces.org/ui">
                             <div class="ui-fluid p-grid">
                                     <div class="p-field p-lg-6">
                                         <p:outputLabel for="mereDateDeces" rendered="#{acteNaissanceEditerBacking.mereDecede}" styleClass="p-d-block">Décédé le</p:outputLabel>
-                                        <p:inputText id="mereDateDeces" rendered="#{acteNaissanceEditerBacking.mereDecede}" value="#{acteNaissanceEditerBacking.acteNaissanceDto.mereDateDeces}"  
-                                                 styleClass="p-d-block"/>
+                                        <p:inputMask id="mereDateDeces" rendered="#{acteNaissanceEditerBacking.mereDecede}" 
+                                                     value="#{acteNaissanceEditerBacking.acteNaissanceDto.mereDateDeces}"
+                                            mask="99/99/9999" required="true" styleClass="p-d-block">
+                                           <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
+                                       </p:inputMask>
                                     </div>
                                     <div class="p-field p-lg-6">
                                         <p:outputLabel for="mereLieuDeces" rendered="#{acteNaissanceEditerBacking.mereDecede}" styleClass="p-d-block">à</p:outputLabel>
