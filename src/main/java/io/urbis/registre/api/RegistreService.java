@@ -8,6 +8,7 @@ package io.urbis.registre.api;
 import io.urbis.registre.dto.RegistreDto;
 import io.urbis.registre.dto.RegistrePatchDto;
 import java.util.List;
+import javax.inject.Inject;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.PATCH;
@@ -15,6 +16,10 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
+import org.eclipse.microprofile.jwt.Claim;
+import org.eclipse.microprofile.jwt.Claims;
+import org.eclipse.microprofile.jwt.JsonWebToken;
+import org.eclipse.microprofile.rest.client.annotation.RegisterClientHeaders;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 /**
@@ -23,7 +28,9 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
  */
 @Path("/registres")
 @RegisterRestClient(baseUri = "http://127.0.0.1:8181")
+//@RegisterClientHeaders(AuthHeader.class)
 public interface RegistreService {
+    
     
     @POST
     public RegistreDto create(RegistreDto registreDto);  

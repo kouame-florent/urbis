@@ -9,8 +9,8 @@
     
     <properties>
         <version.bootable.jar>6.0.0.Final</version.bootable.jar>
-        <version.keycloak>13.0.1</version.keycloak>
-        <version.wildfly>25.0.0.Final</version.wildfly>
+        <version.keycloak>15.0.1</version.keycloak>
+        <version.wildfly>25.0.1.Final</version.wildfly>
         <version.jkube>1.0.1</version.jkube>
         <plugin.fork.embedded>true</plugin.fork.embedded>
         <maven.compiler.source>11</maven.compiler.source>
@@ -52,6 +52,7 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+           
             <dependency>
                 <groupId>org.wildfly.arquillian</groupId>
                 <artifactId>wildfly-arquillian-container-bootable</artifactId>
@@ -122,12 +123,123 @@
             <artifactId>omnifaces</artifactId>
             <version>3.11.1</version>
         </dependency>
-      <dependency>
+        
+      
+      <dependency> 
          <groupId>org.eclipse.microprofile.rest.client</groupId>
          <artifactId>microprofile-rest-client-api</artifactId>
+       </dependency>
+       
+       <dependency>
+            <groupId>org.eclipse.microprofile.jwt</groupId>
+            <artifactId>microprofile-jwt-auth-api</artifactId>
+  
+        </dependency>
+        
+        <dependency>
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-core</artifactId>
+            <version>15.0.2</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-adapter-core</artifactId>
+            <version>15.0.2</version>
+        </dependency>
+        
          
+        <dependency>
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-adapter-spi</artifactId>
+            <version>15.0.2</version>
+        </dependency>
+        
+        <dependency> 
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-authz-client</artifactId>
+            <version>15.0.2</version>
+        </dependency>
+
+       
+       <dependency>
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-servlet-filter-adapter</artifactId>
+            <version>15.0.2</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.2</version>
+        </dependency>
+        
+       
+       
+        
+        <!--  
+        
+        
+        -->
+        
+
+        <!--
+        
+         <dependency>
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-wildfly-elytron-oidc-adapter</artifactId>
+            <version>15.0.2</version>
+        </dependency>
+
+        
+        
+       <dependency> 
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-authz-client</artifactId>
+            <version>15.0.2</version>
+        </dependency>
+        
+     
+        -->
+        
+        <!--
+        <dependency>
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-authz-client</artifactId>
+            <version>8.0.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-servlet-filter-adapter</artifactId>
+            <version>8.0.2</version>
+        </dependency>
+       
+       
+       
+        
+        <dependency>
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-core</artifactId>
+            <version>15.0.2</version>
+        </dependency>
+        
+        
+        <dependency>
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-authz-client</artifactId>
+            <version>15.0.2</version>
+        </dependency>
+        -->
+       
+     <!--
+      <dependency>
+         <groupId>org.keycloak</groupId>
+         <artifactId>keycloak-core</artifactId>
+         <version>9.0.2</version>
          <type>jar</type>
       </dependency>
+      -->
    </dependencies>
     
     
@@ -181,20 +293,26 @@
                         <feature-pack>
                             <location>wildfly@maven(org.jboss.universe:community-universe)#${version.wildfly}</location>
                         </feature-pack>
-                        
+                        <!--
                         <feature-pack>
                             <groupId>org.wildfly</groupId>
                             <artifactId>wildfly-datasources-galleon-pack</artifactId>
                             <version>2.0.4.Final</version>
                         </feature-pack>
-                        
+                        -->
                     </feature-packs>
                     <layers> 
                         <layer>jsf</layer>
                         <layer>jaxrs</layer>
                         <layer>microprofile-rest-client</layer>
                         <layer>microprofile-config</layer>
+                        <layer>elytron-oidc-client</layer>
+                        <!-- <layer>keycloak-client-oidc</layer>-->
+                        <!--<layer>microprofile-jwt</layer>-->
+                        <!-- <layer>ee-security</layer> -->
+                         <!--<layer>elytron</layer> -->
                         
+                     
                     </layers>
                     <excluded-layers>
                         <layer>deployment-scanner</layer>

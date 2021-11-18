@@ -39,6 +39,9 @@ xmlns:p="http://primefaces.org/ui">
                     </p:commandButton>
                      
                 </p:toolbarGroup>
+                <p:toolbarGroup align="right">
+                    <p:commandButton icon="pi pi-cog" />
+                </p:toolbarGroup>
             </p:toolbar>
             <p:spacer height="2"/>
             <p:fieldset legend="Type de registres">
@@ -176,7 +179,7 @@ xmlns:p="http://primefaces.org/ui">
                                     action="#{registreListerBacking.showActesListView(registre)}"
                                     disabled="#{registreListerBacking.disableMenuListActe(registre)}"
                                     rendered="#{registreListerBacking.renderActeNaissanceMenus(registre)}"/>
-                        <p:menuitem value="Declaration jugement" process="@this"  icon="pi pi-folder-open" ajax="false"
+                        <p:menuitem value="Declaration jugement" process="@this"  icon="pi pi-folder-open" 
                                     action="#{registreListerBacking.showDeclarationView(registre)}"  
                                     disabled="#{registreListerBacking.disableMenuDeclarationActe(registre)}"
                                     rendered="#{registreListerBacking.renderActeNaissanceMenus(registre)}"/>

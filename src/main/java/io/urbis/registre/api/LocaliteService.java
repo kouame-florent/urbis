@@ -8,6 +8,7 @@ package io.urbis.registre.api;
 import io.urbis.registre.dto.LocaliteDto;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import org.eclipse.microprofile.rest.client.annotation.RegisterClientHeaders;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 /**
@@ -16,6 +17,7 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
  */
 @Path("/localites")
 @RegisterRestClient(baseUri = "http://127.0.0.1:8181")
+@RegisterClientHeaders(AuthHeader.class)
 public interface LocaliteService {
     
     @Path("/active")

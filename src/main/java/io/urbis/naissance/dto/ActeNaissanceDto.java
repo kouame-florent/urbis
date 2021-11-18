@@ -8,7 +8,11 @@ package io.urbis.naissance.dto;
 
 import io.urbis.mention.dto.MentionAdoptionDto;
 import io.urbis.mention.dto.MentionDecesDto;
+import io.urbis.mention.dto.MentionDissolutionMariageDto;
+import io.urbis.mention.dto.MentionLegitimationDto;
 import io.urbis.mention.dto.MentionMariageDto;
+import io.urbis.mention.dto.MentionReconnaissanceDto;
+import io.urbis.mention.dto.MentionRectificationDto;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -134,7 +138,11 @@ public class ActeNaissanceDto {
     private int registreAnnee;
     private int registreNumero;
     
-    private Set<MentionMariageDto> MentionMariageDtos = new HashSet<>();
-    private Set<MentionAdoptionDto> MentionAdoptionDtos = new HashSet<>();
-    private Set<MentionDecesDto> MentionDecesDtos = new HashSet<>();
+    private Set<MentionMariageDto> mentionMariageDtos = new HashSet<>();
+    private Set<MentionAdoptionDto> mentionAdoptionDtos = new HashSet<>();
+    private Set<MentionDecesDto> mentionDecesDtos = new HashSet<>();
+    private Set<MentionDissolutionMariageDto> mentionDissolutionMariageDtos = new HashSet<>();
+    private Set<MentionLegitimationDto> mentionLegitimationDtos = new HashSet<>();
+    private Set<MentionReconnaissanceDto> mentionReconnaissanceDtos = new HashSet<>();
+    private Set<MentionRectificationDto> mentionRectificationDtos = new HashSet<>();
 }

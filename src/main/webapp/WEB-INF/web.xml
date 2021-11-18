@@ -26,9 +26,53 @@
         <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
     
+   
+    
     <session-config>
         <session-timeout>
             15
         </session-timeout>
     </session-config>
+    
+    
+    <filter>
+        <filter-name>Keycloak Filter</filter-name>
+        <filter-class>org.keycloak.adapters.servlet.KeycloakOIDCFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>Keycloak Filter</filter-name>
+        <url-pattern>/keycloak/*</url-pattern>
+        <url-pattern>/registre/*</url-pattern>
+    </filter-mapping>
+    
+    
+    
+     
+  <!--
+    <login-config>
+        <auth-method>OIDC</auth-method>
+    </login-config>
+    
+    <deny-uncovered-http-methods />
+  
+    <security-constraint>
+        <web-resource-collection>
+          <web-resource-name>UserAuth</web-resource-name>
+          <description>user security constraints</description>
+          <url-pattern>/*</url-pattern>
+          <http-method>GET</http-method>
+          <http-method>POST</http-method>
+          <http-method>PUT</http-method>
+          <http-method>DELETE</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+          <role-name>USER</role-name>
+        </auth-constraint>
+    </security-constraint>
+    
+     <security-role>
+        <role-name>USER</role-name>
+    </security-role>
+   --> 
+ 
 </web-app>

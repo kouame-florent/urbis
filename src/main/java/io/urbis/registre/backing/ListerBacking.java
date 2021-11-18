@@ -7,7 +7,6 @@ package io.urbis.registre.backing;
 
 
 import io.urbis.common.util.BaseBacking;
-import io.urbis.common.util.ViewMode;
 import io.urbis.naissance.dto.Operation;
 import io.urbis.registre.api.EtatService;
 import io.urbis.registre.api.RegistreService;
@@ -33,8 +32,12 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.security.enterprise.SecurityContext;
 import javax.validation.constraints.NotBlank;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
+import org.keycloak.KeycloakPrincipal;
+import org.keycloak.adapters.RefreshableKeycloakSecurityContext;
+import org.keycloak.representations.AccessToken;
 import org.primefaces.PrimeFaces;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DefaultStreamedContent;
@@ -70,6 +73,18 @@ public class ListerBacking extends BaseBacking implements Serializable{
     @Inject
     FilterData filterData;
     
+    @Inject
+    FacesContext facesCtx;
+    
+    
+    //@Inject
+    //SecurityContext sc;    
+    
+    @Inject
+    FacesContext facesContext;
+    
+   
+    
    // private LazyDataModel<RegistreDto> lazyModel;
     
     private List<RegistreDto> registres = new ArrayList<>();
@@ -83,6 +98,70 @@ public class ListerBacking extends BaseBacking implements Serializable{
     
     @PostConstruct
     public void init(){
+        
+        
+        
+       // Principal pr = facesContext.getExternalContext().getUserPrincipal();
+       // sc.getCallerPrincipal().
+       
+      // LOG.log(Level.INFO, "--------- SECURITY CONTEXT : {0}", sc.getCallerPrincipal().getName()); 
+       
+       /*
+       Configuration config = new Configuration("http://127.0.0.1:8585/auth/", 
+                "urbis",
+                "urbis-jsf", 
+                Map.of("secret", "f57e3e40-788c-450e-8a29-d32c01501348"), null);
+       */
+       
+       
+        KeycloakPrincipal principal = (KeycloakPrincipal)facesContext.getExternalContext().getUserPrincipal();
+        LOG.log(Level.INFO, "--------- KEYCLOAK PRINCIPAL: {0}", principal.getKeycloakSecurityContext()); 
+        RefreshableKeycloakSecurityContext ctx = (RefreshableKeycloakSecurityContext)principal.getKeycloakSecurityContext();
+        LOG.log(Level.INFO, "--------- PREFERRED USER NAME: {0}", ctx.getIdToken().getPreferredUsername());  
+        
+        AccessToken accessToken = principal.getKeycloakSecurityContext().getToken();
+        LOG.log(Level.INFO, "--------- SCOPE: {0}", accessToken.getScope());  
+        
+       
+       // AuthzClient ac = AuthzClient.create();
+        
+       
+       //LOG.log(Level.INFO, "--------- AUTHZ CLIENT: {0}", ac);  
+       //LOG.log(Level.INFO, "--------- ACCESS TOKEN: {0}", ac.obtainAccessToken().getTokenType());  
+     
+       
+       
+       //Map<String,String> headers = facesContext.getExternalContext().getRequestHeaderMap();
+       //headers.forEach((k,v) -> LOG.log(Level.INFO, "--------- KEY : {0}\n",v));
+       
+       
+      // Principal princ = facesCtx.getExternalContext().getUserPrincipal();
+               
+      // LOG.log(Level.INFO, "--------- SECURITY PRINCIPAL : {0}", princ);   
+       
+      /*
+        Configuration config = new Configuration("http://127.0.0.1:8585/auth/", 
+                "urbis",
+                "urbis-jsf", 
+                Map.of("secret", "f57e3e40-788c-450e-8a29-d32c01501348"), null);
+        AuthzClient ac = AuthzClient.create();
+       
+       LOG.log(Level.INFO, "--------- AUTHZ CLIENT: {0}", ac);  
+      */
+       
+       /*
+       String userName = sc.getCallerPrincipal().getName();
+
+        if (sc.getCallerPrincipal() instanceof KeycloakPrincipal) {
+          KeycloakPrincipal<KeycloakSecurityContext> kp = (KeycloakPrincipal<KeycloakSecurityContext>)sc.getCallerPrincipal();
+         
+          // this is how to get the real userName (or rather the login name)
+          userName = kp.getKeycloakSecurityContext().getIdToken().getPreferredUsername();
+          LOG.log(Level.INFO, "--------- USER NAME FROM EYCLOAK : {0}", userName);   
+        }
+       */
+       
+       
         typesRegistre = typeRegistreService.findAll();
         
         lazyRegistreDataModel.setTypeRegistre("naissance");  

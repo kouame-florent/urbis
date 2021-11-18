@@ -34,8 +34,6 @@ import io.urbis.registre.api.NationaliteService;
 import io.urbis.registre.api.OfficierService;
 import io.urbis.registre.api.RegistreService;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
@@ -50,7 +48,6 @@ import javax.validation.Validation;
 import javax.validation.ValidationException;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-import javax.validation.constraints.NotBlank;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.primefaces.event.FlowEvent;
 import org.primefaces.event.SelectEvent;
@@ -141,7 +138,6 @@ public class EditerBacking extends BaseBacking implements Serializable{
     LazySaisieActeExistantDataModel lazySaisieActeExistantDataModel;
     
     private ViewMode viewMode;
-   
     
     private String registreID;
     private RegistreDto registreDto;
@@ -189,28 +185,26 @@ public class EditerBacking extends BaseBacking implements Serializable{
     private ActeNaissanceDto acteNaissanceDto;
     
     private MentionAdoptionDto adoptionDto = new MentionAdoptionDto();
-    private List<MentionAdoptionDto> adoptionDtos = new ArrayList<>();
+    private MentionAdoptionDto selectedMentionAdoption;
     
     private MentionDecesDto decesDto = new MentionDecesDto();
-    private List<MentionDecesDto> decesDtos = new ArrayList<>(); 
+    private MentionDecesDto selectedMentionDeces;
     
     private MentionDissolutionMariageDto dissolutionMariageDto = new MentionDissolutionMariageDto();
-    private List<MentionDissolutionMariageDto> dissolutionMariageDtos = new ArrayList<>();
+    private MentionDissolutionMariageDto selectedMentionDissolutionMariage;
     
     private MentionLegitimationDto legitimationDto = new MentionLegitimationDto();  
-    private List<MentionLegitimationDto> legitimationDtos = new ArrayList<>();
+    private MentionLegitimationDto selectedMentionLegitimation;
+
     
     private MentionMariageDto mariageDto = new MentionMariageDto();
-   // private Set<MariageDto> mariageDtos = new HashSet<>();
     private MentionMariageDto selectedMentionMariage;
     
     private MentionReconnaissanceDto reconnaissanceDto = new MentionReconnaissanceDto();
-    private List<MentionReconnaissanceDto> reconnaissanceDtos = new ArrayList<>();
+    private MentionReconnaissanceDto selectedMentionReconnaissance;
     
     private MentionRectificationDto rectificationDto = new MentionRectificationDto();
-    private List<MentionRectificationDto> rectificationDtos = new ArrayList<>();
-    
-   
+    private MentionRectificationDto selectedMentionRectification;
    
     
     @PostConstruct
@@ -266,13 +260,73 @@ public class EditerBacking extends BaseBacking implements Serializable{
         mariageDto = selectedMentionMariage;
     }
     
+    public void onMentionDecesRowSelect(SelectEvent<MentionMariageDto> event){
+        decesDto = selectedMentionDeces;
+    }
+    
+    public void onMentionDissolutionRowSelect(SelectEvent<MentionMariageDto> event){
+        mariageDto = selectedMentionMariage;
+    }
+    
+    public void onMentionLegitimationRowSelect(SelectEvent<MentionMariageDto> event){
+        mariageDto = selectedMentionMariage;
+    }
+    
+    public void onMentionAdoptionRowSelect(SelectEvent<MentionMariageDto> event){
+        mariageDto = selectedMentionMariage;
+    }
+    
+    public void onMentionReconnaissanceRowSelect(SelectEvent<MentionMariageDto> event){
+        mariageDto = selectedMentionMariage;
+    }
+    
+    public void onMentionRectificationRowSelect(SelectEvent<MentionMariageDto> event){
+        mariageDto = selectedMentionMariage;
+    }
+    
     public void deleteMentionMariage(MentionMariageDto dto){
         LOG.log(Level.INFO,"Deleting mention mariage...");
         acteNaissanceDto.getMentionMariageDtos().remove(dto);
-        //mentionMariageService.delete(dto.getId());
-        //mariageDtos.remove(dto);
+      
     }
-   
+    
+    public void deleteMentionAdoptionMariage(MentionAdoptionDto dto){
+        LOG.log(Level.INFO,"Deleting mention mariage...");
+        acteNaissanceDto.getMentionAdoptionDtos().remove(dto);
+      
+    }
+    
+    public void deleteMentionDeces(MentionDecesDto dto){
+        LOG.log(Level.INFO,"Deleting mention mariage...");
+        acteNaissanceDto.getMentionDecesDtos().remove(dto);
+       
+    }
+    
+    public void deleteMentionDissolutionMariage(MentionDissolutionMariageDto dto){
+        LOG.log(Level.INFO,"Deleting mention mariage...");
+        acteNaissanceDto.getMentionDissolutionMariageDtos().remove(dto);
+        
+    }
+    
+    public void deleteMentionLegitimation(MentionLegitimationDto dto){
+        LOG.log(Level.INFO,"Deleting mention mariage...");
+        acteNaissanceDto.getMentionLegitimationDtos().remove(dto);
+        
+    }
+    
+    public void deleteMentionReconnaisance(MentionReconnaissanceDto dto){
+        LOG.log(Level.INFO,"Deleting mention mariage...");
+        acteNaissanceDto.getMentionReconnaissanceDtos().remove(dto);
+        
+    }
+        
+    public void deleteMentionRectification(MentionRectificationDto dto){
+        LOG.log(Level.INFO,"Deleting mention mariage...");
+        acteNaissanceDto.getMentionRectificationDtos().remove(dto);
+        
+    }
+    
+    
     
     public void creer(){
         LOG.log(Level.INFO,"Creating acte naissance...");
@@ -344,7 +398,8 @@ public class EditerBacking extends BaseBacking implements Serializable{
         Set<ConstraintViolation<MentionAdoptionDto>> violations = validator.validate(adoptionDto);
         if(violations.isEmpty()){
             
-            adoptionDtos.add(adoptionDto);
+           // adoptionDtos.add(adoptionDto);
+            acteNaissanceDto.getMentionAdoptionDtos().add(adoptionDto);
             adoptionDto = new MentionAdoptionDto();
         }else{
             violations.stream().forEach(v -> {
@@ -359,7 +414,8 @@ public class EditerBacking extends BaseBacking implements Serializable{
         Set<ConstraintViolation<MentionDissolutionMariageDto>> violations = validator.validate(dissolutionMariageDto);
         if(violations.isEmpty()){
             
-            dissolutionMariageDtos.add(dissolutionMariageDto);
+           // dissolutionMariageDtos.add(dissolutionMariageDto);
+            acteNaissanceDto.getMentionDissolutionMariageDtos().add(dissolutionMariageDto);
             dissolutionMariageDto = new MentionDissolutionMariageDto();
         }else{
             violations.stream().forEach(v -> {
@@ -374,7 +430,8 @@ public class EditerBacking extends BaseBacking implements Serializable{
         Set<ConstraintViolation<MentionReconnaissanceDto>> violations = validator.validate(reconnaissanceDto);
         if(violations.isEmpty()){
             
-            reconnaissanceDtos.add(reconnaissanceDto);
+           // reconnaissanceDtos.add(reconnaissanceDto);
+            acteNaissanceDto.getMentionReconnaissanceDtos().add(reconnaissanceDto);
             reconnaissanceDto = new MentionReconnaissanceDto();
         }else{
             violations.stream().forEach(v -> {
@@ -389,7 +446,8 @@ public class EditerBacking extends BaseBacking implements Serializable{
         Set<ConstraintViolation<MentionLegitimationDto>> violations = validator.validate(legitimationDto);
         if(violations.isEmpty()){
             
-            legitimationDtos.add(legitimationDto);
+           // legitimationDtos.add(legitimationDto);
+            acteNaissanceDto.getMentionLegitimationDtos().add(legitimationDto);
             legitimationDto = new MentionLegitimationDto();
         }else{
             violations.stream().forEach(v -> {
@@ -404,7 +462,8 @@ public class EditerBacking extends BaseBacking implements Serializable{
         Set<ConstraintViolation<MentionRectificationDto>> violations = validator.validate(rectificationDto);
         if(violations.isEmpty()){
             
-            rectificationDtos.add(rectificationDto);
+           // rectificationDtos.add(rectificationDto);
+            acteNaissanceDto.getMentionRectificationDtos().add(rectificationDto);
             rectificationDto = new MentionRectificationDto();
         }else{
             violations.stream().forEach(v -> {
@@ -421,8 +480,9 @@ public class EditerBacking extends BaseBacking implements Serializable{
        if(violations.isEmpty()){
            LOG.log(Level.INFO,"--MENTION DECES DTO OFFICIER ID {0}",decesDto.getOfficierEtatCivilID());
            //var dcs = new MentionDecesDto(decesDto);
-           decesDtos.add(decesDto);
-           LOG.log(Level.INFO,"--DECES DTO SIZE {0}",decesDtos.size());
+          // decesDtos.add(decesDto);
+          // LOG.log(Level.INFO,"--DECES DTO SIZE {0}",decesDtos.size());
+           acteNaissanceDto.getMentionDecesDtos().add(decesDto);
            decesDto = new MentionDecesDto();
        }else{
            violations.stream().forEach(v -> {
@@ -451,13 +511,11 @@ public class EditerBacking extends BaseBacking implements Serializable{
     
     }
     
+    /*
     private void creerMentions(String acteID){
-        /*
-        creerMentionMariage(acteID);
-        creerMentionDeces(acteID);
-        */
+        
     }
-    
+    */
     /*
     private void creerMentionMariage(@NotBlank String acteID){
         mariageDtos.stream().forEach(m -> {
@@ -466,7 +524,7 @@ public class EditerBacking extends BaseBacking implements Serializable{
        });
     }
 */
-    
+   /*
     private void creerMentionDeces(@NotBlank String acteID){
        decesDtos.stream().forEach(d -> {
             d.setActeNaissanceID(acteID);
@@ -474,6 +532,7 @@ public class EditerBacking extends BaseBacking implements Serializable{
        });
       
     }
+*/
     
     private boolean skip;
     
@@ -709,56 +768,7 @@ public class EditerBacking extends BaseBacking implements Serializable{
         this.rectificationDto = rectificationDto;
     }
 
-    public List<MentionAdoptionDto> getAdoptionDtos() {
-        return adoptionDtos;
-    }
-
-    public void setAdoptionDtos(List<MentionAdoptionDto> adoptionDtos) {
-        this.adoptionDtos = adoptionDtos;
-    }
-
-    public List<MentionDecesDto> getDecesDtos() {
-        return decesDtos;
-    }
-
-    public void setDecesDtos(List<MentionDecesDto> decesDtos) {
-        this.decesDtos = decesDtos;
-    }
-
-    public List<MentionDissolutionMariageDto> getDissolutionMariageDtos() {
-        return dissolutionMariageDtos;
-    }
-
-    public void setDissolutionMariageDtos(List<MentionDissolutionMariageDto> dissolutionMariageDtos) {
-        this.dissolutionMariageDtos = dissolutionMariageDtos;
-    }
-
-    public List<MentionLegitimationDto> getLegitimationDtos() {
-        return legitimationDtos;
-    }
-
-    public void setLegitimationDtos(List<MentionLegitimationDto> legitimationDtos) {
-        this.legitimationDtos = legitimationDtos;
-    }
-
    
-    
-    public List<MentionReconnaissanceDto> getReconnaissanceDtos() {
-        return reconnaissanceDtos;
-    }
-
-    public void setReconnaissanceDtos(List<MentionReconnaissanceDto> reconnaissanceDtos) {
-        this.reconnaissanceDtos = reconnaissanceDtos;
-    }
-
-    public List<MentionRectificationDto> getRectificationDtos() {
-        return rectificationDtos;
-    }
-
-    public void setRectificationDtos(List<MentionRectificationDto> rectificationDtos) {
-        this.rectificationDtos = rectificationDtos;
-    }
-
     public MentionMariageDto getSelectedMentionMariage() {
         return selectedMentionMariage;
     }
@@ -782,6 +792,56 @@ public class EditerBacking extends BaseBacking implements Serializable{
     public void setActeNaissanceID(String acteNaissanceID) {
         this.acteNaissanceID = acteNaissanceID;
     }
+
+    public MentionAdoptionDto getSelectedMentionAdoption() {
+        return selectedMentionAdoption;
+    }
+
+    public void setSelectedMentionAdoption(MentionAdoptionDto selectedMentionAdoption) {
+        this.selectedMentionAdoption = selectedMentionAdoption;
+    }
+
+    public MentionDecesDto getSelectedMentionDeces() {
+        return selectedMentionDeces;
+    }
+
+    public void setSelectedMentionDeces(MentionDecesDto selectedMentionDeces) {
+        this.selectedMentionDeces = selectedMentionDeces;
+    }
+
+    public MentionDissolutionMariageDto getSelectedMentionDissolutionMariage() {
+        return selectedMentionDissolutionMariage;
+    }
+
+    public void setSelectedMentionDissolutionMariage(MentionDissolutionMariageDto selectedMentionDissolutionMariage) {
+        this.selectedMentionDissolutionMariage = selectedMentionDissolutionMariage;
+    }
+
+    public MentionLegitimationDto getSelectedMentionLegitimation() {
+        return selectedMentionLegitimation;
+    }
+
+    public void setSelectedMentionLegitimation(MentionLegitimationDto selectedMentionLegitimation) {
+        this.selectedMentionLegitimation = selectedMentionLegitimation;
+    }
+
+    public MentionReconnaissanceDto getSelectedMentionReconnaissance() {
+        return selectedMentionReconnaissance;
+    }
+
+    public void setSelectedMentionReconnaissance(MentionReconnaissanceDto selectedMentionReconnaissance) {
+        this.selectedMentionReconnaissance = selectedMentionReconnaissance;
+    }
+
+    public MentionRectificationDto getSelectedMentionRectification() {
+        return selectedMentionRectification;
+    }
+
+    public void setSelectedMentionRectification(MentionRectificationDto selectedMentionRectification) {
+        this.selectedMentionRectification = selectedMentionRectification;
+    }
+
+    
 
     
 
