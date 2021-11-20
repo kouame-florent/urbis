@@ -113,7 +113,7 @@ public class ListerBacking extends BaseBacking implements Serializable{
                 Map.of("secret", "f57e3e40-788c-450e-8a29-d32c01501348"), null);
        */
        
-       
+        /*
         KeycloakPrincipal principal = (KeycloakPrincipal)facesContext.getExternalContext().getUserPrincipal();
         LOG.log(Level.INFO, "--------- KEYCLOAK PRINCIPAL: {0}", principal.getKeycloakSecurityContext()); 
         RefreshableKeycloakSecurityContext ctx = (RefreshableKeycloakSecurityContext)principal.getKeycloakSecurityContext();
@@ -122,7 +122,7 @@ public class ListerBacking extends BaseBacking implements Serializable{
         AccessToken accessToken = principal.getKeycloakSecurityContext().getToken();
         LOG.log(Level.INFO, "--------- SCOPE: {0}", accessToken.getScope());  
         
-       
+       */
        // AuthzClient ac = AuthzClient.create();
         
        

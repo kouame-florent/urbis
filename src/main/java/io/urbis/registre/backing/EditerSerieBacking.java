@@ -5,11 +5,11 @@
  */
 package io.urbis.registre.backing;
 
-import io.urbis.registre.api.CentreService;
-import io.urbis.registre.api.LocaliteService;
+import io.urbis.param.api.CentreService;
+import io.urbis.param.api.LocaliteService;
 import io.urbis.registre.api.OfficierService;
 import io.urbis.registre.api.RegistreService;
-import io.urbis.registre.api.TribunalService;
+import io.urbis.param.api.TribunalService;
 import io.urbis.registre.api.TypeRegistreService;
 import io.urbis.registre.dto.CentreDto;
 import io.urbis.registre.dto.LocaliteDto;

@@ -18,8 +18,7 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
  */
 @Path("/")
 @RegisterRestClient(baseUri = "http://127.0.0.1:8181")
-
-@RegisterClientHeaders(AuthHeader.class)
+//@RegisterClientHeaders(AuthHeader.class)
 public interface OfficierService {
     
     @Path("/officiers")

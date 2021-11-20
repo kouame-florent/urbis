@@ -3,12 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package io.urbis.registre.api;
+package io.urbis.param.api;
 
 import io.urbis.registre.dto.TribunalDto;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import org.eclipse.microprofile.rest.client.annotation.RegisterClientHeaders;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 /**
@@ -17,7 +16,7 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
  */
 @Path("/tribunaux")
 @RegisterRestClient(baseUri = "http://127.0.0.1:8181")
-@RegisterClientHeaders(AuthHeader.class)
+//@RegisterClientHeaders(AuthHeader.class)
 public interface TribunalService {
     
     @Path("/active")
