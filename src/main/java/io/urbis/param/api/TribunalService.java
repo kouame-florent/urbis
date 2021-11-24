@@ -5,9 +5,15 @@
  */
 package io.urbis.param.api;
 
-import io.urbis.registre.dto.TribunalDto;
+
+import io.urbis.param.dto.TribunalDto;
+import java.util.List;
+import javax.transaction.Transactional;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 /**
@@ -19,7 +25,20 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 //@RegisterClientHeaders(AuthHeader.class)
 public interface TribunalService {
     
+    @Transactional
+    @POST
+    public void create(TribunalDto dto);
+    
+    @Transactional
+    @PUT @Path("{id}")
+    public void update(@PathParam("id") String id, TribunalDto dto);
+    
+    @GET
+    public List<TribunalDto> findAll(); 
+    
+    /*
     @Path("/active")
     @GET
     TribunalDto currentTribunal();
+*/
 }

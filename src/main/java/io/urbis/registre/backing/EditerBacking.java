@@ -8,7 +8,7 @@ package io.urbis.registre.backing;
 import io.urbis.common.util.ViewMode;
 import io.urbis.param.api.CentreService;
 import io.urbis.param.api.LocaliteService;
-import io.urbis.registre.api.OfficierService;
+import io.urbis.param.api.OfficierService;
 import io.urbis.registre.api.RegistreService;
 import io.urbis.param.api.TribunalService;
 import io.urbis.registre.dto.TypeRegistreDto;
@@ -20,11 +20,11 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import io.urbis.registre.api.TypeRegistreService;
-import io.urbis.registre.dto.CentreDto;
-import io.urbis.registre.dto.LocaliteDto;
-import io.urbis.naissance.dto.OfficierEtatCivilDto;
+import io.urbis.param.dto.OfficierEtatCivilDto;
+import io.urbis.param.dto.CentreDto;
+import io.urbis.param.dto.LocaliteDto;
+import io.urbis.param.dto.TribunalDto;
 import io.urbis.registre.dto.RegistreDto;
-import io.urbis.registre.dto.TribunalDto;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -112,9 +112,10 @@ public class EditerBacking implements Serializable{
     public void onTypeRgistreSelect(){
         LOG.log(Level.INFO, "SELECTED TYPE: {0}", selectedType);
         
-        currentLocalite = localiteService.currentLocalite();
-        currentCentre = centreService.currentCentre();
-        currentTribunal = tribunalService.currentTribunal();
+        currentLocalite = localiteService.findActive();
+       // currentCentre = centreService.currentCentre();
+       // currentTribunal = tribunalService.currentTribunal();
+        
         annee = registreService.anneeCourante();
         numeroRegistre = registreService.numeroRegistre(selectedType.getCode(),annee);
         numeroPremierActe = registreService.numeroPremierActe(selectedType.getCode(),annee);

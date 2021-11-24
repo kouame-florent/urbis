@@ -8,6 +8,7 @@ package io.urbis.param.dto;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  *
@@ -15,6 +16,7 @@ import lombok.Data;
  */
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class CentreDto {
       
     private String id;
@@ -28,6 +30,6 @@ public class CentreDto {
     private String localiteID;
     private String localite;
     
-    private String statut;
+   // private String statut;
     
 }

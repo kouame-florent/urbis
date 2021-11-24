@@ -5,11 +5,16 @@
  */
 package io.urbis.param.api;
 
-import io.urbis.registre.dto.CentreDto;
+
+import io.urbis.param.dto.CentreDto;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 /**
@@ -21,14 +26,28 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 //@RegisterClientHeaders(AuthHeader.class)
 public interface CentreService {
     
-    static final Logger LOG = Logger.getLogger(CentreService.class.getName());
+    //static final Logger LOG = Logger.getLogger(CentreService.class.getName());
     
+    /*
     default String lookupAuth() {
      LOG.log(Level.INFO, "-------AUTH LOOKUP");
      return "";
     }
+    */
+    
+    @POST
+    public void create(CentreDto dto);
+    
+   
+    @PUT @Path("{id}")
+    public void update(@PathParam("id") String id, CentreDto dto);
+    
+    @GET
+    public List<CentreDto> findAll();
+    
     
     @Path("/active")
     @GET
-    CentreDto currentCentre();
+    CentreDto findActive();
+    
 }

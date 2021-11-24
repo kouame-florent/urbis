@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class LocaliteDto {
     
     private String id;
@@ -26,6 +27,7 @@ public class LocaliteDto {
     private String code;
     private String libelle;
     private String type;
-    private String statut;
+    private String libelleType;
+    //private String statut;
     
 }

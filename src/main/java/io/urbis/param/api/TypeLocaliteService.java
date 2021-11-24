@@ -3,16 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package io.urbis.registre.api;
+package io.urbis.param.api;
 
+import io.urbis.param.dto.TypeLocaliteDto;
 import io.urbis.security.AuthHeader;
-import io.urbis.registre.dto.TypeRegistreDto;
 import java.util.List;
-import javax.faces.context.FacesContext;
-import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import org.eclipse.microprofile.rest.client.annotation.ClientHeaderParam;
 import org.eclipse.microprofile.rest.client.annotation.RegisterClientHeaders;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
@@ -20,15 +17,11 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
  *
  * @author florent
  */
-@Path("/")
+@Path("/types-localite")
 @RegisterRestClient(baseUri = "http://127.0.0.1:8181")
 @RegisterClientHeaders(AuthHeader.class)
-public interface TypeRegistreService {
+public interface TypeLocaliteService {
     
-       
-    @Path("/types-registre")
     @GET
-    List<TypeRegistreDto> findAll();  
-    
-    
+    public List<TypeLocaliteDto> findAll();
 }

@@ -1,0 +1,358 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+xmlns:h="http://xmlns.jcp.org/jsf/html"
+xmlns:p="http://primefaces.org/ui"
+xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+ <ui:composition template="/WEB-INF/templates/dialog-tpl.xhtml">
+     
+     <ui:define name="title">
+         Paramètres
+     </ui:define>
+    
+    <ui:define name="content">
+         
+        <h:form id="messageForm">
+                <p:growl globalOnly="true" life="15000"/>        
+        </h:form>
+             
+            <p:tabView id="paramTabView">
+                
+                <p:tab title="Localité">
+                    <h:form id="localiteForm">
+                    <p:toolbar>
+                        <p:toolbarGroup>
+                            <p:commandButton value="Nouvelle localité" icon="pi pi-plus" 
+                                             actionListener="#{parametresBacking.openNewLocalite()}"
+                                 oncomplete="PF('manageLocaliteDialog').show()"
+                                 styleClass="ui-button-success" style="margin-right: .5rem">
+                                
+                            </p:commandButton>
+                        </p:toolbarGroup>
+                    </p:toolbar>
+                        
+                    <p:dataTable id="localiteDataTable" 
+                                 var="localite" value="#{parametresBacking.localites}"
+                                selection="#{parametresBacking.selectedLocalite}" 
+                                rowKey="#{localite.id}" paginator="true"
+                                rows="25" rowSelectMode="add" paginatorPosition="bottom" size="small">
+                        
+                        <p:column headerText="Code" >
+                            <h:outputText value="#{localite.code}"/>
+                        </p:column>
+                        <p:column headerText="Libellé"  >
+                            <h:outputText value="#{localite.libelle}"/>
+                        </p:column>
+                        <p:column headerText="Type" >
+                            <h:outputText value="#{localite.libelleType}"/>
+                        </p:column>
+                        <p:column style="width: 5%">
+                            <p:commandButton icon="pi pi-pencil" update=":localiteDialogForm:manage-localite-content"
+                                 oncomplete="PF('manageLocaliteDialog').show()"
+                                 styleClass="edit-button rounded-button" process="@this">
+                                <f:setPropertyActionListener value="#{localite}" target="#{parametresBacking.selectedLocalite}"/>
+                                <p:resetInput target=":localiteDialogForm:manage-localite-content"/>
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                    </h:form>
+                </p:tab>
+                
+                <p:tab title="Centre">
+                  <h:form id="centreForm">
+                    <p:toolbar>
+                        <p:toolbarGroup>
+                            <p:commandButton value="Nouveau centre" icon="pi pi-plus"
+                                 actionListener="#{parametresBacking.openNewCentre()}"
+                                 oncomplete="PF('manageCentreDialog').show()"
+                                 styleClass="ui-button-success" style="margin-right: .5rem">
+                                
+                            </p:commandButton>
+                        </p:toolbarGroup>
+                    </p:toolbar>
+                        
+                    <p:dataTable id="centreDataTable" 
+                                 var="centre" value="#{parametresBacking.centres}"
+                                 selection="#{parametresBacking.selectedCentre}" 
+                                rowKey="#{centre.id}" paginator="true"
+                                rows="25" rowSelectMode="add" paginatorPosition="bottom" size="small">
+                        
+                        <p:column headerText="Code" >
+                            <h:outputText value="#{centre.code}"/>
+                        </p:column>
+                        <p:column headerText="Libellé"  >
+                            <h:outputText value="#{centre.libelle}"/>
+                        </p:column>
+                        
+                        <p:column style="width: 5%">
+                            <p:commandButton icon="pi pi-pencil" update=":centreDialogForm:manage-centre-content"
+                                 oncomplete="PF('manageCentreDialog').show()"
+                                 styleClass="edit-button rounded-button" process="@this">
+                                <f:setPropertyActionListener value="#{centre}" target="#{parametresBacking.selectedCentre}"/>
+                                <p:resetInput target=":centreDialogForm:manage-centre-content"/>
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                  </h:form>
+                </p:tab>
+                
+                <p:tab title="Tribunal">
+                    <h:form id="tribunalForm">
+                    <p:toolbar>
+                        <p:toolbarGroup>
+                            <p:commandButton value="Nouveau tribunal" icon="pi pi-plus"
+                                             actionListener="#{parametresBacking.openNewTribunal()}"
+                                 oncomplete="PF('manageTribunalDialog').show()"
+                                 styleClass="ui-button-success" style="margin-right: .5rem">
+                                
+                            </p:commandButton>
+                        </p:toolbarGroup>
+                    </p:toolbar>
+                        
+                    <p:dataTable id="tribunalDataTable" 
+                                 var="tribunal" value="#{parametresBacking.tribunaux}"
+                                 selection="#{parametresBacking.selectedTribunal}" 
+                                rowKey="#{tribunal.id}" paginator="true"
+                                rows="25" rowSelectMode="add" paginatorPosition="bottom" size="small">
+                        
+                        <p:column headerText="Code" >
+                            <h:outputText value="#{tribunal.code}"/>
+                        </p:column>
+                        <p:column headerText="Libellé"  >
+                            <h:outputText value="#{tribunal.libelle}"/>
+                        </p:column>
+                        
+                        <p:column style="width: 5%">
+                            <p:commandButton icon="pi pi-pencil" update=":tribunalDialogForm:manage-tribunal-content"
+                                 oncomplete="PF('manageTribunalDialog').show()"
+                                 styleClass="edit-button rounded-button" process="@this">
+                                <f:setPropertyActionListener value="#{tribunal}" target="#{parametresBacking.selectedTribunal}"/>
+                                <p:resetInput target=":tribunalDialogForm:manage-tribunal-content"/>
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                  </h:form>
+                </p:tab>
+                
+                <p:tab title="Officier">
+                    <h:form id="officierForm">
+                        <p:toolbar>
+                            <p:toolbarGroup>
+                                <p:commandButton value="Nouvel officier" icon="pi pi-plus"
+                                                 actionListener="#{parametresBacking.openNewOfficier()}"
+                                     oncomplete="PF('manageOfficierDialog').show()"
+                                     styleClass="ui-button-success" style="margin-right: .5rem">
+
+                                </p:commandButton>
+                            </p:toolbarGroup>
+                        </p:toolbar>
+                        
+                        <p:dataTable id="officierDataTable" 
+                                     var="officier" value="#{parametresBacking.officiers}"
+                                     selection="#{parametresBacking.selectedOfficier}" 
+                                    rowKey="#{officier.id}" paginator="true"
+                                    rows="25" rowSelectMode="add" paginatorPosition="bottom" size="small">
+                        
+                            <p:column headerText="Nom" >
+                                <h:outputText value="#{officier.prenoms} #{officier.nom}"/>
+                            </p:column>
+                            <p:column headerText="Titre"  >
+                                <h:outputText value="#{officier.titre}"/>
+                            </p:column>
+                            <p:column headerText="Actif"  >
+                                <h:outputText value="#{officier.actif}"/>
+                            </p:column>
+
+                            <p:column style="width: 5%">
+                                <p:commandButton icon="pi pi-pencil" update=":officierDialogForm:manage-officier-content"
+                                     oncomplete="PF('manageOfficierDialog').show()"
+                                     styleClass="edit-button rounded-button" process="@this">
+                                    <f:setPropertyActionListener value="#{officier}" target="#{parametresBacking.selectedOfficier}"/>
+                                    <p:resetInput target=":officierDialogForm:manage-officier-content"/>
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>
+                        
+                    </h:form>
+                </p:tab>
+            </p:tabView>
+            
+        <h:form id="localiteDialogForm">
+            <p:dialog header="Localité" showEffect="fade" modal="true"
+                      widgetVar="manageLocaliteDialog" responsive="true" >
+                <p:outputPanel id="manage-localite-content" class="ui-fluid">
+                <div class="ui-fluid p-formgrid p-grid">
+                    <div class="p-field p-col">
+                    <p:outputLabel for="localiteCode" styleClass="p-d-block">Code</p:outputLabel>
+                    <p:inputText id="localiteCode" value="#{parametresBacking.selectedLocalite.code}"
+                                  required="true" styleClass="p-d-block"/>
+
+                    </div>
+                    <div class="p-field p-col">
+                    <p:outputLabel for="localiteLibelle" styleClass="p-d-block">Libellé</p:outputLabel>
+                    <p:inputText id="localiteLibelle" value="#{parametresBacking.selectedLocalite.libelle}"
+                                  required="true" styleClass="p-d-block"/>
+
+                    </div>
+                    
+                    <div class="p-field p-col">
+                        <p:outputLabel for="typeLocalite" styleClass="p-d-block">Type</p:outputLabel>
+                        <p:selectOneMenu id="typeLocalite" value="#{parametresBacking.selectedLocalite.type}" 
+                                  converter="omnifaces.SelectItemsConverter"
+                                  required="true">
+                            <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez un type --" />
+                            <f:selectItems value="#{parametresBacking.typesLocalite}" var="type" 
+                                           itemLabel="#{type.libelle}" itemValue="#{type.code}"/>
+                        </p:selectOneMenu>
+                    </div>
+        
+                </div>
+                    <div class="ui-fluid p-formgrid p-grid">
+                        <div class="p-field p-col">
+                            <p:commandButton id="createLocaliteCommandButton" value="Valider" 
+                                             action="#{parametresBacking.enregistrerLocalite()}"
+                                             oncomplete="PF('manageLocaliteDialog').hide()"
+                                             update=":paramTabView:localiteForm:localiteDataTable"/>
+                        </div>
+                    </div>
+
+              </p:outputPanel>        
+            </p:dialog>
+        </h:form>
+        
+        <h:form id="centreDialogForm">
+            <p:dialog header="Centre" showEffect="fade" modal="true"
+                      widgetVar="manageCentreDialog" responsive="true" >
+                <p:outputPanel id="manage-centre-content" class="ui-fluid">
+                <div class="ui-fluid p-formgrid p-grid">
+                    <div class="p-field p-col">
+                    <p:outputLabel for="centreCode" styleClass="p-d-block">Code</p:outputLabel>
+                    <p:inputText id="centreCode" value="#{parametresBacking.selectedCentre.code}"
+                                  required="true" styleClass="p-d-block"/>
+
+                    </div>
+                    
+                    <div class="p-field p-col">
+                    <p:outputLabel for="centreLibelle" styleClass="p-d-block">Libellé</p:outputLabel>
+                    <p:inputText id="centreLibelle" value="#{parametresBacking.selectedCentre.libelle}"
+                                  required="true" styleClass="p-d-block"/>
+
+                    </div>
+                    
+                    
+                </div>
+                <div class="ui-fluid p-formgrid p-grid">
+                    <div class="p-field p-col">
+                        <p:commandButton id="createCentreCommandButton" value="Valider" 
+                                         action="#{parametresBacking.enregistrerCentre()}"
+                                         oncomplete="PF('manageCentreDialog').hide()"
+                                         update=":paramTabView:centreForm:centreDataTable"/>
+                    </div>
+                </div>
+
+              </p:outputPanel>        
+            </p:dialog>
+         </h:form>
+        
+        <h:form id="tribunalDialogForm">
+            <p:dialog header="Centre" showEffect="fade" modal="true"
+                      widgetVar="manageTribunalDialog" responsive="true" >
+                <p:outputPanel id="manage-tribunal-content" class="ui-fluid">
+                <div class="ui-fluid p-formgrid p-grid">
+                    <div class="p-field p-col">
+                    <p:outputLabel for="tribunalCode" styleClass="p-d-block">Code</p:outputLabel>
+                    <p:inputText id="tribunalCode" value="#{parametresBacking.selectedTribunal.code}"
+                                  required="true" styleClass="p-d-block"/>
+
+                    </div>
+                    
+                    <div class="p-field p-col">
+                    <p:outputLabel for="tribunalLibelle" styleClass="p-d-block">Libellé</p:outputLabel>
+                    <p:inputText id="tribunalLibelle" value="#{parametresBacking.selectedTribunal.libelle}"
+                                  required="true" styleClass="p-d-block"/>
+
+                    </div>
+                    
+                    
+                </div>
+                <div class="ui-fluid p-formgrid p-grid">
+                    <div class="p-field p-col">
+                        <p:commandButton id="createTribunalCommandButton" value="Valider" 
+                                         action="#{parametresBacking.enregistrerTribunal()}"
+                                         oncomplete="PF('manageTribunalDialog').hide()"
+                                         update=":paramTabView:tribunalForm:tribunalDataTable"/>
+                    </div>
+                </div>
+
+              </p:outputPanel>        
+            </p:dialog>
+         </h:form>
+        
+        <h:form id="officierDialogForm">
+            <p:dialog header="Officier" showEffect="fade"  modal="true"
+                      widgetVar="manageOfficierDialog" responsive="true" width="800">
+                <p:outputPanel id="manage-officier-content" class="ui-fluid">
+                <div class="ui-fluid p-formgrid p-grid">
+                    <div class="p-field p-col-6">
+                    <p:outputLabel for="officierNom" styleClass="p-d-block">Nom</p:outputLabel>
+                    <p:inputText id="officierNom" value="#{parametresBacking.selectedOfficier.nom}"
+                                  required="true" styleClass="p-d-block"/>
+
+                    </div>
+                    <div class="p-field p-col-6">
+                    <p:outputLabel for="officierPrenom" styleClass="p-d-block">Prénoms</p:outputLabel>
+                    <p:inputText id="officierPrenom" value="#{parametresBacking.selectedOfficier.prenoms}"
+                                  required="true" styleClass="p-d-block"/>
+
+                    </div>
+                    
+                    <div class="p-field p-col-6">
+                    <p:outputLabel for="officierProfession" styleClass="p-d-block">Profession</p:outputLabel>
+                    <p:inputText id="officierProfession" value="#{parametresBacking.selectedOfficier.profession}"
+                                   styleClass="p-d-block"/>
+
+                    </div>
+                    
+                    <div class="p-field p-col-6">
+                    <p:outputLabel for="officierTitre" styleClass="p-d-block">Titre</p:outputLabel>
+                    <p:selectOneMenu id="officierTitre" value="#{parametresBacking.selectedOfficier.titre}" 
+                                  converter="omnifaces.SelectItemsConverter"
+                                  required="true"  styleClass="p-d-block">
+                        <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez un titre --" />
+                        <f:selectItems value="#{parametresBacking.titres}" var="titre" 
+                                       itemLabel="#{titre.libelle}" itemValue="#{titre.code}"/>
+                    </p:selectOneMenu>
+                    
+
+                    </div>
+                    
+                    <div class="p-field p-col-6">
+                    <p:outputLabel for="officierActif" styleClass="p-d-block">Actif ?</p:outputLabel>
+                    <p:toggleSwitch id="officierActif" value="#{parametresBacking.selectedOfficier.actif}"
+                                    required="true" styleClass="p-d-block"/>
+                  
+                    </div>
+                    
+                    
+                </div>
+                <div class="ui-fluid p-formgrid p-grid">
+                    <div class="p-field p-col">
+                        <p:commandButton id="createOfficierCommandButton" value="Valider" 
+                                         action="#{parametresBacking.enregistrerOfficier()}"
+                                         oncomplete="PF('manageOfficierDialog').hide()"
+                                         update=":paramTabView:officierForm:officierDataTable"/>
+                    </div>
+                </div>
+
+              </p:outputPanel>        
+            </p:dialog>
+         </h:form>
+        
+    </ui:define>
+
+</ui:composition>  
+ 
+</html>
+

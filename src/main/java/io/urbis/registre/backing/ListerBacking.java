@@ -234,6 +234,12 @@ public class ListerBacking extends BaseBacking implements Serializable{
     
     }
     
+    public void showParamsView(){
+        Map<String,Object> options = getDialogOptions(96, 96, true);
+        options.put("resizable", false);
+        PrimeFaces.current().dialog().openDynamic("/parametre/parametres", options, null);
+    }
+    
     /*
     public void showModifierView(RegistreDto registreDto){
         LOG.log(Level.INFO, "REGISTRE ID: {0}", registreDto.getId());

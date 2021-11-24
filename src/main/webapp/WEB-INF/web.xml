@@ -43,6 +43,7 @@
         <filter-name>Keycloak Filter</filter-name>
         <url-pattern>/keycloak/*</url-pattern>
         <url-pattern>/registre/*</url-pattern>
+        <url-pattern>/parametre/*</url-pattern>
     </filter-mapping>
     
    

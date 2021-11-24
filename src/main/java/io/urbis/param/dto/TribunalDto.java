@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class TribunalDto {
     private String id;
     
@@ -25,5 +26,5 @@ public class TribunalDto {
     private String code;
     private String libelle;
     
-    private String statut;
+    //private String statut;
 }
