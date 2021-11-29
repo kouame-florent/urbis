@@ -7,13 +7,12 @@ package io.urbis.param.api;
 
 import io.urbis.param.dto.OfficierEtatCivilDto;
 import java.util.List;
-import javax.transaction.Transactional;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-import org.eclipse.microprofile.rest.client.annotation.RegisterClientHeaders;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 /**
@@ -32,6 +31,8 @@ public interface OfficierService {
     @PUT @Path("/{id}")
     public void update(@PathParam("id") String id,OfficierEtatCivilDto dto);
     
+    @DELETE @Path("{id}")
+    public boolean delete(@PathParam("id") String id);
     
     @GET
     List<OfficierEtatCivilDto> findAll();  

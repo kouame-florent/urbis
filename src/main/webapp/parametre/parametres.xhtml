@@ -27,7 +27,8 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
                             <p:commandButton value="Nouvelle localité" icon="pi pi-plus" 
                                              actionListener="#{parametresBacking.openNewLocalite()}"
                                  oncomplete="PF('manageLocaliteDialog').show()"
-                                 styleClass="ui-button-success" style="margin-right: .5rem">
+                                 styleClass="ui-button-success" style="margin-right: .5rem"
+                                 update=":localiteDialogForm:manage-localite-content">
                                 
                             </p:commandButton>
                         </p:toolbarGroup>
@@ -48,12 +49,19 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
                         <p:column headerText="Type" >
                             <h:outputText value="#{localite.libelleType}"/>
                         </p:column>
-                        <p:column style="width: 5%">
+                        <p:column style="width: 3%">
                             <p:commandButton icon="pi pi-pencil" update=":localiteDialogForm:manage-localite-content"
                                  oncomplete="PF('manageLocaliteDialog').show()"
                                  styleClass="edit-button rounded-button" process="@this">
                                 <f:setPropertyActionListener value="#{localite}" target="#{parametresBacking.selectedLocalite}"/>
                                 <p:resetInput target=":localiteDialogForm:manage-localite-content"/>
+                            </p:commandButton>
+                            
+                        </p:column>
+                        <p:column style="width: 3%">
+                            <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash" process="@this"
+                                 oncomplete="PF('deleteLocaliteDialog').show()">
+                                <f:setPropertyActionListener value="#{localite}" target="#{parametresBacking.selectedLocalite}"/>
                             </p:commandButton>
                         </p:column>
                     </p:dataTable>
@@ -67,7 +75,8 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
                             <p:commandButton value="Nouveau centre" icon="pi pi-plus"
                                  actionListener="#{parametresBacking.openNewCentre()}"
                                  oncomplete="PF('manageCentreDialog').show()"
-                                 styleClass="ui-button-success" style="margin-right: .5rem">
+                                 styleClass="ui-button-success" style="margin-right: .5rem"
+                                 update=":centreDialogForm:manage-centre-content">
                                 
                             </p:commandButton>
                         </p:toolbarGroup>
@@ -86,14 +95,22 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
                             <h:outputText value="#{centre.libelle}"/>
                         </p:column>
                         
-                        <p:column style="width: 5%">
+                        <p:column style="width: 3%">
                             <p:commandButton icon="pi pi-pencil" update=":centreDialogForm:manage-centre-content"
                                  oncomplete="PF('manageCentreDialog').show()"
                                  styleClass="edit-button rounded-button" process="@this">
                                 <f:setPropertyActionListener value="#{centre}" target="#{parametresBacking.selectedCentre}"/>
                                 <p:resetInput target=":centreDialogForm:manage-centre-content"/>
                             </p:commandButton>
+                           
                         </p:column>
+                        <p:column style="width: 3%">
+                            <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash" process="@this"
+                                 oncomplete="PF('deleteCentreDialog').show()">
+                                <f:setPropertyActionListener value="#{centre}" target="#{parametresBacking.selectedCentre}"/>
+                            </p:commandButton>
+                        </p:column>
+                        
                     </p:dataTable>
                   </h:form>
                 </p:tab>
@@ -105,7 +122,8 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
                             <p:commandButton value="Nouveau tribunal" icon="pi pi-plus"
                                              actionListener="#{parametresBacking.openNewTribunal()}"
                                  oncomplete="PF('manageTribunalDialog').show()"
-                                 styleClass="ui-button-success" style="margin-right: .5rem">
+                                 styleClass="ui-button-success" style="margin-right: .5rem"
+                                 update=":tribunalDialogForm:manage-tribunal-content">
                                 
                             </p:commandButton>
                         </p:toolbarGroup>
@@ -124,12 +142,18 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
                             <h:outputText value="#{tribunal.libelle}"/>
                         </p:column>
                         
-                        <p:column style="width: 5%">
+                        <p:column style="width: 3%">
                             <p:commandButton icon="pi pi-pencil" update=":tribunalDialogForm:manage-tribunal-content"
                                  oncomplete="PF('manageTribunalDialog').show()"
                                  styleClass="edit-button rounded-button" process="@this">
                                 <f:setPropertyActionListener value="#{tribunal}" target="#{parametresBacking.selectedTribunal}"/>
                                 <p:resetInput target=":tribunalDialogForm:manage-tribunal-content"/>
+                            </p:commandButton>
+                        </p:column>
+                        <p:column style="width: 3%">
+                            <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash" process="@this"
+                                 oncomplete="PF('deleteTribunalDialog').show()">
+                                <f:setPropertyActionListener value="#{tribunal}" target="#{parametresBacking.selectedTribunal}"/>
                             </p:commandButton>
                         </p:column>
                     </p:dataTable>
@@ -143,7 +167,8 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
                                 <p:commandButton value="Nouvel officier" icon="pi pi-plus"
                                                  actionListener="#{parametresBacking.openNewOfficier()}"
                                      oncomplete="PF('manageOfficierDialog').show()"
-                                     styleClass="ui-button-success" style="margin-right: .5rem">
+                                     styleClass="ui-button-success" style="margin-right: .5rem"
+                                     update=":officierDialogForm:manage-officier-content">
 
                                 </p:commandButton>
                             </p:toolbarGroup>
@@ -162,10 +187,10 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
                                 <h:outputText value="#{officier.titre}"/>
                             </p:column>
                             <p:column headerText="Actif"  >
-                                <h:outputText value="#{officier.actif}"/>
+                                <h:outputText value="#{parametresBacking.officierActif(officier)}"/>
                             </p:column>
 
-                            <p:column style="width: 5%">
+                            <p:column style="width: 3%">
                                 <p:commandButton icon="pi pi-pencil" update=":officierDialogForm:manage-officier-content"
                                      oncomplete="PF('manageOfficierDialog').show()"
                                      styleClass="edit-button rounded-button" process="@this">
@@ -173,6 +198,12 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
                                     <p:resetInput target=":officierDialogForm:manage-officier-content"/>
                                 </p:commandButton>
                             </p:column>
+                            <p:column style="width: 3%">
+                            <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash" process="@this"
+                                 oncomplete="PF('deleteOfficierDialog').show()">
+                                <f:setPropertyActionListener value="#{officier}" target="#{parametresBacking.selectedOfficier}"/>
+                            </p:commandButton>
+                        </p:column>
                         </p:dataTable>
                         
                     </h:form>
@@ -220,6 +251,16 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 
               </p:outputPanel>        
             </p:dialog>
+            
+            <p:confirmDialog widgetVar="deleteLocaliteDialog" showEffect="fade" width="300"
+                         message="Supprimer la localité ?" header="Confirmation" severity="warn">
+                <p:commandButton value="Oui" icon="pi pi-check" actionListener="#{parametresBacking.deleteLocalite}"
+                                 process="@this" oncomplete="PF('deleteLocaliteDialog').hide()"
+                                 update=":paramTabView:localiteForm:localiteDataTable messageForm"/>
+                <p:commandButton value="Non" styleClass="ui-button-secondary" icon="pi pi-times"
+                                 onclick="PF('deleteLocaliteDialog').hide()"/>
+            </p:confirmDialog>
+            
         </h:form>
         
         <h:form id="centreDialogForm">
@@ -254,6 +295,14 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 
               </p:outputPanel>        
             </p:dialog>
+            <p:confirmDialog widgetVar="deleteCentreDialog" showEffect="fade" width="300"
+                         message="Supprimer le centre ?" header="Confirmation" severity="warn">
+                <p:commandButton value="Oui" icon="pi pi-check" actionListener="#{parametresBacking.deleteCentre}"
+                                 process="@this" oncomplete="PF('deleteCentreDialog').hide()"
+                                 update=":paramTabView:centreForm:centreDataTable messageForm"/>
+                <p:commandButton value="Non" styleClass="ui-button-secondary" icon="pi pi-times"
+                                 onclick="PF('deleteCentreDialog').hide()"/>
+            </p:confirmDialog>
          </h:form>
         
         <h:form id="tribunalDialogForm">
@@ -288,6 +337,14 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 
               </p:outputPanel>        
             </p:dialog>
+            <p:confirmDialog widgetVar="deleteTribunalDialog" showEffect="fade" width="300"
+                         message="Supprimer le tribunal ?" header="Confirmation" severity="warn">
+                <p:commandButton value="Oui" icon="pi pi-check" actionListener="#{parametresBacking.deleteTribunal}"
+                                 process="@this" oncomplete="PF('deleteTribunalDialog').hide()"
+                                 update=":paramTabView:tribunalForm:tribunalDataTable messageForm"/>
+                <p:commandButton value="Non" styleClass="ui-button-secondary" icon="pi pi-times"
+                                 onclick="PF('deleteTribunalDialog').hide()"/>
+            </p:confirmDialog>
          </h:form>
         
         <h:form id="officierDialogForm">
@@ -348,6 +405,14 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 
               </p:outputPanel>        
             </p:dialog>
+            <p:confirmDialog widgetVar="deleteOfficierDialog" showEffect="fade" width="300"
+                         message="Supprimer l'officier ?" header="Confirmation" severity="warn">
+                <p:commandButton value="Oui" icon="pi pi-check" actionListener="#{parametresBacking.deleteOfficier}"
+                                 process="@this" oncomplete="PF('deleteOfficierDialog').hide()"
+                                 update=":paramTabView:officierForm:officierDataTable messageForm"/>
+                <p:commandButton value="Non" styleClass="ui-button-secondary" icon="pi pi-times"
+                                 onclick="PF('deleteOfficierDialog').hide()"/>
+            </p:confirmDialog>
          </h:form>
         
     </ui:define>

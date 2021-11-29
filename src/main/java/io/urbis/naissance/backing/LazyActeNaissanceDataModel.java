@@ -23,9 +23,9 @@ import org.primefaces.model.SortMeta;
  * @author florent
  */
 @Dependent
-public class LazySaisieActeExistantDataModel extends LazyDataModel<ActeNaissanceDto>{
+public class LazyActeNaissanceDataModel extends LazyDataModel<ActeNaissanceDto>{
     
-    private static final Logger LOG = Logger.getLogger(LazySaisieActeExistantDataModel.class.getName());
+    private static final Logger LOG = Logger.getLogger(LazyActeNaissanceDataModel.class.getName());
     
     @Inject
     ActeNaissanceService acteNaissanceService;

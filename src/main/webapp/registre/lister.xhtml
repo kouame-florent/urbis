@@ -178,24 +178,25 @@ xmlns:p="http://primefaces.org/ui">
                         <p:menuitem value="Liste des actes" process="@this"  icon="pi pi-file"
                                     action="#{registreListerBacking.showActesListView(registre)}"
                                     disabled="#{registreListerBacking.disableMenuListActe(registre)}"
-                                    rendered="#{registreListerBacking.renderActeNaissanceMenus(registre)}"/>
+                                    rendered="false"/>
                         <p:menuitem value="Declaration jugement" process="@this"  icon="pi pi-folder-open" 
                                     action="#{registreListerBacking.showDeclarationView(registre)}"  
                                     disabled="#{registreListerBacking.disableMenuDeclarationActe(registre)}"
-                                    rendered="#{registreListerBacking.renderActeNaissanceMenus(registre)}"/>
-                        <p:menuitem value="Saisie actes naissances existants" process="@this" 
-                                    action="#{registreListerBacking.showSaisieActeExistantview(registre)}" icon="pi pi-folder"
-                                    disabled="#{registreListerBacking.disableSaisieActesExistants(registre)}"
-                                    rendered="#{registreListerBacking.renderActeNaissanceMenus(registre)}"/>
+                                    rendered="false"/>
+                        
+                        <p:menuitem value="Liste des actes" process="@this" 
+                                    action="#{registreListerBacking.openListActes(registre)}" icon="pi pi-folder"
+                                    disabled="#{registreListerBacking.disableMenuListActe(registre)}"
+                                    rendered="true"/>
                         
                         <p:menuitem value="Liste des actes" process="@this"  icon="pi pi-file"
                                     action="#{registreListerBacking.showActesListView(registre)}"
                                     disabled="#{registreListerBacking.disableMenuDeclarationActe(registre)}"
-                                    rendered="#{registreListerBacking.renderActeSpecialNaissance(registre)}"/>
+                                    rendered="false"/>
                         <p:menuitem value="Declaration jugement" process="@this"  icon="pi pi-folder-open"
                                     action="#{registreListerBacking.showDeclarationView(registre)}"  
                                     disabled="#{registreListerBacking.disableMenuDeclarationActe(registre)}"
-                                    rendered="#{registreListerBacking.renderActeSpecialNaissance(registre)}"/>
+                                    rendered="false"/>
                          
                         <p:divider/>
                         <p:menuitem value="Delete" process="@this" action="#{registreListerBacking.supprimer(registre.id)}"  

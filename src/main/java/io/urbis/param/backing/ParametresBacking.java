@@ -27,6 +27,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.ws.rs.WebApplicationException;
 import org.primefaces.PrimeFaces;
 
 /**
@@ -111,8 +112,50 @@ public class ParametresBacking extends BaseBacking implements Serializable{
         }
         
         localites = localiteService.findAll();
-      
-        
+    }
+    
+    public void deleteLocalite(){
+        try{
+            localiteService.delete(selectedLocalite.getId());
+        }catch(WebApplicationException e){
+            LOG.log(Level.SEVERE, e.getMessage());
+            String msg = String.format("Impossible de supprimer la localité: %s", selectedLocalite.getLibelle());
+            addGlobalMessage(msg, FacesMessage.SEVERITY_ERROR);
+        }
+        localites = localiteService.findAll();
+    }
+    
+    public void deleteCentre(){
+        try{
+            centreService.delete(selectedCentre.getId());
+        }catch(WebApplicationException e){
+            LOG.log(Level.SEVERE, e.getMessage());
+            String msg = String.format("Impossible de supprimer le centre: %s", selectedCentre.getLibelle());
+            addGlobalMessage(msg, FacesMessage.SEVERITY_ERROR);
+        }
+        centres = centreService.findAll();
+    }
+    
+    public void deleteTribunal(){
+        try{
+            tribunalService.delete(selectedTribunal.getId());
+        }catch(WebApplicationException e){
+            LOG.log(Level.SEVERE, e.getMessage());
+            String msg = String.format("Impossible de supprimer le tribunal: %s", selectedTribunal.getLibelle());
+            addGlobalMessage(msg, FacesMessage.SEVERITY_ERROR);
+        }
+        tribunaux = tribunalService.findAll();
+    }
+    
+    public void deleteOfficier(){
+        try{
+            officierService.delete(selectedOfficier.getId());
+        }catch(WebApplicationException e){
+            LOG.log(Level.SEVERE, e.getMessage());
+            String msg = String.format("Impossible de supprimer l'officier: %s", selectedOfficier.getNom());
+            addGlobalMessage(msg, FacesMessage.SEVERITY_ERROR);
+        }
+        officiers = officierService.findAll();
     }
     
     public void enregistrerCentre(){
@@ -152,6 +195,13 @@ public class ParametresBacking extends BaseBacking implements Serializable{
         }
         
         officiers = officierService.findAll();
+    }
+    
+    public String officierActif(OfficierEtatCivilDto dto){
+        if(dto.isActif()){
+            return "Oui";
+        }
+        return "Non";
     }
 
     public List<LocaliteDto> getLocalites() {

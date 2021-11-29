@@ -101,8 +101,8 @@ public class EditerSerieBacking implements Serializable{
         LOG.log(Level.INFO, "SELECTED TYPE: {0}", selectedType);
         
         currentLocalite = localiteService.findActive();
-       // currentCentre = centreService.currentCentre();
-       // currentTribunal = tribunalService.currentTribunal();
+        currentCentre = centreService.findActive();
+        currentTribunal = tribunalService.findActive();
         
        // anneeCourante = registreService.anneeCourante();
        // numeroRegistre = registreService.numeroRegistre(selectedType.getCode());

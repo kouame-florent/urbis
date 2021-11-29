@@ -306,7 +306,7 @@
                         <layer>jaxrs</layer>
                         <layer>microprofile-rest-client</layer>
                         <layer>microprofile-config</layer>
-                        <layer>elytron-oidc-client</layer>
+                         <!--<layer>elytron-oidc-client</layer>-->
                         <!-- <layer>keycloak-client-oidc</layer>-->
                         <!--<layer>microprofile-jwt</layer>-->
                         <!-- <layer>ee-security</layer> -->

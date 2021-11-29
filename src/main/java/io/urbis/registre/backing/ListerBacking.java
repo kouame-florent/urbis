@@ -274,21 +274,21 @@ public class ListerBacking extends BaseBacking implements Serializable{
         //        +Operation.DECLARATION_JUGEMENT.name()+"&faces-redirect=true";
        // LOG.log(Level.INFO, "--- RETURNED URL: {0}", url);
         //return url
-        PrimeFaces.current().dialog().openDynamic("/naissance/editer", getDialogOptions(96,96,true), params);
+        PrimeFaces.current().dialog().openDynamic("/naissance/editer", getDialogOptions(98,98,true), params);
     }
     
-    public void showSaisieActeExistantview(RegistreDto registreDto){
+    public void openListActes(RegistreDto registreDto){
         var ids = List.of(registreDto.getId());
         var operations = List.of(Operation.SAISIE_ACTE_EXISTANT.name());
         Map<String, List<String>> params = Map.of("id", ids,"operation",operations);
-        PrimeFaces.current().dialog().openDynamic("/naissance/editer", getDialogOptions(96,96,true), params);
+        PrimeFaces.current().dialog().openDynamic("/naissance/lister", getDialogOptions(98,98,true), params);
     }
     
     public void showActesListView(RegistreDto registreDto){
         LOG.log(Level.INFO, "REGISTRE ID: {0}", registreDto.getId());
         var values = List.of(registreDto.getId());
         Map<String, List<String>> params = Map.of("id", values);
-        PrimeFaces.current().dialog().openDynamic("/naissance/lister", getDialogOptions(96,96,true), params);
+        PrimeFaces.current().dialog().openDynamic("/naissance/lister", getDialogOptions(98,98,true), params);
     }
     
     public boolean renderActeNaissanceMenus(RegistreDto registre){
@@ -353,12 +353,14 @@ public class ListerBacking extends BaseBacking implements Serializable{
         
     }
     
+    /*
     public boolean disableMenuListActe(RegistreDto registreDto){
         return registreDto.getStatut().equals(StatutRegistre.ANNULE.name()) || 
                 registreDto.getStatut().equals(StatutRegistre.PROJET.name());  
     }
+*/
     
-    public boolean disableSaisieActesExistants(RegistreDto registreDto){
+    public boolean disableMenuListActe(RegistreDto registreDto){
         return registreDto.getStatut().equals(StatutRegistre.ANNULE.name()) || 
                 registreDto.getStatut().equals(StatutRegistre.CLOTURE.name()) ||
                 registreDto.getStatut().equals(StatutRegistre.PROJET.name());  

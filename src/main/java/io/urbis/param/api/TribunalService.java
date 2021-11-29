@@ -9,6 +9,7 @@ package io.urbis.param.api;
 import io.urbis.param.dto.TribunalDto;
 import java.util.List;
 import javax.transaction.Transactional;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -36,9 +37,11 @@ public interface TribunalService {
     @GET
     public List<TribunalDto> findAll(); 
     
-    /*
-    @Path("/active")
-    @GET
-    TribunalDto currentTribunal();
-*/
+    @DELETE @Path("{id}")
+    public boolean delete(@PathParam("id") String id);
+    
+    @GET @Path("active")
+    public TribunalDto findActive();
+    
+    
 }

@@ -58,6 +58,8 @@ import io.urbis.mention.api.MentionReconnaissanceService;
 import io.urbis.mention.api.MentionRectificationService;
 import io.urbis.mention.api.MentionMariageService;
 import io.urbis.mention.api.MentionLegitimationService;
+import java.util.Map;
+import org.primefaces.PrimeFaces;
 
 /**
  *
@@ -135,9 +137,9 @@ public class EditerBacking extends BaseBacking implements Serializable{
     MentionRectificationService mentionRectificationService;
     
     @Inject
-    LazySaisieActeExistantDataModel lazySaisieActeExistantDataModel;
+    LazyActeNaissanceDataModel lazyActeNaissanceDataModel;
     
-    private ViewMode viewMode;
+    //private ViewMode viewMode;
     
     private String registreID;
     private RegistreDto registreDto;
@@ -205,12 +207,14 @@ public class EditerBacking extends BaseBacking implements Serializable{
     
     private MentionRectificationDto rectificationDto = new MentionRectificationDto();
     private MentionRectificationDto selectedMentionRectification;
+    
+   
    
     
     @PostConstruct
     public void init(){
         
-        viewMode = ViewMode.NEW;
+        //viewMode = ViewMode.NEW;
         
         officiers = officierService.findAll();
         modesDeclaration = modeDeclarationService.findAll();
@@ -220,7 +224,7 @@ public class EditerBacking extends BaseBacking implements Serializable{
         liensParenteDeclarant = lienDeclarantService.findAll();
         typesPiece = typePieceService.findAll();
         
-        acteNaissanceDto = new ActeNaissanceDto();
+       //acteNaissanceDto = new ActeNaissanceDto();
         
     }
     
@@ -228,33 +232,65 @@ public class EditerBacking extends BaseBacking implements Serializable{
         LOG.log(Level.INFO,"LOAD REGISTRE ID: {0}",registreID);
         registreDto = registreService.findById(registreID);
         LOG.log(Level.INFO,"REGISTRE LIBELLE: {0}",registreDto.getLibelle());
-      
+        
         operation = Operation.fromString(operationParam);
-        lazySaisieActeExistantDataModel.setRegistreID(registreID);
-             
         LOG.log(Level.INFO,"--- CURRENT OPERATION : {0}",operation.name());
+        
+        switch(operation){
+            case DECLARATION_JUGEMENT:
+                acteNaissanceDto = new ActeNaissanceDto();
+                acteNaissanceDto.setRegistreID(registreID);
+                int numeroActe = acteNaissanceService.numeroActe(registreID);
+                acteNaissanceDto.setNumero(numeroActe);
+                
+                break;
+            case SAISIE_ACTE_EXISTANT:
+                acteNaissanceDto = new ActeNaissanceDto();
+                acteNaissanceDto.setRegistreID(registreID);
+                break;
+            case MODIFICATION:
+                acteNaissanceDto = acteNaissanceService.findById(acteNaissanceID);
+                break;
+        }
+        
+        acteNaissanceDto.setOperation(operation.name());
+        lazyActeNaissanceDataModel.setRegistreID(registreID);
+       
+        /*
         if(operation == Operation.DECLARATION_JUGEMENT){
             int numeroActe = acteNaissanceService.numeroActe(registreID);
             acteNaissanceDto.setNumero(numeroActe);
         }
+        */
         
+        /*
         if(operation == Operation.MODIFICATION){
             acteNaissanceDto = acteNaissanceService.findById(acteNaissanceID);
             viewMode = ViewMode.UPDATE;
             selectedActe = acteNaissanceDto;
         }
-        
+        */
     }
     
     public void onRowSelect(SelectEvent<ActeNaissanceDto> event){
+        /*
         LOG.log(Level.INFO,"ENFANT NOM: {0}",selectedActe.getEnfantNom());
         LOG.log(Level.INFO,"SELECTED ACTE OFFICIER ID: {0}",selectedActe.getOfficierEtatCivilID());
         acteNaissanceDto = selectedActe;
         LOG.log(Level.INFO,"SELECTED ACTE NUM: {0}",selectedActe.getNumero());
        // mariageDtos = mentionMariageService.findByActeNaissance(selectedActe.getId());
         //change view mode to render maj commande button
-        viewMode = ViewMode.UPDATE;
+        //viewMode = ViewMode.UPDATE;
+        */
     }
+    
+    /*
+    public void openNewActe(){
+        Map<String,Object> options = getDialogOptions(100, 100, true);
+        options.put("resizable", false);
+        PrimeFaces.current().dialog().openDynamic("infos-acte", options, null);
+    }
+    */
     
     public void onMentionMariageRowSelect(SelectEvent<MentionMariageDto> event){
         mariageDto = selectedMentionMariage;
@@ -331,9 +367,10 @@ public class EditerBacking extends BaseBacking implements Serializable{
     public void creer(){
         LOG.log(Level.INFO,"Creating acte naissance...");
          
-        LOG.log(Level.INFO,"ENFANT DATE NAISSANCE: {0}",acteNaissanceDto.getEnfantDateNaissance());
-        acteNaissanceDto.setOperation(operation.name());
-        acteNaissanceDto.setRegistreID(registreID);
+       // LOG.log(Level.INFO,"ENFANT DATE NAISSANCE: {0}",acteNaissanceDto.getEnfantDateNaissance());
+      //  acteNaissanceDto.setOperation(operation.name());
+      //  LOG.log(Level.INFO,"--- CREATE REGISTRE ID: {0}",acteNaissanceDto.getRegistreID());
+        //acteNaissanceDto.setRegistreID(registreID);
         
         try{
             String id = acteNaissanceService.create(acteNaissanceDto);
@@ -352,7 +389,8 @@ public class EditerBacking extends BaseBacking implements Serializable{
     
    
     public void modifier(){
-        LOG.log(Level.INFO,"Creating acte naissance...");
+        
+        LOG.log(Level.INFO,"Updating acte naissance...");
          
         LOG.log(Level.INFO,"ENFANT DATE NAISSANCE: {0}",acteNaissanceDto.getEnfantDateNaissance());
         acteNaissanceDto.setOperation(Operation.MODIFICATION.name());
@@ -361,19 +399,20 @@ public class EditerBacking extends BaseBacking implements Serializable{
         //creerMentions(acteNaissanceDto.getId());
         resetActeDto();
         addGlobalMessage("L'acte a été modifié avec succès", FacesMessage.SEVERITY_INFO);
-        viewMode = ViewMode.NEW;
+        //viewMode = ViewMode.NEW;
         
         //numeroActe = acteNaissanceService.numeroActe(registreID);
+        
     }
     
     public void nouvelEngeristrement(){
         resetActeDto();
-        viewMode = ViewMode.NEW;
+        //viewMode = ViewMode.NEW;
     }
     
     private void resetActeDto(){
         acteNaissanceDto = new ActeNaissanceDto();
-        if(operation == Operation.DECLARATION_JUGEMENT && viewMode == ViewMode.NEW){
+        if(operation == Operation.DECLARATION_JUGEMENT){
             int numeroActe = acteNaissanceService.numeroActe(registreID);
             acteNaissanceDto.setNumero(numeroActe);
         }
@@ -547,6 +586,10 @@ public class EditerBacking extends BaseBacking implements Serializable{
             
         }
     }
+    
+    public void closeView(){
+        PrimeFaces.current().dialog().closeDynamic(null);
+    }
 
     public String getRegistreID() {
         return registreID;
@@ -696,10 +739,11 @@ public class EditerBacking extends BaseBacking implements Serializable{
         this.nombreNaissance = nombreNaissance;
     }
 
-    public LazySaisieActeExistantDataModel getLazySaisieActeExistantDataModel() {
-        return lazySaisieActeExistantDataModel;
+    public LazyActeNaissanceDataModel getLazyActeNaissanceDataModel() {
+        return lazyActeNaissanceDataModel;
     }
 
+    
     public ActeNaissanceDto getSelectedActe() {
         return selectedActe;
     }
@@ -707,10 +751,7 @@ public class EditerBacking extends BaseBacking implements Serializable{
     public void setSelectedActe(ActeNaissanceDto selectedActe) {
         this.selectedActe = selectedActe;
     }
-
-    public ViewMode getViewMode() {
-        return viewMode;
-    }
+   
 
     public MentionAdoptionDto getAdoptionDto() {
         return adoptionDto;
@@ -839,6 +880,14 @@ public class EditerBacking extends BaseBacking implements Serializable{
 
     public void setSelectedMentionRectification(MentionRectificationDto selectedMentionRectification) {
         this.selectedMentionRectification = selectedMentionRectification;
+    }
+
+    public Operation getOperation() {
+        return operation;
+    }
+
+    public void setOperation(Operation operation) {
+        this.operation = operation;
     }
 
     

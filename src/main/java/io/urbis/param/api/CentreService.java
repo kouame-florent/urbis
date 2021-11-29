@@ -10,6 +10,7 @@ import io.urbis.param.dto.CentreDto;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -44,6 +45,9 @@ public interface CentreService {
     
     @GET
     public List<CentreDto> findAll();
+    
+    @DELETE @Path("{id}")
+    public boolean delete(@PathParam("id") String id);
     
     
     @Path("/active")

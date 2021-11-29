@@ -13,9 +13,15 @@ import javax.ws.rs.core.Response;
  * @author florent
  */
 public enum Operation {
-    DECLARATION_JUGEMENT,
-    SAISIE_ACTE_EXISTANT,
-    MODIFICATION;
+    DECLARATION_JUGEMENT("Declaration jugement"),
+    SAISIE_ACTE_EXISTANT("Saisie acte existant"),
+    MODIFICATION("Modification");
+    
+    private final String libelle;
+    
+    private Operation(String libelle){
+        this.libelle = libelle;
+    }
     
     public static Operation fromString(String operation){
         for(var t : Operation.values()){
@@ -28,4 +34,10 @@ public enum Operation {
                    .entity(new IllegalArgumentException(operation)).build();
         throw new WebApplicationException(res);
     }
+
+    public String getLibelle() {
+        return libelle;
+    }
+    
+    
 }

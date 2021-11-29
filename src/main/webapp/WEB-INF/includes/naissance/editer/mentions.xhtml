@@ -104,9 +104,12 @@ xmlns:p="http://primefaces.org/ui">
                 </div>
                 
             </div>
-               <p:dataTable id="mentionMariageTable" value="#{acteNaissanceEditerBacking.acteNaissanceDto.mentionMariageDtos}" var="mariage"
-                        selectionMode="single"
-                        selection="#{acteNaissanceEditerBacking.selectedMentionMariage}" rowKey="#{mariage.id}">
+               <p:dataTable id="mentionMariageTable" 
+                            value="#{acteNaissanceEditerBacking.acteNaissanceDto.mentionMariageDtos}" 
+                            var="mariage"
+                            selectionMode="single"
+                            selection="#{acteNaissanceEditerBacking.selectedMentionMariage}" 
+                            rowKey="#{mariage.id}">
                 
                 <p:ajax event="rowSelect" listener="#{acteNaissanceEditerBacking.onMentionMariageRowSelect}"
                             update=":contentForm:mentionsTabView"/>
@@ -175,7 +178,9 @@ xmlns:p="http://primefaces.org/ui">
                 </div>
                 
             </div>
-            <p:dataTable id="mentionAdoptionTable" value="#{acteNaissanceEditerBacking.adoptionDtos}" var="adoption">
+                 <p:dataTable id="mentionAdoptionTable" 
+                              value="#{acteNaissanceEditerBacking.acteNaissanceDto.mentionAdoptionDtos}" 
+                              var="adoption">
                <p:column headerText="date dressage" >
                    <h:outputText value="#{adoption.dateDressage}"/>
                </p:column>
@@ -258,7 +263,9 @@ xmlns:p="http://primefaces.org/ui">
                 </div>
                
             </div>
-            <p:dataTable id="mentionDecesTable" value="#{acteNaissanceEditerBacking.decesDtos}" var="deces">
+                <p:dataTable id="mentionDecesTable" 
+                             value="#{acteNaissanceEditerBacking.acteNaissanceDto.mentionDecesDtos}" 
+                             var="deces">
                 
                <p:column headerText="date de naissance" >
                    <h:outputText value="#{deces.date}"/>
@@ -321,7 +328,9 @@ xmlns:p="http://primefaces.org/ui">
                 </div>
                 
             </div>
-            <p:dataTable id="mentionDissolutionTable" value="#{acteNaissanceEditerBacking.dissolutionMariageDtos}" var="dissolution">
+            <p:dataTable id="mentionDissolutionTable" 
+                         value="#{acteNaissanceEditerBacking.acteNaissanceDto.mentionDissolutionMariageDtos}" 
+                         var="dissolution">
                <p:column headerText="date dressage" >
                    <h:outputText value="#{dissolution.dateDressage}"/>
                </p:column>
@@ -377,7 +386,9 @@ xmlns:p="http://primefaces.org/ui">
                 </div>
                 
             </div>
-            <p:dataTable id="mentionLegitimationTable" value="#{acteNaissanceEditerBacking.legitimationDtos}" var="legitimation">
+            <p:dataTable id="mentionLegitimationTable" 
+                         value="#{acteNaissanceEditerBacking.acteNaissanceDto.mentionLegitimationDtos}" 
+                         var="legitimation">
                <p:column headerText="date dressage" >
                    <h:outputText value="#{legitimation.dateDressage}"/>
                </p:column>
@@ -433,7 +444,9 @@ xmlns:p="http://primefaces.org/ui">
                 </div>
                 
             </div>
-            <p:dataTable id="mentionReconnaissanceTable" value="#{acteNaissanceEditerBacking.reconnaissanceDtos}" var="reconnaissance">
+            <p:dataTable id="mentionReconnaissanceTable" 
+                         value="#{acteNaissanceEditerBacking.acteNaissanceDto.mentionReconnaissanceDtos}" 
+                         var="reconnaissance">
                <p:column headerText="date dressage" >
                    <h:outputText value="#{reconnaissance.dateDressage}"/>
                </p:column>
@@ -489,7 +502,9 @@ xmlns:p="http://primefaces.org/ui">
                 </div>
                 
             </div>
-            <p:dataTable id="mentionRectificationTable" value="#{acteNaissanceEditerBacking.rectificationDtos}" var="adoption">
+            <p:dataTable id="mentionRectificationTable" 
+                         value="#{acteNaissanceEditerBacking.acteNaissanceDto.mentionRectificationDtos}" 
+                         var="adoption">
                <p:column headerText="date dressage" >
                    <h:outputText value="#{rectification.dateDressage}"/>
                </p:column>

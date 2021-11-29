@@ -113,8 +113,8 @@ public class EditerBacking implements Serializable{
         LOG.log(Level.INFO, "SELECTED TYPE: {0}", selectedType);
         
         currentLocalite = localiteService.findActive();
-       // currentCentre = centreService.currentCentre();
-       // currentTribunal = tribunalService.currentTribunal();
+        currentCentre = centreService.findActive();
+        currentTribunal = tribunalService.findActive();
         
         annee = registreService.anneeCourante();
         numeroRegistre = registreService.numeroRegistre(selectedType.getCode(),annee);

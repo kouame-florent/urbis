@@ -9,7 +9,7 @@ xmlns:p="http://primefaces.org/ui">
  <ui:composition template="/WEB-INF/templates/dialog-tpl.xhtml">
      
      <ui:define name="title">
-         Actes de naissance
+         Actes :: Registre :: #{acteNaissanceListerBacking.registreDto.libelle}
      </ui:define>
     
     <ui:define name="content">
@@ -24,6 +24,65 @@ xmlns:p="http://primefaces.org/ui">
         </h:form>
        
         <h:form id="contentForm">
+             <p:fieldset legend="Référence registre">
+               <div class="ui-fluid p-formgrid p-grid">
+                   <div class="p-field p-col">
+                   <p:outputLabel for="localite" styleClass="p-d-block">Commune</p:outputLabel>
+                   <p:inputText id="localite" value="#{acteNaissanceListerBacking.registreDto.localite}"
+                                disabled="true" required="true" styleClass="p-d-block"/>
+
+                   </div>
+                   <div class="p-field p-col">
+                       <p:outputLabel for="centre" styleClass="p-d-block">Centre</p:outputLabel>
+                       <p:inputText id="centre" value="#{acteNaissanceListerBacking.registreDto.centre}"
+                                    disabled="true"  required="true" styleClass="p-d-block"/>
+
+                   </div>
+                   <div class="p-field p-col">
+                       <p:outputLabel for="annee" styleClass="p-d-block">Année</p:outputLabel>
+                       <p:inputText id="annee" value="#{acteNaissanceListerBacking.registreDto.annee}" required="true"
+                                    disabled="true" styleClass="p-d-block"/>
+
+                   </div>
+                   <div class="p-field p-col">
+                       <p:outputLabel for="numero" styleClass="p-d-block">Numéro</p:outputLabel>
+                       <p:inputText id="numero" value="#{acteNaissanceListerBacking.registreDto.numero}"  required="true" 
+                                    disabled="true"   styleClass="p-d-block"/>
+
+                   </div>
+                   <div class="p-field p-col">
+                       <p:outputLabel for="numeroPremierActe" styleClass="p-d-block">Numéro premier acte</p:outputLabel>
+                       <p:inputText id="numeroPremierActe" value="#{acteNaissanceListerBacking.registreDto.numeroPremierActe}"  required="true" 
+                                    disabled="true"   styleClass="p-d-block"/>
+
+                   </div>
+                   <div class="p-field p-col">
+                       <p:outputLabel for="numeroDernierActe" styleClass="p-d-block">Numéro dernier acte</p:outputLabel>
+                       <p:inputText id="numeroDernierActe" value="#{acteNaissanceListerBacking.registreDto.numeroDernierActe}"  required="true" 
+                                    disabled="true"   styleClass="p-d-block"/>
+
+                   </div>
+
+               </div>
+
+            </p:fieldset>
+            
+            <p:toolbar>
+                <p:toolbarGroup>
+                    <p:commandButton value="Acte existant" icon="pi pi-plus"
+                         actionListener="#{acteNaissanceListerBacking.openNewActeExistant()}"
+                         styleClass="ui-button-success" style="margin-right: .5rem">
+                        <p:ajax event="dialogReturn" listener="#{acteNaissanceListerBacking.onNewActeReturn}"
+                                 update="messageForm :contentForm:actesDatatable"/>
+                    </p:commandButton>
+                    <p:commandButton value="Declaration jugement" icon="pi pi-plus"
+                                   actionListener="#{acteNaissanceListerBacking.openNewDeclaration()}"
+                                   styleClass="ui-button-success" style="margin-right: .5rem">
+
+                    </p:commandButton>
+                  
+                </p:toolbarGroup>
+            </p:toolbar>
                 
             <p:dataTable id="actesDatatable"  var="acte" 
                          value="#{acteNaissanceListerBacking.lazyDeclarationDataModel}"
@@ -60,24 +119,31 @@ xmlns:p="http://primefaces.org/ui">
               
                 <p:column style="width: 2%" >
                     <p:commandButton process="@this" title="Imprimer"
-                                     ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" icon="pi pi-print">
+                                     ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" icon="pi pi-print"
+                                     styleClass="edit-button rounded-button">
                         <f:setPropertyActionListener value="#{acte.id}" target="#{acteNaissanceListerBacking.selectedActeID}"/>
                         <p:fileDownload value="#{acteNaissanceListerBacking.download()}"/>
                      </p:commandButton>
                 </p:column>
+                
+                <p:column style="width: 2%">
+                    <p:commandButton icon="pi pi-pencil" title="modifier"
+                            action="#{acteNaissanceListerBacking.openModifierActeView(acte)}"            
+                            styleClass="edit-button rounded-button" process="@this">
+                            
+                    </p:commandButton>
+                </p:column>
                
                 <p:column  style="width: 2%">
-                    <p:menuButton icon="pi pi-ellipsis-h" style="width: 100%;white-space: nowrap;width: auto !important;">
+                    <p:menuButton icon="pi pi-ellipsis-h" style="width: 100%;white-space: nowrap;width: auto !important;"
+                                  title="options">
                         <p:menuitem value="Consulter l'acte" process="@this"  icon="pi pi-book"/>
                         <p:menuitem value="Valider l'acte" action="#{acteNaissanceListerBacking.showValiderActeView(acte)}" 
                                     process="@this" icon="pi pi-book">
                             <p:ajax event="dialogReturn" listener="#{acteNaissanceListerBacking.onActeValidated}" 
                                         update=":contentForm:actesDatatable"/>
                         </p:menuitem>
-                        <p:menuitem value="Modifier l'acte" action="#{acteNaissanceListerBacking.showModifierActeview(acte)}" 
-                                    process="@this"  icon="pi pi-book"/>
-                        <p:menuitem value="Imprimer l'acte" action="#{acteNaissanceListerBacking.download()}" process="@this" 
-                                    icon="pi pi-book"/>
+                        
                     </p:menuButton>
                 </p:column>
                 
