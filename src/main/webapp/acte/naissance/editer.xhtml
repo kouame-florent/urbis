@@ -26,12 +26,13 @@ xmlns:p="http://primefaces.org/ui">
         </h:form>
              
         <h:form id="contentForm">  
-            <p:toolbar>
+           
+            <p:toolbar style="border: none">
                 <p:toolbarGroup>
                     
                 </p:toolbarGroup>
                 <p:toolbarGroup align="right">
-                    <p:commandButton action="#{acteNaissanceEditerBacking.closeView()}" process="@this" 
+                    <p:commandButton title="fermer" action="#{acteNaissanceEditerBacking.closeView()}" process="@this" 
                                      icon="pi pi-times" styleClass="rounded-button ui-button-danger"/>
                 </p:toolbarGroup>
             </p:toolbar>
@@ -100,7 +101,7 @@ xmlns:p="http://primefaces.org/ui">
                                 <p:fieldset>
                                       <p:outputLabel for="numeroActe" styleClass="p-d-block" style="color: #ffffff">Numéro acte</p:outputLabel>
                                       <p:inputText id="numeroActe" value="#{acteNaissanceEditerBacking.acteNaissanceDto.numero}" 
-                                                   required="true"/>
+                                                   required="true" disabled="#{acteNaissanceEditerBacking.disableNumeroInput()}"/>
                                 </p:fieldset>
                             </div>
 

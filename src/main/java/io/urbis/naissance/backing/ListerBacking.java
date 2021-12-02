@@ -8,6 +8,7 @@ package io.urbis.naissance.backing;
 import io.urbis.common.util.BaseBacking;
 import io.urbis.naissance.dto.ActeNaissanceDto;
 import io.urbis.naissance.dto.Operation;
+import io.urbis.naissance.dto.StatutActeNaissance;
 import io.urbis.registre.api.EtatService;
 import io.urbis.registre.api.RegistreService;
 import io.urbis.registre.dto.RegistreDto;
@@ -106,7 +107,7 @@ public class ListerBacking extends BaseBacking implements Serializable{
         var operations = List.of(Operation.MODIFICATION.name());
         var acteIds = List.of(dto.getId());
         Map<String, List<String>> params = Map.of("id", ids,"acte-id",acteIds,"operation",operations);
-        PrimeFaces.current().dialog().openDynamic("/naissance/editer", getDialogOptions(98,98,true), params);
+        PrimeFaces.current().dialog().openDynamic("/acte/naissance/editer", getDialogOptions(98,98,false), params);
     }
     
     public String statutSeverity(String statut){
@@ -134,7 +135,11 @@ public class ListerBacking extends BaseBacking implements Serializable{
         LOG.log(Level.INFO, "ACTE ID: {0}", dto.getId());
         var values = List.of(dto.getId());
         Map<String, List<String>> params = Map.of("id", values);
-        PrimeFaces.current().dialog().openDynamic("/naissance/valider", getDialogOptions(96,96,true), params);
+        PrimeFaces.current().dialog().openDynamic("/acte/naissance/valider", getDialogOptions(96,96,true), params);
+    }
+    
+    public boolean disableMenuValiderActe(ActeNaissanceDto dto){
+       return !dto.getStatut().equals(StatutActeNaissance.PROJET.name());
     }
     
     public void openNewActeExistant(){
@@ -150,7 +155,7 @@ public class ListerBacking extends BaseBacking implements Serializable{
         var ids = List.of(registreID);
         var operations = List.of(Operation.DECLARATION_JUGEMENT.name());
         Map<String, List<String>> params = Map.of("id", ids,"operation",operations);
-        Map<String,Object> options = getDialogOptions(100, 100, true);
+        Map<String,Object> options = getDialogOptions(100, 100, false);
         options.put("resizable", false);
         PrimeFaces.current().dialog().openDynamic("editer", options, params);
     }

@@ -550,6 +550,14 @@ public class EditerBacking extends BaseBacking implements Serializable{
     
     }
     
+    public boolean disableNumeroInput(){
+        if(operation != null){
+            return (operation == Operation.DECLARATION_JUGEMENT);
+        }
+        
+        return false;
+    }
+    
     /*
     private void creerMentions(String acteID){
         

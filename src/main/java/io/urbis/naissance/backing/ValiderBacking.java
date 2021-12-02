@@ -164,7 +164,7 @@ public class ValiderBacking extends BaseBacking implements Serializable{
     
     
     public void onload(){
-        LOG.log(Level.INFO,"ACTE ID: {0}",acteNaissanceID);
+        LOG.log(Level.INFO,"ON LOAD ACTE ID: {0}",acteNaissanceID);
         acteNaissanceDto = acteNaissanceService.findById(acteNaissanceID);
         registreDto = registreService.findById(acteNaissanceDto.getRegistreID());
         //LOG.log(Level.INFO,"REGISTRE LIBELLE: {0}",registreDto.getLibelle());
@@ -183,17 +183,17 @@ public class ValiderBacking extends BaseBacking implements Serializable{
     
     public void valider(){
         acteNaissanceDto.setStatut(StatutActeNaissance.VALIDE.name());
-        //acteNaissanceDto.setOperation(Operation.MODIFICATION.name());
-       // try{
+        acteNaissanceDto.setOperation(Operation.MODIFICATION.name());
+        try{
             acteNaissanceService.update(acteNaissanceID, acteNaissanceDto);
-       // }catch(WebApplicationException ex){
-       //     PrimeFaces.current().dialog().closeDynamic(ex);
-       // }
+        }catch(WebApplicationException ex){
+            LOG.log(Level.SEVERE, "{0}", ex);
+            //PrimeFaces.current().dialog().closeDynamic(ex);
+        }
         
-        //addGlobalMessage("Acte validé avec succès", FacesMessage.SEVERITY_INFO);
+        addGlobalMessage("Acte validé avec succès", FacesMessage.SEVERITY_INFO);
         PrimeFaces.current().dialog().closeDynamic(null);
     }
-    
     
     
 

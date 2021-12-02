@@ -7,6 +7,7 @@ package io.urbis.registre.backing;
 
 
 
+import io.urbis.naissance.dto.StatutActeNaissance;
 import io.urbis.registre.api.RegistreService;
 import io.urbis.registre.dto.RegistreDto;
 import io.urbis.registre.dto.RegistrePatchDto;
@@ -47,7 +48,18 @@ public class ValiderBacking implements Serializable{
         registreService.patch(registreID,new RegistrePatchDto(StatutRegistre.VALIDE.name(),""));
         PrimeFaces.current().dialog().closeDynamic(null);
     }
-   
+    
+    public boolean rendererCmdValider(){
+        return !registreDto.getStatut()
+                .equals(StatutRegistre.VALIDE.name());
+    }
+    
+    public String title(){
+        if(registreDto.getStatut().equals(StatutRegistre.VALIDE.name())){
+            return "Consultation du registre";
+        }
+        return "Validation du registre";
+    }
 
     public String getRegistreID() {
         return registreID;

@@ -12,37 +12,9 @@ xmlns:p="http://primefaces.org/ui">
         <h:form id="messageForm">
             <p:growl globalOnly="true" life="15000" showDetail="true"/>        
         </h:form>
-        
-        <h:form id="downloadForm" >
-            <p:toolbar>
-                <p:toolbarGroup align="right" rendered="false">
-                    <p:commandButton value="download" process="@this" 
-                                      ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);">
-                         <p:fileDownload value="#{registreListerBacking.download()}"/>
-                     </p:commandButton>
-                </p:toolbarGroup>
-            </p:toolbar>
                
-            
-        </h:form> 
-        
         <h:form id="contentForm">
-            <p:toolbar>
-                 <p:toolbarGroup>
-                     <p:commandButton  value="Créer un registre" action="#{registreListerBacking.showCreerView()}" icon="pi pi-plus" 
-                                       process="@this" style="margin-right: .5rem" styleClass="ui-button-outlined">   
-                         <p:ajax event="dialogReturn" listener="#{registreListerBacking.onSerieCreated}" update="messageForm @form"/>
-                    </p:commandButton>
-                     <p:commandButton value="Créer une serie de registres" action="#{registreListerBacking.showCreerSerieView()}" icon="pi pi-plus" 
-                                      process="@this" style="margin-right: .5rem" styleClass="ui-button-outlined"> 
-                         <p:ajax event="dialogReturn" listener="#{registreListerBacking.onCreate}" update="messageForm @form"/>
-                    </p:commandButton>
-                     
-                </p:toolbarGroup>
-                <p:toolbarGroup align="right">
-                    <p:commandButton action="#{registreListerBacking.showParamsView()}" icon="pi pi-cog" />
-                </p:toolbarGroup>
-            </p:toolbar>
+           
             <p:spacer height="2"/>
             <p:fieldset legend="Type de registres">
                 <p:selectOneRadio id="console" value="#{registreListerBacking.selectedType}" 
@@ -89,7 +61,22 @@ xmlns:p="http://primefaces.org/ui">
                 </div>
             </p:fieldset>
             
-           
+           <p:toolbar>
+                 <p:toolbarGroup>
+                     <p:commandButton  value="Créer un registre" action="#{registreListerBacking.showCreerView()}" icon="pi pi-plus" 
+                                       process="@this" style="margin-right: .5rem" styleClass="ui-button-outlined">   
+                         <p:ajax event="dialogReturn" listener="#{registreListerBacking.onSerieCreated}" update="messageForm @form"/>
+                    </p:commandButton>
+                     <p:commandButton value="Créer une serie de registres" action="#{registreListerBacking.showCreerSerieView()}" icon="pi pi-plus" 
+                                      process="@this" style="margin-right: .5rem" styleClass="ui-button-outlined"> 
+                         <p:ajax event="dialogReturn" listener="#{registreListerBacking.onCreate}" update="messageForm @form"/>
+                    </p:commandButton>
+                     
+                </p:toolbarGroup>
+                <p:toolbarGroup align="right">
+                    <p:commandButton action="#{registreListerBacking.showParamsView()}" icon="pi pi-cog" />
+                </p:toolbarGroup>
+            </p:toolbar>
                  
             <p:dataTable id="registre" widgetVar="registreWidget" var="registre" value="#{registreListerBacking.lazyRegistreDataModel}"
                       selection="#{registreListerBacking.selectedRegistre}" rowKey="#{registre.id}" paginator="true"
@@ -150,7 +137,8 @@ xmlns:p="http://primefaces.org/ui">
                 <p:column width="5%">
                     
                     <p:menuButton icon="pi pi-ellipsis-h" style="width: 100%;white-space: nowrap;width: auto !important;">
-                        <p:menuitem value="Consulter" process="@this" action="#{registreListerBacking.showValiderView(registre)}" icon="pi pi-book"/>
+                        <p:menuitem value="Consulter" process="@this" action="#{registreListerBacking.showValiderView(registre)}" 
+                                    icon="pi pi-book"/>
                         <p:menuitem value="Valider" process="@this" action="#{registreListerBacking.showValiderView(registre)}" 
                                     update="contentForm:registre" icon="pi pi-ticket" 
                                     disabled="#{registreListerBacking.disableMenuActiver(registre)}">

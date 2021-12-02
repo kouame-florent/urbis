@@ -60,7 +60,7 @@ xmlns:p="http://primefaces.org/ui">
             
             
             <p:spacer height="2" />
-            <p:tabView id="declTabview" >
+            <p:tabView id="declTabview">
                 <p:tab title="Déclaration">
                     <p:outputPanel id="naissanceMultipleOutputPanel" >
                     <div class="ui-fluid p-formgrid p-grid">
@@ -76,8 +76,8 @@ xmlns:p="http://primefaces.org/ui">
                     
                     <p:spacer width="2"/>
                     <p:fieldset legend="Le déclaré">
-                        <div class="ui-fluid">
-                            <div class="p-field p-grid">
+                        <div class="ui-fluid" style="font-size: large">
+                            <div class="p-field p-grid" >
                                 <p:outputLabel for="dateNaissance" class="p-lg-3">Date de naissance:</p:outputLabel>
                                 <p:outputLabel id="dateNaissance" class="p-lg-9" value="#{acteNaissanceValiderBacking.acteNaissanceDto.enfantDateNaissance}"/>
                                
@@ -121,7 +121,7 @@ xmlns:p="http://primefaces.org/ui">
                             <div class="p-lg-6">
                                 <p:fieldset legend="Père">
                                 <p:outputPanel id="pereOutputPanel">
-                                <div class="ui-fluid">
+                                <div class="ui-fluid"  style="font-size: large">
                                     <div class="p-field p-lg-12">
                                         
                                         <div class="p-field p-grid">    
@@ -205,7 +205,7 @@ xmlns:p="http://primefaces.org/ui">
                             <div class="p-lg-6">
                                 <p:fieldset legend="Mère">
                                     <p:outputPanel id="mereOutputPanel">
-                                    <div class="ui-fluid">
+                                    <div class="ui-fluid"  style="font-size: large">
                                          <div class="p-field p-lg-12">
                                              
                                             <div class="p-field p-grid">    
@@ -287,7 +287,7 @@ xmlns:p="http://primefaces.org/ui">
                     <p:spacer height="2"/>
                     
                     <p:fieldset >
-                        <div class="ui-fluid">
+                        <div class="ui-fluid"  style="font-size: large">
                             <div class="p-field p-grid">
                                 <p:outputLabel for="dateDeclaration" class="p-lg-4">Date déclaration</p:outputLabel>
                                 <p:outputLabel id="dateDeclaration" class="p-lg-8" value="#{acteNaissanceValiderBacking.acteNaissanceDto.dateDeclaration}"/>
@@ -304,7 +304,7 @@ xmlns:p="http://primefaces.org/ui">
                     
                     <p:spacer height="2"/>
                      <p:fieldset legend="Officier d'état civil">
-                        <div class="ui-fluid">
+                        <div class="ui-fluid"  style="font-size: large">
                             <div class="p-field p-grid">
                                 <p:outputLabel for="officier" class="p-lg-2">Officier:</p:outputLabel>
                                 <p:outputLabel id="officier" class="p-lg-4"
@@ -325,7 +325,7 @@ xmlns:p="http://primefaces.org/ui">
                 <p:tab  title="Autre Informations">
                     <p:fieldset legend="Le déclarant">
                         <p:outputPanel id="declarantOutputPanel">
-                        <div class="ui-fluid">
+                        <div class="ui-fluid"  style="font-size: large">
                             <div class="p-field p-grid">
                                 <p:outputLabel for="declarantLienParente" class="p-lg-3">Lien parenté: </p:outputLabel>
                                 <p:outputLabel id="declarantLienParente" value="#{acteNaissanceValiderBacking.acteNaissanceDto.declarantLien}" 
@@ -391,7 +391,7 @@ xmlns:p="http://primefaces.org/ui">
                     </p:fieldset>
                     <p:spacer height="2"/>
                     <p:fieldset legend="Interprète">
-                        <div class="ui-fluid">
+                        <div class="ui-fluid"  style="font-size: large">
                             <div class="p-field p-grid">
                                 <p:outputLabel for="interpreteLangue" class="p-lg-3">Langue: </p:outputLabel>
                                 <p:outputLabel id="interpreteLangue" value="#{acteNaissanceValiderBacking.acteNaissanceDto.interpreteLangue}" 
@@ -426,7 +426,7 @@ xmlns:p="http://primefaces.org/ui">
                         </div>
                     </p:fieldset>
                     <p:spacer height="2"/>
-                    <div class="p-grid">
+                    <div class="p-grid"  style="font-size: large">
                         <div class="p-lg-6">
                             <p:fieldset legend="Témoin1">
                                 <div class="ui-fluid">
@@ -460,7 +460,7 @@ xmlns:p="http://primefaces.org/ui">
                         </div>
                         <div class="p-lg-6">
                             <p:fieldset legend="Témoin2">
-                                <div class="ui-fluid">
+                                <div class="ui-fluid"  style="font-size: large">
                                 <div class="p-field p-grid">
                                     <p:outputLabel for="temoin2Nom" class="p-lg-4">Nom: </p:outputLabel>
                                     <p:outputLabel id="temoin2Nom" value="#{acteNaissanceValiderBacking.acteNaissanceDto.temoinDeuxiemeNom}" 
@@ -504,7 +504,8 @@ xmlns:p="http://primefaces.org/ui">
                 <div class="p-field p-lg-12">
                     <p:commandButton value="Valider l'acte de naissance" process="@form" 
                                      action="#{acteNaissanceValiderBacking.valider()}"
-                                     update="@form messageForm"  icon="pi pi-check" 
+                                     update="@form messageForm"
+                                     icon="pi pi-check" 
                                      styleClass="ui-button-outlined"/>
                 </div>
                 

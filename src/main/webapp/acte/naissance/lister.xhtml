@@ -78,6 +78,8 @@ xmlns:p="http://primefaces.org/ui">
                     <p:commandButton value="Declaration jugement" icon="pi pi-plus"
                                    actionListener="#{acteNaissanceListerBacking.openNewDeclaration()}"
                                    styleClass="ui-button-success" style="margin-right: .5rem">
+                        <p:ajax event="dialogReturn" listener="#{acteNaissanceListerBacking.onNewActeReturn}"
+                                 update="messageForm :contentForm:actesDatatable"/>
 
                     </p:commandButton>
                   
@@ -113,7 +115,7 @@ xmlns:p="http://primefaces.org/ui">
                     <h:outputText value="#{acte.numero}"/>
                 </p:column>
                 
-                <p:column headerText="Numéro acte" >
+                <p:column headerText="Statut acte" >
                     <p:tag severity="#{acteNaissanceListerBacking.statutSeverity(acte.statut)}" value="#{acte.statut}"/>
                 </p:column>
               
@@ -139,7 +141,8 @@ xmlns:p="http://primefaces.org/ui">
                                   title="options">
                         <p:menuitem value="Consulter l'acte" process="@this"  icon="pi pi-book"/>
                         <p:menuitem value="Valider l'acte" action="#{acteNaissanceListerBacking.showValiderActeView(acte)}" 
-                                    process="@this" icon="pi pi-book">
+                                    process="@this" disabled="#{acteNaissanceListerBacking.disableMenuValiderActe(acte)}" 
+                                    icon="pi pi-book">
                             <p:ajax event="dialogReturn" listener="#{acteNaissanceListerBacking.onActeValidated}" 
                                         update=":contentForm:actesDatatable"/>
                         </p:menuitem>
