@@ -27,6 +27,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.EntityNotFoundException;
 import javax.ws.rs.WebApplicationException;
 import org.primefaces.PrimeFaces;
 
@@ -78,7 +79,9 @@ public class ParametresBacking extends BaseBacking implements Serializable{
     
     @PostConstruct
     public void init(){
+      
         localites = localiteService.findAll();
+        
         typesLocalite = typeLocaliteService.findAll();
         centres = centreService.findAll();
         tribunaux = tribunalService.findAll();

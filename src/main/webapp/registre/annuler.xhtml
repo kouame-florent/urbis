@@ -26,88 +26,73 @@ xmlns:p="http://primefaces.org/ui">
         <h:form id="contentForm">
             <p:panel header="Information du registre">
                 
-              <div class="ui-fluid">
+              <div class="ui-fluid" style="font-size: large">
                   
                 <div class="p-field p-grid">
-                    <p:outputLabel for="localite" styleClass="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Localité:</p:outputLabel>     
-                    <div class="p-col-12 p-md-10">
-                        <p:outputLabel id="localite" value="#{registreAnnulerBacking.registreDto.localite}" />
-                    </div>
+                    <p:outputLabel for="localite" class="p-lg-3">Localité:</p:outputLabel>     
+                    <p:outputLabel id="localite" value="#{registreAnnulerBacking.registreDto.localite}" class="p-lg-9"/>
+                 
                 </div>
                 
                 <div class="p-field p-grid">
-                    <p:outputLabel for="centre" styleClass="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Centre:</p:outputLabel>
-                    <div class="p-col-12 p-md-10">
-                        <p:outputLabel id="centre" value="#{registreAnnulerBacking.registreDto.centre}"/>
-                    </div>
+                    <p:outputLabel for="centre" class="p-lg-3">Centre:</p:outputLabel>
+                    <p:outputLabel id="centre" value="#{registreAnnulerBacking.registreDto.centre}" class="p-lg-9"/>
+                 
                     
                 </div>
                   
                 <div class="p-field p-grid">
-                    <p:outputLabel for="tribunal" styleClass="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Centre:</p:outputLabel>
-                    <div class="p-col-12 p-md-10">
-                        <p:outputLabel id="tribunal" value="#{registreAnnulerBacking.registreDto.tribunal}"/>
-                    </div>
+                    <p:outputLabel for="tribunal" class="p-lg-3">Centre:</p:outputLabel>
+                    <p:outputLabel id="tribunal" value="#{registreAnnulerBacking.registreDto.tribunal}" class="p-lg-9"/>
+                
                     
                 </div>
                   
                 <div class="p-field p-grid">
-                    <p:outputLabel for="annee" styleClass="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Année:</p:outputLabel>
-                    <div class="p-col-12 p-md-10">
-                        <p:outputLabel id="annee" value="#{registreAnnulerBacking.registreDto.annee}" />
-                    </div>
+                    <p:outputLabel for="annee" class="p-lg-3">Année:</p:outputLabel>
+                    <p:outputLabel id="annee" value="#{registreAnnulerBacking.registreDto.annee}" class="p-lg-9"/>
+                
                     
                 </div>
                 <div class="p-field p-grid">
-                    <p:outputLabel for="numero" styleClass="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Numéro:</p:outputLabel>
-                    <div class="p-col-12 p-md-10">
-                        <p:outputLabel id="numero" value="#{registreAnnulerBacking.registreDto.numero}" />
-                    </div>
+                    <p:outputLabel for="numero" class="p-lg-3">Numéro:</p:outputLabel>
+                     <p:outputLabel id="numero" value="#{registreAnnulerBacking.registreDto.numero}" class="p-lg-9"/>
+             
                     
                 </div>
                   
                 <div class="p-field p-grid">
-                    <p:outputLabel for="numeroPremierActe" styleClass="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Numéro premier acte:
-                    </p:outputLabel>
-                    <div class="p-col-12 p-md-10">
-                        <p:outputLabel id="numeroPremierActe" value="#{registreAnnulerBacking.registreDto.numeroPremierActe}" />
-                    </div>
+                    <p:outputLabel for="numeroPremierActe" class="p-lg-3">Numéro premier acte: </p:outputLabel>
+                    <p:outputLabel id="numeroPremierActe" value="#{registreAnnulerBacking.registreDto.numeroPremierActe}" class="p-lg-9"/>
+                 
                 </div>
                 
                 <div class="p-field p-grid">
-                    <p:outputLabel for="numeroDernierActe" styleClass="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Numéro dernier acte:
+                    <p:outputLabel for="numeroDernierActe" class="p-lg-3">Numéro dernier acte:
                     </p:outputLabel>
-                    <div class="p-col-12 p-md-10">
-                        <p:outputLabel id="numeroDernierActe" value="#{registreAnnulerBacking.registreDto.numeroDernierActe}" />
-                    </div>
+                    <p:outputLabel id="numeroDernierActe" value="#{registreAnnulerBacking.registreDto.numeroDernierActe}" class="p-lg-9"/>
+                
                     
                 </div>
                   
                 <div class="p-field p-grid">
-                    <p:outputLabel for="nombreFeuillets" styleClass="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Nombre de feuillets:
-                    </p:outputLabel>
-                    <div class="p-col-12 p-md-10">
-                        <p:outputLabel id="nombreFeuillets" value="#{registreAnnulerBacking.registreDto.nombreDeFeuillets}" />
-                    </div>
+                    <p:outputLabel for="nombreFeuillets" class="p-lg-3">Nombre de feuillets:</p:outputLabel>
+                    <p:outputLabel id="nombreFeuillets" value="#{registreAnnulerBacking.registreDto.nombreDeFeuillets}" class="p-lg-9"/>
+               
                     
                 </div>
                 <div class="p-field p-grid">
-                    <p:outputLabel for="officier" styleClass="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Officier:
-                    </p:outputLabel>
-                    <div class="p-col-12 p-md-10">
-                        <p:outputLabel id="officier" value="#{registreAnnulerBacking.registreDto.officierEtatCivilNomComplet}" />
-                    </div>
+                    <p:outputLabel for="officier" class="p-lg-3">Officier:</p:outputLabel>
+                    <p:outputLabel id="officier" value="#{registreAnnulerBacking.registreDto.officierEtatCivilNomComplet}" class="p-lg-9"/>
+             
                     
                 </div>
                   
                 <div class="p-field p-grid">
-                    <p:outputLabel for="motif" styleClass="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Motif annulation:
-                    </p:outputLabel>
-                    <div class="p-col-12 p-md-10">
-                        <p:inputTextarea id="motif" required="true" value="#{registreAnnulerBacking.registreDto.motifAnnulation}"/>
-                        
-                    </div>
-                    
+                    <p:outputLabel for="motif" class="p-lg-3">Motif annulation:</p:outputLabel>
+                    <p:inputTextarea id="motif" required="true" value="#{registreAnnulerBacking.registreDto.motifAnnulation}" class="p-lg-9"/>
+                    <p:message for="motif"/>
+                   
                 </div>
 
                 </div>
@@ -116,7 +101,8 @@ xmlns:p="http://primefaces.org/ui">
             </p:panel>
             <div class="ui-fluid p-formgrid p-grid">
                  <div class="p-field p-col">
-                     <p:commandButton value="Annuler"  action="#{registreAnnulerBacking.annuler()}" styleClass="ui-button-outlined"/>
+                     <p:commandButton value="Annuler"  action="#{registreAnnulerBacking.annuler()}" styleClass="ui-button-outlined"
+                                      update="@form"/>
                 </div>
             </div>
       

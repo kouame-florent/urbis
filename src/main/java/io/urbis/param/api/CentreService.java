@@ -54,4 +54,7 @@ public interface CentreService {
     @GET
     CentreDto findActive();
     
+    @GET @Path("count")
+    public long count();
+    
 }

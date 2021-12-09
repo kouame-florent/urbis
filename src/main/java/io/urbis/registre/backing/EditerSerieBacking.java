@@ -5,6 +5,7 @@
  */
 package io.urbis.registre.backing;
 
+import io.urbis.common.util.BaseBacking;
 import io.urbis.param.api.CentreService;
 import io.urbis.param.api.LocaliteService;
 import io.urbis.param.api.OfficierService;
@@ -29,7 +30,10 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.EntityNotFoundException;
+import javax.ws.rs.WebApplicationException;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
+import org.omnifaces.util.Ajax;
 import org.primefaces.PrimeFaces;
 
 /**
@@ -38,7 +42,7 @@ import org.primefaces.PrimeFaces;
  */
 @Named(value = "registreEditerSerieBacking")
 @ViewScoped
-public class EditerSerieBacking implements Serializable{
+public class EditerSerieBacking extends BaseBacking implements Serializable{
     
     private static final long serialVersionUID = 1L;
     
@@ -96,13 +100,20 @@ public class EditerSerieBacking implements Serializable{
       // registreDto = new RegistreDto();
     }
     
-    
+   
     public void onTypeRgistreSelect(){
         LOG.log(Level.INFO, "SELECTED TYPE: {0}", selectedType);
         
-        currentLocalite = localiteService.findActive();
-        currentCentre = centreService.findActive();
-        currentTribunal = tribunalService.findActive();
+      try{
+            currentLocalite = localiteService.findActive();
+            currentCentre = centreService.findActive();
+            currentTribunal = tribunalService.findActive();
+      }catch(WebApplicationException ex){
+          //LOG.log(Level.SEVERE, "{0}", ex);
+          addGlobalMessage("Certains Paramètres de l'application sont inexistants", FacesMessage.SEVERITY_ERROR);
+          ex.printStackTrace();
+      }
+       
         
        // anneeCourante = registreService.anneeCourante();
        // numeroRegistre = registreService.numeroRegistre(selectedType.getCode());

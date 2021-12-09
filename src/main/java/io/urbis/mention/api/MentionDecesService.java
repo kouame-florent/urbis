@@ -7,6 +7,7 @@ package io.urbis.mention.api;
 
 import io.urbis.mention.dto.MentionDecesDto;
 import java.util.List;
+import java.util.Set;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.DELETE;
@@ -29,7 +30,7 @@ public interface MentionDecesService {
     public void create(@NotNull MentionDecesDto dto);
     
     @GET
-    public List<MentionDecesDto> findByActeNaissance(@QueryParam("acte-naissance-id") @NotBlank String acteNaissanceID);
+    public Set<MentionDecesDto> findByActeNaissance(@QueryParam("acte-naissance-id") @NotBlank String acteNaissanceID);
     
     @DELETE @Path("{id}")
     public void delete(@PathParam("id") String id);

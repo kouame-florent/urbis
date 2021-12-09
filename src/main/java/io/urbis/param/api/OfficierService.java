@@ -36,4 +36,7 @@ public interface OfficierService {
     
     @GET
     List<OfficierEtatCivilDto> findAll();  
+    
+    @GET @Path("count")
+    public long count();
 }

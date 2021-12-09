@@ -141,19 +141,19 @@ public class ValiderBacking extends BaseBacking implements Serializable{
     
    // private ActeNaissanceDto acteNaissanceDto;
     
-    private List<MentionAdoptionDto> adoptionDtos = new ArrayList<>();
+    private Set<MentionAdoptionDto> adoptionDtos = new HashSet<>();
     
-    private List<MentionDecesDto> decesDtos = new ArrayList<>(); 
+    private Set<MentionDecesDto> decesDtos = new HashSet<>();
     
-    private List<MentionDissolutionMariageDto> dissolutionMariageDtos = new ArrayList<>();
+    private Set<MentionDissolutionMariageDto> dissolutionMariageDtos = new HashSet<>();
       
-    private List<MentionLegitimationDto> legitimationDtos = new ArrayList<>();
+    private Set<MentionLegitimationDto> legitimationDtos = new HashSet<>();
     
     private Set<MentionMariageDto> mariageDtos = new HashSet<>();
     
-    private List<MentionReconnaissanceDto> reconnaissanceDtos = new ArrayList<>();
+    private Set<MentionReconnaissanceDto> reconnaissanceDtos = new HashSet<>();
     
-    private List<MentionRectificationDto> rectificationDtos = new ArrayList<>();
+    private Set<MentionRectificationDto> rectificationDtos = new HashSet<>();
     
    
     
@@ -171,6 +171,7 @@ public class ValiderBacking extends BaseBacking implements Serializable{
         //numeroActe = acteNaissanceService.numeroActe(registreID);
         
         adoptionDtos = mentionAdoptionService.findByActeNaissance(acteNaissanceID);
+        adoptionDtos.forEach(a -> LOG.log(Level.INFO,"ADOPTION DATE DRESSAGE: {0}",a.getDateDressage()));
         dissolutionMariageDtos = mentionDissolutionService.findByActeNaissance(acteNaissanceID);
         decesDtos = mentionDecesService.findByActeNaissance(acteNaissanceID);
         legitimationDtos = mentionLegitimationService.findByActeNaissance(acteNaissanceID);
@@ -220,35 +221,65 @@ public class ValiderBacking extends BaseBacking implements Serializable{
     public void setRegistreDto(RegistreDto registreDto) {
         this.registreDto = registreDto;
     }
-   
-    
-    public List<MentionAdoptionDto> getAdoptionDtos() {
+
+    public Set<MentionAdoptionDto> getAdoptionDtos() {
         return adoptionDtos;
     }
 
-    public List<MentionDecesDto> getDecesDtos() {
+    public void setAdoptionDtos(Set<MentionAdoptionDto> adoptionDtos) {
+        this.adoptionDtos = adoptionDtos;
+    }
+
+    public Set<MentionDecesDto> getDecesDtos() {
         return decesDtos;
     }
 
-    public List<MentionDissolutionMariageDto> getDissolutionMariageDtos() {
+    public void setDecesDtos(Set<MentionDecesDto> decesDtos) {
+        this.decesDtos = decesDtos;
+    }
+
+    public Set<MentionDissolutionMariageDto> getDissolutionMariageDtos() {
         return dissolutionMariageDtos;
     }
 
-    public List<MentionLegitimationDto> getLegitimationDtos() {
+    public void setDissolutionMariageDtos(Set<MentionDissolutionMariageDto> dissolutionMariageDtos) {
+        this.dissolutionMariageDtos = dissolutionMariageDtos;
+    }
+
+    public Set<MentionLegitimationDto> getLegitimationDtos() {
         return legitimationDtos;
+    }
+
+    public void setLegitimationDtos(Set<MentionLegitimationDto> legitimationDtos) {
+        this.legitimationDtos = legitimationDtos;
     }
 
     public Set<MentionMariageDto> getMariageDtos() {
         return mariageDtos;
     }
 
-    public List<MentionReconnaissanceDto> getReconnaissanceDtos() {
+    public void setMariageDtos(Set<MentionMariageDto> mariageDtos) {
+        this.mariageDtos = mariageDtos;
+    }
+
+    public Set<MentionReconnaissanceDto> getReconnaissanceDtos() {
         return reconnaissanceDtos;
     }
 
-    public List<MentionRectificationDto> getRectificationDtos() {
+    public void setReconnaissanceDtos(Set<MentionReconnaissanceDto> reconnaissanceDtos) {
+        this.reconnaissanceDtos = reconnaissanceDtos;
+    }
+
+    public Set<MentionRectificationDto> getRectificationDtos() {
         return rectificationDtos;
     }
+
+    public void setRectificationDtos(Set<MentionRectificationDto> rectificationDtos) {
+        this.rectificationDtos = rectificationDtos;
+    }
+   
+    
+   
     
     
 }

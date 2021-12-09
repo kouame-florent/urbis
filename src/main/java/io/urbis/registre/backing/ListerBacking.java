@@ -8,6 +8,10 @@ package io.urbis.registre.backing;
 
 import io.urbis.common.util.BaseBacking;
 import io.urbis.naissance.dto.Operation;
+import io.urbis.param.api.CentreService;
+import io.urbis.param.api.LocaliteService;
+import io.urbis.param.api.OfficierService;
+import io.urbis.param.api.TribunalService;
 import io.urbis.registre.api.EtatService;
 import io.urbis.registre.api.RegistreService;
 import io.urbis.registre.api.TypeRegistreService;
@@ -38,6 +42,7 @@ import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.adapters.RefreshableKeycloakSecurityContext;
 import org.keycloak.representations.AccessToken;
+import org.omnifaces.util.Ajax;
 import org.primefaces.PrimeFaces;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DefaultStreamedContent;
@@ -65,6 +70,18 @@ public class ListerBacking extends BaseBacking implements Serializable{
     @Inject
     @RestClient
     EtatService etatService;
+    
+    @Inject
+    CentreService centreService;
+    
+    @Inject
+    LocaliteService localiteService;
+    
+    @Inject
+    TribunalService tribunalService;
+    
+    @Inject
+    OfficierService officierService;
     
     
     @Inject
@@ -168,6 +185,27 @@ public class ListerBacking extends BaseBacking implements Serializable{
         selectedType = defaultSelectedType();
     }
     
+    public void onLoad(){
+        checkRequiredParams();
+    }
+    
+    private void checkRequiredParams(){
+        if(localiteService.count() != 1){
+            addGlobalMessage("Aucune localité n'a été créee.", FacesMessage.SEVERITY_ERROR);
+            Ajax.update("messageForm");
+        }
+        
+        if(centreService.count() != 1){
+            addGlobalMessage("Aucun centre n'a été créee.", FacesMessage.SEVERITY_ERROR);
+            Ajax.update("messageForm");
+        }
+        
+        if(tribunalService.count() != 1){
+            addGlobalMessage("Aucun tribunal n'a été créee.", FacesMessage.SEVERITY_ERROR);
+            Ajax.update("messageForm");
+        }
+    }
+    
     public TypeRegistreDto defaultSelectedType(){
        return typesRegistre.stream()
                 .peek(c -> LOG.log(Level.INFO, "TYPE NAME: {0}", c.getCode()))
@@ -196,7 +234,7 @@ public class ListerBacking extends BaseBacking implements Serializable{
         lazyRegistreDataModel.setNumero(0);
     }
     
-   
+    
     public void onTypeRegistreSelect(){
         LOG.log(Level.INFO, "SELECTED TYPE: {0}", selectedType);
         lazyRegistreDataModel.setTypeRegistre(selectedType.getCode());
@@ -206,6 +244,7 @@ public class ListerBacking extends BaseBacking implements Serializable{
     
     public void cloturer(@NotBlank String registreID){
         registreService.patch(registreID,new RegistrePatchDto(StatutRegistre.CLOTURE.name(),""));
+        
     }
     
     public void supprimer(@NotBlank String id){
@@ -225,7 +264,16 @@ public class ListerBacking extends BaseBacking implements Serializable{
         PrimeFaces.current().dialog().openDynamic("editer-serie", options, null);
     }
     
-    public void showValiderView(RegistreDto registreDto){
+    public void openConsulterView(RegistreDto registreDto){
+        LOG.log(Level.INFO, "REGISTRE ID: {0}", registreDto.getId());
+        
+        var values = List.of(registreDto.getId());
+        Map<String, List<String>> params = Map.of("id", values);
+        PrimeFaces.current().dialog().openDynamic("/registre/consulter", getDialogOptions(70,95,true), params);
+    
+    }
+    
+     public void openValiderView(RegistreDto registreDto){
         LOG.log(Level.INFO, "REGISTRE ID: {0}", registreDto.getId());
         
         var values = List.of(registreDto.getId());
@@ -258,13 +306,21 @@ public class ListerBacking extends BaseBacking implements Serializable{
     
     public void showAnnulerView(RegistreDto registreDto){
         LOG.log(Level.INFO, "REGISTRE ID: {0}", registreDto.getId());
-        
         var values = List.of(registreDto.getId());
         Map<String, List<String>> params = Map.of("id", values);
-        PrimeFaces.current().dialog().openDynamic("/registre/annuler", getDialogOptions(70,95,true), params);
+        PrimeFaces.current().dialog().openDynamic("/registre/annuler", getDialogOptions(80,95,true), params);
     
     }
     
+    public void openCloturerRegistreView(RegistreDto registreDto){
+        LOG.log(Level.INFO, "REGISTRE ID: {0}", registreDto.getId());
+        var values = List.of(registreDto.getId());
+        Map<String, List<String>> params = Map.of("id", values);
+        PrimeFaces.current().dialog().openDynamic("/registre/cloturer", getDialogOptions(80,95,true), params);
+    }
+    
+    
+    /*
     public void showDeclarationView(RegistreDto registreDto){
         LOG.log(Level.INFO, "REGISTRE ID: {0}", registreDto.getId());
         var ids = List.of(registreDto.getId());
@@ -276,6 +332,7 @@ public class ListerBacking extends BaseBacking implements Serializable{
         //return url
         PrimeFaces.current().dialog().openDynamic("/acte/naissance/editer", getDialogOptions(98,98,true), params);
     }
+    */
     
     public void openListActes(RegistreDto registreDto){
         var ids = List.of(registreDto.getId());
@@ -346,19 +403,7 @@ public class ListerBacking extends BaseBacking implements Serializable{
                 registreDto.getStatut().equals(StatutRegistre.CLOTURE.name());  
     }
     
-    public boolean disableMenuDeclarationActe(RegistreDto registreDto){
-        return registreDto.getStatut().equals(StatutRegistre.ANNULE.name()) || 
-                registreDto.getStatut().equals(StatutRegistre.CLOTURE.name()) ||
-                registreDto.getStatut().equals(StatutRegistre.PROJET.name());
-        
-    }
-    
-    /*
-    public boolean disableMenuListActe(RegistreDto registreDto){
-        return registreDto.getStatut().equals(StatutRegistre.ANNULE.name()) || 
-                registreDto.getStatut().equals(StatutRegistre.PROJET.name());  
-    }
-*/
+   
     
     public boolean disableMenuListActe(RegistreDto registreDto){
         return registreDto.getStatut().equals(StatutRegistre.ANNULE.name()) || 

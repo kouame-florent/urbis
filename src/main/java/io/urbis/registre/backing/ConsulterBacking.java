@@ -5,9 +5,6 @@
  */
 package io.urbis.registre.backing;
 
-
-
-import io.urbis.naissance.dto.StatutActeNaissance;
 import io.urbis.registre.api.RegistreService;
 import io.urbis.registre.dto.RegistreDto;
 import io.urbis.registre.dto.RegistrePatchDto;
@@ -25,11 +22,11 @@ import org.primefaces.PrimeFaces;
  *
  * @author florent
  */
-@Named(value = "registreValiderBacking")
+@Named(value = "registreConsulterBacking")
 @ViewScoped
-public class ValiderBacking implements Serializable{
+public class ConsulterBacking implements Serializable {
     
-    private static final Logger LOG = Logger.getLogger(ValiderBacking.class.getName());
+     private static final Logger LOG = Logger.getLogger(ConsulterBacking.class.getName());
     
     private String registreID;
     private RegistreDto registreDto;
@@ -44,10 +41,7 @@ public class ValiderBacking implements Serializable{
         LOG.log(Level.INFO,"REGISTRE LIBELLE: {0}",registreDto.getLibelle());
     }
     
-    public void valider(){
-        registreService.patch(registreID,new RegistrePatchDto(StatutRegistre.VALIDE.name(),""));
-        PrimeFaces.current().dialog().closeDynamic(null);
-    }
+   
     
     public boolean rendererCmdValider(){
         return registreDto.getStatut()
@@ -78,5 +72,4 @@ public class ValiderBacking implements Serializable{
     }
 
    
-    
 }

@@ -5,6 +5,7 @@
  */
 package io.urbis.registre.backing;
 
+import io.urbis.common.util.BaseBacking;
 import io.urbis.common.util.ViewMode;
 import io.urbis.param.api.CentreService;
 import io.urbis.param.api.LocaliteService;
@@ -28,6 +29,8 @@ import io.urbis.registre.dto.RegistreDto;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.application.FacesMessage;
+import javax.persistence.EntityNotFoundException;
 import org.primefaces.PrimeFaces;
 
 /**
@@ -36,7 +39,7 @@ import org.primefaces.PrimeFaces;
  */
 @Named(value = "registreEditerBacking")
 @ViewScoped
-public class EditerBacking implements Serializable{
+public class EditerBacking extends BaseBacking implements Serializable{
     
     private static final long serialVersionUID = 1L;
     
@@ -111,8 +114,13 @@ public class EditerBacking implements Serializable{
     
     public void onTypeRgistreSelect(){
         LOG.log(Level.INFO, "SELECTED TYPE: {0}", selectedType);
+        try{
+            currentLocalite = localiteService.findActive();
+        }catch(EntityNotFoundException e){
+            addGlobalMessage(e.getMessage(), FacesMessage.SEVERITY_ERROR);
+        }
         
-        currentLocalite = localiteService.findActive();
+        
         currentCentre = centreService.findActive();
         currentTribunal = tribunalService.findActive();
         

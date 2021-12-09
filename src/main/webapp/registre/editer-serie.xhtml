@@ -13,6 +13,7 @@ xmlns:p="http://primefaces.org/ui">
      </ui:define>
     
     <ui:define name="content">
+               
         <h:form id="messageForm">
                 <p:growl globalOnly="true" life="15000"/>        
         </h:form>
@@ -25,7 +26,7 @@ xmlns:p="http://primefaces.org/ui">
                                   required="true">
                     <p:ajax listener="#{registreEditerSerieBacking.onTypeRgistreSelect}" 
                             update="contentForm:commune contentForm:centre contentForm:tribunal 
-                             contentForm:libelleOutputPanel"/>
+                             contentForm:libelleOutputPanel messageForm"/>
                     <f:selectItems value="#{registreEditerSerieBacking.typesRegistre}" var="type" 
                                    itemLabel="#{type.libelle}" itemValue="#{type}"/>
                 </p:selectOneRadio>

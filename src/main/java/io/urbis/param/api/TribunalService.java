@@ -43,5 +43,6 @@ public interface TribunalService {
     @GET @Path("active")
     public TribunalDto findActive();
     
-    
+    @GET @Path("count")
+    public long count();
 }

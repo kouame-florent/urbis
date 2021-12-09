@@ -41,4 +41,7 @@ public interface LocaliteService {
     @Path("/active")
     @GET
     LocaliteDto findActive();
+    
+    @GET @Path("count")
+    public long count();
 }

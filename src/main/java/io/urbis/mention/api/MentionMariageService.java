@@ -5,9 +5,7 @@
  */
 package io.urbis.mention.api;
 
-import io.urbis.mention.dto.MentionAdoptionDto;
 import io.urbis.mention.dto.MentionMariageDto;
-import java.util.List;
 import java.util.Set;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;

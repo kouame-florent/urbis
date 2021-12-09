@@ -9,6 +9,11 @@ xmlns:p="http://primefaces.org/ui">
  <ui:composition template="/WEB-INF/templates/default-tpl.xhtml">
     
     <ui:define name="content">
+        
+        <f:metadata>
+            <f:viewAction action="#{registreListerBacking.onLoad}" />
+        </f:metadata>
+        
         <h:form id="messageForm">
             <p:growl globalOnly="true" life="15000" showDetail="true"/>        
         </h:form>
@@ -20,7 +25,7 @@ xmlns:p="http://primefaces.org/ui">
                 <p:selectOneRadio id="console" value="#{registreListerBacking.selectedType}" 
                                 converter="omnifaces.SelectItemsConverter"
                                 required="true" columns="5" styleClass="grid-radio">
-                  <p:ajax listener="#{registreListerBacking.onTypeRgistreSelect}" 
+                    <p:ajax listener="#{registreListerBacking.onTypeRegistreSelect}" 
                           update="contentForm:registre"/>
                   <f:selectItems value="#{registreListerBacking.typesRegistre}" var="type" 
                                  itemLabel="#{type.libelle}" itemValue="#{type}"/>
@@ -123,7 +128,7 @@ xmlns:p="http://primefaces.org/ui">
                 </p:column>
                 
                 <p:column width="10%" rendered="false">
-                    <p:commandButton  value="Valider" action="#{registreListerBacking.showValiderView(registre)}"
+                    <p:commandButton  value="Valider" action="#{registreListerBacking.openConsulterView(registre)}"
                                       styleClass="ui-button-outlined" process="@this" 
                                       update="contentForm:registre" >
                     <p:ajax event="dialogReturn" 
@@ -137,9 +142,10 @@ xmlns:p="http://primefaces.org/ui">
                 <p:column width="5%">
                     
                     <p:menuButton icon="pi pi-ellipsis-h" style="width: 100%;white-space: nowrap;width: auto !important;">
-                        <p:menuitem value="Consulter" process="@this" action="#{registreListerBacking.showValiderView(registre)}" 
+                        <p:menuitem value="Consulter" process="@this" action="#{registreListerBacking.openConsulterView(registre)}" 
                                     icon="pi pi-book"/>
-                        <p:menuitem value="Valider" process="@this" action="#{registreListerBacking.showValiderView(registre)}" 
+                        
+                        <p:menuitem value="Valider" process="@this" action="#{registreListerBacking.openValiderView(registre)}" 
                                     update="contentForm:registre" icon="pi pi-ticket" 
                                     disabled="#{registreListerBacking.disableMenuActiver(registre)}">
                             <p:ajax event="dialogReturn" listener="#{registreListerBacking.onRegistreValidated}" 
@@ -147,14 +153,17 @@ xmlns:p="http://primefaces.org/ui">
                             <f:setPropertyActionListener value="#{registre}" target="#{registreListerBacking.selectedRegistre}"/>
                         
                         </p:menuitem>
-                       <p:menuitem value="Cloturer" process="@this" action="#{registreListerBacking.cloturer(registre.id)}"  
-                                   icon="pi pi-ban" update="contentForm:registre"
+                        
+                        <p:menuitem value="Cloturer" process="@this" 
+                                    action="#{registreListerBacking.cloturer(registre.id)}"  
+                                   icon="pi pi-ban" update="@form"
                                    disabled="#{registreListerBacking.disableMenuCloturer(registre)}" >
                             
                             <p:confirm header="Confirmation" 
                                        message="Voulez-vous vraiment cloturer le registre #{registre.numero} de #{registre.annee} ?" 
                                        icon="pi pi-exclamation-triangle"/>
                         </p:menuitem>
+                        
                         <p:menuitem value="Annuler" process="@this" action="#{registreListerBacking.showAnnulerView(registre)}"  
                                     icon="pi pi-undo"
                                     disabled="#{registreListerBacking.disableMenuAnnuler(registre)}">
@@ -167,75 +176,30 @@ xmlns:p="http://primefaces.org/ui">
                                     action="#{registreListerBacking.showActesListView(registre)}"
                                     disabled="#{registreListerBacking.disableMenuListActe(registre)}"
                                     rendered="false"/>
-                        <p:menuitem value="Declaration jugement" process="@this"  icon="pi pi-folder-open" 
-                                    action="#{registreListerBacking.showDeclarationView(registre)}"  
-                                    disabled="#{registreListerBacking.disableMenuDeclarationActe(registre)}"
-                                    rendered="false"/>
-                        
-                        <p:menuitem value="Liste des actes" process="@this" 
+                         
+                        <p:menuitem value="Gerer des actes" process="@this" 
                                     action="#{registreListerBacking.openListActes(registre)}" icon="pi pi-folder"
                                     disabled="#{registreListerBacking.disableMenuListActe(registre)}"
                                     rendered="true"/>
                         
-                        <p:menuitem value="Liste des actes" process="@this"  icon="pi pi-file"
-                                    action="#{registreListerBacking.showActesListView(registre)}"
-                                    disabled="#{registreListerBacking.disableMenuDeclarationActe(registre)}"
-                                    rendered="false"/>
-                        <p:menuitem value="Declaration jugement" process="@this"  icon="pi pi-folder-open"
-                                    action="#{registreListerBacking.showDeclarationView(registre)}"  
-                                    disabled="#{registreListerBacking.disableMenuDeclarationActe(registre)}"
-                                    rendered="false"/>
-                         
                         <p:divider/>
-                        <p:menuitem value="Delete" process="@this" action="#{registreListerBacking.supprimer(registre.id)}"  
-                                   icon="pi pi-ban" update="contentForm:registre">
+                        <p:menuitem value="Supprimer" process="@this" action="#{registreListerBacking.supprimer(registre.id)}"  
+                                   icon="pi pi-times" update="contentForm:registre">
                             
                             <p:confirm header="Confirmation" 
                                        message="Voulez-vous vraiment supprimer le registre #{registre.numero} de #{registre.annee} ?" 
                                        icon="pi pi-exclamation-triangle"/>
                         </p:menuitem>
-                        <p:menuitem value="supprimer"  process="@this" icon="pi pi-times"
-                                    oncomplete="PF('supprimerConfirmDialog').show()">
-                            <f:setPropertyActionListener value="#{registre}" target="#{registreListerBacking.selectedRegistre}"/>
-                        </p:menuitem>
+                        
                     </p:menuButton>
                 </p:column>
                 
                 </p:dataTable>
             
-            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
-                <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
-                <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" />
-            </p:confirmDialog>
-            
-            <p:dialog widgetVar="supprimerConfirmDialog"  showEffect="fade" hideEffect="fade" responsive="true" width="450">
-                <p class="p-m-0">
-                    Voulez-vous vraiment supprimer le registre  ?
-                </p>
-                    <f:facet name="footer">
-                        <p:commandButton action="#{registreListerBacking.supprimer(registreListerBacking.selectedRegistre)}" 
-                                         value="Oui" 
-                                         styleClass="ui-confirmdialog-no ui-button-flat" style="width: 6rem" 
-                                         update="contentForm:registre"
-                                         oncomplete="PF('supprimerConfirmDialog').hide()"/>
-                        <p:commandButton onclick="PF('supprimerConfirmDialog').hide()" value="Non" styleClass="ui-confirmdialog-yes" />
-                    </f:facet>
-                    
-            </p:dialog>
-            <p:dialog widgetVar="cloturerConfirmDialog"  showEffect="fade" hideEffect="fade" responsive="true" width="450">
-                <p class="p-m-0">
-                    Voulez-vous vraiment supprimer le registre?
-                </p>
-                    <f:facet name="footer">
-                        <p:commandButton action="#{registreListerBacking.cloturer(registreListerBacking.selectedRegistre.id)}" 
-                                         value="Oui" 
-                                         styleClass="ui-confirmdialog-no ui-button-flat" style="width: 6rem" 
-                                         update="contentForm:registre"
-                                         oncomplete="PF('cloturerConfirmDialog').hide()"/>
-                        <p:commandButton onclick="PF('supprimerConfirmDialog').hide()" value="Non" styleClass="ui-confirmdialog-yes" />
-                    </f:facet>
-                    
-            </p:dialog>
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+                    <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+                    <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" />
+                </p:confirmDialog>
           
         </h:form>
           

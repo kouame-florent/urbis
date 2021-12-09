@@ -6,6 +6,7 @@
 package io.urbis.common.util;
 
 import java.io.ByteArrayInputStream;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Priority;
 import javax.persistence.EntityNotFoundException;
@@ -27,15 +28,19 @@ public class ExceptionMapper implements ResponseExceptionMapper<RuntimeException
     public RuntimeException toThrowable(Response response) {
          int status = response.getStatus();
          
-        String msg = getBody(response); // see below
+        String msg = getBody(response); 
 
         RuntimeException re ;
         switch (status) {
-          case 412: re = new ValidationException(msg);
-          break;
-          case 404: re = new EntityNotFoundException(msg);
-          break;
+          case 412: 
+            re = new ValidationException(msg);
+            break;
+          case 404: 
+            LOG.log(Level.INFO, "---MAPPER ERROR: {0}", 404);
+            re = new EntityNotFoundException(msg);
+            break;
           default:
+            LOG.log(Level.INFO, "---MAPPER ERROR: {0}", "DEFAULT");
             re = new WebApplicationException(msg,status);
         }
         return re;

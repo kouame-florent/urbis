@@ -8,6 +8,7 @@ package io.urbis.mention.api;
 
 import io.urbis.mention.dto.MentionDto;
 import java.util.List;
+import java.util.Set;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -27,5 +28,5 @@ public interface MentionService {
     public void create(@NotNull MentionDto mentionDto);
     
     @GET 
-    public List<MentionDto> findByActeNaissance(@QueryParam("acte-naissance-id") String id);
+    public Set<MentionDto> findByActeNaissance(@QueryParam("acte-naissance-id") String id);
 }
