@@ -71,18 +71,20 @@ xmlns:p="http://primefaces.org/ui">
                 <p:toolbarGroup>
                     <p:commandButton value="Acte existant" icon="pi pi-plus"
                          actionListener="#{acteMariageListerBacking.openNewActeExistant()}"
+                         disabled="#{acteMariageListerBacking.disableButtonsOpenNew()}"
                          styleClass="ui-button-success" style="margin-right: .5rem">
                         <p:ajax event="dialogReturn" listener="#{acteMariageListerBacking.onNewActeReturn}"
                                  update="messageForm :contentForm:actesDatatable"/>
                     </p:commandButton>
-                    <p:commandButton value="Declaration jugement" icon="pi pi-plus"
+                  
+                    <p:commandButton value="Declaration" icon="pi pi-plus"
                                    actionListener="#{acteMariageListerBacking.openNewDeclaration()}"
                                    styleClass="ui-button-success" style="margin-right: .5rem">
                         <p:ajax event="dialogReturn" listener="#{acteMariageListerBacking.onNewActeReturn}"
                                  update="messageForm :contentForm:actesDatatable"/>
 
                     </p:commandButton>
-                  
+                    
                 </p:toolbarGroup>
             </p:toolbar>
                 

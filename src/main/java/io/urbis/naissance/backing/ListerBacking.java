@@ -12,6 +12,7 @@ import io.urbis.naissance.dto.StatutActeNaissance;
 import io.urbis.registre.api.EtatService;
 import io.urbis.registre.api.RegistreService;
 import io.urbis.registre.dto.RegistreDto;
+import io.urbis.registre.dto.StatutRegistre;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -138,6 +139,10 @@ public class ListerBacking extends BaseBacking implements Serializable{
         PrimeFaces.current().dialog().openDynamic("/acte/naissance/valider", getDialogOptions(96,96,true), params);
     }
     
+    public void supprimer(ActeNaissanceDto dto){
+        
+    }
+    
     public boolean disableMenuValiderActe(ActeNaissanceDto dto){
        return !dto.getStatut().equals(StatutActeNaissance.PROJET.name());
     }
@@ -158,6 +163,15 @@ public class ListerBacking extends BaseBacking implements Serializable{
         Map<String,Object> options = getDialogOptions(100, 100, false);
         options.put("resizable", false);
         PrimeFaces.current().dialog().openDynamic("editer", options, params);
+    }
+    
+    public boolean disableButtonsOpenNew(){
+        LOG.log(Level.INFO, "REGISTRE DTO STATUT: {0}",registreDto.getStatut());
+        if(registreDto != null){
+            return !registreDto.getStatut().equals(StatutRegistre.VALIDE.name());
+          
+        }
+        return true;
     }
 
     public LazyDeclarationDataModel getLazyDeclarationDataModel() {

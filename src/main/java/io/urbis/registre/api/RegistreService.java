@@ -5,6 +5,7 @@
  */
 package io.urbis.registre.api;
 
+import io.urbis.common.util.ExceptionMapper;
 import io.urbis.registre.dto.RegistreDto;
 import io.urbis.registre.dto.RegistrePatchDto;
 import java.util.List;
@@ -20,6 +21,7 @@ import org.eclipse.microprofile.jwt.Claim;
 import org.eclipse.microprofile.jwt.Claims;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.eclipse.microprofile.rest.client.annotation.RegisterClientHeaders;
+import org.eclipse.microprofile.rest.client.annotation.RegisterProvider;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 /**
@@ -28,12 +30,13 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
  */
 @Path("/registres")
 @RegisterRestClient(baseUri = "http://127.0.0.1:8181")
+@RegisterProvider(value = ExceptionMapper.class,priority = 50)
 //@RegisterClientHeaders(AuthHeader.class)
 public interface RegistreService {
     
     
     @POST
-    public RegistreDto create(RegistreDto registreDto);  
+    public void create(RegistreDto registreDto);  
     
     /*
     @PATCH @Path("{id}")
@@ -67,11 +70,20 @@ public interface RegistreService {
     @GET
     int anneeCourante();
    
-    @Path("/numero/{type}/{annee}")
+    @Path("/numero/{type}")
     @GET
-    int numeroRegistre(@PathParam("type") String typeRegistre,@PathParam("annee") int annee);
+    int numeroRegistre(@PathParam("type") String typeRegistre,@QueryParam("annee") int annee);
     
-    @GET @Path("numero-premier-acte/{type}/{annee}")
-    public int numeroPremierActe(@PathParam("type") String typeRegistre,@PathParam("annee") int annee);
+    @GET @Path("numero-premier-acte-courant/{type}")
+    public int numeroPremierActeCourant(@PathParam("type") String typeRegistre,@QueryParam("annee") int annee);
+    
+    @GET @Path("numero-premier-acte/{type}")
+    public int numeroPremierActe(@PathParam("type") String typeRegistre,@QueryParam("annee") int annee,
+            @QueryParam("numero") int numero);
+    
+    @GET @Path("numero-dernier-acte/{type}")
+    public int numeroDernierActe(@PathParam("type") String typeRegistre,@QueryParam("annee") int annee,
+            @QueryParam("numero") int numero,@QueryParam("numero-premier-acte") int numeroPremierActe,
+            @QueryParam("nombre-feuillets") int nombreFeuillets);
 
 }

@@ -7,6 +7,7 @@ package io.urbis.mariage.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  *
@@ -14,6 +15,7 @@ import lombok.Data;
  */
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class SituationMatrimonialeDto {
     private String code;
     private String libelle;

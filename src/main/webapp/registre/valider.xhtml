@@ -9,14 +9,14 @@ xmlns:p="http://primefaces.org/ui">
  <ui:composition template="/WEB-INF/templates/dialog-tpl.xhtml">
      
      <ui:define name="title">
-         #{registreValiderBacking.title()}
+         #{registreAfficherBacking.title()}
      </ui:define>
     
     <ui:define name="content">
         
         <f:metadata>
-            <f:viewParam name="id" value="#{registreValiderBacking.registreID}" />
-            <f:viewAction action="#{registreValiderBacking.onload}" />
+            <f:viewParam name="id" value="#{registreAfficherBacking.registreID}" />
+            <f:viewAction action="#{registreAfficherBacking.onload}" />
         </f:metadata>
         
         <h:form id="messageForm">
@@ -24,55 +24,64 @@ xmlns:p="http://primefaces.org/ui">
         </h:form>
              
         <h:form id="contentForm">
-            <p:panel header="Information du registre">
+            <p:panel >
                 
               <div class="ui-fluid" style="font-size: large">
                   
                 <div class="p-field p-grid">
+                    <p:outputLabel for="statut" class="p-lg-3">Statut:</p:outputLabel>
+                    <p:outputLabel id="statut" value="#{registreAfficherBacking.registreDto.statut}" class="p-lg-9"/>
+                </div>
+                  
+                <div class="p-field p-grid">
                     <p:outputLabel for="localite" class="p-lg-3">Localité:</p:outputLabel>     
-                    <p:outputLabel id="localite" value="#{registreValiderBacking.registreDto.localite}" class="p-lg-9"/>
+                    <p:outputLabel id="localite" value="#{registreAfficherBacking.registreDto.localite}" class="p-lg-9"/>
                  
                 </div>
                 
                 <div class="p-field p-grid">
                     <p:outputLabel for="centre" class="p-lg-3">Centre:</p:outputLabel>
-                    <p:outputLabel id="centre" value="#{registreValiderBacking.registreDto.centre}" class="p-lg-9"/>
+                    <p:outputLabel id="centre" value="#{registreAfficherBacking.registreDto.centre}" class="p-lg-9"/>
                  
                 </div>
                   
                 <div class="p-field p-grid">
-                    <p:outputLabel for="tribunal" class="p-lg-3">Centre:</p:outputLabel>
-                    <p:outputLabel id="tribunal" value="#{registreValiderBacking.registreDto.tribunal}" class="p-lg-9"/>
+                    <p:outputLabel for="tribunal" class="p-lg-3">Tribunal:</p:outputLabel>
+                    <p:outputLabel id="tribunal" value="#{registreAfficherBacking.registreDto.tribunal}" class="p-lg-9"/>
                 </div>
                   
                 <div class="p-field p-grid">
                     <p:outputLabel for="annee" class="p-lg-3">Année:</p:outputLabel>
-                    <p:outputLabel id="annee" value="#{registreValiderBacking.registreDto.annee}" class="p-lg-9"/>
+                    <p:outputLabel id="annee" value="#{registreAfficherBacking.registreDto.annee}" class="p-lg-9"/>
                </div>
                 <div class="p-field p-grid">
                     <p:outputLabel for="numero" class="p-lg-3">Numéro:</p:outputLabel>
-                    <p:outputLabel id="numero" value="#{registreValiderBacking.registreDto.numero}" class="p-lg-9"/>
+                    <p:outputLabel id="numero" value="#{registreAfficherBacking.registreDto.numero}" class="p-lg-9"/>
                     
                 </div>
                   
                 <div class="p-field p-grid">
                     <p:outputLabel for="numeroPremierActe" class="p-lg-3">Numéro premier acte:</p:outputLabel>
-                    <p:outputLabel id="numeroPremierActe" value="#{registreValiderBacking.registreDto.numeroPremierActe}" class="p-lg-9"/>
+                    <p:outputLabel id="numeroPremierActe" value="#{registreAfficherBacking.registreDto.numeroPremierActe}" class="p-lg-9"/>
                 
                 </div>
                 
                 <div class="p-field p-grid">
                     <p:outputLabel for="numeroDernierActe" class="p-lg-3">Numéro dernier acte:</p:outputLabel>
-                    <p:outputLabel id="numeroDernierActe" value="#{registreValiderBacking.registreDto.numeroDernierActe}" class="p-lg-9"/>
+                    <p:outputLabel id="numeroDernierActe" value="#{registreAfficherBacking.registreDto.numeroDernierActe}" class="p-lg-9"/>
                 </div>
                   
                 <div class="p-field p-grid">
                     <p:outputLabel for="nombreFeuillets" class="p-lg-3">Nombre de feuillets:</p:outputLabel>
-                    <p:outputLabel id="nombreFeuillets" value="#{registreValiderBacking.registreDto.nombreDeFeuillets}" class="p-lg-9"/>
+                    <p:outputLabel id="nombreFeuillets" value="#{registreAfficherBacking.registreDto.nombreDeFeuillets}" class="p-lg-9"/>
+                </div>
+                <div class="p-field p-grid">
+                    <p:outputLabel for="nombreActe" class="p-lg-3">Nombre d'actes:</p:outputLabel>
+                    <p:outputLabel id="nombreActe" value="#{registreAfficherBacking.registreDto.nombreActe}" class="p-lg-9"/>
                 </div>
                 <div class="p-field p-grid">
                     <p:outputLabel for="officier" class="p-lg-3">Officier:</p:outputLabel>
-                   <p:outputLabel id="officier" value="#{registreValiderBacking.registreDto.officierEtatCivilNomComplet}" class="p-lg-9"/>
+                   <p:outputLabel id="officier" value="#{registreAfficherBacking.registreDto.officierEtatCivilNomComplet}" class="p-lg-9"/>
                 </div>
 
             </div>
@@ -81,7 +90,7 @@ xmlns:p="http://primefaces.org/ui">
             </p:panel>
             <div class="ui-fluid p-formgrid p-grid">
                  <div class="p-field p-col">
-                     <p:commandButton value="Valider"  action="#{registreValiderBacking.valider()}" 
+                     <p:commandButton value="Valider"  action="#{registreAfficherBacking.valider()}" 
                                       styleClass="ui-button-outlined"/>
                 </div>
             </div>

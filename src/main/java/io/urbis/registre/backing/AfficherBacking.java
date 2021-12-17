@@ -25,11 +25,11 @@ import org.primefaces.PrimeFaces;
  *
  * @author florent
  */
-@Named(value = "registreValiderBacking")
+@Named(value = "registreAfficherBacking")
 @ViewScoped
-public class ValiderBacking implements Serializable{
+public class AfficherBacking implements Serializable{
     
-    private static final Logger LOG = Logger.getLogger(ValiderBacking.class.getName());
+    private static final Logger LOG = Logger.getLogger(AfficherBacking.class.getName());
     
     private String registreID;
     private RegistreDto registreDto;
@@ -55,11 +55,10 @@ public class ValiderBacking implements Serializable{
     }
     
     public String title(){
-        if(registreDto.getStatut().equals(StatutRegistre.VALIDE.name())){
-            return "Consultation du registre";
-        }
-        return "Validation du registre";
+        return "Information du registre";
     }
+    
+    
 
     public String getRegistreID() {
         return registreID;

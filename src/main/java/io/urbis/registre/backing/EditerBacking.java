@@ -30,7 +30,9 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
+import javax.validation.ValidationException;
 import org.primefaces.PrimeFaces;
 
 /**
@@ -126,7 +128,7 @@ public class EditerBacking extends BaseBacking implements Serializable{
         
         annee = registreService.anneeCourante();
         numeroRegistre = registreService.numeroRegistre(selectedType.getCode(),annee);
-        numeroPremierActe = registreService.numeroPremierActe(selectedType.getCode(),annee);
+        numeroPremierActe = registreService.numeroPremierActeCourant(selectedType.getCode(),annee);
     }
 
     public void onOfficierSelect(){
@@ -151,12 +153,7 @@ public class EditerBacking extends BaseBacking implements Serializable{
     
     public void creer(){
         LOG.log(Level.INFO, "CREATING REGISTRE ...");
-        
-       
-       
-       //registreDto.setId(registre.id);
-       //registreDto.setCreated(registre.created);
-       //registreDto.setUpdated(registre.updated);
+     
        registreDto.setTypeRegistre(selectedType.getCode());
        registreDto.setLibelle(selectedType.getLibelle());
        registreDto.setLocalite(currentLocalite.getLibelle());
@@ -167,7 +164,6 @@ public class EditerBacking extends BaseBacking implements Serializable{
        registreDto.setNumero(numeroRegistre);
        registreDto.setTribunal(currentTribunal.getLibelle());
        registreDto.setTribunalID(currentTribunal.getId());
-       //registreDto.setOfficierEtatCivilNomComplet(registre.officierEtatCivil.prenoms + " " + registre.officierEtatCivil.nom);
        registreDto.setOfficierEtatCivilID(selectedOfficierId);
        registreDto.setNumeroPremierActe(numeroPremierActe);
        registreDto.setNumeroDernierActe(nombreDeFeuillets + numeroPremierActe - 1);
@@ -177,33 +173,13 @@ public class EditerBacking extends BaseBacking implements Serializable{
        registreDto.setDateAnnulation(null);
        registreDto.setMotifAnnulation("");
        
-        /*
-        var regi = new RegistreDto(
-                "", 
-                null, 
-                null,
-                selectedType.getCode(), 
-                selectedType.getLibelle(),
-                currentLocalite.getLibelle(), 
-                currentLocalite.getId(), 
-                currentCentre.getLibelle(), 
-                currentCentre.getId(), 
-                annee, 
-                numeroRegistre, 
-                currentTribunal.getLibelle(), 
-                currentTribunal.getId(), 
-                "",
-                selectedOfficierId, 
-                numeroPremierActe, 
-                nombreDeFeuillets + numeroPremierActe - 1, 
-                nombreDeFeuillets, 
-                0,
-                "", 
-                null, 
-                "");
-        */
-        
-        RegistreDto regRes = registreService.create(registreDto);
+       
+        try{
+                registreService.create(registreDto);
+        }catch(EntityExistsException | ValidationException  e){
+                LOG.log(Level.SEVERE, e.getMessage());
+                addGlobalMessage(e.getMessage(), FacesMessage.SEVERITY_ERROR);
+       }
         PrimeFaces.current().dialog().closeDynamic("");
     }
 

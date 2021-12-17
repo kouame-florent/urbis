@@ -8,6 +8,7 @@ package io.urbis.naissance.api;
 import io.urbis.common.util.ExceptionMapper;
 import io.urbis.naissance.dto.ActeNaissanceDto;
 import java.util.List;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -45,4 +46,8 @@ public interface ActeNaissanceService {
     @GET
     @Path("/numero-acte/{id}")
     public int numeroActe(@PathParam("id") String registreID);
+    
+    @DELETE 
+    @Path("{id}")
+    public boolean delete(@PathParam("id") String id);
 }

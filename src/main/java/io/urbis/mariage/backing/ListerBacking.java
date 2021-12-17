@@ -32,6 +32,7 @@ import java.util.Map;
 import org.primefaces.PrimeFaces;
 import io.urbis.registre.api.EtatService;
 import io.urbis.registre.api.RegistreService;
+import io.urbis.registre.dto.StatutRegistre;
 
 /**
  *
@@ -44,7 +45,7 @@ public class ListerBacking extends BaseBacking implements Serializable{
     private static final Logger LOG = Logger.getLogger(ListerBacking.class.getName());
     
     @Inject
-    LazyActeMariageDataModele lazyActeMariageDataModele;
+    LazyActeMariageDataModel lazyActeMariageDataModele;
      
     @Inject 
     @RestClient
@@ -142,6 +143,7 @@ public class ListerBacking extends BaseBacking implements Serializable{
        return !dto.getStatut().equals(StatutActeMariage.PROJET.name()); 
     }
     
+    
     public void openNewActeExistant(){
         var ids = List.of(registreID);
         var operations = List.of(Operation.SAISIE_ACTE_EXISTANT.name());
@@ -151,15 +153,24 @@ public class ListerBacking extends BaseBacking implements Serializable{
         PrimeFaces.current().dialog().openDynamic("editer", options, params);
     }
     
+
     public void openNewDeclaration(){
         var ids = List.of(registreID);
-        var operations = List.of(Operation.DECLARATION_JUGEMENT.name());
+        var operations = List.of(Operation.DECLARATION.name());
         Map<String, List<String>> params = Map.of("id", ids,"operation",operations);
         Map<String,Object> options = getDialogOptions(100, 100, false);
         options.put("resizable", false);
         PrimeFaces.current().dialog().openDynamic("editer", options, params);
     }
 
+    public boolean disableButtonsOpenNew(){
+        LOG.log(Level.INFO, "REGISTRE DTO STATUT: {0}",registreDto.getStatut());
+        if(registreDto != null){
+            return !registreDto.getStatut().equals(StatutRegistre.VALIDE.name());
+          
+        }
+        return true;
+    }
     
 
     public String getRegistreID() {
@@ -186,11 +197,11 @@ public class ListerBacking extends BaseBacking implements Serializable{
         this.registreDto = registreDto;
     }
 
-    public LazyActeMariageDataModele getLazyActeMariageDataModele() {
+    public LazyActeMariageDataModel getLazyActeMariageDataModele() {
         return lazyActeMariageDataModele;
     }
 
-    public void setLazyActeMariageDataModele(LazyActeMariageDataModele lazyActeMariageDataModele) {
+    public void setLazyActeMariageDataModele(LazyActeMariageDataModel lazyActeMariageDataModele) {
         this.lazyActeMariageDataModele = lazyActeMariageDataModele;
     }
 

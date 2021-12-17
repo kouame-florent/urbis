@@ -9,6 +9,7 @@ import java.io.ByteArrayInputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Priority;
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import javax.validation.ValidationException;
 import javax.ws.rs.WebApplicationException;
@@ -32,12 +33,18 @@ public class ExceptionMapper implements ResponseExceptionMapper<RuntimeException
 
         RuntimeException re ;
         switch (status) {
+          case 400: 
+            re = new ValidationException(msg);
+            break;
           case 412: 
             re = new ValidationException(msg);
             break;
           case 404: 
             LOG.log(Level.INFO, "---MAPPER ERROR: {0}", 404);
             re = new EntityNotFoundException(msg);
+            break;
+          case 409:
+            re = new EntityExistsException(msg);
             break;
           default:
             LOG.log(Level.INFO, "---MAPPER ERROR: {0}", "DEFAULT");

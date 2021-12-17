@@ -71,7 +71,6 @@ public class EditerBacking extends BaseBacking implements Serializable{
     
     private static final Logger LOG = Logger.getLogger(EditerBacking.class.getName());
     
-    
     @Inject 
     @RestClient
     RegistreService registreService;
@@ -550,6 +549,7 @@ public class EditerBacking extends BaseBacking implements Serializable{
     
     }
     
+    /*
     public boolean disableNumeroInput(){
         if(operation != null){
             return (operation == Operation.DECLARATION_JUGEMENT);
@@ -557,6 +557,7 @@ public class EditerBacking extends BaseBacking implements Serializable{
         
         return false;
     }
+    */
     
     /*
     private void creerMentions(String acteID){
@@ -581,18 +582,11 @@ public class EditerBacking extends BaseBacking implements Serializable{
     }
 */
     
-    private boolean skip;
+   // private boolean skip;
     
     public String onFlowProcess(FlowEvent event) {
-        if (skip) {
-            skip = false; //reset in case user goes back
-            return "mariage";
-        }
-        else {
-            
-            return event.getNewStep();
-            
-        }
+       return event.getNewStep();
+       
     }
     
     public void closeView(){

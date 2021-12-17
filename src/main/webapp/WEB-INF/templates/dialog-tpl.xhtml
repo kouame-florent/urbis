@@ -32,16 +32,16 @@ xmlns:p="http://primefaces.org/ui">
         </div>
       
          
-        <!-- shows ajax task dialog -->
-        <p:ajaxStatus onstart="PF('statusDialog').show()" 
-                      onsuccess="PF('statusDialog').hide()" rendered="false"/>
-        <p:dialog widgetVar="statusDialog" modal="true" draggable="false" 
-                  closable="false" resizable="false" 
-                  showHeader="false" appendTo="@(body)">
-            <p:panelGrid columns="1" styleClass="ui-noborder ui-panelgrid-blank">
-                <h:outputText value="Traitement en cours..."/>
-                <p:graphicImage library="images" name="loading.gif"/>
-            </p:panelGrid>
+         <!-- shows ajax task dialog -->
+       <p:ajaxStatus onstart="PF('statusDialog').show()" 
+                     onsuccess="PF('statusDialog').hide()" rendered="true"/>
+       <p:dialog widgetVar="statusDialog" modal="true" draggable="false" 
+                 closable="false" resizable="false" 
+                 showHeader="false" >
+            <div class="p-text-center" >
+                <i class="pi pi-spin pi-spinner loading-icon" aria-hidden="true" style="margin-top: 25px"></i>
+            </div>
+            
         </p:dialog>
      
     </h:body>

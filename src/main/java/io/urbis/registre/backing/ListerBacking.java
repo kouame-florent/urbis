@@ -36,12 +36,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.security.enterprise.SecurityContext;
+import javax.validation.ValidationException;
 import javax.validation.constraints.NotBlank;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
-import org.keycloak.KeycloakPrincipal;
-import org.keycloak.adapters.RefreshableKeycloakSecurityContext;
-import org.keycloak.representations.AccessToken;
 import org.omnifaces.util.Ajax;
 import org.primefaces.PrimeFaces;
 import org.primefaces.event.SelectEvent;
@@ -191,17 +188,17 @@ public class ListerBacking extends BaseBacking implements Serializable{
     
     private void checkRequiredParams(){
         if(localiteService.count() != 1){
-            addGlobalMessage("Aucune localité n'a été créee.", FacesMessage.SEVERITY_ERROR);
+            addGlobalMessage("Aucune localité n'a été créée.", FacesMessage.SEVERITY_ERROR);
             Ajax.update("messageForm");
         }
         
         if(centreService.count() != 1){
-            addGlobalMessage("Aucun centre n'a été créee.", FacesMessage.SEVERITY_ERROR);
+            addGlobalMessage("Aucun centre n'a été créé.", FacesMessage.SEVERITY_ERROR);
             Ajax.update("messageForm");
         }
         
         if(tribunalService.count() != 1){
-            addGlobalMessage("Aucun tribunal n'a été créee.", FacesMessage.SEVERITY_ERROR);
+            addGlobalMessage("Aucun tribunal n'a été créé.", FacesMessage.SEVERITY_ERROR);
             Ajax.update("messageForm");
         }
     }
@@ -243,13 +240,23 @@ public class ListerBacking extends BaseBacking implements Serializable{
     }
     
     public void cloturer(@NotBlank String registreID){
-        registreService.patch(registreID,new RegistrePatchDto(StatutRegistre.CLOTURE.name(),""));
+        try{
+            registreService.patch(registreID,new RegistrePatchDto(StatutRegistre.CLOTURE.name(),""));
+        }catch(ValidationException ex){
+            LOG.log(Level.INFO,"ERROR MESSAGE: {0}",ex.getMessage());
+            addGlobalMessage(ex.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+        }
+        
         
     }
     
     public void supprimer(@NotBlank String id){
         LOG.log(Level.INFO, "DELETE REGISTRE WITH ID: {0}", id);
         registreService.delete(id);
+    }
+    
+    public boolean disabledButtonSupprimer(RegistreDto dto){
+       return  dto.getNombreActe() > 0;
     }
     
     public void showCreerView(){
@@ -335,18 +342,39 @@ public class ListerBacking extends BaseBacking implements Serializable{
     */
     
     public void openListActes(RegistreDto registreDto){
+        TypeRegistre typeRegistre = TypeRegistre.fromString(registreDto.getTypeRegistre());
+        switch(typeRegistre){
+            case NAISSANCE:
+                openListActesNaissance(registreDto);
+                break;
+            case MARIAGE:
+                openListActesMariage(registreDto);
+                break;
+        }
+    }
+    
+    private void openListActesNaissance(RegistreDto registreDto){
         var ids = List.of(registreDto.getId());
         var operations = List.of(Operation.SAISIE_ACTE_EXISTANT.name());
         Map<String, List<String>> params = Map.of("id", ids,"operation",operations);
         PrimeFaces.current().dialog().openDynamic("/acte/naissance/lister", getDialogOptions(98,98,true), params);
     }
     
+    private void openListActesMariage(RegistreDto registreDto){
+        var ids = List.of(registreDto.getId());
+        //var operations = List.of(Operation.SAISIE_ACTE_EXISTANT.name());
+        Map<String, List<String>> params = Map.of("id", ids);
+        PrimeFaces.current().dialog().openDynamic("/acte/mariage/lister", getDialogOptions(98,98,true), params);
+    }
+    
+    /*
     public void showActesListView(RegistreDto registreDto){
         LOG.log(Level.INFO, "REGISTRE ID: {0}", registreDto.getId());
         var values = List.of(registreDto.getId());
         Map<String, List<String>> params = Map.of("id", values);
         PrimeFaces.current().dialog().openDynamic("/acte/naissance/lister", getDialogOptions(98,98,true), params);
     }
+*/
     
     public boolean renderActeNaissanceMenus(RegistreDto registre){
         return registre.getTypeRegistre().equals("NAISSANCE");
@@ -405,9 +433,8 @@ public class ListerBacking extends BaseBacking implements Serializable{
     
    
     
-    public boolean disableMenuListActe(RegistreDto registreDto){
+    public boolean disableMenuGererActes(RegistreDto registreDto){
         return registreDto.getStatut().equals(StatutRegistre.ANNULE.name()) || 
-                registreDto.getStatut().equals(StatutRegistre.CLOTURE.name()) ||
                 registreDto.getStatut().equals(StatutRegistre.PROJET.name());  
     }
     

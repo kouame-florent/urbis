@@ -30,10 +30,10 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.persistence.EntityNotFoundException;
+import javax.persistence.EntityExistsException;
+import javax.validation.ValidationException;
 import javax.ws.rs.WebApplicationException;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
-import org.omnifaces.util.Ajax;
 import org.primefaces.PrimeFaces;
 
 /**
@@ -113,11 +113,7 @@ public class EditerSerieBacking extends BaseBacking implements Serializable{
           addGlobalMessage("Certains Paramètres de l'application sont inexistants", FacesMessage.SEVERITY_ERROR);
           ex.printStackTrace();
       }
-       
-        
-       // anneeCourante = registreService.anneeCourante();
-       // numeroRegistre = registreService.numeroRegistre(selectedType.getCode());
-       // numeroPremierActe = registreService.numeroPremierActe(selectedType.getCode());
+      
     }
     
     public boolean renderedLibelle(){
@@ -150,7 +146,9 @@ public class EditerSerieBacking extends BaseBacking implements Serializable{
         for (int i = premier; i <= dernier; i++ ){
             LOG.log(Level.INFO, "CREATING REGISTRE ...");
             //int numeroRegistre = registreService.numeroRegistre(selectedType.getCode(),anneeCourante);
-            int numeroPremierActe = registreService.numeroPremierActe(selectedType.getCode(),annee);
+            int numeroPremierActe = registreService.numeroPremierActe(selectedType.getCode(),annee,i-1);
+            int numeroDernierActe = registreService.numeroDernierActe(selectedType.getCode(), annee,i+1,
+                    numeroPremierActe, nombreDeFeuillets);
             LOG.log(Level.INFO, "NUMERO PREMIER ACTE: {0}", numeroPremierActe);
             
             RegistreDto registreDto = new RegistreDto();
@@ -167,39 +165,22 @@ public class EditerSerieBacking extends BaseBacking implements Serializable{
             registreDto.setTribunalID(currentTribunal.getId());
             registreDto.setOfficierEtatCivilID(selectedOfficierId);
             registreDto.setNumeroPremierActe(numeroPremierActe);
-            registreDto.setNumeroDernierActe(nombreDeFeuillets + numeroPremierActe - 1);
+            registreDto.setNumeroDernierActe(numeroDernierActe);
+            //registreDto.setNumeroDernierActe(nombreDeFeuillets + numeroPremierActe - 1);
             registreDto.setNombreDeFeuillets(nombreDeFeuillets);
             registreDto.setNombreActe(0);
             registreDto.setStatut("");
             registreDto.setDateAnnulation(null);
             registreDto.setMotifAnnulation("");
             
-            /*
-            var reg = new RegistreDto(
-                    "", 
-                    null, 
-                    null,
-                    selectedType.getCode(), 
-                    registreLibelle(selectedType),
-                    currentLocalite.getLibelle(), 
-                    currentLocalite.getId(), 
-                    currentCentre.getLibelle(), 
-                    currentCentre.getId(), 
-                    annee, 
-                    i, 
-                    currentTribunal.getLibelle(), 
-                    currentTribunal.getId(), 
-                    "",
-                    selectedOfficierId, 
-                    numeroPremierActe, 
-                    numeroPremierActe + nombreDeFeuillets - 1, 
-                    nombreDeFeuillets, 
-                    0,
-                    "", 
-                    null, 
-                    "");
-            */
-            RegistreDto regRes = registreService.create(registreDto);
+            try{
+                registreService.create(registreDto);
+            }catch(EntityExistsException | ValidationException e){
+                LOG.log(Level.SEVERE, e.getMessage());
+                addGlobalMessage(e.getMessage(), FacesMessage.SEVERITY_ERROR);
+                return;
+            }
+           
         }
         
        PrimeFaces.current().dialog().closeDynamic("");

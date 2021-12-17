@@ -40,6 +40,7 @@ xmlns:p="http://primefaces.org/ui">
                            <p:outputLabel for="annee" styleClass="p-d-block">Année</p:outputLabel>
                            <p:inputMask id="annee" value="#{registreListerBacking.filterData.annee}" mask="9999" maxlength="4"
                                           styleClass="p-d-block"/>
+                           <p:message for="annee"/>
                           
 
                         </div>
@@ -79,7 +80,7 @@ xmlns:p="http://primefaces.org/ui">
                      
                 </p:toolbarGroup>
                 <p:toolbarGroup align="right">
-                    <p:commandButton action="#{registreListerBacking.showParamsView()}" icon="pi pi-cog" />
+                    <p:commandButton action="#{registreListerBacking.showParamsView()}" icon="pi pi-cog" title="paramètres"/>
                 </p:toolbarGroup>
             </p:toolbar>
                  
@@ -172,19 +173,16 @@ xmlns:p="http://primefaces.org/ui">
                             
                         </p:menuitem>
                         <p:divider/>
-                        <p:menuitem value="Liste des actes" process="@this"  icon="pi pi-file"
-                                    action="#{registreListerBacking.showActesListView(registre)}"
-                                    disabled="#{registreListerBacking.disableMenuListActe(registre)}"
-                                    rendered="false"/>
-                         
-                        <p:menuitem value="Gerer des actes" process="@this" 
+                          
+                        <p:menuitem value="Gerer les actes" process="@this" 
                                     action="#{registreListerBacking.openListActes(registre)}" icon="pi pi-folder"
-                                    disabled="#{registreListerBacking.disableMenuListActe(registre)}"
+                                    disabled="#{registreListerBacking.disableMenuGererActes(registre)}"
                                     rendered="true"/>
                         
                         <p:divider/>
                         <p:menuitem value="Supprimer" process="@this" action="#{registreListerBacking.supprimer(registre.id)}"  
-                                   icon="pi pi-times" update="contentForm:registre">
+                                   icon="pi pi-times" update="contentForm:registre"
+                                   disabled="#{registreListerBacking.disabledButtonSupprimer(registre)}">
                             
                             <p:confirm header="Confirmation" 
                                        message="Voulez-vous vraiment supprimer le registre #{registre.numero} de #{registre.annee} ?" 

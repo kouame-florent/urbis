@@ -14,7 +14,7 @@ import javax.ws.rs.core.Response;
  * @author florent
  */
 public enum Operation {
-    DECLARATION_JUGEMENT("Declaration jugement"),
+    DECLARATION("Declaration"),
     SAISIE_ACTE_EXISTANT("Saisie acte existant"),
     MODIFICATION("Modification");
     

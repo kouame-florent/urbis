@@ -71,15 +71,18 @@ xmlns:p="http://primefaces.org/ui">
                 <p:toolbarGroup>
                     <p:commandButton value="Acte existant" icon="pi pi-plus"
                          actionListener="#{acteNaissanceListerBacking.openNewActeExistant()}"
+                         disabled="#{acteNaissanceListerBacking.disableButtonsOpenNew()}"
                          styleClass="ui-button-success" style="margin-right: .5rem">
                         <p:ajax event="dialogReturn" listener="#{acteNaissanceListerBacking.onNewActeReturn}"
                                  update="messageForm :contentForm:actesDatatable"/>
                     </p:commandButton>
                     <p:commandButton value="Declaration jugement" icon="pi pi-plus"
                                    actionListener="#{acteNaissanceListerBacking.openNewDeclaration()}"
+                                   disabled="#{acteNaissanceListerBacking.disableButtonsOpenNew()}"
                                    styleClass="ui-button-success" style="margin-right: .5rem">
                         <p:ajax event="dialogReturn" listener="#{acteNaissanceListerBacking.onNewActeReturn}"
-                                 update="messageForm :contentForm:actesDatatable"/>
+                                 update="messageForm :contentForm:actesDatatable"
+                                 />
 
                     </p:commandButton>
                   
@@ -139,8 +142,15 @@ xmlns:p="http://primefaces.org/ui">
                 <p:column  style="width: 2%">
                     <p:menuButton icon="pi pi-ellipsis-h" style="width: 100%;white-space: nowrap;width: auto !important;"
                                   title="options">
-                        <p:menuitem value="Consulter l'acte" process="@this"  icon="pi pi-book"/>
-                        <p:menuitem value="Valider l'acte" action="#{acteNaissanceListerBacking.showValiderActeView(acte)}" 
+                        <p:menuitem value="Consulter" process="@this"  icon="pi pi-book"/>
+                        <p:menuitem value="Valider" action="#{acteNaissanceListerBacking.showValiderActeView(acte)}" 
+                                    process="@this" disabled="#{acteNaissanceListerBacking.disableMenuValiderActe(acte)}" 
+                                    icon="pi pi-book">
+                            <p:ajax event="dialogReturn" listener="#{acteNaissanceListerBacking.onActeValidated}" 
+                                        update=":contentForm:actesDatatable"/>
+                        </p:menuitem>
+                        
+                        <p:menuitem value="Supprimer" action="#{acteNaissanceListerBacking.supprimer(acte)}" 
                                     process="@this" disabled="#{acteNaissanceListerBacking.disableMenuValiderActe(acte)}" 
                                     icon="pi pi-book">
                             <p:ajax event="dialogReturn" listener="#{acteNaissanceListerBacking.onActeValidated}" 
