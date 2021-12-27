@@ -83,57 +83,56 @@ xmlns:p="http://primefaces.org/ui">
            </p:fieldset>
             <p:spacer height="2" />
       
-                <p:fieldset >
+        <p:fieldset >
 
-                    <div class="ui-fluid p-formgrid p-grid">
-                        <div class="p-field p-lg-4">
+            <div class="ui-fluid p-formgrid p-grid">
+                <div class="p-field p-lg-4">
 
-                            <p:outputLabel for="numeroActe" styleClass="p-d-block" style="color: #ffffff">Numéro acte</p:outputLabel>
-                            <p:inputText id="numeroActe" value="#{acteMariageEditerBacking.acteDto.numero}" 
-                                         required="true"/>
+                    <p:outputLabel for="numeroActe" styleClass="p-d-block" style="color: #ffffff">Numéro acte</p:outputLabel>
+                    <p:inputText id="numeroActe" value="#{acteMariageEditerBacking.acteDto.numero}" 
+                                 required="true"/>
 
-                        </div>
+                </div>
 
+            </div>
+
+               <div class="ui-fluid p-formgrid p-grid">
+                    <div class="p-field p-lg-6">
+                        <p:outputLabel for="dateMariage" styleClass="p-d-block">Date mariage</p:outputLabel>
+                        <p:inputMask id="dateMariage"  
+                                     value="#{acteMariageEditerBacking.acteDto.dateMariage}"
+                            mask="99/99/9999 99:99:99" required="true" styleClass="p-d-block">
+                           <f:convertDateTime locale="fr_FR" type="localDateTime" pattern="dd/MM/yyyy HH:mm:ss"/>
+                       </p:inputMask>
+                       <p:message for="dateMariage"/>
+                    </div>
+                    <div class="p-field p-lg-6">
+                        <p:outputLabel for="lieuMariage" styleClass="p-d-block">Lieu mariage</p:outputLabel>
+                        <p:inputText id="lieuMariage" value="#{acteMariageEditerBacking.acteDto.lieuMariage}" 
+                                     required="true"  
+                                     styleClass="p-d-block"/>
                     </div>
 
-                       <div class="ui-fluid p-formgrid p-grid">
-                            <div class="p-field p-lg-6">
-                                <p:outputLabel for="dateMariage" styleClass="p-d-block">Date mariage</p:outputLabel>
-                                <p:inputMask id="dateMariage"  
-                                             value="#{acteMariageEditerBacking.acteDto.dateMariage}"
-                                    mask="99/99/9999 99:99:99" required="true" styleClass="p-d-block">
-                                   <f:convertDateTime locale="fr_FR" type="localDateTime" pattern="dd/MM/yyyy HH:mm:ss"/>
-                               </p:inputMask>
-                               <p:message for="dateMariage"/>
-                            </div>
-                            <div class="p-field p-lg-6">
-                                <p:outputLabel for="lieuMariage" styleClass="p-d-block">Lieu mariage</p:outputLabel>
-                                <p:inputText id="lieuMariage" value="#{acteMariageEditerBacking.acteDto.lieuMariage}" 
-                                             required="true"  
-                                             styleClass="p-d-block"/>
-                            </div>
+                     <div class="p-field p-lg-6"> 
+                         <div class="ui-fluid  p-grid">
+                         <div class="p-field p-lg-12">
+                             <p:outputLabel for="regime" styleClass="p-d-block">Regime matrimoniale</p:outputLabel>
+                             <p:selectOneRadio id="regime" 
+                                               value="#{acteMariageEditerBacking.acteDto.regime}" 
+                                                converter="omnifaces.SelectItemsConverter"
+                                                required="true">
 
-
-                             <div class="p-field p-lg-6"> 
-                                 <div class="ui-fluid  p-grid">
-                                 <div class="p-field p-lg-12">
-                                     <p:outputLabel for="regime" styleClass="p-d-block">Regime matrimoniale</p:outputLabel>
-                                     <p:selectOneRadio id="regime" 
-                                                       value="#{acteMariageEditerBacking.acteDto.regime}" 
-                                                        converter="omnifaces.SelectItemsConverter"
-                                                        required="true">
-
-                                         <f:selectItems value="#{acteMariageEditerBacking.regimes}" var="regime" 
-                                                           itemLabel="#{regime.libelle}" itemValue="#{regime.code}"/>
-                                       </p:selectOneRadio>
-                                 </div>
-
-                                </div>
-                              </div>
+                                 <f:selectItems value="#{acteMariageEditerBacking.regimes}" var="regime" 
+                                                   itemLabel="#{regime.libelle}" itemValue="#{regime.code}"/>
+                               </p:selectOneRadio>
+                         </div>
 
                         </div>
+                      </div>
 
-                   </p:fieldset>
+                </div>
+
+           </p:fieldset>
               
             <p:spacer height="2" />       
             <p:fieldset legend="Conjoint">

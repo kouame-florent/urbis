@@ -13,6 +13,7 @@ import io.urbis.mariage.dto.ActeMariageDto;
 import io.urbis.mariage.dto.Operation;
 import io.urbis.mariage.dto.RegimeDto;
 import io.urbis.mariage.dto.SituationMatrimonialeDto;
+import io.urbis.mariage.dto.StatutActeMariage;
 import io.urbis.naissance.api.ActeNaissanceService;
 import io.urbis.param.api.OfficierService;
 import io.urbis.param.dto.OfficierEtatCivilDto;
@@ -136,30 +137,31 @@ public class EditerBacking extends BaseBacking implements Serializable{
     }
     
     public void valider(){
-        /*
+        
         try{
-            acteMariageService.create(acteDto);
-            resetActeDto();
-            addGlobalMessage("Déclaration enregistrée avec succès", FacesMessage.SEVERITY_INFO);
+            acteDto.setStatut(StatutActeMariage.VALIDE.name());
+            acteMariageService.update(acteDto.getId(), acteDto);
+            addGlobalMessage("Acte validé avec succès", FacesMessage.SEVERITY_INFO);
+            PrimeFaces.current().dialog().closeDynamic(null);
         }catch(ValidationException ex){
             LOG.log(Level.INFO,"ERROR MESSAGE: {0}",ex.getMessage());
             addGlobalMessage(ex.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
         }
-*/
+
     }
     
     public boolean renderedValiderButton(){
-        if(acteDto != null){
-            return acteDto.getOperation().equals(Operation.VALIDATION.name());
+        if(operation != null){
+            return operation == Operation.VALIDATION && 
+                    acteDto.getStatut().equals(StatutActeMariage.PROJET.name());
         }
         
         return false;
     }
     
     public boolean renderedCreerButton(){
-        if(acteDto != null){
-            return acteDto.getOperation().equals(Operation.SAISIE_ACTE_EXISTANT.name()) || 
-                    acteDto.getOperation().equals(Operation.DECLARATION.name());
+        if(operation != null){
+            return operation == Operation.SAISIE_ACTE_EXISTANT || operation == Operation.DECLARATION;
         }
         
         return false;

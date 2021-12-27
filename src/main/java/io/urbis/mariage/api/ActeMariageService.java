@@ -10,6 +10,7 @@ import io.urbis.mariage.dto.ActeMariageDto;
 import java.util.List;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
@@ -27,6 +28,9 @@ public interface ActeMariageService {
     
     @POST
     public void create(ActeMariageDto dto);
+    
+    @PUT @Path("{id}")
+    public void update(@PathParam("id") String id,ActeMariageDto dto);
     
     @GET @Path("{id}")
     public ActeMariageDto findById(@PathParam("id") String id);
