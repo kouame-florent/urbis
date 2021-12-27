@@ -16,7 +16,7 @@ xmlns:p="http://primefaces.org/ui">
         
         <f:metadata>
             <f:viewParam name="operation" value="#{acteMariageEditerBacking.operationParam}" />
-            <f:viewParam name="id" value="#{acteMariageEditerBacking.registreID}" />
+            <f:viewParam name="reg-id" value="#{acteMariageEditerBacking.registreID}" required="true"/>
             <f:viewParam name="acte-id" value="#{acteMariageEditerBacking.acteMariageID}" />
             <f:viewAction action="#{acteMariageEditerBacking.onload}" />
         </f:metadata>
@@ -38,8 +38,7 @@ xmlns:p="http://primefaces.org/ui">
             </p:toolbar>
             
             <p:focus context="contentForm"/>
-         
-           
+          
             <p:fieldset legend="Référence registre">
                <div class="ui-fluid p-formgrid p-grid">
                    <div class="p-field p-col">
@@ -83,118 +82,155 @@ xmlns:p="http://primefaces.org/ui">
 
            </p:fieldset>
             <p:spacer height="2" />
-                
-            
-            <p:wizard id="acteWizard" widgetVar="wizardWgt" flowListener="#{acteMariageEditerBacking.onFlowProcess}"
-                      nextLabel="suivant" backLabel="précédent">
-                    <p:tab id="epoux" title="Epoux">
-                       <p:focus context="epoux"/>
-                       
-                        <div class="ui-fluid p-formgrid p-grid">
-                            <div class="p-field p-lg-4">
-                                <p:fieldset>
-                                      <p:outputLabel for="numeroActe" styleClass="p-d-block" style="color: #ffffff">Numéro acte</p:outputLabel>
-                                      <p:inputText id="numeroActe" value="#{acteMariageEditerBacking.acteDto.numero}" 
-                                                   required="true"/>
-                                </p:fieldset>
-                            </div>
+      
+                <p:fieldset >
+
+                    <div class="ui-fluid p-formgrid p-grid">
+                        <div class="p-field p-lg-4">
+
+                            <p:outputLabel for="numeroActe" styleClass="p-d-block" style="color: #ffffff">Numéro acte</p:outputLabel>
+                            <p:inputText id="numeroActe" value="#{acteMariageEditerBacking.acteDto.numero}" 
+                                         required="true"/>
 
                         </div>
-                       
-                       <p:fieldset legend="Conjoint">
-                           <div class="ui-fluid p-formgrid p-grid">
-                                <div class="p-field p-lg-6">
-                                    <p:outputLabel for="nom" styleClass="p-d-block">Nom</p:outputLabel>
-                                    <p:inputText id="nom" value="#{acteMariageEditerBacking.acteDto.epouxConjointNom}" required="true"  
-                                                    styleClass="p-d-block"/>
-                                </div>
-                                <div class="p-field p-lg-6">
-                                    <p:outputLabel for="prenoms" styleClass="p-d-block">Prénoms</p:outputLabel>
-                                    <p:inputText id="prenoms" value="#{acteMariageEditerBacking.acteDto.epouxConjointPrenoms}" required="true"  
-                                                    styleClass="p-d-block"/>
-                                </div>
-                               <div class="p-field p-lg-6">
-                                    <p:outputLabel for="profession" styleClass="p-d-block">Profession</p:outputLabel>
-                                    <p:inputText id="profession" value="#{acteMariageEditerBacking.acteDto.epouxConjointProfession}" required="true"  
-                                                    styleClass="p-d-block"/>
-                                </div>
-                                <div class="p-field p-lg-6">
-                                    <p:outputLabel for="dateNaissance" styleClass="p-d-block">Date de naissance</p:outputLabel>
-                                    <p:inputMask id="dateNaissance" value="#{acteMariageEditerBacking.acteDto.epouxConjointDateNaissance}"
-                                                 mask="99/99/9999 99:99:99" required="true">
-                                        <f:convertDateTime locale="fr_FR" type="localDateTime" pattern="dd/MM/yyyy HH:mm:ss"/>
-                                    </p:inputMask>
 
-                                    <p:message for="dateNaissance"/>
+                    </div>
 
-                                </div>
-                               
-                                <div class="p-field p-lg-6">
-                                    <p:outputLabel for="lieuNaissance" styleClass="p-d-block">Lieu de naissance</p:outputLabel>
-                                    <p:inputText id="lieuNaissance" value="#{acteMariageEditerBacking.acteDto.epouxConjointLieuNaissance}" required="true"  
-                                                    styleClass="p-d-block"/>
-                                </div>
-                               
-                                 <div class="p-field p-lg-6">
-                                    <p:outputLabel for="domicile" styleClass="p-d-block">Domicile</p:outputLabel>
-                                    <p:inputText id="domicile" value="#{acteMariageEditerBacking.acteDto.epouxConjointDomicile}" required="true"  
-                                                    styleClass="p-d-block"/>
-                                </div>
-                                 <div class="p-field p-lg-6"> 
-                                     <div class="ui-fluid  p-grid">
-                                     <div class="p-field p-lg-12">
-                                         <p:outputLabel for="situation" styleClass="p-d-block">Situation matrimoniale</p:outputLabel>
-                                         <p:selectOneRadio id="situation" 
-                                                           value="#{acteMariageEditerBacking.acteDto.epouxConjointSituationMatrimoniale}" 
-                                                            converter="omnifaces.SelectItemsConverter"
-                                                            required="true">
-
-                                             <f:selectItems value="#{acteMariageEditerBacking.situations}" var="situation" 
-                                                               itemLabel="#{situation.libelle}" itemValue="#{situation.code}"/>
-                                           </p:selectOneRadio>
-                                     </div>
-
-                                    </div>
-                                  </div>
-
+                       <div class="ui-fluid p-formgrid p-grid">
+                            <div class="p-field p-lg-6">
+                                <p:outputLabel for="dateMariage" styleClass="p-d-block">Date mariage</p:outputLabel>
+                                <p:inputMask id="dateMariage"  
+                                             value="#{acteMariageEditerBacking.acteDto.dateMariage}"
+                                    mask="99/99/9999 99:99:99" required="true" styleClass="p-d-block">
+                                   <f:convertDateTime locale="fr_FR" type="localDateTime" pattern="dd/MM/yyyy HH:mm:ss"/>
+                               </p:inputMask>
+                               <p:message for="dateMariage"/>
                             </div>
-                           
-                       </p:fieldset>
+                            <div class="p-field p-lg-6">
+                                <p:outputLabel for="lieuMariage" styleClass="p-d-block">Lieu mariage</p:outputLabel>
+                                <p:inputText id="lieuMariage" value="#{acteMariageEditerBacking.acteDto.lieuMariage}" 
+                                             required="true"  
+                                             styleClass="p-d-block"/>
+                            </div>
+
+
+                             <div class="p-field p-lg-6"> 
+                                 <div class="ui-fluid  p-grid">
+                                 <div class="p-field p-lg-12">
+                                     <p:outputLabel for="regime" styleClass="p-d-block">Regime matrimoniale</p:outputLabel>
+                                     <p:selectOneRadio id="regime" 
+                                                       value="#{acteMariageEditerBacking.acteDto.regime}" 
+                                                        converter="omnifaces.SelectItemsConverter"
+                                                        required="true">
+
+                                         <f:selectItems value="#{acteMariageEditerBacking.regimes}" var="regime" 
+                                                           itemLabel="#{regime.libelle}" itemValue="#{regime.code}"/>
+                                       </p:selectOneRadio>
+                                 </div>
+
+                                </div>
+                              </div>
+
+                        </div>
+
+                   </p:fieldset>
+              
+            <p:spacer height="2" />       
+            <p:fieldset legend="Conjoint">
+                <div class="ui-fluid p-formgrid p-grid">
+                     <div class="p-field p-lg-6">
+                         <p:outputLabel for="epouxNom" styleClass="p-d-block">Nom</p:outputLabel>
+                         <p:inputText id="epouxNom" value="#{acteMariageEditerBacking.acteDto.epouxConjointNom}" required="true"  
+                                         styleClass="p-d-block"/>
+                     </div>
+                     <div class="p-field p-lg-6">
+                         <p:outputLabel for="epouxPrenoms" styleClass="p-d-block">Prénoms</p:outputLabel>
+                         <p:inputText id="epouxPrenoms" value="#{acteMariageEditerBacking.acteDto.epouxConjointPrenoms}" required="true"  
+                                         styleClass="p-d-block"/>
+                     </div>
+                    <div class="p-field p-lg-6">
+                         <p:outputLabel for="epouxProfession" styleClass="p-d-block">Profession</p:outputLabel>
+                         <p:inputText id="epouxProfession" value="#{acteMariageEditerBacking.acteDto.epouxConjointProfession}" required="true"  
+                                         styleClass="p-d-block"/>
+                     </div>
+                     <div class="p-field p-lg-6">
+                         <p:outputLabel for="epouxDateNaissance" styleClass="p-d-block">Date de naissance</p:outputLabel>
+                         <p:inputMask id="epouxDateNaissance" value="#{acteMariageEditerBacking.acteDto.epouxConjointDateNaissance}"
+                                      mask="99/99/9999" required="true">
+                             <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
+                         </p:inputMask>
+
+                         <p:message for="epouxDateNaissance"/>
+
+                     </div>
+
+                     <div class="p-field p-lg-6">
+                         <p:outputLabel for="epouxLieuNaissance" styleClass="p-d-block">Lieu de naissance</p:outputLabel>
+                         <p:inputText id="epouxLieuNaissance" value="#{acteMariageEditerBacking.acteDto.epouxConjointLieuNaissance}" required="true"  
+                                         styleClass="p-d-block"/>
+                     </div>
+
+                      <div class="p-field p-lg-6">
+                         <p:outputLabel for="epouxDomicile" styleClass="p-d-block">Domicile</p:outputLabel>
+                         <p:inputText id="epouxDomicile" value="#{acteMariageEditerBacking.acteDto.epouxConjointDomicile}" required="true"  
+                                         styleClass="p-d-block"/>
+                     </div>
+                      <div class="p-field p-lg-6"> 
+                          <div class="ui-fluid  p-grid">
+                          <div class="p-field p-lg-12">
+                              <p:outputLabel for="epouxSituation" styleClass="p-d-block">Situation matrimoniale</p:outputLabel>
+                              <p:selectOneRadio id="epouxSituation" 
+                                                value="#{acteMariageEditerBacking.acteDto.epouxConjointSituationMatrimoniale}" 
+                                                 converter="omnifaces.SelectItemsConverter"
+                                                 required="true">
+
+                                  <f:selectItems value="#{acteMariageEditerBacking.situations}" var="situation" 
+                                                    itemLabel="#{situation.libelle}" itemValue="#{situation.code}"/>
+                                </p:selectOneRadio>
+                          </div>
+
+                         </div>
+                       </div>
+
+                 </div>
+
+            </p:fieldset>
                        
-                       <p:fieldset legend="Filiation Epoux">
+            <p:spacer height="2" /> 
+            <p:fieldset legend="Filiation Epoux">
                         <div class="p-grid">
                             <div class="p-lg-6">
-                                <p:fieldset legend="Père">
-                                <p:outputPanel id="pereOutputPanel">
+                                <p:fieldset legend="Père de l'époux">
+                                <p:outputPanel id="epouxPereOutputPanel">
                                 <div class="ui-fluid p-formgrid p-grid">
                                     <div class="p-field p-lg-12">
-                                        <p:outputLabel for="pereDecede" styleClass="p-d-block">Père décédé ?</p:outputLabel>
-                                        <p:toggleSwitch id="pereDecede" value="#{acteMariageEditerBacking.acteDto.epouxPereDecede}">
-                                            <p:ajax  update="pereOutputPanel"/>
+                                        <p:outputLabel for="epouxPereDecede" styleClass="p-d-block">Père décédé ?</p:outputLabel>
+                                        <p:toggleSwitch id="epouxPereDecede" value="#{acteMariageEditerBacking.acteDto.epouxPereDecede}">
+                                            <p:ajax  update="epouxPereOutputPanel"/>
                                         </p:toggleSwitch>
                                         <div class="p-field p-lg-12">    
-                                            <p:outputLabel for="pereNom" styleClass="p-d-block">Nom</p:outputLabel>
-                                            <p:inputText id="pereNom" value="#{acteMariageEditerBacking.acteDto.epouxPereNom}"  required="true" 
+                                            <p:outputLabel for="epouxPereNom" styleClass="p-d-block">Nom</p:outputLabel>
+                                            <p:inputText id="epouxPereNom" value="#{acteMariageEditerBacking.acteDto.epouxPereNom}"  required="true" 
                                                           styleClass="p-d-block"/>
                                         </div>
                                         <div class="p-field p-lg-12">
-                                            <p:outputLabel for="perePrenoms" styleClass="p-d-block">Prénoms</p:outputLabel>
-                                            <p:inputText id="perePrenoms" value="#{acteMariageEditerBacking.acteDto.epouxPerePrenoms}" required="true"  
+                                            <p:outputLabel for="epouxPerePrenoms" styleClass="p-d-block">Prénoms</p:outputLabel>
+                                            <p:inputText id="epouxPerePrenoms" value="#{acteMariageEditerBacking.acteDto.epouxPerePrenoms}" required="true"  
                                                          styleClass="p-d-block"/>
                                         </div>
                                         
                                          <div class="p-field p-lg-12">
-                                            <p:outputLabel for="pereProfession" styleClass="p-d-block" 
+                                            <p:outputLabel for="epouxPereProfession" styleClass="p-d-block" 
                                                            rendered="#{!acteMariageEditerBacking.acteDto.epouxPereDecede}">Profession</p:outputLabel>
-                                            <p:inputText id="pereProfession" value="#{acteMariageEditerBacking.acteDto.epouxPereProfession}"
+                                            <p:inputText id="epouxPereProfession" value="#{acteMariageEditerBacking.acteDto.epouxPereProfession}"
                                                          rendered="#{!acteMariageEditerBacking.acteDto.epouxPereDecede}" required="true" 
                                                          styleClass="p-d-block"/>
                                         </div>
                                         
                                         <div class="p-field p-lg-12">
-                                            <p:outputLabel for="pereDomicile" styleClass="p-d-block" 
+                                            <p:outputLabel for="epouxPereDomicile" styleClass="p-d-block" 
                                                            rendered="#{!acteMariageEditerBacking.acteDto.epouxPereDecede}">Domicile</p:outputLabel>
-                                            <p:inputText id="pereDomicile" value="#{acteMariageEditerBacking.acteDto.epouxPereProfession}"
+                                            <p:inputText id="epouxPereDomicile" value="#{acteMariageEditerBacking.acteDto.epouxPereDomicile}"
                                                          rendered="#{!acteMariageEditerBacking.acteDto.epouxPereDecede}" required="true" 
                                                          styleClass="p-d-block"/>
                                         </div>
@@ -203,16 +239,17 @@ xmlns:p="http://primefaces.org/ui">
                                         <div class="p-field p-lg-12">
                                             <div class="ui-fluid p-grid">
                                                 <div class="p-field p-lg-6">
-                                                    <p:outputLabel for="pereDateDeces" rendered="#{acteMariageEditerBacking.acteDto.epouxPereDecede}" styleClass="p-d-block">Décédé le</p:outputLabel>
-                                                    <p:inputMask id="pereDateDeces" rendered="#{acteMariageEditerBacking.acteDto.epouxPereDecede}" 
+                                                    <p:outputLabel for="epouxPereDateDeces" rendered="#{acteMariageEditerBacking.acteDto.epouxPereDecede}" styleClass="p-d-block">Décédé le</p:outputLabel>
+                                                    <p:inputMask id="epouxPereDateDeces" rendered="#{acteMariageEditerBacking.acteDto.epouxPereDecede}" 
                                                                  value="#{acteMariageEditerBacking.acteDto.epouxPereDateDeces}"
                                                         mask="99/99/9999" required="true" styleClass="p-d-block">
                                                        <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
                                                    </p:inputMask>
+                                                   <p:message for="epouxPereDateDeces"/>
                                                 </div>
                                                 <div class="p-field p-lg-6">
-                                                    <p:outputLabel for="pereLieuDeces" rendered="#{acteMariageEditerBacking.acteDto.epouxPereDecede}" styleClass="p-d-block">à</p:outputLabel>
-                                                    <p:inputText id="pereLieuDeces" rendered="#{acteMariageEditerBacking.acteDto.epouxPereDecede}" 
+                                                    <p:outputLabel for="epouxPereLieuDeces" rendered="#{acteMariageEditerBacking.acteDto.epouxPereDecede}" styleClass="p-d-block">à</p:outputLabel>
+                                                    <p:inputText id="epouxPereLieuDeces" rendered="#{acteMariageEditerBacking.acteDto.epouxPereDecede}" 
                                                                  value="#{acteMariageEditerBacking.acteDto.epouxPereLieuDeces}"  
                                                              styleClass="p-d-block"/>
                                                 </div>
@@ -226,37 +263,37 @@ xmlns:p="http://primefaces.org/ui">
                                 </p:fieldset>
                              </div>
                             <div class="p-lg-6">
-                                <p:fieldset legend="Mère">
-                                    <p:outputPanel id="mereOutputPanel">
+                                <p:fieldset legend="Mère de l'époux">
+                                    <p:outputPanel id="epouxMereOutputPanel">
                                          <div class="ui-fluid p-formgrid p-grid">
                                             <div class="p-field p-lg-12">
-                                                <p:outputLabel for="mereDecede" styleClass="p-d-block">Mère décédé ?</p:outputLabel>
-                                                <p:toggleSwitch id="mereDecede" value="#{acteMariageEditerBacking.acteDto.epouxMereDecede}">
-                                                    <p:ajax  update="mereOutputPanel"/>
+                                                <p:outputLabel for="epouxMereDecede" styleClass="p-d-block">Mère décédé ?</p:outputLabel>
+                                                <p:toggleSwitch id="epouxMereDecede" value="#{acteMariageEditerBacking.acteDto.epouxMereDecede}">
+                                                    <p:ajax  update="epouxMereOutputPanel"/>
                                                 </p:toggleSwitch>
                                                 <div class="p-field p-lg-12">    
-                                                    <p:outputLabel for="mereNom" styleClass="p-d-block">Nom</p:outputLabel>
-                                                    <p:inputText id="mereNom" value="#{acteMariageEditerBacking.acteDto.epouxMereNom}"  required="true" 
+                                                    <p:outputLabel for="epouxMereNom" styleClass="p-d-block">Nom</p:outputLabel>
+                                                    <p:inputText id="epouxMereNom" value="#{acteMariageEditerBacking.acteDto.epouxMereNom}"  required="true" 
                                                                   styleClass="p-d-block"/>
                                                 </div>
                                                 <div class="p-field p-lg-12">
-                                                    <p:outputLabel for="merePrenoms" styleClass="p-d-block">Prénoms</p:outputLabel>
-                                                    <p:inputText id="merePrenoms" value="#{acteMariageEditerBacking.acteDto.epouxMerePrenoms}" required="true"  
+                                                    <p:outputLabel for="epouxMerePrenoms" styleClass="p-d-block">Prénoms</p:outputLabel>
+                                                    <p:inputText id="epouxMerePrenoms" value="#{acteMariageEditerBacking.acteDto.epouxMerePrenoms}" required="true"  
                                                                  styleClass="p-d-block"/>
                                                 </div>
 
                                                  <div class="p-field p-lg-12">
-                                                    <p:outputLabel for="mereProfession" styleClass="p-d-block" 
+                                                    <p:outputLabel for="epouxMereProfession" styleClass="p-d-block" 
                                                                    rendered="#{!acteMariageEditerBacking.acteDto.epouxMereDecede}">Profession</p:outputLabel>
-                                                    <p:inputText id="mereProfession" value="#{acteMariageEditerBacking.acteDto.epouxMereProfession}"
+                                                    <p:inputText id="epouxMereProfession" value="#{acteMariageEditerBacking.acteDto.epouxMereProfession}"
                                                                  rendered="#{!acteMariageEditerBacking.acteDto.epouxMereDecede}" required="true" 
                                                                  styleClass="p-d-block"/>
                                                 </div>
 
                                                 <div class="p-field p-lg-12">
-                                                    <p:outputLabel for="mereDomicile" styleClass="p-d-block" 
+                                                    <p:outputLabel for="epouxMereDomicile" styleClass="p-d-block" 
                                                                    rendered="#{!acteMariageEditerBacking.acteDto.epouxMereDecede}">Domicile</p:outputLabel>
-                                                    <p:inputText id="mereDomicile" value="#{acteMariageEditerBacking.acteDto.epouxMereProfession}"
+                                                    <p:inputText id="epouxMereDomicile" value="#{acteMariageEditerBacking.acteDto.epouxMereDomicile}"
                                                                  rendered="#{!acteMariageEditerBacking.acteDto.epouxMereDecede}" required="true" 
                                                                  styleClass="p-d-block"/>
                                                 </div>
@@ -265,24 +302,23 @@ xmlns:p="http://primefaces.org/ui">
                                                 <div class="p-field p-lg-12">
                                                     <div class="ui-fluid p-grid">
                                                         <div class="p-field p-lg-6">
-                                                            <p:outputLabel for="mereDateDeces" rendered="#{acteMariageEditerBacking.acteDto.epouxMereDecede}" styleClass="p-d-block">Décédé le</p:outputLabel>
-                                                            <p:inputMask id="mereDateDeces" rendered="#{acteMariageEditerBacking.acteDto.epouxMereDecede}" 
+                                                            <p:outputLabel for="epouxMereDateDeces" rendered="#{acteMariageEditerBacking.acteDto.epouxMereDecede}" styleClass="p-d-block">Décédé le</p:outputLabel>
+                                                            <p:inputMask id="epouxMereDateDeces" rendered="#{acteMariageEditerBacking.acteDto.epouxMereDecede}" 
                                                                          value="#{acteMariageEditerBacking.acteDto.epouxMereDateDeces}"
-                                                                mask="99/99/9999" required="true" styleClass="p-d-block">
+                                                                         mask="99/99/9999" required="true"  styleClass="p-d-block">
                                                                <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
                                                            </p:inputMask>
+                                                            <p:message for="epouxMereDateDeces"/>
                                                         </div>
                                                         <div class="p-field p-lg-6">
-                                                            <p:outputLabel for="mereLieuDeces" rendered="#{acteMariageEditerBacking.acteDto.epouxMereDecede}" styleClass="p-d-block">à</p:outputLabel>
-                                                            <p:inputText id="mereLieuDeces" rendered="#{acteMariageEditerBacking.acteDto.epouxMereDecede}" 
+                                                            <p:outputLabel for="epouxMereLieuDeces" rendered="#{acteMariageEditerBacking.acteDto.epouxMereDecede}" styleClass="p-d-block">à</p:outputLabel>
+                                                            <p:inputText id="epouxMereLieuDeces" rendered="#{acteMariageEditerBacking.acteDto.epouxMereDecede}" 
                                                                          value="#{acteMariageEditerBacking.acteDto.epouxMereLieuDeces}"  
                                                                      styleClass="p-d-block"/>
                                                         </div>
                                                     </div>
                                                 </div>
-
-
-                                             </div>
+                                            </div>
                                         </div>
                                    
                                     </p:outputPanel>
@@ -292,17 +328,328 @@ xmlns:p="http://primefaces.org/ui">
                         </div>
 
                     </p:fieldset>
+            <p:spacer height="2" />
+            <p:fieldset legend="Temoin de l'époux">
+                <div class="ui-fluid p-formgrid p-grid">
+                    <div class="p-field p-lg-6">
+                        <p:outputLabel for="epouxTemoinNom" styleClass="p-d-block">Nom</p:outputLabel>
+                        <p:inputText id="epouxTemoinNom" value="#{acteMariageEditerBacking.acteDto.epouxTemoinNom}" required="true"  
+                                        styleClass="p-d-block"/>
+                    </div>
+                    <div class="p-field p-lg-6">
+                        <p:outputLabel for="epouxTemoinPrenoms" styleClass="p-d-block">Prénoms</p:outputLabel>
+                        <p:inputText id="epouxTemoinPrenoms" value="#{acteMariageEditerBacking.acteDto.epouxTemoinPrenoms}" required="true"  
+                                        styleClass="p-d-block"/>
+                    </div>
+                   <div class="p-field p-lg-6">
+                        <p:outputLabel for="epouxTemoinProfession" styleClass="p-d-block">Profession</p:outputLabel>
+                        <p:inputText id="epouxTemoinProfession" value="#{acteMariageEditerBacking.acteDto.epouxTemoinProfession}" 
+                                     required="true" styleClass="p-d-block"/>
+                    </div>
 
-                    </p:tab>
-                    <p:tab id="epouse" title="epouse">
-                        
-                    </p:tab>
-                   
-            </p:wizard>
-            
+                     <div class="p-field p-lg-6">
+                        <p:outputLabel for="epouxTemoinDomicile" styleClass="p-d-block">Domicile</p:outputLabel>
+                        <p:inputText id="epouxTemoinDomicile" value="#{acteMariageEditerBacking.acteDto.epouxTemoinDomicile}" 
+                                     required="true" styleClass="p-d-block"/>
+                    </div>
+
+                    <div class="p-field p-lg-6">
+                        <p:outputLabel for="epouxTemoinDateNaissance" styleClass="p-d-block">Date naissance</p:outputLabel>
+                        <p:inputMask id="epouxTemoinDateNaissance" value="#{acteMariageEditerBacking.acteDto.epouxTemoinDateNaissance}"
+                                         mask="99/99/9999" required="true">
+                                <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
+                        </p:inputMask>
+                         <p:message for="epouxTemoinDateNaissance"/>
+                    </div>
+
+                </div>
+            </p:fieldset>
+            <p:spacer height="2" />
+            <p:fieldset legend="Conjointe">
+                <div class="ui-fluid p-formgrid p-grid">
+                     <div class="p-field p-lg-6">
+                         <p:outputLabel for="epouseNom" styleClass="p-d-block">Nom</p:outputLabel>
+                         <p:inputText id="epouseNom" value="#{acteMariageEditerBacking.acteDto.epouseConjointNom}" required="true"  
+                                         styleClass="p-d-block"/>
+                     </div>
+                     <div class="p-field p-lg-6">
+                         <p:outputLabel for="epousePrenoms" styleClass="p-d-block">Prénoms</p:outputLabel>
+                         <p:inputText id="epousePrenoms" value="#{acteMariageEditerBacking.acteDto.epouseConjointPrenoms}" required="true"  
+                                         styleClass="p-d-block"/>
+                     </div>
+                    <div class="p-field p-lg-6">
+                         <p:outputLabel for="epouseProfession" styleClass="p-d-block">Profession</p:outputLabel>
+                         <p:inputText id="epouseProfession" value="#{acteMariageEditerBacking.acteDto.epouseConjointProfession}" required="true"  
+                                         styleClass="p-d-block"/>
+                     </div>
+                     <div class="p-field p-lg-6">
+                         <p:outputLabel for="epouseDateNaissance" styleClass="p-d-block">Date de naissance</p:outputLabel>
+                         <p:inputMask id="epouseDateNaissance" value="#{acteMariageEditerBacking.acteDto.epouseConjointDateNaissance}"
+                                      mask="99/99/9999" required="true">
+                             <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
+                         </p:inputMask>
+
+                         <p:message for="epouseDateNaissance"/>
+
+                     </div>
+
+                     <div class="p-field p-lg-6">
+                         <p:outputLabel for="epouseLieuNaissance" styleClass="p-d-block">Lieu de naissance</p:outputLabel>
+                         <p:inputText id="epouseLieuNaissance" value="#{acteMariageEditerBacking.acteDto.epouseConjointLieuNaissance}" required="true"  
+                                         styleClass="p-d-block"/>
+                     </div>
+
+                      <div class="p-field p-lg-6">
+                         <p:outputLabel for="epouseDomicile" styleClass="p-d-block">Domicile</p:outputLabel>
+                         <p:inputText id="epouseDomicile" value="#{acteMariageEditerBacking.acteDto.epouseConjointDomicile}" required="true"  
+                                         styleClass="p-d-block"/>
+                     </div>
+                      <div class="p-field p-lg-6"> 
+                          <div class="ui-fluid  p-grid">
+                          <div class="p-field p-lg-12">
+                              <p:outputLabel for="epouseSituation" styleClass="p-d-block">Situation matrimoniale</p:outputLabel>
+                              <p:selectOneRadio id="epouseSituation" 
+                                                value="#{acteMariageEditerBacking.acteDto.epouseConjointSituationMatrimoniale}" 
+                                                 converter="omnifaces.SelectItemsConverter"
+                                                 required="true">
+
+                                  <f:selectItems value="#{acteMariageEditerBacking.situations}" var="situation" 
+                                                    itemLabel="#{situation.libelle}" itemValue="#{situation.code}"/>
+                                </p:selectOneRadio>
+                          </div>
+
+                         </div>
+                       </div>
+
+                 </div>
+
+               </p:fieldset>
+            <p:spacer height="2" />          
+                <p:fieldset legend="Filiation Epouse">
+                 <div class="p-grid">
+                     <div class="p-lg-6">
+                         <p:fieldset legend="Père de l'épouse">
+                         <p:outputPanel id="epousePereOutputPanel">
+                         <div class="ui-fluid p-formgrid p-grid">
+                             <div class="p-field p-lg-12">
+                                 <p:outputLabel for="epousePereDecede" styleClass="p-d-block">Père décédé ?</p:outputLabel>
+                                 <p:toggleSwitch id="epousePereDecede" value="#{acteMariageEditerBacking.acteDto.epousePereDecede}">
+                                     <p:ajax  update="epousePereOutputPanel"/>
+                                 </p:toggleSwitch>
+                                 <div class="p-field p-lg-12">    
+                                     <p:outputLabel for="epousePereNom" styleClass="p-d-block">Nom</p:outputLabel>
+                                     <p:inputText id="epousePereNom" value="#{acteMariageEditerBacking.acteDto.epousePereNom}"  required="true" 
+                                                   styleClass="p-d-block"/>
+                                 </div>
+                                 <div class="p-field p-lg-12">
+                                     <p:outputLabel for="epousePerePrenoms" styleClass="p-d-block">Prénoms</p:outputLabel>
+                                     <p:inputText id="epousePerePrenoms" value="#{acteMariageEditerBacking.acteDto.epousePerePrenoms}" required="true"  
+                                                  styleClass="p-d-block"/>
+                                 </div>
+
+                                  <div class="p-field p-lg-12">
+                                     <p:outputLabel for="epousePereProfession" styleClass="p-d-block" 
+                                                    rendered="#{!acteMariageEditerBacking.acteDto.epousePereDecede}">Profession</p:outputLabel>
+                                     <p:inputText id="epousePereProfession" 
+                                                  value="#{acteMariageEditerBacking.acteDto.epousePereProfession}"
+                                                  rendered="#{!acteMariageEditerBacking.acteDto.epousePereDecede}" required="true" 
+                                                  styleClass="p-d-block"/>
+                                 </div>
+
+                                 <div class="p-field p-lg-12">
+                                     <p:outputLabel for="epousePereDomicile" styleClass="p-d-block" 
+                                                    rendered="#{!acteMariageEditerBacking.acteDto.epousePereDecede}">Domicile</p:outputLabel>
+                                     <p:inputText id="epousePereDomicile" 
+                                                  value="#{acteMariageEditerBacking.acteDto.epousePereDomicile}"
+                                                  rendered="#{!acteMariageEditerBacking.acteDto.epousePereDecede}" required="true" 
+                                                  styleClass="p-d-block"/>
+                                 </div>
+
+
+                                 <div class="p-field p-lg-12">
+                                     <div class="ui-fluid p-grid">
+                                         <div class="p-field p-lg-6">
+                                             <p:outputLabel for="epousePereDateDeces" rendered="#{acteMariageEditerBacking.acteDto.epouxPereDecede}" styleClass="p-d-block">Décédé le</p:outputLabel>
+                                             <p:inputMask id="epousePereDateDeces" 
+                                                          rendered="#{acteMariageEditerBacking.acteDto.epousePereDecede}" 
+                                                          value="#{acteMariageEditerBacking.acteDto.epousePereDateDeces}"
+                                                 mask="99/99/9999" required="true" styleClass="p-d-block">
+                                                <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
+                                            </p:inputMask>
+                                             <p:message for="epousePereDateDeces"/>
+                                         </div>
+                                         <div class="p-field p-lg-6">
+                                             <p:outputLabel for="epousePereLieuDeces" rendered="#{acteMariageEditerBacking.acteDto.epouxPereDecede}" styleClass="p-d-block">à</p:outputLabel>
+                                             <p:inputText id="epousePereLieuDeces" 
+                                                          rendered="#{acteMariageEditerBacking.acteDto.epousePereDecede}" 
+                                                          value="#{acteMariageEditerBacking.acteDto.epousePereLieuDeces}"  
+                                                      styleClass="p-d-block"/>
+                                         </div>
+                                     </div>
+                                 </div>
+
+
+                              </div>
+                         </div>
+                         </p:outputPanel>
+                         </p:fieldset>
+                      </div>
+                     <div class="p-lg-6">
+                         <p:fieldset legend="Mère de l'épouse">
+                             <p:outputPanel id="epouseMereOutputPanel">
+                                  <div class="ui-fluid p-formgrid p-grid">
+                                     <div class="p-field p-lg-12">
+                                         <p:outputLabel for="epouseMereDecede" styleClass="p-d-block">Mère décédé ?</p:outputLabel>
+                                         <p:toggleSwitch id="epouseMereDecede" 
+                                                         value="#{acteMariageEditerBacking.acteDto.epouseMereDecede}">
+                                             <p:ajax  update="epouseMereOutputPanel"/>
+                                         </p:toggleSwitch>
+                                         <div class="p-field p-lg-12">    
+                                             <p:outputLabel for="epouseMereNom" styleClass="p-d-block">Nom</p:outputLabel>
+                                             <p:inputText id="epouseMereNom" 
+                                                          value="#{acteMariageEditerBacking.acteDto.epouseMereNom}"  required="true" 
+                                                           styleClass="p-d-block"/>
+                                         </div>
+                                         <div class="p-field p-lg-12">
+                                             <p:outputLabel for="epouseMerePrenoms" styleClass="p-d-block">Prénoms</p:outputLabel>
+                                             <p:inputText id="epouseMerePrenoms" 
+                                                          value="#{acteMariageEditerBacking.acteDto.epouseMerePrenoms}" 
+                                                          required="true"  
+                                                          styleClass="p-d-block"/>
+                                         </div>
+
+                                          <div class="p-field p-lg-12">
+                                             <p:outputLabel for="epouseMereProfession" styleClass="p-d-block" 
+                                                            rendered="#{!acteMariageEditerBacking.acteDto.epouxMereDecede}">Profession</p:outputLabel>
+                                             <p:inputText id="epouseMereProfession" 
+                                                          value="#{acteMariageEditerBacking.acteDto.epouseMereProfession}"
+                                                          rendered="#{!acteMariageEditerBacking.acteDto.epouseMereDecede}" required="true" 
+                                                          styleClass="p-d-block"/>
+                                         </div>
+
+                                         <div class="p-field p-lg-12">
+                                             <p:outputLabel for="epouseMereDomicile" styleClass="p-d-block" 
+                                                            rendered="#{!acteMariageEditerBacking.acteDto.epouseMereDecede}">Domicile</p:outputLabel>
+                                             <p:inputText id="epouseMereDomicile" 
+                                                          value="#{acteMariageEditerBacking.acteDto.epouseMereDomicile}"
+                                                          rendered="#{!acteMariageEditerBacking.acteDto.epouseMereDecede}" required="true" 
+                                                          styleClass="p-d-block"/>
+                                         </div>
+
+
+                                         <div class="p-field p-lg-12">
+                                             <div class="ui-fluid p-grid">
+                                                 <div class="p-field p-lg-6">
+                                                     <p:outputLabel for="epouseMereDateDeces" rendered="#{acteMariageEditerBacking.acteDto.epouxMereDecede}" styleClass="p-d-block">Décédé le</p:outputLabel>
+                                                     <p:inputMask id="epouseMereDateDeces" 
+                                                                  rendered="#{acteMariageEditerBacking.acteDto.epouseMereDecede}" 
+                                                                  value="#{acteMariageEditerBacking.acteDto.epouseMereDateDeces}"
+                                                         mask="99/99/9999" required="true" styleClass="p-d-block">
+                                                        <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
+                                                    </p:inputMask>
+                                                     <p:message for="epouseMereDateDeces"/>
+                                                 </div>
+                                                 <div class="p-field p-lg-6">
+                                                     <p:outputLabel for="epouseMereLieuDeces" 
+                                                                    rendered="#{acteMariageEditerBacking.acteDto.epouseMereDecede}" styleClass="p-d-block">à</p:outputLabel>
+                                                     <p:inputText id="epouseMereLieuDeces" 
+                                                                  rendered="#{acteMariageEditerBacking.acteDto.epouseMereDecede}" 
+                                                                  value="#{acteMariageEditerBacking.acteDto.epouseMereLieuDeces}"  
+                                                              styleClass="p-d-block"/>
+                                                 </div>
+                                             </div>
+                                         </div>
+
+
+                                      </div>
+                                 </div>
+
+                             </p:outputPanel>
+                         </p:fieldset>
+                     </div>
+
+                 </div>
+
+             </p:fieldset>
+            <p:spacer height="2" />
+            <p:fieldset legend="Temoin de l'épouse">
+                <div class="ui-fluid p-formgrid p-grid">
+                    <div class="p-field p-lg-6">
+                        <p:outputLabel for="epouseTemoinNom" styleClass="p-d-block">Nom</p:outputLabel>
+                        <p:inputText id="epouseTemoinNom" value="#{acteMariageEditerBacking.acteDto.epouseTemoinNom}" required="true"  
+                                        styleClass="p-d-block"/>
+                    </div>
+                    <div class="p-field p-lg-6">
+                        <p:outputLabel for="epouseTemoinPrenoms" styleClass="p-d-block">Prénoms</p:outputLabel>
+                        <p:inputText id="epouseTemoinPrenoms" value="#{acteMariageEditerBacking.acteDto.epouseTemoinPrenoms}" required="true"  
+                                        styleClass="p-d-block"/>
+                    </div>
+                   <div class="p-field p-lg-6">
+                        <p:outputLabel for="epouseTemoinProfession" styleClass="p-d-block">Profession</p:outputLabel>
+                        <p:inputText id="epouseTemoinProfession" value="#{acteMariageEditerBacking.acteDto.epouseTemoinProfession}" required="true"  
+                                        styleClass="p-d-block"/>
+                    </div>
+
+                     <div class="p-field p-lg-6">
+                        <p:outputLabel for="epouseTemoinDomicile" styleClass="p-d-block">Domicile</p:outputLabel>
+                        <p:inputText id="epouseTemoinDomicile" value="#{acteMariageEditerBacking.acteDto.epouseTemoinDomicile}" required="true"  
+                                        styleClass="p-d-block"/>
+                    </div>
+
+                    <div class="p-field p-lg-6">
+                        <p:outputLabel for="epouseTemoinDateNaissance" styleClass="p-d-block">Date naissance</p:outputLabel>
+                        <p:inputMask id="epouseTemoinDateNaissance" value="#{acteMariageEditerBacking.acteDto.epouseTemoinDateNaissance}"
+                                         mask="99/99/9999" required="true">
+                                <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
+                        </p:inputMask>
+                        <p:message for="epouseTemoinDateNaissance"/>
+                    </div>
+
+
+
+                </div>
+                </p:fieldset>
+            <p:spacer height="2" />  
+                <p:fieldset legend="Officier d'état civil">
+                    <div class="ui-fluid p-formgrid p-grid">
+                        <div class="p-field p-col">
+                            <p:outputLabel for="officierEtatCivil" styleClass="p-d-block">Officier</p:outputLabel>
+                            <p:selectOneMenu id="officierEtatCivil" value="#{acteMariageEditerBacking.acteDto.officierEtatCivilID}"          
+                                             label="Selectionnez" required="true">
+                                <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez un officier --" />
+                                <f:selectItems value="#{acteNaissanceEditerBacking.officiers}" var="officier" 
+                                               itemLabel="#{officier.prenoms} #{officier.nom} [#{officier.titre}]" 
+                                               itemValue="#{officier.id}"/>
+                            </p:selectOneMenu>
+                        </div>
+                   </div>
+
+                </p:fieldset>
+                <p:outputPanel id="commandOutputPanel">
+                <p:fieldset>
+                <div class="ui-fluid p-formgrid p-grid">
+
+                    <div class="p-field p-lg-12">
+
+                        <p:commandButton value="Enregistrer l'acte de mariage" process="@form" 
+                                         action="#{acteMariageEditerBacking.creer()}"
+                                         rendered="#{acteMariageEditerBacking.renderedCreerButton()}"
+                                         update="@form messageForm"  icon="pi pi-check" 
+                                         styleClass="ui-button-outlined"/>
+
+                        <p:commandButton value="Valider l'acte" process="@form" 
+                                         action="#{acteMariageEditerBacking.valider()}"
+                                         rendered="#{acteMariageEditerBacking.renderedValiderButton()}"
+                                         update="@form messageForm"  icon="pi pi-check" 
+                                         styleClass="ui-button-outlined"/>
+                    </div>
+
+
+                </div>
+                </p:fieldset>
+            </p:outputPanel>
             
        </h:form>
-          
         
     </ui:define>
 

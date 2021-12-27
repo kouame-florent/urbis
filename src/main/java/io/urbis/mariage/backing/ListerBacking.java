@@ -108,7 +108,7 @@ public class ListerBacking extends BaseBacking implements Serializable{
         var operations = List.of(Operation.MODIFICATION.name());
         var acteIds = List.of(dto.getId());
         Map<String, List<String>> params = Map.of("id", ids,"acte-id",acteIds,"operation",operations);
-        PrimeFaces.current().dialog().openDynamic("/acte/naissance/editer", getDialogOptions(98,98,false), params);
+        PrimeFaces.current().dialog().openDynamic("/acte/mariage/editer", getDialogOptions(98,98,false), params);
     }
     
     public String statutSeverity(String statut){
@@ -132,12 +132,7 @@ public class ListerBacking extends BaseBacking implements Serializable{
         LOG.log(Level.INFO, "RETURN FROM NEW ACTE...");
     }
     
-    public void showValiderActeView(ActeMariageDto dto){
-        LOG.log(Level.INFO, "ACTE ID: {0}", dto.getId());
-        var values = List.of(dto.getId());
-        Map<String, List<String>> params = Map.of("id", values);
-        PrimeFaces.current().dialog().openDynamic("/acte/naissance/valider", getDialogOptions(96,96,true), params);
-    }
+   
     
     public boolean disableMenuValiderActe(ActeMariageDto dto){
        return !dto.getStatut().equals(StatutActeMariage.PROJET.name()); 
@@ -147,7 +142,7 @@ public class ListerBacking extends BaseBacking implements Serializable{
     public void openNewActeExistant(){
         var ids = List.of(registreID);
         var operations = List.of(Operation.SAISIE_ACTE_EXISTANT.name());
-        Map<String, List<String>> params = Map.of("id", ids,"operation",operations);
+        Map<String, List<String>> params = Map.of("reg-id", ids,"operation",operations);
         Map<String,Object> options = getDialogOptions(100, 100, false);
         options.put("resizable", false);
         PrimeFaces.current().dialog().openDynamic("editer", options, params);
@@ -155,12 +150,22 @@ public class ListerBacking extends BaseBacking implements Serializable{
     
 
     public void openNewDeclaration(){
+        
         var ids = List.of(registreID);
         var operations = List.of(Operation.DECLARATION.name());
-        Map<String, List<String>> params = Map.of("id", ids,"operation",operations);
+        Map<String, List<String>> params = Map.of("reg-id", ids,"operation",operations);
         Map<String,Object> options = getDialogOptions(100, 100, false);
         options.put("resizable", false);
         PrimeFaces.current().dialog().openDynamic("editer", options, params);
+    }
+    
+    public void openValiderActeView(ActeMariageDto dto){
+        LOG.log(Level.INFO, "ACTE ID: {0}", dto.getId());
+        var ids = List.of(registreID);
+        var operations = List.of(Operation.VALIDATION.name());
+        var acteIds = List.of(dto.getId());
+        Map<String, List<String>> params = Map.of("reg-id", ids,"acte-id",acteIds,"operation",operations);
+        PrimeFaces.current().dialog().openDynamic("/acte/mariage/editer", getDialogOptions(98,98,true), params);
     }
 
     public boolean disableButtonsOpenNew(){

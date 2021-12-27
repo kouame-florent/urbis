@@ -7,19 +7,27 @@ package io.urbis.mariage.backing;
 
 import io.urbis.common.util.BaseBacking;
 import io.urbis.mariage.api.ActeMariageService;
+import io.urbis.mariage.api.RegimeService;
 import io.urbis.mariage.api.SituationMatrimonialeService;
 import io.urbis.mariage.dto.ActeMariageDto;
 import io.urbis.mariage.dto.Operation;
+import io.urbis.mariage.dto.RegimeDto;
 import io.urbis.mariage.dto.SituationMatrimonialeDto;
+import io.urbis.naissance.api.ActeNaissanceService;
+import io.urbis.param.api.OfficierService;
+import io.urbis.param.dto.OfficierEtatCivilDto;
 import io.urbis.registre.api.RegistreService;
 import io.urbis.registre.dto.RegistreDto;
 import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.validation.ValidationException;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.primefaces.PrimeFaces;
 import org.primefaces.event.FlowEvent;
@@ -45,7 +53,14 @@ public class EditerBacking extends BaseBacking implements Serializable{
     @Inject 
     @RestClient
     SituationMatrimonialeService situationMatrimonialeService;
-   
+    
+    @Inject 
+    @RestClient
+    RegimeService regimeService;
+    
+    @Inject 
+    @RestClient
+    OfficierService officierService;
     
     private String registreID;
     private RegistreDto registreDto;
@@ -58,21 +73,31 @@ public class EditerBacking extends BaseBacking implements Serializable{
     private Operation operation;
     
     private List<SituationMatrimonialeDto> situations;
+    private List<RegimeDto> regimes = List.of();
+    
+    private List<OfficierEtatCivilDto> officiers;
     
     
     @Inject
     LazyActeMariageDataModel lazyActeMariageDataModel;
     
+    @PostConstruct
+    public void init(){
+        officiers = officierService.findAll();
+        
+    }
+    
     
     public void onload(){
-        LOG.log(Level.INFO,"LOAD REGISTRE ID: {0}",registreID);
+        LOG.log(Level.INFO,"--- ON LOAD REGISTRE ID: {0}",registreID);
         registreDto = registreService.findById(registreID);
-        LOG.log(Level.INFO,"REGISTRE LIBELLE: {0}",registreDto.getLibelle());
+        LOG.log(Level.INFO,"-- ON LOAD REGISTRE LIBELLE: {0}",registreDto.getLibelle());
         
         operation = Operation.fromString(operationParam);
-        LOG.log(Level.INFO,"--- CURRENT OPERATION : {0}",operation.name());
+        LOG.log(Level.INFO,"---ON LOAD CURRENT OPERATION : {0}",operation.name());
         
         situations = situationMatrimonialeService.findAll();
+        regimes = regimeService.findAll();
         
         switch(operation){
             case DECLARATION:
@@ -89,6 +114,9 @@ public class EditerBacking extends BaseBacking implements Serializable{
             case MODIFICATION:
                 acteDto = acteMariageService.findById(acteMariageID);
                 break;
+            case VALIDATION:
+                acteDto = acteMariageService.findById(acteMariageID);
+                break;
         }
         
         acteDto.setOperation(operation.name());
@@ -96,7 +124,60 @@ public class EditerBacking extends BaseBacking implements Serializable{
         
     }
     
+    public void creer(){
+        try{
+            acteMariageService.create(acteDto);
+            resetActeDto();
+            addGlobalMessage("Déclaration enregistrée avec succès", FacesMessage.SEVERITY_INFO);
+        }catch(ValidationException ex){
+            LOG.log(Level.INFO,"ERROR MESSAGE: {0}",ex.getMessage());
+            addGlobalMessage(ex.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+        }
+    }
+    
+    public void valider(){
+        /*
+        try{
+            acteMariageService.create(acteDto);
+            resetActeDto();
+            addGlobalMessage("Déclaration enregistrée avec succès", FacesMessage.SEVERITY_INFO);
+        }catch(ValidationException ex){
+            LOG.log(Level.INFO,"ERROR MESSAGE: {0}",ex.getMessage());
+            addGlobalMessage(ex.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+        }
+*/
+    }
+    
+    public boolean renderedValiderButton(){
+        if(acteDto != null){
+            return acteDto.getOperation().equals(Operation.VALIDATION.name());
+        }
+        
+        return false;
+    }
+    
+    public boolean renderedCreerButton(){
+        if(acteDto != null){
+            return acteDto.getOperation().equals(Operation.SAISIE_ACTE_EXISTANT.name()) || 
+                    acteDto.getOperation().equals(Operation.DECLARATION.name());
+        }
+        
+        return false;
+    }
+    
+    private void resetActeDto(){
+        acteDto = new ActeMariageDto();
+        if(operation == Operation.DECLARATION){
+            int numeroActe = acteMariageService.numeroActe(registreID);
+            acteDto.setNumero(numeroActe);
+        }
+       // selectedActe = null;
+    
+    }
+    
     public String onFlowProcess(FlowEvent event) {
+       LOG.log(Level.INFO, "--- EVENT NEW STEP: {0}", event.getNewStep());
+       LOG.log(Level.INFO, "--- EVENT OLD STEP: {0}", event.getOldStep());
        return event.getNewStep();
        
     }
@@ -159,6 +240,10 @@ public class EditerBacking extends BaseBacking implements Serializable{
 
     public List<SituationMatrimonialeDto> getSituations() {
         return situations;
+    }
+
+    public List<RegimeDto> getRegimes() {
+        return regimes;
     }
     
     

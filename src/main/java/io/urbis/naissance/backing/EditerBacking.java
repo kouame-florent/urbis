@@ -394,20 +394,44 @@ public class EditerBacking extends BaseBacking implements Serializable{
         LOG.log(Level.INFO,"ENFANT DATE NAISSANCE: {0}",acteNaissanceDto.getEnfantDateNaissance());
         acteNaissanceDto.setOperation(Operation.MODIFICATION.name());
           
-        acteNaissanceService.update(acteNaissanceDto.getId(),acteNaissanceDto);
-        //creerMentions(acteNaissanceDto.getId());
-        resetActeDto();
-        addGlobalMessage("L'acte a été modifié avec succès", FacesMessage.SEVERITY_INFO);
+        try{
+        
+        }catch(ValidationException ex){
+            acteNaissanceService.update(acteNaissanceDto.getId(),acteNaissanceDto);
+            //creerMentions(acteNaissanceDto.getId());
+            resetActeDto();
+            addGlobalMessage("L'acte a été modifié avec succès", FacesMessage.SEVERITY_INFO);
+        }
+        
         //viewMode = ViewMode.NEW;
         
         //numeroActe = acteNaissanceService.numeroActe(registreID);
         
     }
     
+    public boolean renderCreateButton(){
+        if(operation != null){
+            return operation == Operation.DECLARATION_JUGEMENT || 
+                    operation == Operation.SAISIE_ACTE_EXISTANT;
+        }
+        return false;
+    }
+    
+    
+    public boolean renderUpdateButton(){
+        if(operation != null){
+            return operation == Operation.MODIFICATION ;
+                    
+        }
+        return false;
+    }
+    
+    /*
     public void nouvelEngeristrement(){
         resetActeDto();
         //viewMode = ViewMode.NEW;
     }
+    */
     
     private void resetActeDto(){
         acteNaissanceDto = new ActeNaissanceDto();

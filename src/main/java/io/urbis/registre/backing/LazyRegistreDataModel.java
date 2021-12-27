@@ -73,6 +73,13 @@ public class LazyRegistreDataModel extends LazyDataModel<RegistreDto> {
     public void setNumero(int numero) {
         this.numero = numero;
     }
+
+    
+    @Override
+    public int count(Map<String, FilterMeta> arg0) {
+        return registreService.count(typeRegistre,annee,numero);
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     
     

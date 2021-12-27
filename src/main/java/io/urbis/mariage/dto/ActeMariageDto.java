@@ -23,16 +23,16 @@ public class ActeMariageDto {
     private LocalDateTime created; 
     private LocalDateTime updated; 
     
-    @NotBlank
+   // @NotBlank
     private String operation;
    
-    @NotBlank
+   // @NotBlank
     private String id;
     
-    @NotBlank
+  //  @NotBlank
     private String registreID;
     
-    @Min(1)
+  //  @Min(1)
     private int numero;
     
     private LocalDateTime dateMariage;
@@ -44,6 +44,7 @@ public class ActeMariageDto {
     
     private String statut;
    
+   // @NotBlank
     private String officierEtatCivilID;
     private String officierEtatCivilNom;
     private String officierEtatCivilPrenoms;
@@ -79,7 +80,7 @@ public class ActeMariageDto {
     private String epouxTemoinPrenoms;
     private String epouxTemoinProfession;
     private String epouxTemoinDomicile;
-    private int epouxTemoinAge;
+    private LocalDate epouxTemoinDateNaissance;
     
     private String epouseConjointNom;
     private String epouseConjointPrenoms;
@@ -111,7 +112,7 @@ public class ActeMariageDto {
     private String epouseTemoinPrenoms;
     private String epouseTemoinProfession;
     private String epouseTemoinDomicile;
-    private int epouseTemoinAge;
+    private LocalDate epouseTemoinDateNaissance;
 
     
 }

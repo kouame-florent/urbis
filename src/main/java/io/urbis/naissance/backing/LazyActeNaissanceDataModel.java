@@ -82,6 +82,14 @@ public class LazyActeNaissanceDataModel extends LazyDataModel<ActeNaissanceDto>{
     public void setRegistreID(String registreID) {
         this.registreID = registreID;
     }
+
+    
+    @Override
+    public int count(Map<String, FilterMeta> arg0) {
+        return acteNaissanceService.count();
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     
     
 }

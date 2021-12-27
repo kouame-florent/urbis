@@ -129,6 +129,7 @@ public class ActeNaissanceDto {
     private int nombreCopiesIntegrales;
     private int nombreExtraits;
     
+    @NotBlank
     private String officierEtatCivilID;
     private String officierEtatCivilNom;
     private String officierEtatCivilPrenoms;

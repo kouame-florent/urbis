@@ -6,6 +6,7 @@
 package io.urbis.registre.dto;
 
 import java.time.LocalDateTime;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -34,8 +35,10 @@ public class RegistreDto {
     private String centre;
     private String centreID;
     
+    @Min(value = 1900, message = "valeur minimale 1900")
     private int annee;
     
+    @Min(value = 1, message = "valeur minimale 1")
     private int numero;
     
     private String tribunal;

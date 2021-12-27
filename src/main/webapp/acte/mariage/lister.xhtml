@@ -94,27 +94,23 @@ xmlns:p="http://primefaces.org/ui">
                         rows="25" rowSelectMode="add" paginatorPosition="bottom">
                 
                 
-                <p:column headerText="Nom"  >
-                    <h:outputText value="#{acte.enfantNom}"/>
+                <p:column headerText="N°"  >
+                    <h:outputText value="#{acte.numero}"/>
                 </p:column>
-                <p:column headerText="Prénoms"  >
-                    <h:outputText value="#{acte.enfantPrenoms}"/>
-                </p:column>
-                
-                 <p:column headerText="Date naissance"  >
-                    <h:outputText value="#{acte.enfantDateNaissance}"/>
+                <p:column headerText="Date mariage"  >
+                    <h:outputText value="#{acte.dateMariage}"/>
                 </p:column>
                 
-                <p:column headerText="Année registre" >
-                    <h:outputText value="#{acte.registreAnnee}"/>
+                 <p:column headerText="Lieu Mariage"  >
+                    <h:outputText value="#{acte.lieuMariage}"/>
                 </p:column>
                 
-                <p:column headerText="Numéro registre" >
-                    <h:outputText value="#{acte.registreNumero}"/>
+                <p:column headerText="époux" >
+                    <h:outputText value="#{acte.epouxConjointPrenoms} #{acte.epouxConjointNom}"/>
                 </p:column>
                  
-                <p:column headerText="Numéro acte" >
-                    <h:outputText value="#{acte.numero}"/>
+                <p:column headerText="épouse" >
+                    <h:outputText value="#{acte.epouseConjointPrenoms} #{acte.epouseConjointNom}"/>
                 </p:column>
                 
                 <p:column headerText="Statut acte" >
@@ -142,7 +138,7 @@ xmlns:p="http://primefaces.org/ui">
                     <p:menuButton icon="pi pi-ellipsis-h" style="width: 100%;white-space: nowrap;width: auto !important;"
                                   title="options">
                         <p:menuitem value="Consulter l'acte" process="@this"  icon="pi pi-book"/>
-                        <p:menuitem value="Valider l'acte" action="#{acteMariageListerBacking.showValiderActeView(acte)}" 
+                        <p:menuitem value="Valider l'acte" action="#{acteMariageListerBacking.openValiderActeView(acte)}" 
                                     process="@this" disabled="#{acteMariageListerBacking.disableMenuValiderActe(acte)}" 
                                     icon="pi pi-book">
                             <p:ajax event="dialogReturn" listener="#{acteMariageListerBacking.onActeValidated}" 

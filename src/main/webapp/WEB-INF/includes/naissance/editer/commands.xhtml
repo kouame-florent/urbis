@@ -17,12 +17,13 @@ xmlns:p="http://primefaces.org/ui">
                              action="#{acteNaissanceEditerBacking.creer()}"
                              update="@form messageForm"  icon="pi pi-check" 
                              styleClass="ui-button-outlined"
+                             rendered="#{acteNaissanceEditerBacking.renderCreateButton()}"
                              oncomplete="PF('wizardWgt').loadStep('declaration','back')"/>
-            <p:commandButton value="mettre à jour l'acte de naissance" process="@form" 
+            <p:commandButton value="Mettre à jour l'acte de naissance" process="@form" 
                              action="#{acteNaissanceEditerBacking.modifier()}"
                              update="@form messageForm"  icon="pi pi-check" 
                              styleClass="ui-button-outlined"
-                             rendered="false"
+                             rendered="#{acteNaissanceEditerBacking.renderUpdateButton()}"
                              oncomplete="PF('wizardWgt').loadStep('declaration','back')"/>
 
         </div>

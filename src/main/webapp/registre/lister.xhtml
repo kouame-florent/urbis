@@ -86,7 +86,7 @@ xmlns:p="http://primefaces.org/ui">
                  
             <p:dataTable id="registre" widgetVar="registreWidget" var="registre" value="#{registreListerBacking.lazyRegistreDataModel}"
                       selection="#{registreListerBacking.selectedRegistre}" rowKey="#{registre.id}" paginator="true"
-                      rows="25" rowSelectMode="add" paginatorPosition="bottom">
+                      rows="25" rowSelectMode="add" paginatorPosition="bottom" stripedRows="true">
                 
                 <f:facet name="header">
                     <div class="products-table-header">
@@ -144,7 +144,7 @@ xmlns:p="http://primefaces.org/ui">
                     
                     <p:menuButton icon="pi pi-ellipsis-h" style="width: 100%;white-space: nowrap;width: auto !important;">
                         <p:menuitem value="Consulter" process="@this" action="#{registreListerBacking.openConsulterView(registre)}" 
-                                    icon="pi pi-book"/>
+                                    icon="pi pi-book" />
                         
                         <p:menuitem value="Valider" process="@this" action="#{registreListerBacking.openValiderView(registre)}" 
                                     update="contentForm:registre" icon="pi pi-ticket" 

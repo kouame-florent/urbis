@@ -162,11 +162,21 @@ xmlns:p="http://primefaces.org/ui">
 
                         </p:fieldset>
 
-                         <p:fieldset legend="Officier d'état civil">
+                         
+                    </p:tab>
+                    <p:tab id="autresInformations" title="Autres Informations">
+                        <ui:include src="/WEB-INF/includes/naissance/editer/autres-informations.xhtml"/>     
+                    </p:tab>
+                    <p:tab id="mentions" title="Mentions" >
+                        <ui:include src="/WEB-INF/includes/naissance/editer/mentions.xhtml"/> 
+                        
+                    </p:tab>
+                 <p:tab id="officier" title="Officier" >
+                     <p:fieldset legend="Officier d'état civil">
                             <div class="ui-fluid p-formgrid p-grid">
                                 <div class="p-field p-col">
-                                    <p:outputLabel for="officier" styleClass="p-d-block">Officier</p:outputLabel>
-                                    <p:selectOneMenu id="officier" value="#{acteNaissanceEditerBacking.acteNaissanceDto.officierEtatCivilID}"          
+                                    <p:outputLabel for="officierEtatCivil" styleClass="p-d-block">Officier</p:outputLabel>
+                                    <p:selectOneMenu id="officierEtatCivil" value="#{acteNaissanceEditerBacking.acteNaissanceDto.officierEtatCivilID}"          
                                                      label="Selectionnez" required="true">
                                         <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez un officier --" />
                                         <f:selectItems value="#{acteNaissanceEditerBacking.officiers}" var="officier" 
@@ -176,16 +186,10 @@ xmlns:p="http://primefaces.org/ui">
                                 </div>
                            </div>
 
-                        </p:fieldset>
-                    </p:tab>
-                    <p:tab id="autresInformations" title="Autres Informations">
-                        <ui:include src="/WEB-INF/includes/naissance/editer/autres-informations.xhtml"/>     
-                    </p:tab>
-                    <p:tab id="mentions" title="Mentions" >
-                        <ui:include src="/WEB-INF/includes/naissance/editer/mentions.xhtml"/> 
-                        <ui:include src="/WEB-INF/includes/naissance/editer/commands.xhtml"/>
-                    </p:tab>
-                </p:wizard>
+                      </p:fieldset>
+                     <ui:include src="/WEB-INF/includes/naissance/editer/commands.xhtml"/>
+                 </p:tab>
+            </p:wizard>
             
             
        </h:form>
