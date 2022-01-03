@@ -1,0 +1,241 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+xmlns:h="http://xmlns.jcp.org/jsf/html"
+xmlns:f="http://xmlns.jcp.org/jsf/core"
+xmlns:p="http://primefaces.org/ui">
+    
+ <ui:composition template="/WEB-INF/templates/dialog-tpl.xhtml">
+     
+     <ui:define name="title">
+         DÉCLARATION RECONNAISSANCE ENFANT NATUREL
+     </ui:define>
+    
+    <ui:define name="content">
+        
+        <f:metadata>
+            <f:viewParam name="operation" value="#{acteDecEnfantNaturelEditerBacking.operationParam}" />
+            <f:viewParam name="reg-id" value="#{acteDecEnfantNaturelEditerBacking.registreID}" required="true"/>
+            <f:viewParam name="acte-id" value="#{acteDecEnfantNaturelEditerBacking.acteID}" />
+            <f:viewAction action="#{acteDecEnfantNaturelEditerBacking.onload}" />
+        </f:metadata>
+        
+        <h:form id="messageForm">
+                <p:growl globalOnly="true" life="15000" />        
+        </h:form>
+             
+        <h:form id="contentForm">  
+           
+            <p:toolbar style="border: none">
+                <p:toolbarGroup>
+                    
+                </p:toolbarGroup>
+                <p:toolbarGroup align="right">
+                    <p:commandButton title="fermer" action="#{acteDecEnfantNaturelEditerBacking.closeView()}" process="@this" 
+                                     icon="pi pi-times" styleClass="rounded-button ui-button-danger"/>
+                </p:toolbarGroup>
+            </p:toolbar>
+            
+            <p:focus context="contentForm"/>
+          
+            <p:fieldset legend="Référence registre">
+               <div class="ui-fluid p-formgrid p-grid">
+                   <div class="p-field p-col">
+                   <p:outputLabel for="localite" styleClass="p-d-block">Commune</p:outputLabel>
+                   <p:inputText id="localite" value="#{acteDecEnfantNaturelEditerBacking.registreDto.localite}"
+                                disabled="true" required="true" styleClass="p-d-block"/>
+
+                   </div>
+                   <div class="p-field p-col">
+                       <p:outputLabel for="centre" styleClass="p-d-block">Centre</p:outputLabel>
+                       <p:inputText id="centre" value="#{acteDecEnfantNaturelEditerBacking.registreDto.centre}"
+                                    disabled="true"  required="true" styleClass="p-d-block"/>
+
+                   </div>
+                   <div class="p-field p-col">
+                       <p:outputLabel for="annee" styleClass="p-d-block">Année</p:outputLabel>
+                       <p:inputText id="annee" value="#{acteDecEnfantNaturelEditerBacking.registreDto.annee}" required="true"
+                                    disabled="true" styleClass="p-d-block"/>
+
+                   </div>
+                   <div class="p-field p-col">
+                       <p:outputLabel for="numero" styleClass="p-d-block">Numéro</p:outputLabel>
+                       <p:inputText id="numero" value="#{acteDecEnfantNaturelEditerBacking.registreDto.numero}"  required="true" 
+                                    disabled="true"   styleClass="p-d-block"/>
+
+                   </div>
+                   <div class="p-field p-col">
+                       <p:outputLabel for="numeroPremierActe" styleClass="p-d-block">Numéro premier acte</p:outputLabel>
+                       <p:inputText id="numeroPremierActe" value="#{acteDecEnfantNaturelEditerBacking.registreDto.numeroPremierActe}"  required="true" 
+                                    disabled="true"   styleClass="p-d-block"/>
+
+                   </div>
+                   <div class="p-field p-col">
+                       <p:outputLabel for="numeroDernierActe" styleClass="p-d-block">Numéro dernier acte</p:outputLabel>
+                       <p:inputText id="numeroDernierActe" value="#{acteDecEnfantNaturelEditerBacking.registreDto.numeroDernierActe}"  required="true" 
+                                    disabled="true"   styleClass="p-d-block"/>
+
+                   </div>
+
+               </div>
+
+           </p:fieldset>
+            <p:spacer height="2" />
+      
+        <p:fieldset >
+
+            <div class="ui-fluid p-formgrid p-grid">
+                <div class="p-field p-lg-4">
+
+                    <p:outputLabel for="numeroActe" styleClass="p-d-block" style="color: #ffffff">Numéro acte</p:outputLabel>
+                    <p:inputText id="numeroActe" value="#{acteDecEnfantNaturelEditerBacking.acteDto.numero}" 
+                                 required="true"/>
+
+                </div>
+
+            </div>
+
+             
+           </p:fieldset>
+            
+            <p:spacer height="2" />      
+            
+            <p:fieldset legend="Reconnaissance">
+                
+                 <div class="ui-fluid p-formgrid p-grid">
+                    <div class="p-field p-lg-6">
+                        <p:outputLabel for="reconnaissanceDate" styleClass="p-d-block">Date</p:outputLabel>
+                        <p:inputMask id="reconnaissanceDate"  
+                                     value="#{acteDecEnfantNaturelEditerBacking.acteDto.reconnaissanceDate}"
+                            mask="99/99/9999 99:99:99" required="true" styleClass="p-d-block">
+                           <f:convertDateTime locale="fr_FR" type="localDateTime" pattern="dd/MM/yyyy HH:mm:ss"/>
+                       </p:inputMask>
+                       <p:message for="reconnaissanceDate"/>
+                    </div>
+                    <div class="p-field p-lg-6">
+                        <p:outputLabel for="reconnaissanceLieu" styleClass="p-d-block">Lieu</p:outputLabel>
+                        <p:inputText id="reconnaissanceLieu" value="#{acteDecEnfantNaturelEditerBacking.acteDto.reconnaissanceLieu}" 
+                                     required="true"  
+                                     styleClass="p-d-block"/>
+                    </div>
+                     
+                    <div class="p-field p-lg-6">
+                        <p:outputLabel for="reconnaissanceNatureCirconscription" styleClass="p-d-block">Nature circonscription</p:outputLabel>
+                        <p:inputText id="reconnaissanceNatureCirconscription" 
+                                     value="#{acteDecEnfantNaturelEditerBacking.acteDto.reconnaissanceNatureCirconscription}" 
+                                     required="true"  
+                                     styleClass="p-d-block"/>
+                    </div>
+                     
+                    <div class="p-field p-lg-6">
+                        <p:outputLabel for="reconnaissanceNomCirconscription" styleClass="p-d-block">Nom circonscription</p:outputLabel>
+                        <p:inputText id="reconnaissanceNomCirconscription" 
+                                     value="#{acteDecEnfantNaturelEditerBacking.acteDto.reconnaissanceNomCirconscription}" 
+                                     required="true"  
+                                     styleClass="p-d-block"/>
+                    </div>
+                    
+                </div>
+                
+            </p:fieldset>
+              
+            <p:fieldset legend="Enfant">
+                <div class="ui-fluid p-formgrid p-grid">
+                    <div class="p-field p-lg-6">
+                        <p:outputLabel for="enfantNumeroActe" styleClass="p-d-block">Numéro acte</p:outputLabel>
+                        <p:inputText id="enfantNumeroActe" 
+                                     value="#{acteDecEnfantNaturelEditerBacking.acteDto.enfantNumeroActe}" 
+                                     required="true"  
+                                     styleClass="p-d-block"/>
+                    </div>
+                    <div class="p-field p-lg-6">
+                        <p:outputLabel for="enfantDateActe" styleClass="p-d-block">Date acte</p:outputLabel>
+                        <p:inputMask id="enfantDateActe"  
+                                     value="#{acteDecEnfantNaturelEditerBacking.acteDto.enfantDateActe}"
+                            mask="99/99/9999" required="true" styleClass="p-d-block">
+                           <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
+                       </p:inputMask>
+                       <p:message for="reconnaissanceDate"/>
+                    </div>
+                    <div class="p-field p-lg-6">
+                        <p:outputLabel for="enfantNom" styleClass="p-d-block">Nom</p:outputLabel>
+                        <p:inputText id="enfantNom" value="#{acteDecEnfantNaturelEditerBacking.acteDto.enfantNom}" 
+                                     required="true"  
+                                     styleClass="p-d-block"/>
+                    </div>
+                     
+                    <div class="p-field p-lg-6">
+                        <p:outputLabel for="enfantPrenoms" styleClass="p-d-block">Prénoms</p:outputLabel>
+                        <p:inputText id="enfantPrenoms" 
+                                     value="#{acteDecEnfantNaturelEditerBacking.acteDto.enfantPrenoms}" 
+                                     required="true"  
+                                     styleClass="p-d-block"/>
+                    </div>
+                     
+                    <div class="p-field p-lg-6">
+                        <p:outputLabel for="enfantDateNaissance" styleClass="p-d-block">Date naissance</p:outputLabel>
+                        <p:inputMask id="enfantDateNaissance"  
+                                     value="#{acteDecEnfantNaturelEditerBacking.acteDto.enfantDateNaissance}"
+                            mask="99/99/9999" required="true" styleClass="p-d-block">
+                           <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
+                       </p:inputMask>
+                       <p:message for="enfantDateNaissance"/>
+                    </div>
+                    
+                    <div class="p-field p-lg-6">
+                        <p:outputLabel for="enfantLieuNaissance" styleClass="p-d-block">Lieu de naissance</p:outputLabel>
+                        <p:inputText id="enfantLieuNaissance" 
+                                     value="#{acteDecEnfantNaturelEditerBacking.acteDto.enfantLieuNaissance}" 
+                                     required="true"  
+                                     styleClass="p-d-block"/>
+                    </div>
+                    
+                    <div class="p-field p-lg-6">
+                        <p:outputLabel for="sexe" styleClass="p-d-block">Sexe</p:outputLabel>
+                        <p:selectOneRadio id="sexe" value="#{acteDecEnfantNaturelEditerBacking.acteDto.enfantSexe}" 
+                                           converter="omnifaces.SelectItemsConverter"
+                                           required="true">
+
+                               <f:selectItems value="#{acteDecEnfantNaturelEditerBacking.sexes}" var="sexe" 
+                                              itemLabel="#{sexe.libelle}" itemValue="#{sexe.code}"/>
+                          </p:selectOneRadio>
+                    </div>
+                    
+                </div>
+                
+                
+            </p:fieldset>
+            <p:outputPanel id="commandOutputPanel">
+                <p:fieldset>
+                <div class="ui-fluid p-formgrid p-grid">
+
+                    <div class="p-field p-lg-12">
+
+                        <p:commandButton value="Enregistrer l'acte de mariage" process="@form" 
+                                         action="#{acteDecEnfantNaturelEditerBacking.creer()}"
+                                         rendered="#{acteDecEnfantNaturelEditerBacking.renderedCreerButton()}"
+                                         update="@form messageForm"  icon="pi pi-check" 
+                                         styleClass="ui-button-outlined"/>
+
+                        <p:commandButton value="Valider l'acte" process="@form" 
+                                         action="#{acteDecEnfantNaturelEditerBacking.valider()}"
+                                         rendered="#{acteDecEnfantNaturelEditerBacking.renderedValiderButton()}"
+                                         update="@form messageForm"  icon="pi pi-check" 
+                                         styleClass="ui-button-outlined"/>
+                    </div>
+
+
+                </div>
+                </p:fieldset>
+            </p:outputPanel>
+           
+          
+       </h:form>
+        
+    </ui:define>
+
+</ui:composition>  
+ 
+</html>
+

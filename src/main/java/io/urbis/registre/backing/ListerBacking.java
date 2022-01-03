@@ -350,7 +350,18 @@ public class ListerBacking extends BaseBacking implements Serializable{
             case MARIAGE:
                 openListActesMariage(registreDto);
                 break;
+            case DIVERS:
+                openListActesDivers(registreDto);
+                break;
         }
+    }
+    
+    public boolean renderGererActesMenu(RegistreDto registreDto){
+        return !registreDto.getTypeRegistre().equals(TypeRegistre.DIVERS.name());
+    }
+    
+    public boolean renderGererActesDiversMenu(RegistreDto registreDto){
+        return registreDto.getTypeRegistre().equals(TypeRegistre.DIVERS.name());
     }
     
     private void openListActesNaissance(RegistreDto registreDto){
@@ -365,6 +376,12 @@ public class ListerBacking extends BaseBacking implements Serializable{
         //var operations = List.of(Operation.SAISIE_ACTE_EXISTANT.name());
         Map<String, List<String>> params = Map.of("id", ids);
         PrimeFaces.current().dialog().openDynamic("/acte/mariage/lister", getDialogOptions(98,98,true), params);
+    }
+    
+    private void openListActesDivers(RegistreDto registreDto){
+        var ids = List.of(registreDto.getId());
+        Map<String, List<String>> params = Map.of("id", ids);
+        PrimeFaces.current().dialog().openDynamic("/acte/divers/lister-reconnaissance-enfant-naturel", getDialogOptions(98,98,true), params);
     }
     
     /*
@@ -475,6 +492,26 @@ public class ListerBacking extends BaseBacking implements Serializable{
         return "";
     }
     
+    public String registreDataTableHeader(){
+        if(selectedType != null){
+            switch(selectedType.getCode()){
+                case "NAISSANCE":
+                    return "REGISTRES DES ACTES DE NAISSANCE";
+                case "MARIAGE":
+                    return "REGISTRES DES ACTES DE MARIAGES";
+                case "DIVERS":
+                    return "REGISTRES DES ACTES DIVERS";
+                case "DECES":
+                    return "REGISTRES DES ACTES DE DÉCÈS";
+                case "SPECIAL_NAISSANCE":
+                    return "REGISTRES DES ACTES SPÉCIAUX DE NAISSANCE";
+                case "SPECIAL_DECES":
+                    return "REGISTRES DES ACTES SPÉCIAUX DE DÉCÈS";
+            }
+        }
+      
+        return "";
+    }
     
     public StreamedContent download(){
        File file = etatService.downloadRegistre();

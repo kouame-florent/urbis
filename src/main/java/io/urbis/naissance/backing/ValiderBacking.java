@@ -32,7 +32,7 @@ import io.urbis.naissance.dto.TypePieceDto;
 import io.urbis.naissance.api.ActeNaissanceService;
 import io.urbis.naissance.api.LienDeclarantService;
 import io.urbis.naissance.api.ModeDeclarationService;
-import io.urbis.naissance.api.SexeService;
+import io.urbis.common.api.SexeService;
 import io.urbis.naissance.api.TypeNaissanceService;
 import io.urbis.naissance.api.TypePieceService;
 import io.urbis.naissance.dto.StatutActeNaissance;

@@ -91,7 +91,7 @@ xmlns:p="http://primefaces.org/ui">
                 <f:facet name="header">
                     <div class="products-table-header">
                         <span style="font-weight: bold">
-                            #{registreListerBacking.selectedType eq null ? '': registreListerBacking.selectedType.libelle}
+                            #{registreListerBacking.registreDataTableHeader()}
                         </span>
 
                     </div>
@@ -177,7 +177,22 @@ xmlns:p="http://primefaces.org/ui">
                         <p:menuitem value="Gerer les actes" process="@this" 
                                     action="#{registreListerBacking.openListActes(registre)}" icon="pi pi-folder"
                                     disabled="#{registreListerBacking.disableMenuGererActes(registre)}"
-                                    rendered="true"/>
+                                    rendered="#{registreListerBacking.renderGererActesMenu(registre)}"/>
+                        
+                        <p:menuitem value="Gerer les actes de déclaration de reconnaissance d'enfant naturel" process="@this" 
+                                    action="#{registreListerBacking.openListActes(registre)}" icon="pi pi-folder"
+                                    disabled="#{registreListerBacking.disableMenuGererActes(registre)}"
+                                    rendered="#{registreListerBacking.renderGererActesDiversMenu(registre)}"/>
+                        
+                        <p:menuitem value="Gerer les actes de déclaration de reconnaissance d'enfant adultérin" process="@this" 
+                                    action="#{registreListerBacking.openListActes(registre)}" icon="pi pi-folder"
+                                    disabled="#{registreListerBacking.disableMenuGererActes(registre)}"
+                                    rendered="#{registreListerBacking.renderGererActesDiversMenu(registre)}"/>
+                        
+                        <p:menuitem value="Gerer les actes de déclaration de consentement à reconnaissance" process="@this" 
+                                    action="#{registreListerBacking.openListActes(registre)}" icon="pi pi-folder"
+                                    disabled="#{registreListerBacking.disableMenuGererActes(registre)}"
+                                    rendered="#{registreListerBacking.renderGererActesDiversMenu(registre)}"/>
                         
                         <p:divider/>
                         <p:menuitem value="Supprimer" process="@this" action="#{registreListerBacking.supprimer(registre.id)}"  
