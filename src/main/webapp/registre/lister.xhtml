@@ -179,17 +179,18 @@ xmlns:p="http://primefaces.org/ui">
                                     disabled="#{registreListerBacking.disableMenuGererActes(registre)}"
                                     rendered="#{registreListerBacking.renderGererActesMenu(registre)}"/>
                         
-                        <p:menuitem value="Gerer les actes de déclaration de reconnaissance d'enfant naturel" process="@this" 
+                        <p:menuitem value="Gérer les reconnaissances d'enfant naturel" process="@this"
+                                    
+                                    action="#{registreListerBacking.openListActesDecRecEnfNaturel(registre)}" icon="pi pi-folder"
+                                    disabled="#{registreListerBacking.disableMenuGererActes(registre)}"
+                                    rendered="#{registreListerBacking.renderGererActesDiversMenu(registre)}"/>
+                        
+                        <p:menuitem value="Gérer les reconnaissances d'enfant adultérin" process="@this" 
                                     action="#{registreListerBacking.openListActes(registre)}" icon="pi pi-folder"
                                     disabled="#{registreListerBacking.disableMenuGererActes(registre)}"
                                     rendered="#{registreListerBacking.renderGererActesDiversMenu(registre)}"/>
                         
-                        <p:menuitem value="Gerer les actes de déclaration de reconnaissance d'enfant adultérin" process="@this" 
-                                    action="#{registreListerBacking.openListActes(registre)}" icon="pi pi-folder"
-                                    disabled="#{registreListerBacking.disableMenuGererActes(registre)}"
-                                    rendered="#{registreListerBacking.renderGererActesDiversMenu(registre)}"/>
-                        
-                        <p:menuitem value="Gerer les actes de déclaration de consentement à reconnaissance" process="@this" 
+                        <p:menuitem value="Gérer les consentements à reconnaissance" process="@this" 
                                     action="#{registreListerBacking.openListActes(registre)}" icon="pi pi-folder"
                                     disabled="#{registreListerBacking.disableMenuGererActes(registre)}"
                                     rendered="#{registreListerBacking.renderGererActesDiversMenu(registre)}"/>

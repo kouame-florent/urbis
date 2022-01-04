@@ -12,6 +12,8 @@ import io.urbis.divers.api.ActeRecEnfNaturelService;
 import io.urbis.divers.dto.Operation;
 import io.urbis.divers.dto.StatutActeDivers;
 import io.urbis.naissance.dto.SexeDto;
+import io.urbis.param.api.OfficierService;
+import io.urbis.param.dto.OfficierEtatCivilDto;
 import io.urbis.registre.api.RegistreService;
 import io.urbis.registre.dto.RegistreDto;
 import io.urbis.registre.dto.StatutRegistre;
@@ -44,27 +46,35 @@ public class EditerRecEnfNaturelBacking extends BaseBacking implements Serializa
     
     @Inject 
     @RestClient
+    OfficierService officierService;
+    
+    @Inject 
+    @RestClient
     RegistreService registreService;
     
     @Inject
     ActeRecEnfNaturelService acteRecEnfNaturelService;
     
+    @Inject
+    LazyRecEnfNaturelDataModel lazyRecEnfNaturelDataModel;
+    
     private String registreID;
     private RegistreDto registreDto;
     private String operationParam;
     private Operation operation;
-    
     private String acteID;
     
     private ActeRecEnfantNaturelDto acteDto;
     
     private List<SexeDto> sexes;
+    private List<OfficierEtatCivilDto> officiers;
     
     
     @PostConstruct
     public void init(){
         LOG.log(Level.INFO,"--- INIT EditerRecEnfNaturelBacking ---");
         sexes = sexeService.findAll();
+        officiers = officierService.findAll();
         
     }
     
@@ -75,6 +85,28 @@ public class EditerRecEnfNaturelBacking extends BaseBacking implements Serializa
         
         operation = Operation.fromString(operationParam);
         LOG.log(Level.INFO,"---ON LOAD CURRENT OPERATION : {0}",operation.name());
+        
+        switch(operation){
+            case DECLARATION:
+                acteDto = new ActeRecEnfantNaturelDto();
+                //acteDto.setStatut(StatutActeDivers.PROJET.name());
+                acteDto.setRegistreID(registreID);
+                int numeroActe = acteRecEnfNaturelService.numeroActe(registreID);
+                acteDto.setNumero(numeroActe);
+                
+                break;
+            case SAISIE_ACTE_EXISTANT:
+                acteDto = new ActeRecEnfantNaturelDto();
+               // acteDto.setStatut(StatutActeDivers.PROJET.name());
+                acteDto.setRegistreID(registreID);
+                break;
+            case MODIFICATION:
+                acteDto = acteRecEnfNaturelService.findById(acteID);
+                break;
+        }
+        
+        acteDto.setOperation(operation.name());
+        lazyRecEnfNaturelDataModel.setRegistreID(registreID);
     }
     
     public void creer(){
@@ -183,6 +215,14 @@ public class EditerRecEnfNaturelBacking extends BaseBacking implements Serializa
 
     public void setOperation(Operation operation) {
         this.operation = operation;
+    }
+
+    public List<OfficierEtatCivilDto> getOfficiers() {
+        return officiers;
+    }
+
+    public void setOfficiers(List<OfficierEtatCivilDto> officiers) {
+        this.officiers = officiers;
     }
     
     

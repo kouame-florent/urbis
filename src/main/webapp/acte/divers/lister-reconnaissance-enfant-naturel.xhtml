@@ -9,14 +9,14 @@ xmlns:p="http://primefaces.org/ui">
  <ui:composition template="/WEB-INF/templates/dialog-tpl.xhtml">
      
      <ui:define name="title">
-         Actes :: Registre :: #{acteRecEnfNaturelListerBacking.registreDto.libelle}
+         DÉCLARATION RECONNAISSANCE ENFANT NATUREL
      </ui:define>
     
     <ui:define name="content">
         
         <f:metadata>
-            <f:viewParam name="id" value="#{acteRecEnfNaturelListerBacking.registreID}" />
-            <f:viewAction action="#{acteRecEnfNaturelListerBacking.onload}" />
+            <f:viewParam name="reg-id" value="#{acteRecEnfNaturelListerBacking.registreID}" />
+            <f:viewAction action="#{acteRecEnfNaturelListerBacking.onload}" />
         </f:metadata>
         
         <h:form id="messageForm">
@@ -69,29 +69,89 @@ xmlns:p="http://primefaces.org/ui">
             
             <p:toolbar>
                 <p:toolbarGroup>
-                     <p:commandButton value="Acte existant" icon="pi pi-plus"
-                         actionListener="#{acteRecEnfNaturelListerBacking.openNewActeExistant()}"
-                         disabled="#{acteRecEnfNaturelListerBacking.disableButtonsOpenNew()}"
+                    <p:commandButton value="Acte existant" icon="pi pi-plus" 
+                         action="#{acteRecEnfNaturelListerBacking.openNewActeExistant}"
+                         
                          styleClass="ui-button-success" style="margin-right: .5rem">
                         <p:ajax event="dialogReturn" listener="#{acteRecEnfNaturelListerBacking.onNewActeReturn}"
                                  update="messageForm :contentForm:actesDatatable"/>
                     </p:commandButton>
                     <p:commandButton value="Déclaration" icon="pi pi-plus"
-                                   actionListener="#{acteRecEnfNaturelListerBacking.openNewDeclaration()}"
-                                   disabled="#{acteRecEnfNaturelListerBacking.disableButtonsOpenNew()}"
+                                   action="#{acteRecEnfNaturelListerBacking.openNewDeclaration}"
+                                   
                                    styleClass="ui-button-success" style="margin-right: .5rem">
                         <p:ajax event="dialogReturn" listener="#{acteRecEnfNaturelListerBacking.onNewActeReturn}"
-                                 update="messageForm :contentForm:actesDatatable"
-                                 />
+                                 update="messageForm :contentForm:actesDatatable"/>
 
                     </p:commandButton>
                     
                 </p:toolbarGroup>
             </p:toolbar>
             
-            <p:dataTable id="actesDatatable" widgetVar="registreWidget" var="acte" paginator="true"
-                         value="#{acteRecEnfNaturelListerBacking.lazyRecEnfNaturelDataModel}"
+            <p:dataTable id="actesDatatable" var="acte" paginator="true"
+                         value="#{acteRecEnfNaturelListerBacking.lazyRecEnfNaturelDataModel}" rowKey="#{acte.id}"
                          rows="25" rowSelectMode="add" paginatorPosition="bottom" stripedRows="true">
+                
+                
+                <p:column headerText="Nom"  >
+                    <h:outputText value="#{acte.enfantNom}"/>
+                </p:column>
+                <p:column headerText="Prénoms"  >
+                    <h:outputText value="#{acte.enfantPrenoms}"/>
+                </p:column>
+                
+                 <p:column headerText="Date naissance"  >
+                    <h:outputText value="#{acte.enfantDateNaissance}"/>
+                </p:column>
+                
+                <p:column headerText="Année registre" >
+                    <h:outputText value="#{acte.registreAnnee}"/>
+                </p:column>
+                
+                <p:column headerText="Numéro registre" >
+                    <h:outputText value="#{acte.registreNumero}"/>
+                </p:column>
+                 
+                <p:column headerText="Numéro acte" >
+                    <h:outputText value="#{acte.numero}"/>
+                </p:column>
+                
+                <p:column headerText="Statut acte" >
+                    <p:tag severity="#{acteRecEnfNaturelListerBacking.statutSeverity(acte.statut)}" value="#{acte.statut}"/>
+                </p:column>
+              
+                <p:column style="width: 2%" >
+                    <p:commandButton process="@this" title="Imprimer"
+                                     ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" icon="pi pi-print"
+                                     styleClass="edit-button rounded-button">
+                        <f:setPropertyActionListener value="#{acte.id}" 
+                                                     target="#{acteRecEnfNaturelListerBacking.selectedActeID}"/>
+                        <p:fileDownload value="#{acteRecEnfNaturelListerBacking.download()}"/>
+                     </p:commandButton>
+                </p:column>
+                
+                <p:column style="width: 2%">
+                    <p:commandButton icon="pi pi-pencil" title="modifier"
+                            action="#{acteRecEnfNaturelListerBacking.openModifierActeView(acte)}"            
+                            styleClass="edit-button rounded-button" process="@this">
+                            
+                    </p:commandButton>
+                </p:column>
+               
+                <p:column  style="width: 2%">
+                    <p:menuButton icon="pi pi-ellipsis-h" style="width: 100%;white-space: nowrap;width: auto !important;"
+                                  title="options">
+                        <p:menuitem value="Consulter" process="@this"  icon="pi pi-book"/>
+                        <p:menuitem value="Valider" action="#{acteRecEnfNaturelListerBacking.openValiderActeView(acte)}" 
+                                    process="@this" disabled="#{acteRecEnfNaturelListerBacking.disableMenuValiderActe(acte)}" 
+                                    icon="pi pi-book">
+                            <p:ajax event="dialogReturn" listener="#{acteRecEnfNaturelListerBacking.onActeValidated}" 
+                                        update=":contentForm:actesDatatable"/>
+                        </p:menuitem>
+                        
+                    </p:menuButton>
+                </p:column>
+                
                 
             </p:dataTable>
          

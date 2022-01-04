@@ -25,6 +25,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -350,10 +352,32 @@ public class ListerBacking extends BaseBacking implements Serializable{
             case MARIAGE:
                 openListActesMariage(registreDto);
                 break;
-            case DIVERS:
-                openListActesDivers(registreDto);
-                break;
+            //case DIVERS:
+            //    openListActesDivers(registreDto);
+            //    break;
         }
+    }
+    
+    public void openListActesDecRecEnfNaturel(RegistreDto registreDto) {
+        
+        var ids = List.of(registreDto.getId());
+        Map<String, List<String>> params = Map.of("reg-id", ids);
+        PrimeFaces.current().dialog().openDynamic("/acte/divers/lister-reconnaissance-enfant-naturel", 
+                getDialogOptions(100,100,true), params);
+        
+        /*
+        LOG.log(Level.INFO, "REC REC REGISTRE: {0}", registreDto.getId());
+        
+        String url  = "/acte/divers/lister-reconnaissance-enfant-naturel.xhtml?reg-id="
+                + registreDto.getId() 
+                + "&faces-redirect=true";
+        
+        
+        LOG.log(Level.INFO, "DEC REC URL: {0}", url);
+        
+        return url;
+        */
+    
     }
     
     public boolean renderGererActesMenu(RegistreDto registreDto){
@@ -374,16 +398,17 @@ public class ListerBacking extends BaseBacking implements Serializable{
     private void openListActesMariage(RegistreDto registreDto){
         var ids = List.of(registreDto.getId());
         //var operations = List.of(Operation.SAISIE_ACTE_EXISTANT.name());
-        Map<String, List<String>> params = Map.of("id", ids);
+        Map<String, List<String>> params = Map.of("reg-id", ids);
         PrimeFaces.current().dialog().openDynamic("/acte/mariage/lister", getDialogOptions(98,98,true), params);
     }
     
+    /*
     private void openListActesDivers(RegistreDto registreDto){
         var ids = List.of(registreDto.getId());
-        Map<String, List<String>> params = Map.of("id", ids);
+        Map<String, List<String>> params = Map.of("reg-id", ids);
         PrimeFaces.current().dialog().openDynamic("/acte/divers/lister-reconnaissance-enfant-naturel", getDialogOptions(98,98,true), params);
     }
-    
+    */
     /*
     public void showActesListView(RegistreDto registreDto){
         LOG.log(Level.INFO, "REGISTRE ID: {0}", registreDto.getId());

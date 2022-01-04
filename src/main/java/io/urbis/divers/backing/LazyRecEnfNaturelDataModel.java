@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.LazyDataModel;
@@ -21,6 +22,7 @@ import org.primefaces.model.SortMeta;
  *
  * @author florent
  */
+@Dependent
 public class LazyRecEnfNaturelDataModel extends LazyDataModel<ActeRecEnfantNaturelDto>{
     
      private static final Logger LOG = Logger.getLogger(LazyRecEnfNaturelDataModel.class.getName());

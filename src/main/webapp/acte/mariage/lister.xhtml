@@ -15,7 +15,7 @@ xmlns:p="http://primefaces.org/ui">
     <ui:define name="content">
         
         <f:metadata>
-            <f:viewParam name="id" value="#{acteMariageListerBacking.registreID}" />
+            <f:viewParam name="reg-id" value="#{acteMariageListerBacking.registreID}"/>
             <f:viewAction action="#{acteMariageListerBacking.onload}" />
         </f:metadata>
         
@@ -91,7 +91,7 @@ xmlns:p="http://primefaces.org/ui">
             <p:dataTable id="actesDatatable"  var="acte" 
                          value="#{acteMariageListerBacking.lazyActeMariageDataModele}"
                          selection="#{acteMariageListerBacking.selectedActe}" rowKey="#{acte.id}" paginator="true"
-                        rows="25" rowSelectMode="add" paginatorPosition="bottom">
+                         rows="25" rowSelectMode="add" paginatorPosition="bottom" stripedRows="true">
                 
                 
                 <p:column headerText="N°"  >
@@ -149,7 +149,7 @@ xmlns:p="http://primefaces.org/ui">
                 </p:column>
                 
              
-                </p:dataTable>
+            </p:dataTable>
 
 
         </h:form>

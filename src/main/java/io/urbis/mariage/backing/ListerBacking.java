@@ -131,7 +131,6 @@ public class ListerBacking extends BaseBacking implements Serializable{
     public void onNewActeReturn(SelectEvent event){
         LOG.log(Level.INFO, "RETURN FROM NEW ACTE...");
     }
-    
    
     
     public boolean disableMenuValiderActe(ActeMariageDto dto){

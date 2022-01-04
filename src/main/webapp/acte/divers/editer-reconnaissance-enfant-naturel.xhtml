@@ -16,7 +16,7 @@ xmlns:p="http://primefaces.org/ui">
         
         <f:metadata>
             <f:viewParam name="operation" value="#{acteDecEnfantNaturelEditerBacking.operationParam}" />
-            <f:viewParam name="reg-id" value="#{acteDecEnfantNaturelEditerBacking.registreID}" required="true"/>
+            <f:viewParam name="reg-id" value="#{acteDecEnfantNaturelEditerBacking.registreID}" />
             <f:viewParam name="acte-id" value="#{acteDecEnfantNaturelEditerBacking.acteID}" />
             <f:viewAction action="#{acteDecEnfantNaturelEditerBacking.onload}" />
         </f:metadata>
@@ -206,6 +206,133 @@ xmlns:p="http://primefaces.org/ui">
                 
                 
             </p:fieldset>
+            
+             <p:fieldset legend="Officier d'état civil">
+                    <div class="ui-fluid p-formgrid p-grid">
+                        <div class="p-field p-col">
+                            <p:outputLabel for="officierEtatCivil" styleClass="p-d-block">Officier</p:outputLabel>
+                            <p:selectOneMenu id="officierEtatCivil" 
+                                             value="#{acteDecEnfantNaturelEditerBacking.acteDto.officierEtatCivilID}"          
+                                             label="Selectionnez" required="true">
+                                <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez un officier --" />
+                                <f:selectItems value="#{acteDecEnfantNaturelEditerBacking.officiers}" var="officier" 
+                                               itemLabel="#{officier.prenoms} #{officier.nom} [#{officier.titre}]" 
+                                               itemValue="#{officier.id}"/>
+                            </p:selectOneMenu>
+                        </div>
+                   </div>
+
+            </p:fieldset>
+            
+            <p:fieldset>
+                <div class="p-grid">
+                    <div class="p-lg-6">
+                    <p:fieldset legend="Le reconnaissant">
+                    <p:outputPanel id="reconnaissantOutputPanel">
+                    <div class="ui-fluid p-formgrid p-grid">
+                    <div class="p-field p-lg-12">
+                        
+                        <div class="p-field p-lg-12">    
+                            <p:outputLabel for="reconnaissantNom" styleClass="p-d-block">Nom</p:outputLabel>
+                            <p:inputText id="reconnaissantNom" 
+                                         value="#{acteDecEnfantNaturelEditerBacking.acteDto.reconnaissantNom}"  required="true" 
+                                         styleClass="p-d-block"/>
+                        </div>
+                        <div class="p-field p-lg-12">
+                            <p:outputLabel for="reconnaissantPrenoms" styleClass="p-d-block">Prénoms</p:outputLabel>
+                            <p:inputText id="reconnaissantPrenoms" 
+                                         value="#{acteDecEnfantNaturelEditerBacking.acteDto.reconnaissantPrenoms}" required="true"  
+                                         styleClass="p-d-block"/>
+                        </div>
+
+                        <div class="p-field p-lg-12">
+                            <p:outputLabel for="reconnaissantDateNaissance" styleClass="p-d-block">Date de naissance</p:outputLabel>
+                            <p:inputMask id="reconnaissantDateNaissance" 
+                                         value="#{acteDecEnfantNaturelEditerBacking.acteDto.reconnaissantDateNaissance}"
+                                          mask="99/99/9999" required="true">
+                                <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
+                            </p:inputMask>
+                            
+
+                        </div>
+                       
+                        <div class="p-field p-lg-12">
+                            <p:outputLabel for="reconnaissantProfession" styleClass="p-d-block">Profession</p:outputLabel>
+                            <p:inputText id="reconnaissantProfession" 
+                                         value="#{acteDecEnfantNaturelEditerBacking.acteDto.reconnaissantProfession}"
+                                         required="true" 
+                                         styleClass="p-d-block"/>
+                        </div>
+                        
+                        <div class="p-field p-lg-12">
+                            <p:outputLabel for="reconnaissantDomicile" styleClass="p-d-block">Domicile</p:outputLabel>
+                            <p:inputText id="reconnaissantDomicile"
+                                         value="#{acteDecEnfantNaturelEditerBacking.acteDto.reconnaissantDomicile}" required="true"  
+                                         styleClass="p-d-block"/>
+                        </div>
+                       
+                       
+                     </div>
+                </div>
+                </p:outputPanel>
+                </p:fieldset>
+                </div>
+                <div class="p-lg-6">
+                    <p:fieldset legend="Mère de l'enfant">
+                    <p:outputPanel id="mereOutputPanel">
+                    <div class="ui-fluid p-formgrid p-grid">
+                         <div class="p-field p-lg-12">
+                             
+                            <div class="p-field p-lg-12">    
+                            <p:outputLabel for="mereEnfantNom" styleClass="p-d-block">Nom</p:outputLabel>
+                            <p:inputText id="mereEnfantNom" 
+                                         value="#{acteDecEnfantNaturelEditerBacking.acteDto.mereEnfantNom}"  required="true" 
+                                         styleClass="p-d-block"/>
+                            </div>
+                            <div class="p-field p-lg-12">
+                                <p:outputLabel for="mereEnfantPrenoms" styleClass="p-d-block">Prénoms</p:outputLabel>
+                                <p:inputText id="mereEnfantPrenoms" 
+                                             value="#{acteDecEnfantNaturelEditerBacking.acteDto.mereEnfantPrenoms}" 
+                                             required="true"  
+                                             styleClass="p-d-block"/>
+                            </div>
+
+                            <div class="p-field p-lg-12">
+                                <p:outputLabel for="mereEnfantDateNaissance" styleClass="p-d-block">Date de naissance</p:outputLabel>
+                                <p:inputMask id="mereEnfantDateNaissance" 
+                                             value="#{acteDecEnfantNaturelEditerBacking.acteDto.mereEnfantDateNaissance}"
+                                              mask="99/99/9999" required="true">
+                                    <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
+                                </p:inputMask>
+
+
+                            </div>
+
+                            <div class="p-field p-lg-12">
+                                <p:outputLabel for="mereEnfantProfession" styleClass="p-d-block">Profession</p:outputLabel>
+                                <p:inputText id="mereEnfantProfession" 
+                                             value="#{acteDecEnfantNaturelEditerBacking.acteDto.mereEnfantProfession}"
+                                             required="true" 
+                                             styleClass="p-d-block"/>
+                            </div>
+
+                            <div class="p-field p-lg-12">
+                                <p:outputLabel for="mereEnfantDomicile" styleClass="p-d-block">Domicile</p:outputLabel>
+                                <p:inputText id="mereEnfantDomicile"
+                                             value="#{acteDecEnfantNaturelEditerBacking.acteDto.mereEnfantDomicile}" required="true"  
+                                             styleClass="p-d-block"/>
+                            </div>
+
+                        </div>
+                     </div> 
+                </p:outputPanel>
+                </p:fieldset>
+                </div>
+
+                </div>
+
+            </p:fieldset>
+         
             <p:outputPanel id="commandOutputPanel">
                 <p:fieldset>
                 <div class="ui-fluid p-formgrid p-grid">

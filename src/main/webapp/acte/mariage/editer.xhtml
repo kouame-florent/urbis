@@ -15,8 +15,8 @@ xmlns:p="http://primefaces.org/ui">
     <ui:define name="content">
         
         <f:metadata>
+            <f:viewParam name="reg-id" value="#{acteMariageEditerBacking.registreID}"/>
             <f:viewParam name="operation" value="#{acteMariageEditerBacking.operationParam}" />
-            <f:viewParam name="reg-id" value="#{acteMariageEditerBacking.registreID}" required="true"/>
             <f:viewParam name="acte-id" value="#{acteMariageEditerBacking.acteMariageID}" />
             <f:viewAction action="#{acteMariageEditerBacking.onload}" />
         </f:metadata>
