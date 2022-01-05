@@ -6,6 +6,7 @@
 package io.urbis.divers.backing;
 
 import io.urbis.common.util.BaseBacking;
+import io.urbis.divers.api.ActeRecEnfNaturelService;
 import io.urbis.divers.dto.ActeDiversDto;
 import io.urbis.divers.dto.ActeRecEnfantNaturelDto;
 import io.urbis.divers.dto.Operation;
@@ -28,6 +29,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.validation.constraints.NotBlank;
 import javax.ws.rs.WebApplicationException;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.primefaces.PrimeFaces;
@@ -52,6 +54,9 @@ public class ListerRecEnfNaturelBacking extends BaseBacking implements Serializa
     @Inject 
     @RestClient
     EtatService etatService;
+    
+    @Inject
+    ActeRecEnfNaturelService acteRecEnfNaturelService;
     
     @Inject
     LazyRecEnfNaturelDataModel lazyRecEnfNaturelDataModel;
@@ -161,6 +166,14 @@ public class ListerRecEnfNaturelBacking extends BaseBacking implements Serializa
         }
         addGlobalMessage("L'acte de naissance a été validé avec succès", FacesMessage.SEVERITY_INFO);
     }
+    
+    public void supprimer(@NotBlank String id){
+       boolean result = acteRecEnfNaturelService.delete(id);
+       if(!result){
+           addGlobalMessage("L'acte ne peut être supprimé!", FacesMessage.SEVERITY_ERROR);
+       }
+    }
+    
     
     public String statutSeverity(String statut){
         

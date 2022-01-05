@@ -9,6 +9,7 @@ import io.urbis.common.util.ExceptionMapper;
 import io.urbis.divers.dto.ActeRecEnfantNaturelDto;
 import java.util.List;
 import javax.transaction.Transactional;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -37,6 +38,10 @@ public interface ActeRecEnfNaturelService {
     
     @GET @Path("{id}")
     public ActeRecEnfantNaturelDto findById(@PathParam("id") String id);
+    
+
+    @DELETE @Path("{id}")
+    public boolean delete(@PathParam("id") String id);
     
     @GET
     public List<ActeRecEnfantNaturelDto> findWithFilters(@QueryParam("offset") int offset, 

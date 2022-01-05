@@ -395,12 +395,13 @@ public class EditerBacking extends BaseBacking implements Serializable{
         acteNaissanceDto.setOperation(Operation.MODIFICATION.name());
           
         try{
-        
-        }catch(ValidationException ex){
             acteNaissanceService.update(acteNaissanceDto.getId(),acteNaissanceDto);
             //creerMentions(acteNaissanceDto.getId());
             resetActeDto();
             addGlobalMessage("L'acte a été modifié avec succès", FacesMessage.SEVERITY_INFO);
+        }catch(ValidationException ex){
+            LOG.log(Level.INFO,"ERROR MESSAGE: {0}",ex.getMessage());
+            addGlobalMessage(ex.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
         }
         
         //viewMode = ViewMode.NEW;

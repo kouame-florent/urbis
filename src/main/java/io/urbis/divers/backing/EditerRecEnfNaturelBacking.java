@@ -115,9 +115,26 @@ public class EditerRecEnfNaturelBacking extends BaseBacking implements Serializa
             resetActeDto();
             addGlobalMessage("Déclaration enregistrée avec succès", FacesMessage.SEVERITY_INFO);
         }catch(ValidationException ex){
-            LOG.log(Level.INFO,"ERROR MESSAGE: {0}",ex.getMessage());
+            LOG.log(Level.SEVERE,ex.getMessage());
             addGlobalMessage(ex.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
         }
+    }
+    
+    public void modifier(){
+        
+        LOG.log(Level.INFO,"Updating acte naissance...");
+        acteDto.setOperation(Operation.MODIFICATION.name());
+          
+        try{
+            acteRecEnfNaturelService.update(acteDto.getId(),acteDto);
+            acteDto = acteRecEnfNaturelService.findById(acteDto.getId());
+            addGlobalMessage("L'acte a été modifié avec succès", FacesMessage.SEVERITY_INFO);
+        }catch(ValidationException ex){
+           LOG.log(Level.SEVERE,ex.getMessage());
+           addGlobalMessage(ex.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+        }
+        
+        
     }
     
     public void valider(){
@@ -127,7 +144,7 @@ public class EditerRecEnfNaturelBacking extends BaseBacking implements Serializa
             addGlobalMessage("Acte validé avec succès", FacesMessage.SEVERITY_INFO);
             PrimeFaces.current().dialog().closeDynamic(null);
         }catch(ValidationException ex){
-            LOG.log(Level.INFO,"ERROR MESSAGE: {0}",ex.getMessage());
+            LOG.log(Level.SEVERE,ex.getMessage());
             addGlobalMessage(ex.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
         }
     }
@@ -146,6 +163,14 @@ public class EditerRecEnfNaturelBacking extends BaseBacking implements Serializa
         if(operation != null){
             return operation == Operation.VALIDATION && 
                     acteDto.getStatut().equals(StatutActeDivers.PROJET.name());
+        }
+        
+        return false;
+    }
+    
+    public boolean renderedModifierButton(){
+        if(operation != null){
+            return operation == Operation.MODIFICATION ;
         }
         
         return false;

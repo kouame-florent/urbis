@@ -350,6 +350,13 @@ xmlns:p="http://primefaces.org/ui">
                                          rendered="#{acteDecEnfantNaturelEditerBacking.renderedValiderButton()}"
                                          update="@form messageForm"  icon="pi pi-check" 
                                          styleClass="ui-button-outlined"/>
+                        
+                        <p:commandButton value="Modifier l'acte de mariage" process="@form" 
+                                         action="#{acteDecEnfantNaturelEditerBacking.modifier()}"
+                                         rendered="#{acteDecEnfantNaturelEditerBacking.renderedModifierButton()}"
+                                         update="@form messageForm"  icon="pi pi-check" 
+                                         styleClass="ui-button-outlined"/>
+                        
                     </div>
 
 

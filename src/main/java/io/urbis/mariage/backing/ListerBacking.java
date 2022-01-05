@@ -6,6 +6,7 @@
 package io.urbis.mariage.backing;
 
 import io.urbis.common.util.BaseBacking;
+import io.urbis.mariage.api.ActeMariageService;
 import java.io.Serializable;
 import java.util.logging.Logger;
 import javax.faces.view.ViewScoped;
@@ -33,6 +34,7 @@ import org.primefaces.PrimeFaces;
 import io.urbis.registre.api.EtatService;
 import io.urbis.registre.api.RegistreService;
 import io.urbis.registre.dto.StatutRegistre;
+import javax.validation.constraints.NotBlank;
 
 /**
  *
@@ -54,6 +56,10 @@ public class ListerBacking extends BaseBacking implements Serializable{
     @Inject 
     @RestClient
     EtatService etatService;
+    
+    @Inject 
+    @RestClient
+    ActeMariageService acteMariageService;
     
     private String registreID;
     private RegistreDto registreDto;
@@ -107,7 +113,7 @@ public class ListerBacking extends BaseBacking implements Serializable{
         var ids = List.of(registreID);
         var operations = List.of(Operation.MODIFICATION.name());
         var acteIds = List.of(dto.getId());
-        Map<String, List<String>> params = Map.of("id", ids,"acte-id",acteIds,"operation",operations);
+        Map<String, List<String>> params = Map.of("reg-id", ids,"acte-id",acteIds,"operation",operations);
         PrimeFaces.current().dialog().openDynamic("/acte/mariage/editer", getDialogOptions(98,98,false), params);
     }
     
@@ -175,6 +181,14 @@ public class ListerBacking extends BaseBacking implements Serializable{
         }
         return true;
     }
+    
+     public void supprimer(@NotBlank String id){
+       boolean result = acteMariageService.delete(id);
+       if(!result){
+           addGlobalMessage("L'acte ne peut être supprimé!", FacesMessage.SEVERITY_ERROR);
+       }
+    }
+    
     
 
     public String getRegistreID() {

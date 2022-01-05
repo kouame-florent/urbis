@@ -131,9 +131,26 @@ public class EditerBacking extends BaseBacking implements Serializable{
             resetActeDto();
             addGlobalMessage("Déclaration enregistrée avec succès", FacesMessage.SEVERITY_INFO);
         }catch(ValidationException ex){
-            LOG.log(Level.INFO,"ERROR MESSAGE: {0}",ex.getMessage());
+            LOG.log(Level.SEVERE,ex.getMessage());
             addGlobalMessage(ex.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
         }
+    }
+    
+    public void modifier(){
+        
+        LOG.log(Level.INFO,"Updating acte naissance...");
+        acteDto.setOperation(Operation.MODIFICATION.name());
+          
+        try{
+            acteMariageService.update(acteDto.getId(),acteDto);
+            acteDto = acteMariageService.findById(acteDto.getId());
+            addGlobalMessage("L'acte a été modifié avec succès", FacesMessage.SEVERITY_INFO);
+        }catch(ValidationException ex){
+           LOG.log(Level.SEVERE,ex.getMessage());
+           addGlobalMessage(ex.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+        }
+        
+        
     }
     
     public void valider(){
@@ -144,7 +161,7 @@ public class EditerBacking extends BaseBacking implements Serializable{
             addGlobalMessage("Acte validé avec succès", FacesMessage.SEVERITY_INFO);
             PrimeFaces.current().dialog().closeDynamic(null);
         }catch(ValidationException ex){
-            LOG.log(Level.INFO,"ERROR MESSAGE: {0}",ex.getMessage());
+            LOG.log(Level.SEVERE,ex.getMessage());
             addGlobalMessage(ex.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
         }
 
@@ -162,6 +179,14 @@ public class EditerBacking extends BaseBacking implements Serializable{
     public boolean renderedCreerButton(){
         if(operation != null){
             return operation == Operation.SAISIE_ACTE_EXISTANT || operation == Operation.DECLARATION;
+        }
+        
+        return false;
+    }
+    
+    public boolean renderedModifierButton(){
+        if(operation != null){
+            return operation == Operation.MODIFICATION;
         }
         
         return false;

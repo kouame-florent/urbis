@@ -148,13 +148,25 @@ xmlns:p="http://primefaces.org/ui">
                             <p:ajax event="dialogReturn" listener="#{acteRecEnfNaturelListerBacking.onActeValidated}" 
                                         update=":contentForm:actesDatatable"/>
                         </p:menuitem>
+                        <p:divider/>
+                        <p:menuitem value="Supprimer" process="@this" action="#{acteRecEnfNaturelListerBacking.supprimer(acte.id)}"  
+                                   icon="pi pi-times" update="contentForm:actesDatatable" >
+                            
+                            <p:confirm header="Confirmation" 
+                                       message="Voulez-vous vraiment supprimer l'acte #{acte.numero} du registre
+                                       numéro #{acte.registreNumero} de #{acte.registreAnnee} ?" 
+                                       icon="pi pi-exclamation-triangle"/>
+                        </p:menuitem>
                         
                     </p:menuButton>
-                </p:column>
-                
+                 </p:column>
                 
             </p:dataTable>
          
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+                <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+                <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" />
+            </p:confirmDialog>
 
         </h:form>
           

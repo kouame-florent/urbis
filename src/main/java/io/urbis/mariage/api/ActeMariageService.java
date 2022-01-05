@@ -8,6 +8,7 @@ package io.urbis.mariage.api;
 import io.urbis.common.util.ExceptionMapper;
 import io.urbis.mariage.dto.ActeMariageDto;
 import java.util.List;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -31,6 +32,9 @@ public interface ActeMariageService {
     
     @PUT @Path("{id}")
     public void update(@PathParam("id") String id,ActeMariageDto dto);
+    
+    @DELETE @Path("{id}")
+    public boolean delete(@PathParam("id") String id);
     
     @GET @Path("{id}")
     public ActeMariageDto findById(@PathParam("id") String id);
