@@ -5,18 +5,19 @@
  */
 package io.urbis.divers.backing;
 
-import io.urbis.common.util.BaseBacking;
-import io.urbis.divers.dto.ActeRecEnfantNaturelDto;
 import io.urbis.common.api.SexeService;
-import io.urbis.divers.api.ActeRecEnfNaturelService;
+import io.urbis.common.util.BaseBacking;
+import io.urbis.divers.api.ActeRecEnfAdulterinService;
+import io.urbis.divers.api.TypeConsentementService;
+import io.urbis.divers.dto.ActeRecEnfantAdulterinDto;
 import io.urbis.divers.dto.Operation;
 import io.urbis.divers.dto.StatutActeDivers;
+import io.urbis.divers.dto.TypeConsentementDto;
 import io.urbis.naissance.dto.SexeDto;
 import io.urbis.param.api.OfficierService;
 import io.urbis.param.dto.OfficierEtatCivilDto;
 import io.urbis.registre.api.RegistreService;
 import io.urbis.registre.dto.RegistreDto;
-import io.urbis.registre.dto.StatutRegistre;
 import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Level;
@@ -34,9 +35,9 @@ import org.primefaces.PrimeFaces;
  *
  * @author florent
  */
-@Named(value = "acteRecEnfantNaturelEditerBacking")
+@Named(value = "acteRecEnfantAdulterinEditerBacking")
 @ViewScoped
-public class EditerRecEnfNaturelBacking extends BaseBacking implements Serializable{
+public class EditerRecEnfAdulterinBacking extends BaseBacking implements Serializable{
     
     private static final Logger LOG = Logger.getLogger(EditerRecEnfNaturelBacking.class.getName());
     
@@ -53,7 +54,10 @@ public class EditerRecEnfNaturelBacking extends BaseBacking implements Serializa
     RegistreService registreService;
     
     @Inject
-    ActeRecEnfNaturelService acteRecEnfNaturelService;
+    ActeRecEnfAdulterinService acteRecEnfAdulterinService;
+    
+    @Inject
+    TypeConsentementService typeConsentementService ;
     
     @Inject
     LazyRecEnfNaturelDataModel lazyRecEnfNaturelDataModel;
@@ -64,10 +68,12 @@ public class EditerRecEnfNaturelBacking extends BaseBacking implements Serializa
     private Operation operation;
     private String acteID;
     
-    private ActeRecEnfantNaturelDto acteDto;
+    private ActeRecEnfantAdulterinDto acteDto;
     
     private List<SexeDto> sexes;
     private List<OfficierEtatCivilDto> officiers;
+    
+    private List<TypeConsentementDto> typesConsentement;
     
     
     @PostConstruct
@@ -75,7 +81,7 @@ public class EditerRecEnfNaturelBacking extends BaseBacking implements Serializa
         LOG.log(Level.INFO,"--- INIT EditerRecEnfNaturelBacking ---");
         sexes = sexeService.findAll();
         officiers = officierService.findAll();
-        
+        typesConsentement = typeConsentementService.findAll();
     }
     
     public void onload(){
@@ -88,20 +94,20 @@ public class EditerRecEnfNaturelBacking extends BaseBacking implements Serializa
         
         switch(operation){
             case DECLARATION:
-                acteDto = new ActeRecEnfantNaturelDto();
+                acteDto = new ActeRecEnfantAdulterinDto();
                 //acteDto.setStatut(StatutActeDivers.PROJET.name());
                 acteDto.setRegistreID(registreID);
-                int numeroActe = acteRecEnfNaturelService.numeroActe(registreID);
+                int numeroActe = acteRecEnfAdulterinService.numeroActe(registreID);
                 acteDto.setNumero(numeroActe);
                 
                 break;
             case SAISIE_ACTE_EXISTANT:
-                acteDto = new ActeRecEnfantNaturelDto();
+                acteDto = new ActeRecEnfantAdulterinDto();
                // acteDto.setStatut(StatutActeDivers.PROJET.name());
                 acteDto.setRegistreID(registreID);
                 break;
             case MODIFICATION:
-                acteDto = acteRecEnfNaturelService.findById(acteID);
+                acteDto = acteRecEnfAdulterinService.findById(acteID);
                 break;
         }
         
@@ -111,7 +117,7 @@ public class EditerRecEnfNaturelBacking extends BaseBacking implements Serializa
     
     public void creer(){
         try{
-            acteRecEnfNaturelService.create(acteDto);
+            acteRecEnfAdulterinService.create(acteDto);
             resetActeDto();
             addGlobalMessage("Déclaration enregistrée avec succès", FacesMessage.SEVERITY_INFO);
         }catch(ValidationException ex){
@@ -126,8 +132,8 @@ public class EditerRecEnfNaturelBacking extends BaseBacking implements Serializa
         acteDto.setOperation(Operation.MODIFICATION.name());
           
         try{
-            acteRecEnfNaturelService.update(acteDto.getId(),acteDto);
-            acteDto = acteRecEnfNaturelService.findById(acteDto.getId());
+            acteRecEnfAdulterinService.update(acteDto.getId(),acteDto);
+            acteDto = acteRecEnfAdulterinService.findById(acteDto.getId());
             addGlobalMessage("L'acte a été modifié avec succès", FacesMessage.SEVERITY_INFO);
         }catch(ValidationException ex){
            LOG.log(Level.SEVERE,ex.getMessage());
@@ -140,7 +146,7 @@ public class EditerRecEnfNaturelBacking extends BaseBacking implements Serializa
     public void valider(){
         try{
             acteDto.setStatut(StatutActeDivers.VALIDE.name());
-            acteRecEnfNaturelService.update(acteDto.getId(), acteDto);
+            acteRecEnfAdulterinService.update(acteDto.getId(), acteDto);
             addGlobalMessage("Acte validé avec succès", FacesMessage.SEVERITY_INFO);
             PrimeFaces.current().dialog().closeDynamic(null);
         }catch(ValidationException ex){
@@ -150,9 +156,9 @@ public class EditerRecEnfNaturelBacking extends BaseBacking implements Serializa
     }
     
     private void resetActeDto(){
-        acteDto = new ActeRecEnfantNaturelDto();
+        acteDto = new ActeRecEnfantAdulterinDto();
         if(operation == Operation.DECLARATION){
-            int numeroActe = acteRecEnfNaturelService.numeroActe(registreID);
+            int numeroActe = acteRecEnfAdulterinService.numeroActe(registreID);
             acteDto.setNumero(numeroActe);
         }
        // selectedActe = null;
@@ -214,11 +220,11 @@ public class EditerRecEnfNaturelBacking extends BaseBacking implements Serializa
 
     
     
-    public ActeRecEnfantNaturelDto getActeDto() {
+    public ActeRecEnfantAdulterinDto getActeDto() {
         return acteDto;
     }
 
-    public void setActeDto(ActeRecEnfantNaturelDto acteDto) {
+    public void setActeDto(ActeRecEnfantAdulterinDto acteDto) {
         this.acteDto = acteDto;
     }
 
@@ -249,7 +255,10 @@ public class EditerRecEnfNaturelBacking extends BaseBacking implements Serializa
     public void setOfficiers(List<OfficierEtatCivilDto> officiers) {
         this.officiers = officiers;
     }
-    
+
+    public List<TypeConsentementDto> getTypesConsentement() {
+        return typesConsentement;
+    }
     
     
 }

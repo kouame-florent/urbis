@@ -9,16 +9,16 @@ xmlns:p="http://primefaces.org/ui">
  <ui:composition template="/WEB-INF/templates/dialog-tpl.xhtml">
      
      <ui:define name="title">
-         DÉCLARATION RECONNAISSANCE ENFANT NATUREL
+         DÉCLARATION RECONNAISSANCE ENFANT ADULTERIN
      </ui:define>
     
     <ui:define name="content">
         
         <f:metadata>
-            <f:viewParam name="operation" value="#{acteRecEnfantNaturelEditerBacking.operationParam}" />
-            <f:viewParam name="reg-id" value="#{acteRecEnfantNaturelEditerBacking.registreID}" />
-            <f:viewParam name="acte-id" value="#{acteRecEnfantNaturelEditerBacking.acteID}" />
-            <f:viewAction action="#{acteRecEnfantNaturelEditerBacking.onload}" />
+            <f:viewParam name="operation" value="#{acteRecEnfantAdulterinEditerBacking.operationParam}" />
+            <f:viewParam name="reg-id" value="#{acteRecEnfantAdulterinEditerBacking.registreID}" />
+            <f:viewParam name="acte-id" value="#{acteRecEnfantAdulterinEditerBacking.acteID}" />
+            <f:viewAction action="#{acteRecEnfantAdulterinEditerBacking.onload}" />
         </f:metadata>
         
         <h:form id="messageForm">
@@ -32,7 +32,7 @@ xmlns:p="http://primefaces.org/ui">
                     
                 </p:toolbarGroup>
                 <p:toolbarGroup align="right">
-                    <p:commandButton title="fermer" action="#{acteRecEnfantNaturelEditerBacking.closeView()}" process="@this" 
+                    <p:commandButton title="fermer" action="#{acteRecEnfantAdulterinEditerBacking.closeView()}" process="@this" 
                                      icon="pi pi-times" styleClass="rounded-button ui-button-danger"/>
                 </p:toolbarGroup>
             </p:toolbar>
@@ -43,37 +43,37 @@ xmlns:p="http://primefaces.org/ui">
                <div class="ui-fluid p-formgrid p-grid">
                    <div class="p-field p-col">
                    <p:outputLabel for="localite" styleClass="p-d-block">Commune</p:outputLabel>
-                   <p:inputText id="localite" value="#{acteRecEnfantNaturelEditerBacking.registreDto.localite}"
+                   <p:inputText id="localite" value="#{acteRecEnfantAdulterinEditerBacking.registreDto.localite}"
                                 disabled="true" required="true" styleClass="p-d-block"/>
 
                    </div>
                    <div class="p-field p-col">
                        <p:outputLabel for="centre" styleClass="p-d-block">Centre</p:outputLabel>
-                       <p:inputText id="centre" value="#{acteRecEnfantNaturelEditerBacking.registreDto.centre}"
+                       <p:inputText id="centre" value="#{acteRecEnfantAdulterinEditerBacking.registreDto.centre}"
                                     disabled="true"  required="true" styleClass="p-d-block"/>
 
                    </div>
                    <div class="p-field p-col">
                        <p:outputLabel for="annee" styleClass="p-d-block">Année</p:outputLabel>
-                       <p:inputText id="annee" value="#{acteRecEnfantNaturelEditerBacking.registreDto.annee}" required="true"
+                       <p:inputText id="annee" value="#{acteRecEnfantAdulterinEditerBacking.registreDto.annee}" required="true"
                                     disabled="true" styleClass="p-d-block"/>
 
                    </div>
                    <div class="p-field p-col">
                        <p:outputLabel for="numero" styleClass="p-d-block">Numéro</p:outputLabel>
-                       <p:inputText id="numero" value="#{acteRecEnfantNaturelEditerBacking.registreDto.numero}"  required="true" 
+                       <p:inputText id="numero" value="#{acteRecEnfantAdulterinEditerBacking.registreDto.numero}"  required="true" 
                                     disabled="true"   styleClass="p-d-block"/>
 
                    </div>
                    <div class="p-field p-col">
                        <p:outputLabel for="numeroPremierActe" styleClass="p-d-block">Numéro premier acte</p:outputLabel>
-                       <p:inputText id="numeroPremierActe" value="#{acteRecEnfantNaturelEditerBacking.registreDto.numeroPremierActe}"  required="true" 
+                       <p:inputText id="numeroPremierActe" value="#{acteRecEnfantAdulterinEditerBacking.registreDto.numeroPremierActe}"  required="true" 
                                     disabled="true"   styleClass="p-d-block"/>
 
                    </div>
                    <div class="p-field p-col">
                        <p:outputLabel for="numeroDernierActe" styleClass="p-d-block">Numéro dernier acte</p:outputLabel>
-                       <p:inputText id="numeroDernierActe" value="#{acteRecEnfantNaturelEditerBacking.registreDto.numeroDernierActe}"  required="true" 
+                       <p:inputText id="numeroDernierActe" value="#{acteRecEnfantAdulterinEditerBacking.registreDto.numeroDernierActe}"  required="true" 
                                     disabled="true"   styleClass="p-d-block"/>
 
                    </div>
@@ -89,7 +89,7 @@ xmlns:p="http://primefaces.org/ui">
                 <div class="p-field p-lg-4">
 
                     <p:outputLabel for="numeroActe" styleClass="p-d-block" style="color: #ffffff">Numéro acte</p:outputLabel>
-                    <p:inputText id="numeroActe" value="#{acteRecEnfantNaturelEditerBacking.acteDto.numero}" 
+                    <p:inputText id="numeroActe" value="#{acteRecEnfantAdulterinEditerBacking.acteDto.numero}" 
                                  required="true"/>
 
                 </div>
@@ -107,7 +107,7 @@ xmlns:p="http://primefaces.org/ui">
                     <div class="p-field p-lg-6">
                         <p:outputLabel for="reconnaissanceDate" styleClass="p-d-block">Date</p:outputLabel>
                         <p:inputMask id="reconnaissanceDate"  
-                                     value="#{acteRecEnfantNaturelEditerBacking.acteDto.reconnaissanceDate}"
+                                     value="#{acteRecEnfantAdulterinEditerBacking.acteDto.reconnaissanceDate}"
                             mask="99/99/9999 99:99:99" required="true" styleClass="p-d-block">
                            <f:convertDateTime locale="fr_FR" type="localDateTime" pattern="dd/MM/yyyy HH:mm:ss"/>
                        </p:inputMask>
@@ -115,7 +115,7 @@ xmlns:p="http://primefaces.org/ui">
                     </div>
                     <div class="p-field p-lg-6">
                         <p:outputLabel for="reconnaissanceLieu" styleClass="p-d-block">Lieu</p:outputLabel>
-                        <p:inputText id="reconnaissanceLieu" value="#{acteRecEnfantNaturelEditerBacking.acteDto.reconnaissanceLieu}" 
+                        <p:inputText id="reconnaissanceLieu" value="#{acteRecEnfantAdulterinEditerBacking.acteDto.reconnaissanceLieu}" 
                                      required="true"  
                                      styleClass="p-d-block"/>
                     </div>
@@ -123,7 +123,7 @@ xmlns:p="http://primefaces.org/ui">
                     <div class="p-field p-lg-6">
                         <p:outputLabel for="reconnaissanceNatureCirconscription" styleClass="p-d-block">Nature circonscription</p:outputLabel>
                         <p:inputText id="reconnaissanceNatureCirconscription" 
-                                     value="#{acteRecEnfantNaturelEditerBacking.acteDto.reconnaissanceNatureCirconscription}" 
+                                     value="#{acteRecEnfantAdulterinEditerBacking.acteDto.reconnaissanceNatureCirconscription}" 
                                      required="true"  
                                      styleClass="p-d-block"/>
                     </div>
@@ -131,7 +131,7 @@ xmlns:p="http://primefaces.org/ui">
                     <div class="p-field p-lg-6">
                         <p:outputLabel for="reconnaissanceNomCirconscription" styleClass="p-d-block">Nom circonscription</p:outputLabel>
                         <p:inputText id="reconnaissanceNomCirconscription" 
-                                     value="#{acteRecEnfantNaturelEditerBacking.acteDto.reconnaissanceNomCirconscription}" 
+                                     value="#{acteRecEnfantAdulterinEditerBacking.acteDto.reconnaissanceNomCirconscription}" 
                                      required="true"  
                                      styleClass="p-d-block"/>
                     </div>
@@ -145,14 +145,14 @@ xmlns:p="http://primefaces.org/ui">
                     <div class="p-field p-lg-6">
                         <p:outputLabel for="enfantNumeroActe" styleClass="p-d-block">Numéro acte</p:outputLabel>
                         <p:inputText id="enfantNumeroActe" 
-                                     value="#{acteRecEnfantNaturelEditerBacking.acteDto.enfantNumeroActe}" 
+                                     value="#{acteRecEnfantAdulterinEditerBacking.acteDto.enfantNumeroActe}" 
                                      required="true"  
                                      styleClass="p-d-block"/>
                     </div>
                     <div class="p-field p-lg-6">
                         <p:outputLabel for="enfantDateActe" styleClass="p-d-block">Date acte</p:outputLabel>
                         <p:inputMask id="enfantDateActe"  
-                                     value="#{acteRecEnfantNaturelEditerBacking.acteDto.enfantDateActe}"
+                                     value="#{acteRecEnfantAdulterinEditerBacking.acteDto.enfantDateActe}"
                             mask="99/99/9999" required="true" styleClass="p-d-block">
                            <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
                        </p:inputMask>
@@ -160,7 +160,7 @@ xmlns:p="http://primefaces.org/ui">
                     </div>
                     <div class="p-field p-lg-6">
                         <p:outputLabel for="enfantNom" styleClass="p-d-block">Nom</p:outputLabel>
-                        <p:inputText id="enfantNom" value="#{acteRecEnfantNaturelEditerBacking.acteDto.enfantNom}" 
+                        <p:inputText id="enfantNom" value="#{acteRecEnfantAdulterinEditerBacking.acteDto.enfantNom}" 
                                      required="true"  
                                      styleClass="p-d-block"/>
                     </div>
@@ -168,7 +168,7 @@ xmlns:p="http://primefaces.org/ui">
                     <div class="p-field p-lg-6">
                         <p:outputLabel for="enfantPrenoms" styleClass="p-d-block">Prénoms</p:outputLabel>
                         <p:inputText id="enfantPrenoms" 
-                                     value="#{acteRecEnfantNaturelEditerBacking.acteDto.enfantPrenoms}" 
+                                     value="#{acteRecEnfantAdulterinEditerBacking.acteDto.enfantPrenoms}" 
                                      required="true"  
                                      styleClass="p-d-block"/>
                     </div>
@@ -176,7 +176,7 @@ xmlns:p="http://primefaces.org/ui">
                     <div class="p-field p-lg-6">
                         <p:outputLabel for="enfantDateNaissance" styleClass="p-d-block">Date naissance</p:outputLabel>
                         <p:inputMask id="enfantDateNaissance"  
-                                     value="#{acteRecEnfantNaturelEditerBacking.acteDto.enfantDateNaissance}"
+                                     value="#{acteRecEnfantAdulterinEditerBacking.acteDto.enfantDateNaissance}"
                             mask="99/99/9999" required="true" styleClass="p-d-block">
                            <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
                        </p:inputMask>
@@ -186,18 +186,18 @@ xmlns:p="http://primefaces.org/ui">
                     <div class="p-field p-lg-6">
                         <p:outputLabel for="enfantLieuNaissance" styleClass="p-d-block">Lieu de naissance</p:outputLabel>
                         <p:inputText id="enfantLieuNaissance" 
-                                     value="#{acteRecEnfantNaturelEditerBacking.acteDto.enfantLieuNaissance}" 
+                                     value="#{acteRecEnfantAdulterinEditerBacking.acteDto.enfantLieuNaissance}" 
                                      required="true"  
                                      styleClass="p-d-block"/>
                     </div>
                     
                     <div class="p-field p-lg-6">
                         <p:outputLabel for="sexe" styleClass="p-d-block">Sexe</p:outputLabel>
-                        <p:selectOneRadio id="sexe" value="#{acteRecEnfantNaturelEditerBacking.acteDto.enfantSexe}" 
+                        <p:selectOneRadio id="sexe" value="#{acteRecEnfantAdulterinEditerBacking.acteDto.enfantSexe}" 
                                            converter="omnifaces.SelectItemsConverter"
                                            required="true">
 
-                               <f:selectItems value="#{acteRecEnfantNaturelEditerBacking.sexes}" var="sexe" 
+                               <f:selectItems value="#{acteRecEnfantAdulterinEditerBacking.sexes}" var="sexe" 
                                               itemLabel="#{sexe.libelle}" itemValue="#{sexe.code}"/>
                           </p:selectOneRadio>
                     </div>
@@ -212,10 +212,10 @@ xmlns:p="http://primefaces.org/ui">
                         <div class="p-field p-col">
                             <p:outputLabel for="officierEtatCivil" styleClass="p-d-block">Officier</p:outputLabel>
                             <p:selectOneMenu id="officierEtatCivil" 
-                                             value="#{acteRecEnfantNaturelEditerBacking.acteDto.officierEtatCivilID}"          
+                                             value="#{acteRecEnfantAdulterinEditerBacking.acteDto.officierEtatCivilID}"          
                                              label="Selectionnez" required="true">
                                 <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez un officier --" />
-                                <f:selectItems value="#{acteRecEnfantNaturelEditerBacking.officiers}" var="officier" 
+                                <f:selectItems value="#{acteRecEnfantAdulterinEditerBacking.officiers}" var="officier" 
                                                itemLabel="#{officier.prenoms} #{officier.nom} [#{officier.titre}]" 
                                                itemValue="#{officier.id}"/>
                             </p:selectOneMenu>
@@ -235,20 +235,20 @@ xmlns:p="http://primefaces.org/ui">
                         <div class="p-field p-lg-12">    
                             <p:outputLabel for="reconnaissantNom" styleClass="p-d-block">Nom</p:outputLabel>
                             <p:inputText id="reconnaissantNom" 
-                                         value="#{acteRecEnfantNaturelEditerBacking.acteDto.reconnaissantNom}"  required="true" 
+                                         value="#{acteRecEnfantAdulterinEditerBacking.acteDto.reconnaissantNom}"  required="true" 
                                          styleClass="p-d-block"/>
                         </div>
                         <div class="p-field p-lg-12">
                             <p:outputLabel for="reconnaissantPrenoms" styleClass="p-d-block">Prénoms</p:outputLabel>
                             <p:inputText id="reconnaissantPrenoms" 
-                                         value="#{acteRecEnfantNaturelEditerBacking.acteDto.reconnaissantPrenoms}" required="true"  
+                                         value="#{acteRecEnfantAdulterinEditerBacking.acteDto.reconnaissantPrenoms}" required="true"  
                                          styleClass="p-d-block"/>
                         </div>
 
                         <div class="p-field p-lg-12">
                             <p:outputLabel for="reconnaissantDateNaissance" styleClass="p-d-block">Date de naissance</p:outputLabel>
                             <p:inputMask id="reconnaissantDateNaissance" 
-                                         value="#{acteRecEnfantNaturelEditerBacking.acteDto.reconnaissantDateNaissance}"
+                                         value="#{acteRecEnfantAdulterinEditerBacking.acteDto.reconnaissantDateNaissance}"
                                           mask="99/99/9999" required="true">
                                 <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
                             </p:inputMask>
@@ -259,7 +259,7 @@ xmlns:p="http://primefaces.org/ui">
                         <div class="p-field p-lg-12">
                             <p:outputLabel for="reconnaissantProfession" styleClass="p-d-block">Profession</p:outputLabel>
                             <p:inputText id="reconnaissantProfession" 
-                                         value="#{acteRecEnfantNaturelEditerBacking.acteDto.reconnaissantProfession}"
+                                         value="#{acteRecEnfantAdulterinEditerBacking.acteDto.reconnaissantProfession}"
                                          required="true" 
                                          styleClass="p-d-block"/>
                         </div>
@@ -267,7 +267,7 @@ xmlns:p="http://primefaces.org/ui">
                         <div class="p-field p-lg-12">
                             <p:outputLabel for="reconnaissantDomicile" styleClass="p-d-block">Domicile</p:outputLabel>
                             <p:inputText id="reconnaissantDomicile"
-                                         value="#{acteRecEnfantNaturelEditerBacking.acteDto.reconnaissantDomicile}" required="true"  
+                                         value="#{acteRecEnfantAdulterinEditerBacking.acteDto.reconnaissantDomicile}" required="true"  
                                          styleClass="p-d-block"/>
                         </div>
                        
@@ -278,49 +278,37 @@ xmlns:p="http://primefaces.org/ui">
                 </p:fieldset>
                 </div>
                 <div class="p-lg-6">
-                    <p:fieldset legend="Mère de l'enfant">
+                    <p:fieldset legend="Consentement épouse">
                     <p:outputPanel id="mereOutputPanel">
                     <div class="ui-fluid p-formgrid p-grid">
                          <div class="p-field p-lg-12">
                              
                             <div class="p-field p-lg-12">    
-                            <p:outputLabel for="mereEnfantNom" styleClass="p-d-block">Nom</p:outputLabel>
-                            <p:inputText id="mereEnfantNom" 
-                                         value="#{acteRecEnfantNaturelEditerBacking.acteDto.mereEnfantNom}"  required="true" 
+                            <p:outputLabel for="consentementEpouseNom" styleClass="p-d-block">Nom</p:outputLabel>
+                            <p:inputText id="consentementEpouseNom" 
+                                         value="#{acteRecEnfantAdulterinEditerBacking.acteDto.consentementEpouseNom}"  
+                                         required="true" 
                                          styleClass="p-d-block"/>
                             </div>
                             <div class="p-field p-lg-12">
-                                <p:outputLabel for="mereEnfantPrenoms" styleClass="p-d-block">Prénoms</p:outputLabel>
-                                <p:inputText id="mereEnfantPrenoms" 
-                                             value="#{acteRecEnfantNaturelEditerBacking.acteDto.mereEnfantPrenoms}" 
+                                <p:outputLabel for="consentementEpousePrenoms" styleClass="p-d-block">Prénoms</p:outputLabel>
+                                <p:inputText id="consentementEpousePrenoms" 
+                                             value="#{acteRecEnfantAdulterinEditerBacking.acteDto.consentementEpousePrenoms}" 
                                              required="true"  
                                              styleClass="p-d-block"/>
                             </div>
 
                             <div class="p-field p-lg-12">
-                                <p:outputLabel for="mereEnfantDateNaissance" styleClass="p-d-block">Date de naissance</p:outputLabel>
-                                <p:inputMask id="mereEnfantDateNaissance" 
-                                             value="#{acteRecEnfantNaturelEditerBacking.acteDto.mereEnfantDateNaissance}"
-                                              mask="99/99/9999" required="true">
-                                    <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
-                                </p:inputMask>
+                                <p:outputLabel for="consentementEpouseType" styleClass="p-d-block">Type Consentement</p:outputLabel>
+                                <p:selectOneRadio id="consentementEpouseType" value="#{acteRecEnfantAdulterinEditerBacking.acteDto.consentementEpouseType}" 
+                                           converter="omnifaces.SelectItemsConverter"
+                                                required="true">
+
+                                    <f:selectItems value="#{acteRecEnfantAdulterinEditerBacking.typesConsentement}" var="type" 
+                                                   itemLabel="#{type.libelle}" itemValue="#{type.code}"/>
+                               </p:selectOneRadio>
 
 
-                            </div>
-
-                            <div class="p-field p-lg-12">
-                                <p:outputLabel for="mereEnfantProfession" styleClass="p-d-block">Profession</p:outputLabel>
-                                <p:inputText id="mereEnfantProfession" 
-                                             value="#{acteRecEnfantNaturelEditerBacking.acteDto.mereEnfantProfession}"
-                                             required="true" 
-                                             styleClass="p-d-block"/>
-                            </div>
-
-                            <div class="p-field p-lg-12">
-                                <p:outputLabel for="mereEnfantDomicile" styleClass="p-d-block">Domicile</p:outputLabel>
-                                <p:inputText id="mereEnfantDomicile"
-                                             value="#{acteRecEnfantNaturelEditerBacking.acteDto.mereEnfantDomicile}" required="true"  
-                                             styleClass="p-d-block"/>
                             </div>
 
                         </div>
@@ -339,21 +327,21 @@ xmlns:p="http://primefaces.org/ui">
 
                     <div class="p-field p-lg-12">
 
-                        <p:commandButton value="Enregistrer l'acte de mariage" process="@form" 
-                                         action="#{acteRecEnfantNaturelEditerBacking.creer()}"
-                                         rendered="#{acteRecEnfantNaturelEditerBacking.renderedCreerButton()}"
+                        <p:commandButton value="Enregistrer l'acte de déclaration reconnaissance enfant adultérin" process="@form" 
+                                         action="#{acteRecEnfantAdulterinEditerBacking.creer()}"
+                                         rendered="#{acteRecEnfantAdulterinEditerBacking.renderedCreerButton()}"
                                          update="@form messageForm"  icon="pi pi-check" 
                                          styleClass="ui-button-outlined"/>
 
                         <p:commandButton value="Valider l'acte" process="@form" 
-                                         action="#{acteRecEnfantNaturelEditerBacking.valider()}"
-                                         rendered="#{acteRecEnfantNaturelEditerBacking.renderedValiderButton()}"
+                                         action="#{acteRecEnfantAdulterinEditerBacking.valider()}"
+                                         rendered="#{acteRecEnfantAdulterinEditerBacking.renderedValiderButton()}"
                                          update="@form messageForm"  icon="pi pi-check" 
                                          styleClass="ui-button-outlined"/>
                         
-                        <p:commandButton value="Modifier l'acte de mariage" process="@form" 
-                                         action="#{acteRecEnfantNaturelEditerBacking.modifier()}"
-                                         rendered="#{acteRecEnfantNaturelEditerBacking.renderedModifierButton()}"
+                        <p:commandButton value="Modifier l'acte de déclaration reconnaissance enfant adultérin" process="@form" 
+                                         action="#{acteRecEnfantAdulterinEditerBacking.modifier()}"
+                                         rendered="#{acteRecEnfantAdulterinEditerBacking.renderedModifierButton()}"
                                          update="@form messageForm"  icon="pi pi-check" 
                                          styleClass="ui-button-outlined"/>
                         

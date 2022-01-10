@@ -380,6 +380,16 @@ public class ListerBacking extends BaseBacking implements Serializable{
     
     }
     
+    public void openListActesDecRecEnfAdulterin(RegistreDto registreDto) {
+        
+        var ids = List.of(registreDto.getId());
+        Map<String, List<String>> params = Map.of("reg-id", ids);
+        PrimeFaces.current().dialog().openDynamic("/acte/divers/lister-reconnaissance-enfant-adulterin", 
+                getDialogOptions(100,100,true), params);
+        
+    
+    }
+    
     public boolean renderGererActesMenu(RegistreDto registreDto){
         return !registreDto.getTypeRegistre().equals(TypeRegistre.DIVERS.name());
     }

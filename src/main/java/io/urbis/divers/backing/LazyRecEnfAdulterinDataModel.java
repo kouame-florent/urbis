@@ -5,8 +5,8 @@
  */
 package io.urbis.divers.backing;
 
-import io.urbis.divers.api.ActeRecEnfNaturelService;
-import io.urbis.divers.dto.ActeRecEnfantNaturelDto;
+import io.urbis.divers.api.ActeRecEnfAdulterinService;
+import io.urbis.divers.dto.ActeRecEnfantAdulterinDto;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -23,23 +23,23 @@ import org.primefaces.model.SortMeta;
  * @author florent
  */
 @Dependent
-public class LazyRecEnfNaturelDataModel extends LazyDataModel<ActeRecEnfantNaturelDto>{
+public class LazyRecEnfAdulterinDataModel extends LazyDataModel<ActeRecEnfantAdulterinDto>{
     
-    private static final Logger LOG = Logger.getLogger(LazyRecEnfNaturelDataModel.class.getName());
+     private static final Logger LOG = Logger.getLogger(LazyRecEnfAdulterinDataModel.class.getName());
     
     @Inject
-    ActeRecEnfNaturelService acteRecEnfNaturelService;
+    ActeRecEnfAdulterinService ActeRecEnfAdulterinService;
     
     private String registreID;
     
-    List<ActeRecEnfantNaturelDto> actes = new ArrayList<>();
+    List<ActeRecEnfantAdulterinDto> actes = new ArrayList<>();
 
     @Override
-    public List<ActeRecEnfantNaturelDto> load(int offset, int pageSize, Map<String, SortMeta> sortBy, Map<String, FilterMeta> filterBy) {
+    public List<ActeRecEnfantAdulterinDto> load(int offset, int pageSize, Map<String, SortMeta> sortBy, Map<String, FilterMeta> filterBy) {
         LOG.log(Level.INFO,"Loading the lazy data between {0} and {1}", new Object[]{offset, offset+pageSize} );
-        actes = acteRecEnfNaturelService.findWithFilters(offset, pageSize,registreID);
+        actes = ActeRecEnfAdulterinService.findWithFilters(offset, pageSize,registreID);
         LOG.log(Level.INFO,"LOADED DATA SIZE: {0}", actes.size());
-        int count = acteRecEnfNaturelService.count();
+        int count = ActeRecEnfAdulterinService.count();
         setRowCount(count);
        
         return actes;
@@ -47,11 +47,11 @@ public class LazyRecEnfNaturelDataModel extends LazyDataModel<ActeRecEnfantNatur
     
     
     @Override
-    public ActeRecEnfantNaturelDto getRowData(String rowKey) { 
+    public ActeRecEnfantAdulterinDto getRowData(String rowKey) { 
         //LOG.log(Level.INFO,"ROW KEY: {0}", rowKey);
         //LOG.log(Level.INFO,"DATA SIZE: {0}", actes.size());
         
-        for(ActeRecEnfantNaturelDto acte : actes){
+        for(ActeRecEnfantAdulterinDto acte : actes){
             //LOG.log(Level.INFO,"--- CURRENT ID: {0}", acte.getId());
             if(acte.getId().equals(rowKey)){
                 return acte;
@@ -70,7 +70,7 @@ public class LazyRecEnfNaturelDataModel extends LazyDataModel<ActeRecEnfantNatur
 
 
     @Override
-    public String getRowKey(ActeRecEnfantNaturelDto acte) {
+    public String getRowKey(ActeRecEnfantAdulterinDto acte) {
         return acte.getId();
     }
 
@@ -85,8 +85,7 @@ public class LazyRecEnfNaturelDataModel extends LazyDataModel<ActeRecEnfantNatur
     
     @Override
     public int count(Map<String, FilterMeta> arg0) {
-        return acteRecEnfNaturelService.count();
+        return ActeRecEnfAdulterinService.count();
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
 }

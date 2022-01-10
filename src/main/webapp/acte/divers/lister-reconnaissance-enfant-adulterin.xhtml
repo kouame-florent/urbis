@@ -1,0 +1,179 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+xmlns:h="http://xmlns.jcp.org/jsf/html"
+xmlns:f="http://xmlns.jcp.org/jsf/core"
+xmlns:p="http://primefaces.org/ui">
+    
+ <ui:composition template="/WEB-INF/templates/dialog-tpl.xhtml">
+     
+     <ui:define name="title">
+         DÉCLARATION RECONNAISSANCE ENFANT ADULTERIN
+     </ui:define>
+    
+    <ui:define name="content">
+        
+        <f:metadata>
+            <f:viewParam name="reg-id" value="#{acteRecEnfAdulterinListerBacking.registreID}" />
+            <f:viewAction action="#{acteRecEnfAdulterinListerBacking.onload}" />
+        </f:metadata>
+        
+        <h:form id="messageForm">
+            <p:growl globalOnly="true" life="15000" showDetail="true"/>        
+        </h:form>
+       
+        <h:form id="contentForm">
+             <p:fieldset legend="Référence registre">
+               <div class="ui-fluid p-formgrid p-grid">
+                   <div class="p-field p-col">
+                   <p:outputLabel for="localite" styleClass="p-d-block">Commune</p:outputLabel>
+                   <p:inputText id="localite" value="#{acteRecEnfAdulterinListerBacking.registreDto.localite}"
+                                disabled="true" required="true" styleClass="p-d-block"/>
+
+                   </div>
+                   <div class="p-field p-col">
+                       <p:outputLabel for="centre" styleClass="p-d-block">Centre</p:outputLabel>
+                       <p:inputText id="centre" value="#{acteRecEnfAdulterinListerBacking.registreDto.centre}"
+                                    disabled="true"  required="true" styleClass="p-d-block"/>
+
+                   </div>
+                   <div class="p-field p-col">
+                       <p:outputLabel for="annee" styleClass="p-d-block">Année</p:outputLabel>
+                       <p:inputText id="annee" value="#{acteRecEnfAdulterinListerBacking.registreDto.annee}" required="true"
+                                    disabled="true" styleClass="p-d-block"/>
+
+                   </div>
+                   <div class="p-field p-col">
+                       <p:outputLabel for="numero" styleClass="p-d-block">Numéro</p:outputLabel>
+                       <p:inputText id="numero" value="#{acteRecEnfAdulterinListerBacking.registreDto.numero}"  required="true" 
+                                    disabled="true"   styleClass="p-d-block"/>
+
+                   </div>
+                   <div class="p-field p-col">
+                       <p:outputLabel for="numeroPremierActe" styleClass="p-d-block">Numéro premier acte</p:outputLabel>
+                       <p:inputText id="numeroPremierActe" value="#{acteRecEnfAdulterinListerBacking.registreDto.numeroPremierActe}"  required="true" 
+                                    disabled="true"   styleClass="p-d-block"/>
+
+                   </div>
+                   <div class="p-field p-col">
+                       <p:outputLabel for="numeroDernierActe" styleClass="p-d-block">Numéro dernier acte</p:outputLabel>
+                       <p:inputText id="numeroDernierActe" value="#{acteRecEnfAdulterinListerBacking.registreDto.numeroDernierActe}"  required="true" 
+                                    disabled="true"   styleClass="p-d-block"/>
+
+                   </div>
+
+               </div>
+
+            </p:fieldset>
+            
+            <p:toolbar>
+                <p:toolbarGroup>
+                    <p:commandButton value="Acte existant" icon="pi pi-plus" 
+                         action="#{acteRecEnfAdulterinListerBacking.openNewActeExistant}"
+                         
+                         styleClass="ui-button-success" style="margin-right: .5rem">
+                        <p:ajax event="dialogReturn" listener="#{acteRecEnfAdulterinListerBacking.onNewActeReturn}"
+                                 update="messageForm :contentForm:actesDatatable"/>
+                    </p:commandButton>
+                    <p:commandButton value="Déclaration" icon="pi pi-plus"
+                                   action="#{acteRecEnfAdulterinListerBacking.openNewDeclaration}"
+                                   
+                                   styleClass="ui-button-success" style="margin-right: .5rem">
+                        <p:ajax event="dialogReturn" listener="#{acteRecEnfAdulterinListerBacking.onNewActeReturn}"
+                                 update="messageForm :contentForm:actesDatatable"/>
+
+                    </p:commandButton>
+                    
+                </p:toolbarGroup>
+            </p:toolbar>
+            
+            <p:dataTable id="actesDatatable" var="acte" paginator="true"
+                         value="#{acteRecEnfAdulterinListerBacking.lazyRecEnfAdulterinDataModel}" rowKey="#{acte.id}"
+                         rows="25" rowSelectMode="add" paginatorPosition="bottom" stripedRows="true">
+                
+                
+                <p:column headerText="Nom"  >
+                    <h:outputText value="#{acte.enfantNom}"/>
+                </p:column>
+                <p:column headerText="Prénoms"  >
+                    <h:outputText value="#{acte.enfantPrenoms}"/>
+                </p:column>
+                
+                 <p:column headerText="Date naissance"  >
+                    <h:outputText value="#{acte.enfantDateNaissance}"/>
+                </p:column>
+                
+                <p:column headerText="Année registre" >
+                    <h:outputText value="#{acte.registreAnnee}"/>
+                </p:column>
+                
+                <p:column headerText="Numéro registre" >
+                    <h:outputText value="#{acte.registreNumero}"/>
+                </p:column>
+                 
+                <p:column headerText="Numéro acte" >
+                    <h:outputText value="#{acte.numero}"/>
+                </p:column>
+                
+                <p:column headerText="Statut acte" >
+                    <p:tag severity="#{acteRecEnfAdulterinListerBacking.statutSeverity(acte.statut)}" value="#{acte.statut}"/>
+                </p:column>
+              
+                <p:column style="width: 2%" >
+                    <p:commandButton process="@this" title="Imprimer"
+                                     ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" icon="pi pi-print"
+                                     styleClass="edit-button rounded-button">
+                        <f:setPropertyActionListener value="#{acte.id}" 
+                                                     target="#{acteRecEnfAdulterinListerBacking.selectedActeID}"/>
+                        <p:fileDownload value="#{acteRecEnfAdulterinListerBacking.download()}"/>
+                     </p:commandButton>
+                </p:column>
+                
+                <p:column style="width: 2%">
+                    <p:commandButton icon="pi pi-pencil" title="modifier"
+                            action="#{acteRecEnfAdulterinListerBacking.openModifierActeView(acte)}"            
+                            styleClass="edit-button rounded-button" process="@this">
+                            
+                    </p:commandButton>
+                </p:column>
+               
+                <p:column  style="width: 2%">
+                    <p:menuButton icon="pi pi-ellipsis-h" style="width: 100%;white-space: nowrap;width: auto !important;"
+                                  title="options">
+                        <p:menuitem value="Consulter" process="@this"  icon="pi pi-book"/>
+                        <p:menuitem value="Valider" action="#{acteRecEnfAdulterinListerBacking.openValiderActeView(acte)}" 
+                                    process="@this" disabled="#{acteRecEnfAdulterinListerBacking.disableMenuValiderActe(acte)}" 
+                                    icon="pi pi-book">
+                            <p:ajax event="dialogReturn" listener="#{acteRecEnfAdulterinListerBacking.onActeValidated}" 
+                                        update=":contentForm:actesDatatable"/>
+                        </p:menuitem>
+                        <p:divider/>
+                        <p:menuitem value="Supprimer" process="@this" action="#{acteRecEnfAdulterinListerBacking.supprimer(acte.id)}"  
+                                   icon="pi pi-times" update="contentForm:actesDatatable" >
+                            
+                            <p:confirm header="Confirmation" 
+                                       message="Voulez-vous vraiment supprimer l'acte #{acte.numero} du registre
+                                       numéro #{acte.registreNumero} de #{acte.registreAnnee} ?" 
+                                       icon="pi pi-exclamation-triangle"/>
+                        </p:menuitem>
+                        
+                    </p:menuButton>
+                 </p:column>
+                
+            </p:dataTable>
+         
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+                <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+                <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" />
+            </p:confirmDialog>
+
+        </h:form>
+          
+        
+    </ui:define>
+
+</ui:composition>  
+ 
+</html>
+
