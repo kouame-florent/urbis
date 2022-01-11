@@ -103,6 +103,10 @@ public class EditerRecEnfNaturelBacking extends BaseBacking implements Serializa
             case MODIFICATION:
                 acteDto = acteRecEnfNaturelService.findById(acteID);
                 break;
+           case VALIDATION:
+                acteDto = acteRecEnfNaturelService.findById(acteID);
+                break;
+                
         }
         
         acteDto.setOperation(operation.name());

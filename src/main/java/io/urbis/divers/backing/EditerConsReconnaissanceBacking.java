@@ -5,15 +5,11 @@
  */
 package io.urbis.divers.backing;
 
-import io.urbis.common.api.SexeService;
 import io.urbis.common.util.BaseBacking;
-import io.urbis.divers.api.ActeRecEnfAdulterinService;
-import io.urbis.divers.api.TypeConsentementService;
-import io.urbis.divers.dto.ActeRecEnfantAdulterinDto;
+import io.urbis.divers.api.ActeConsReconnaissanceService;
+import io.urbis.divers.dto.ActeConsReconnaissanceDto;
 import io.urbis.divers.dto.Operation;
 import io.urbis.divers.dto.StatutActeDivers;
-import io.urbis.divers.dto.TypeConsentementDto;
-import io.urbis.naissance.dto.SexeDto;
 import io.urbis.param.api.OfficierService;
 import io.urbis.param.dto.OfficierEtatCivilDto;
 import io.urbis.registre.api.RegistreService;
@@ -35,16 +31,13 @@ import org.primefaces.PrimeFaces;
  *
  * @author florent
  */
-@Named(value = "acteRecEnfantAdulterinEditerBacking")
+@Named(value = "acteConsReconnaissanceEditerBacking")
 @ViewScoped
-public class EditerRecEnfAdulterinBacking extends BaseBacking implements Serializable{
+public class EditerConsReconnaissanceBacking extends BaseBacking implements Serializable{
     
-    private static final Logger LOG = Logger.getLogger(EditerRecEnfNaturelBacking.class.getName());
+    private static final Logger LOG = Logger.getLogger(EditerConsReconnaissanceBacking.class.getName());
     
-    @Inject
-    @RestClient
-    SexeService sexeService;
-    
+        
     @Inject 
     @RestClient
     OfficierService officierService;
@@ -54,13 +47,10 @@ public class EditerRecEnfAdulterinBacking extends BaseBacking implements Seriali
     RegistreService registreService;
     
     @Inject
-    ActeRecEnfAdulterinService acteRecEnfAdulterinService;
-    
+    ActeConsReconnaissanceService acteConsReconnaissanceService;
+  
     @Inject
-    TypeConsentementService typeConsentementService ;
-    
-    @Inject
-    LazyRecEnfNaturelDataModel lazyRecEnfNaturelDataModel;
+    LazyConsReconnaissanceDataModel lazyConsReconnaissanceDataModel;
     
     private String registreID;
     private RegistreDto registreDto;
@@ -68,20 +58,16 @@ public class EditerRecEnfAdulterinBacking extends BaseBacking implements Seriali
     private Operation operation;
     private String acteID;
     
-    private ActeRecEnfantAdulterinDto acteDto;
+    private ActeConsReconnaissanceDto acteDto;
     
-    private List<SexeDto> sexes;
     private List<OfficierEtatCivilDto> officiers;
-    
-    private List<TypeConsentementDto> typesConsentement;
     
     
     @PostConstruct
     public void init(){
         LOG.log(Level.INFO,"--- INIT EditerRecEnfNaturelBacking ---");
-        sexes = sexeService.findAll();
         officiers = officierService.findAll();
-        typesConsentement = typeConsentementService.findAll();
+  
     }
     
     public void onload(){
@@ -94,33 +80,33 @@ public class EditerRecEnfAdulterinBacking extends BaseBacking implements Seriali
         
         switch(operation){
             case DECLARATION:
-                acteDto = new ActeRecEnfantAdulterinDto();
+                acteDto = new ActeConsReconnaissanceDto();
                 //acteDto.setStatut(StatutActeDivers.PROJET.name());
                 acteDto.setRegistreID(registreID);
-                int numeroActe = acteRecEnfAdulterinService.numeroActe(registreID);
+                int numeroActe = acteConsReconnaissanceService.numeroActe(registreID);
                 acteDto.setNumero(numeroActe);
                 
                 break;
             case SAISIE_ACTE_EXISTANT:
-                acteDto = new ActeRecEnfantAdulterinDto();
+                acteDto = new ActeConsReconnaissanceDto();
                // acteDto.setStatut(StatutActeDivers.PROJET.name());
                 acteDto.setRegistreID(registreID);
                 break;
             case MODIFICATION:
-                acteDto = acteRecEnfAdulterinService.findById(acteID);
+                acteDto = acteConsReconnaissanceService.findById(acteID);
                 break;
             case VALIDATION:
-                acteDto = acteRecEnfAdulterinService.findById(acteID);
+                acteDto = acteConsReconnaissanceService.findById(acteID);
                 break;
         }
         
         acteDto.setOperation(operation.name());
-        lazyRecEnfNaturelDataModel.setRegistreID(registreID);
+        lazyConsReconnaissanceDataModel.setRegistreID(registreID);
     }
     
     public void creer(){
         try{
-            acteRecEnfAdulterinService.create(acteDto);
+            acteConsReconnaissanceService.create(acteDto);
             resetActeDto();
             addGlobalMessage("Déclaration enregistrée avec succès", FacesMessage.SEVERITY_INFO);
         }catch(ValidationException ex){
@@ -135,8 +121,8 @@ public class EditerRecEnfAdulterinBacking extends BaseBacking implements Seriali
         acteDto.setOperation(Operation.MODIFICATION.name());
           
         try{
-            acteRecEnfAdulterinService.update(acteDto.getId(),acteDto);
-            acteDto = acteRecEnfAdulterinService.findById(acteDto.getId());
+            acteConsReconnaissanceService.update(acteDto.getId(),acteDto);
+            acteDto = acteConsReconnaissanceService.findById(acteDto.getId());
             addGlobalMessage("L'acte a été modifié avec succès", FacesMessage.SEVERITY_INFO);
         }catch(ValidationException ex){
            LOG.log(Level.SEVERE,ex.getMessage());
@@ -149,7 +135,7 @@ public class EditerRecEnfAdulterinBacking extends BaseBacking implements Seriali
     public void valider(){
         try{
             acteDto.setStatut(StatutActeDivers.VALIDE.name());
-            acteRecEnfAdulterinService.update(acteDto.getId(), acteDto);
+            acteConsReconnaissanceService.update(acteDto.getId(), acteDto);
             addGlobalMessage("Acte validé avec succès", FacesMessage.SEVERITY_INFO);
             PrimeFaces.current().dialog().closeDynamic(null);
         }catch(ValidationException ex){
@@ -159,9 +145,9 @@ public class EditerRecEnfAdulterinBacking extends BaseBacking implements Seriali
     }
     
     private void resetActeDto(){
-        acteDto = new ActeRecEnfantAdulterinDto();
+        acteDto = new ActeConsReconnaissanceDto();
         if(operation == Operation.DECLARATION){
-            int numeroActe = acteRecEnfAdulterinService.numeroActe(registreID);
+            int numeroActe = acteConsReconnaissanceService.numeroActe(registreID);
             acteDto.setNumero(numeroActe);
         }
        // selectedActe = null;
@@ -223,17 +209,15 @@ public class EditerRecEnfAdulterinBacking extends BaseBacking implements Seriali
 
     
     
-    public ActeRecEnfantAdulterinDto getActeDto() {
+    public ActeConsReconnaissanceDto getActeDto() {
         return acteDto;
     }
 
-    public void setActeDto(ActeRecEnfantAdulterinDto acteDto) {
+    public void setActeDto(ActeConsReconnaissanceDto acteDto) {
         this.acteDto = acteDto;
     }
 
-    public List<SexeDto> getSexes() {
-        return sexes;
-    }
+   
 
     public String getOperationParam() {
         return operationParam;
@@ -259,9 +243,5 @@ public class EditerRecEnfAdulterinBacking extends BaseBacking implements Seriali
         this.officiers = officiers;
     }
 
-    public List<TypeConsentementDto> getTypesConsentement() {
-        return typesConsentement;
-    }
-    
     
 }

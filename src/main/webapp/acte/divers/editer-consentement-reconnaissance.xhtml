@@ -1,0 +1,317 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+xmlns:h="http://xmlns.jcp.org/jsf/html"
+xmlns:f="http://xmlns.jcp.org/jsf/core"
+xmlns:p="http://primefaces.org/ui">
+    
+ <ui:composition template="/WEB-INF/templates/dialog-tpl.xhtml">
+     
+     <ui:define name="title">
+         DÉCLARATION CONSENTEMENT À RECONNAISSANCE
+     </ui:define>
+    
+    <ui:define name="content">
+        
+        <f:metadata>
+            <f:viewParam name="operation" value="#{acteConsReconnaissanceEditerBacking.operationParam}" />
+            <f:viewParam name="reg-id" value="#{acteConsReconnaissanceEditerBacking.registreID}" />
+            <f:viewParam name="acte-id" value="#{acteConsReconnaissanceEditerBacking.acteID}" />
+            <f:viewAction action="#{acteConsReconnaissanceEditerBacking.onload}" />
+        </f:metadata>
+        
+        <h:form id="messageForm">
+                <p:growl globalOnly="true" life="15000" />        
+        </h:form>
+             
+        <h:form id="contentForm">  
+           
+            <p:toolbar style="border: none">
+                <p:toolbarGroup>
+                    
+                </p:toolbarGroup>
+                <p:toolbarGroup align="right">
+                    <p:commandButton title="fermer" action="#{acteConsReconnaissanceEditerBacking.closeView()}" process="@this" 
+                                     icon="pi pi-times" styleClass="rounded-button ui-button-danger"/>
+                </p:toolbarGroup>
+            </p:toolbar>
+            
+            <p:focus context="contentForm"/>
+          
+            <p:fieldset legend="Référence registre">
+               <div class="ui-fluid p-formgrid p-grid">
+                   <div class="p-field p-col">
+                   <p:outputLabel for="localite" styleClass="p-d-block">Commune</p:outputLabel>
+                   <p:inputText id="localite" value="#{acteConsReconnaissanceEditerBacking.registreDto.localite}"
+                                disabled="true" required="true" styleClass="p-d-block"/>
+
+                   </div>
+                   <div class="p-field p-col">
+                       <p:outputLabel for="centre" styleClass="p-d-block">Centre</p:outputLabel>
+                       <p:inputText id="centre" value="#{acteConsReconnaissanceEditerBacking.registreDto.centre}"
+                                    disabled="true"  required="true" styleClass="p-d-block"/>
+
+                   </div>
+                   <div class="p-field p-col">
+                       <p:outputLabel for="annee" styleClass="p-d-block">Année</p:outputLabel>
+                       <p:inputText id="annee" value="#{acteConsReconnaissanceEditerBacking.registreDto.annee}" required="true"
+                                    disabled="true" styleClass="p-d-block"/>
+
+                   </div>
+                   <div class="p-field p-col">
+                       <p:outputLabel for="numero" styleClass="p-d-block">Numéro</p:outputLabel>
+                       <p:inputText id="numero" value="#{acteConsReconnaissanceEditerBacking.registreDto.numero}"  required="true" 
+                                    disabled="true"   styleClass="p-d-block"/>
+
+                   </div>
+                   <div class="p-field p-col">
+                       <p:outputLabel for="numeroPremierActe" styleClass="p-d-block">Numéro premier acte</p:outputLabel>
+                       <p:inputText id="numeroPremierActe" value="#{acteConsReconnaissanceEditerBacking.registreDto.numeroPremierActe}"  required="true" 
+                                    disabled="true"   styleClass="p-d-block"/>
+
+                   </div>
+                   <div class="p-field p-col">
+                       <p:outputLabel for="numeroDernierActe" styleClass="p-d-block">Numéro dernier acte</p:outputLabel>
+                       <p:inputText id="numeroDernierActe" value="#{acteConsReconnaissanceEditerBacking.registreDto.numeroDernierActe}"  required="true" 
+                                    disabled="true"   styleClass="p-d-block"/>
+
+                   </div>
+
+               </div>
+
+           </p:fieldset>
+            <p:spacer height="2" />
+      
+        <p:fieldset >
+
+            <div class="ui-fluid p-formgrid p-grid">
+                <div class="p-field p-lg-4">
+
+                    <p:outputLabel for="numeroActe" styleClass="p-d-block" style="color: #ffffff">Numéro acte</p:outputLabel>
+                    <p:inputText id="numeroActe" value="#{acteConsReconnaissanceEditerBacking.acteDto.numero}" 
+                                 required="true"/>
+
+                </div>
+
+            </div>
+
+             
+           </p:fieldset>
+            
+            <p:spacer height="2" />      
+            
+            <p:fieldset legend="Consentement">
+                
+                 <div class="ui-fluid p-formgrid p-grid">
+                    <div class="p-field p-lg-6">
+                        <p:outputLabel for="consentementDate" styleClass="p-d-block">Date</p:outputLabel>
+                        <p:inputMask id="consentementDate"  
+                                     value="#{acteConsReconnaissanceEditerBacking.acteDto.consentementDate}"
+                            mask="99/99/9999" required="true" styleClass="p-d-block">
+                           <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
+                       </p:inputMask>
+                       <p:message for="consentementDate"/>
+                    </div>
+                    <div class="p-field p-lg-6">
+                        <p:outputLabel for="consentementNom" styleClass="p-d-block">Nom</p:outputLabel>
+                        <p:inputText id="consentementNom" 
+                                     value="#{acteConsReconnaissanceEditerBacking.acteDto.consentementNom}" 
+                                     required="true"  
+                                     styleClass="p-d-block"/>
+                    </div>
+                     
+                    <div class="p-field p-lg-6">
+                        <p:outputLabel for="consentementPrenoms" styleClass="p-d-block">Prénoms</p:outputLabel>
+                        <p:inputText id="consentementPrenoms" 
+                                     value="#{acteConsReconnaissanceEditerBacking.acteDto.consentementPrenoms}" 
+                                     required="true"  
+                                     styleClass="p-d-block"/>
+                    </div>
+                     
+                                        
+                    <div class="p-field p-lg-6">
+                        <p:outputLabel for="consentementNatureCirconscription" styleClass="p-d-block">Nature circonscription</p:outputLabel>
+                        <p:inputText id="consentementNatureCirconscription" 
+                                     value="#{acteConsReconnaissanceEditerBacking.acteDto.consentementNatureCirconscription}" 
+                                     required="true"  
+                                     styleClass="p-d-block"/>
+                    </div>
+                     
+                    <div class="p-field p-lg-6">
+                        <p:outputLabel for="consentementNomCirconscription" styleClass="p-d-block">Nom circonscription</p:outputLabel>
+                        <p:inputText id="consentementNomCirconscription" 
+                                     value="#{acteConsReconnaissanceEditerBacking.acteDto.consentementNomCirconscription}" 
+                                     required="true"  
+                                     styleClass="p-d-block"/>
+                    </div>
+                    
+                    <div class="p-field p-lg-6">
+                        <p:outputLabel for="consentementProfession" styleClass="p-d-block">Profession</p:outputLabel>
+                        <p:inputText id="consentementProfession" 
+                                     value="#{acteConsReconnaissanceEditerBacking.acteDto.consentementProfession}" 
+                                     required="true"  
+                                     styleClass="p-d-block"/>
+                    </div>
+                     
+                    <div class="p-field p-lg-6">
+                        <p:outputLabel for="consentementDomicile" styleClass="p-d-block">Domicile</p:outputLabel>
+                        <p:inputText id="consentementDomicile" 
+                                     value="#{acteConsReconnaissanceEditerBacking.acteDto.consentementDomicile}" 
+                                     required="true"  
+                                     styleClass="p-d-block"/>
+                    </div>
+                    
+                </div>
+                
+            </p:fieldset>
+              
+            <p:fieldset legend="Enfant consenti">
+                <div class="ui-fluid p-formgrid p-grid">
+                    
+                   
+                    <div class="p-field p-lg-6">
+                        <p:outputLabel for="enfantConsentiNom" styleClass="p-d-block">Nom</p:outputLabel>
+                        <p:inputText id="enfantConsentiNom" 
+                                     value="#{acteConsReconnaissanceEditerBacking.acteDto.enfantConsentiNom}" 
+                                     required="true"  
+                                     styleClass="p-d-block"/>
+                    </div>
+                     
+                    <div class="p-field p-lg-6">
+                        <p:outputLabel for="enfantConsentiPrenoms" styleClass="p-d-block">Prénoms</p:outputLabel>
+                        <p:inputText id="enfantConsentiPrenoms" 
+                                     value="#{acteConsReconnaissanceEditerBacking.acteDto.enfantConsentiPrenoms}" 
+                                     required="true"  
+                                     styleClass="p-d-block"/>
+                    </div>
+                     
+                    <div class="p-field p-lg-6">
+                        <p:outputLabel for="enfantConsentiDateNaissance" styleClass="p-d-block">Date naissance</p:outputLabel>
+                        <p:inputMask id="enfantConsentiDateNaissance"  
+                                     value="#{acteConsReconnaissanceEditerBacking.acteDto.enfantConsentiDateNaissance}"
+                            mask="99/99/9999" required="true" styleClass="p-d-block">
+                           <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
+                       </p:inputMask>
+                       <p:message for="enfantConsentiDateNaissance"/>
+                    </div>
+                    
+                    <div class="p-field p-lg-6">
+                        <p:outputLabel for="enfantConsentiProfession" styleClass="p-d-block">Profession</p:outputLabel>
+                        <p:inputText id="enfantConsentiProfession" 
+                                     value="#{acteConsReconnaissanceEditerBacking.acteDto.enfantConsentiProfession}" 
+                                     required="true"  
+                                     styleClass="p-d-block"/>
+                    </div>
+                    <div class="p-field p-lg-6">
+                        <p:outputLabel for="enfantConsentiDomicile" styleClass="p-d-block">Domicile</p:outputLabel>
+                        <p:inputText id="enfantConsentiDomicile" 
+                                     value="#{acteConsReconnaissanceEditerBacking.acteDto.enfantConsentiDomicile}" 
+                                     required="true"  
+                                     styleClass="p-d-block"/>
+                    </div>
+                    
+                    
+                </div>
+                
+                
+            </p:fieldset>
+            
+            <p:fieldset legend="Contractant">
+                <div class="ui-fluid p-formgrid p-grid">
+                    
+                    <div class="p-field p-lg-6">
+                        <p:outputLabel for="contractantNom" styleClass="p-d-block">Nom</p:outputLabel>
+                        <p:inputText id="contractantNom" 
+                                     value="#{acteConsReconnaissanceEditerBacking.acteDto.contractantNom}" 
+                                     required="true"  
+                                     styleClass="p-d-block"/>
+                    </div>
+                    
+                    <div class="p-field p-lg-6">
+                        <p:outputLabel for="contractantPrenoms" styleClass="p-d-block">Prénom</p:outputLabel>
+                        <p:inputText id="contractantPrenoms" 
+                                     value="#{acteConsReconnaissanceEditerBacking.acteDto.contractantPrenoms}" 
+                                     required="true"  
+                                     styleClass="p-d-block"/>
+                    </div>
+                     
+                    <div class="p-field p-lg-6">
+                        <p:outputLabel for="contractantProfession" styleClass="p-d-block">Profession</p:outputLabel>
+                        <p:inputText id="contractantProfession" 
+                                     value="#{acteConsReconnaissanceEditerBacking.acteDto.contractantProfession}" 
+                                     required="true"  
+                                     styleClass="p-d-block"/>
+                    </div>
+                     
+                   <div class="p-field p-lg-6">
+                        <p:outputLabel for="contractantDomicile" styleClass="p-d-block">Domicile</p:outputLabel>
+                        <p:inputText id="contractantDomicile" 
+                                     value="#{acteConsReconnaissanceEditerBacking.acteDto.contractantDomicile}" 
+                                     required="true"  
+                                     styleClass="p-d-block"/>
+                    </div>
+                    
+                    
+                    
+                </div>
+                
+                
+            </p:fieldset>
+            
+             <p:fieldset legend="Officier d'état civil">
+                    <div class="ui-fluid p-formgrid p-grid">
+                        <div class="p-field p-col">
+                            <p:outputLabel for="officierEtatCivil" styleClass="p-d-block">Officier</p:outputLabel>
+                            <p:selectOneMenu id="officierEtatCivil" 
+                                             value="#{acteConsReconnaissanceEditerBacking.acteDto.officierEtatCivilID}"          
+                                             label="Selectionnez" required="true">
+                                <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez un officier --" />
+                                <f:selectItems value="#{acteConsReconnaissanceEditerBacking.officiers}" var="officier" 
+                                               itemLabel="#{officier.prenoms} #{officier.nom} [#{officier.titre}]" 
+                                               itemValue="#{officier.id}"/>
+                            </p:selectOneMenu>
+                        </div>
+                   </div>
+
+            </p:fieldset>
+            <p:outputPanel id="commandOutputPanel">
+                <p:fieldset>
+                <div class="ui-fluid p-formgrid p-grid">
+
+                    <div class="p-field p-lg-12">
+
+                        <p:commandButton value="Enregistrer l'acte de déclaration consentement à reconnaissance" process="@form" 
+                                         action="#{acteConsReconnaissanceEditerBacking.creer()}"
+                                         rendered="#{acteConsReconnaissanceEditerBacking.renderedCreerButton()}"
+                                         update="@form messageForm"  icon="pi pi-check" 
+                                         styleClass="ui-button-outlined"/>
+
+                        <p:commandButton value="Valider l'acte" process="@form" 
+                                         action="#{acteConsReconnaissanceEditerBacking.valider()}"
+                                         rendered="#{acteConsReconnaissanceEditerBacking.renderedValiderButton()}"
+                                         update="@form messageForm"  icon="pi pi-check" 
+                                         styleClass="ui-button-outlined"/>
+                        
+                        <p:commandButton value="Modifier l'acte de déclaration consentement à reconnaissance" process="@form" 
+                                         action="#{acteConsReconnaissanceEditerBacking.modifier()}"
+                                         rendered="#{acteConsReconnaissanceEditerBacking.renderedModifierButton()}"
+                                         update="@form messageForm"  icon="pi pi-check" 
+                                         styleClass="ui-button-outlined"/>
+                        
+                    </div>
+
+
+                </div>
+                </p:fieldset>
+            </p:outputPanel>
+           
+          
+       </h:form>
+        
+    </ui:define>
+
+</ui:composition>  
+ 
+</html>
+

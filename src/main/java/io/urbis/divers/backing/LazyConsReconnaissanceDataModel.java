@@ -5,14 +5,13 @@
  */
 package io.urbis.divers.backing;
 
-import io.urbis.divers.api.ActeRecEnfAdulterinService;
-import io.urbis.divers.dto.ActeRecEnfantAdulterinDto;
+import io.urbis.divers.api.ActeConsReconnaissanceService;
+import io.urbis.divers.dto.ActeConsReconnaissanceDto;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.LazyDataModel;
@@ -22,24 +21,23 @@ import org.primefaces.model.SortMeta;
  *
  * @author florent
  */
-@Dependent
-public class LazyRecEnfAdulterinDataModel extends LazyDataModel<ActeRecEnfantAdulterinDto>{
+public class LazyConsReconnaissanceDataModel extends LazyDataModel<ActeConsReconnaissanceDto>{
     
-    private static final Logger LOG = Logger.getLogger(LazyRecEnfAdulterinDataModel.class.getName());
+    private static final Logger LOG = Logger.getLogger(LazyConsReconnaissanceDataModel.class.getName());
     
     @Inject
-    ActeRecEnfAdulterinService ActeRecEnfAdulterinService;
+    ActeConsReconnaissanceService acteConsReconnaissanceService;
     
     private String registreID;
     
-    List<ActeRecEnfantAdulterinDto> actes = new ArrayList<>();
+    List<ActeConsReconnaissanceDto> actes = new ArrayList<>();
 
     @Override
-    public List<ActeRecEnfantAdulterinDto> load(int offset, int pageSize, Map<String, SortMeta> sortBy, Map<String, FilterMeta> filterBy) {
+    public List<ActeConsReconnaissanceDto> load(int offset, int pageSize, Map<String, SortMeta> sortBy, Map<String, FilterMeta> filterBy) {
         LOG.log(Level.INFO,"Loading the lazy data between {0} and {1}", new Object[]{offset, offset+pageSize} );
-        actes = ActeRecEnfAdulterinService.findWithFilters(offset, pageSize,registreID);
+        actes = acteConsReconnaissanceService.findWithFilters(offset, pageSize,registreID);
         LOG.log(Level.INFO,"LOADED DATA SIZE: {0}", actes.size());
-        int count = ActeRecEnfAdulterinService.count();
+        int count = acteConsReconnaissanceService.count();
         setRowCount(count);
        
         return actes;
@@ -47,11 +45,11 @@ public class LazyRecEnfAdulterinDataModel extends LazyDataModel<ActeRecEnfantAdu
     
     
     @Override
-    public ActeRecEnfantAdulterinDto getRowData(String rowKey) { 
+    public ActeConsReconnaissanceDto getRowData(String rowKey) { 
         //LOG.log(Level.INFO,"ROW KEY: {0}", rowKey);
         //LOG.log(Level.INFO,"DATA SIZE: {0}", actes.size());
         
-        for(ActeRecEnfantAdulterinDto acte : actes){
+        for(ActeConsReconnaissanceDto acte : actes){
             //LOG.log(Level.INFO,"--- CURRENT ID: {0}", acte.getId());
             if(acte.getId().equals(rowKey)){
                 return acte;
@@ -70,7 +68,7 @@ public class LazyRecEnfAdulterinDataModel extends LazyDataModel<ActeRecEnfantAdu
 
 
     @Override
-    public String getRowKey(ActeRecEnfantAdulterinDto acte) {
+    public String getRowKey(ActeConsReconnaissanceDto acte) {
         return acte.getId();
     }
 
@@ -85,7 +83,7 @@ public class LazyRecEnfAdulterinDataModel extends LazyDataModel<ActeRecEnfantAdu
     
     @Override
     public int count(Map<String, FilterMeta> arg0) {
-        return ActeRecEnfAdulterinService.count();
+        return acteConsReconnaissanceService.count();
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
