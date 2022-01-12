@@ -16,8 +16,8 @@ xmlns:p="http://primefaces.org/ui">
         
         <f:metadata>
             <f:viewParam name="operation" value="#{acteNaissanceEditerBacking.operationParam}" />
-            <f:viewParam name="id" value="#{acteNaissanceEditerBacking.registreID}" />
-            <f:viewParam name="acte-id" value="#{acteNaissanceEditerBacking.acteNaissanceID}" />
+            <f:viewParam name="reg-id" value="#{acteNaissanceEditerBacking.registreID}" />
+            <f:viewParam name="acte-id" value="#{acteNaissanceEditerBacking.acteID}" />
             <f:viewAction action="#{acteNaissanceEditerBacking.onload}" />
         </f:metadata>
         
@@ -83,114 +83,105 @@ xmlns:p="http://primefaces.org/ui">
 
            </p:fieldset>
             <p:spacer height="2" />
-                
-            
-             <p:wizard id="acteWizard" widgetVar="wizardWgt" flowListener="#{acteNaissanceEditerBacking.onFlowProcess}"
-                      nextLabel="suivant" backLabel="précédent">
-                    <p:tab id="declaration" title="Déclaration">
+             
+                <ui:include src="/WEB-INF/includes/naissance/editer/mode-declaration.xhtml"/>
 
-                        <p:focus context="declaration"/>
+                <p:spacer height="2" />
 
-                        <ui:include src="/WEB-INF/includes/naissance/editer/mode-declaration.xhtml"/>
+                <p:outputPanel id="naissanceMultipleOutputPanel" >
+                <div class="ui-fluid p-formgrid p-grid">
+                    <div class="p-field p-lg-4">
+                        <p:fieldset>
+                              <p:outputLabel for="numeroActe" styleClass="p-d-block" style="color: #ffffff">Numéro acte</p:outputLabel>
+                              <p:inputText id="numeroActe" value="#{acteNaissanceEditerBacking.acteNaissanceDto.numero}" 
+                                           required="true"/>
+                        </p:fieldset>
+                    </div>
 
-                        <p:spacer height="2" />
+                </div>
 
-                        <p:outputPanel id="naissanceMultipleOutputPanel" >
-                        <div class="ui-fluid p-formgrid p-grid">
-                            <div class="p-field p-lg-4">
-                                <p:fieldset>
-                                      <p:outputLabel for="numeroActe" styleClass="p-d-block" style="color: #ffffff">Numéro acte</p:outputLabel>
-                                      <p:inputText id="numeroActe" value="#{acteNaissanceEditerBacking.acteNaissanceDto.numero}" 
-                                                   required="true"/>
-                                </p:fieldset>
-                            </div>
+                <p:spacer width="2"/>
+                <p:fieldset>      
+                    <p:outputLabel for="typeNaisance" styleClass="p-d-block">Type naissance</p:outputLabel>
+                    <p:selectOneMenu id="typeNaisance" converter="omnifaces.SelectItemsConverter" required="true"
+                                    value="#{acteNaissanceEditerBacking.acteNaissanceDto.typeNaissance}" styleClass="p-d-block">
+                       <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez un type --" />
+                       <f:selectItems value="#{acteNaissanceEditerBacking.typesNaissance}" var="type" 
+                                      itemLabel="#{type.libelle}"  
+                                      itemValue="#{type.code}" />
+                    </p:selectOneMenu>
+                    <p:message for="typeNaisance"/>
+                </p:fieldset> 
+                <p:spacer width="2"/>
+                <ui:include src="/WEB-INF/includes/naissance/editer/le-declare.xhtml"/>
+                </p:outputPanel>
+
+                <p:spacer height="2" />
+
+                <ui:include src="/WEB-INF/includes/naissance/editer/filiation.xhtml"/>
+
+                <p:fieldset >
+                    <div class="ui-fluid p-formgrid p-grid">
+                        <div class="p-field p-lg-4">
+                            <p:outputLabel for="dateDeclaration" styleClass="p-d-block">Date déclaration</p:outputLabel>
+                            <p:inputMask id="dateDeclaration" value="#{acteNaissanceEditerBacking.acteNaissanceDto.dateDeclaration}"
+                                         mask="99/99/9999" required="true">
+                                <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
+                            </p:inputMask>
 
                         </div>
+                        <div class="p-field p-lg-4">
+                            <p:outputLabel for="dateDressage" styleClass="p-d-block">Date dressage</p:outputLabel>
+                            <p:inputMask id="dateDressage" value="#{acteNaissanceEditerBacking.acteNaissanceDto.dateDressage}"
+                                        mask="99/99/9999 99:99:99" required="true">
+                                <f:convertDateTime locale="fr_FR" type="localDateTime" pattern="dd/MM/yyyy HH:mm:ss"/>
+                           </p:inputMask>
 
-                        <p:spacer width="2"/>
-                        <p:fieldset>      
-                            <p:outputLabel for="typeNaisance" styleClass="p-d-block">Type naissance</p:outputLabel>
-                            <p:selectOneMenu id="typeNaisance" converter="omnifaces.SelectItemsConverter" required="true"
-                                            value="#{acteNaissanceEditerBacking.acteNaissanceDto.typeNaissance}" styleClass="p-d-block">
-                               <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez un type --" />
-                               <f:selectItems value="#{acteNaissanceEditerBacking.typesNaissance}" var="type" 
-                                              itemLabel="#{type.libelle}"  
-                                              itemValue="#{type.code}" />
-                            </p:selectOneMenu>
-                            <p:message for="typeNaisance"/>
-                        </p:fieldset> 
-                        <p:spacer width="2"/>
-                        <ui:include src="/WEB-INF/includes/naissance/editer/le-declare.xhtml"/>
-                        </p:outputPanel>
+                            <p:message for="dateDressage"/>
+                        </div>
+                        <div class="p-field p-lg-4">
+                            <p:outputLabel for="lienParenteDeclarant">Lien parenté déclarant</p:outputLabel>
+                            <p:selectOneRadio id="lienParenteDeclarant" 
+                                              value="#{acteNaissanceEditerBacking.acteNaissanceDto.declarantLien}" 
+                                                converter="omnifaces.SelectItemsConverter"
+                                                required="true">
 
-                        <p:spacer height="2" />
+                                <f:selectItems value="#{acteNaissanceEditerBacking.liensParenteDeclarant}" var="lien" 
+                                               itemLabel="#{lien.libelle}" itemValue="#{lien.code}"/>
+                                <p:ajax update="contentForm:declarantLienParente"/>
+                            </p:selectOneRadio>
+                        </div>
+                    </div>
 
-                        <ui:include src="/WEB-INF/includes/naissance/editer/filiation.xhtml"/>
+                </p:fieldset>
 
-                        <p:fieldset >
-                            <div class="ui-fluid p-formgrid p-grid">
-                                <div class="p-field p-lg-4">
-                                    <p:outputLabel for="dateDeclaration" styleClass="p-d-block">Date déclaration</p:outputLabel>
-                                    <p:inputMask id="dateDeclaration" value="#{acteNaissanceEditerBacking.acteNaissanceDto.dateDeclaration}"
-                                                 mask="99/99/9999" required="true">
-                                        <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
-                                    </p:inputMask>
+            <p:fieldset legend="Autres informations">
+                <ui:include src="/WEB-INF/includes/naissance/editer/autres-informations.xhtml"/>     
+            </p:fieldset>
+                
+            <p:spacer height="2"/>
 
-                                </div>
-                                <div class="p-field p-lg-4">
-                                    <p:outputLabel for="dateDressage" styleClass="p-d-block">Date dressage</p:outputLabel>
-                                    <p:inputMask id="dateDressage" value="#{acteNaissanceEditerBacking.acteNaissanceDto.dateDressage}"
-                                                mask="99/99/9999 99:99:99" required="true">
-                                        <f:convertDateTime locale="fr_FR" type="localDateTime" pattern="dd/MM/yyyy HH:mm:ss"/>
-                                   </p:inputMask>
-
-                                    <p:message for="dateDressage"/>
-                                </div>
-                                <div class="p-field p-lg-4">
-                                    <p:outputLabel for="lienParenteDeclarant">Lien parenté déclarant</p:outputLabel>
-                                    <p:selectOneRadio id="lienParenteDeclarant" 
-                                                      value="#{acteNaissanceEditerBacking.acteNaissanceDto.declarantLien}" 
-                                                        converter="omnifaces.SelectItemsConverter"
-                                                        required="true">
-
-                                        <f:selectItems value="#{acteNaissanceEditerBacking.liensParenteDeclarant}" var="lien" 
-                                                       itemLabel="#{lien.libelle}" itemValue="#{lien.code}"/>
-                                        <p:ajax update="contentForm:declarantLienParente"/>
-                                    </p:selectOneRadio>
-                                </div>
-                            </div>
-
-                        </p:fieldset>
-
-                         
-                    </p:tab>
-                    <p:tab id="autresInformations" title="Autres Informations">
-                        <ui:include src="/WEB-INF/includes/naissance/editer/autres-informations.xhtml"/>     
-                    </p:tab>
-                    <p:tab id="mentions" title="Mentions" >
-                        <ui:include src="/WEB-INF/includes/naissance/editer/mentions.xhtml"/> 
-                        
-                    </p:tab>
-                 <p:tab id="officier" title="Officier" >
-                     <p:fieldset legend="Officier d'état civil">
-                            <div class="ui-fluid p-formgrid p-grid">
-                                <div class="p-field p-col">
-                                    <p:outputLabel for="officierEtatCivil" styleClass="p-d-block">Officier</p:outputLabel>
-                                    <p:selectOneMenu id="officierEtatCivil" value="#{acteNaissanceEditerBacking.acteNaissanceDto.officierEtatCivilID}"          
-                                                     label="Selectionnez" required="true">
-                                        <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez un officier --" />
-                                        <f:selectItems value="#{acteNaissanceEditerBacking.officiers}" var="officier" 
-                                                       itemLabel="#{officier.prenoms} #{officier.nom} [#{officier.titre}]" 
-                                                       itemValue="#{officier.id}"/>
-                                    </p:selectOneMenu>
-                                </div>
-                           </div>
-
-                      </p:fieldset>
-                     <ui:include src="/WEB-INF/includes/naissance/editer/commands.xhtml"/>
-                 </p:tab>
-            </p:wizard>
+            <p:fieldset legend="Mentions">
+                <ui:include src="/WEB-INF/includes/naissance/editer/mentions.xhtml"/> 
+            </p:fieldset>
             
+
+             <p:fieldset legend="Officier d'état civil">
+                    <div class="ui-fluid p-formgrid p-grid">
+                        <div class="p-field p-col">
+                            <p:outputLabel for="officierEtatCivil" styleClass="p-d-block">Officier</p:outputLabel>
+                            <p:selectOneMenu id="officierEtatCivil" value="#{acteNaissanceEditerBacking.acteNaissanceDto.officierEtatCivilID}"          
+                                             label="Selectionnez" required="true">
+                                <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez un officier --" />
+                                <f:selectItems value="#{acteNaissanceEditerBacking.officiers}" var="officier" 
+                                               itemLabel="#{officier.prenoms} #{officier.nom} [#{officier.titre}]" 
+                                               itemValue="#{officier.id}"/>
+                            </p:selectOneMenu>
+                        </div>
+                   </div>
+
+              </p:fieldset>
+             <ui:include src="/WEB-INF/includes/naissance/editer/commands.xhtml"/>
             
        </h:form>
           

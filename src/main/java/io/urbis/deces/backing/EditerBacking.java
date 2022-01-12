@@ -3,17 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package io.urbis.mariage.backing;
+package io.urbis.deces.backing;
 
 import io.urbis.common.util.BaseBacking;
-import io.urbis.mariage.api.ActeMariageService;
-import io.urbis.mariage.api.RegimeService;
-import io.urbis.mariage.api.SituationMatrimonialeService;
-import io.urbis.mariage.dto.ActeMariageDto;
-import io.urbis.mariage.dto.Operation;
-import io.urbis.mariage.dto.RegimeDto;
-import io.urbis.mariage.dto.SituationMatrimonialeDto;
-import io.urbis.mariage.dto.StatutActeMariage;
+import io.urbis.deces.api.ActeDecesService;
+import io.urbis.deces.api.SituationMatrimonialeService;
+import io.urbis.deces.dto.ActeDecesDto;
+import io.urbis.deces.dto.SituationMatrimonialeDto;
+import io.urbis.deces.dto.StatutActeDeces;
+import io.urbis.divers.dto.Operation;
 import io.urbis.param.api.OfficierService;
 import io.urbis.param.dto.OfficierEtatCivilDto;
 import io.urbis.registre.api.RegistreService;
@@ -36,27 +34,24 @@ import org.primefaces.event.FlowEvent;
  *
  * @author florent
  */
-@Named(value = "acteMariageEditerBacking")
+@Named(value = "acteDecesEditerBacking")
 @ViewScoped
 public class EditerBacking extends BaseBacking implements Serializable{
     
     private static final Logger LOG = Logger.getLogger(EditerBacking.class.getName());
-    
+     
     @Inject 
     @RestClient
     RegistreService registreService;
     
     @Inject 
     @RestClient
-    ActeMariageService acteMariageService;
+    ActeDecesService acteDecesService;
     
     @Inject 
     @RestClient
     SituationMatrimonialeService situationMatrimonialeService;
     
-    @Inject 
-    @RestClient
-    RegimeService regimeService;
     
     @Inject 
     @RestClient
@@ -65,21 +60,20 @@ public class EditerBacking extends BaseBacking implements Serializable{
     private String registreID;
     private RegistreDto registreDto;
     
-    private String acteMariageID;
+    private String acteID;
     
-    private ActeMariageDto acteDto;
+    private ActeDecesDto acteDto;
     
     private String operationParam;
-    private Operation operation;
+    private Operation operation; 
     
     private List<SituationMatrimonialeDto> situations;
-    private List<RegimeDto> regimes = List.of();
-    
+        
     private List<OfficierEtatCivilDto> officiers;
     
     
     @Inject
-    LazyActeMariageDataModel lazyActeMariageDataModel;
+    LazyActeDecesDataModel lazyActeDecesDataModel;
     
     @PostConstruct
     public void init(){
@@ -97,36 +91,36 @@ public class EditerBacking extends BaseBacking implements Serializable{
         LOG.log(Level.INFO,"---ON LOAD CURRENT OPERATION : {0}",operation.name());
         
         situations = situationMatrimonialeService.findAll();
-        regimes = regimeService.findAll();
+        
         
         switch(operation){
             case DECLARATION:
-                acteDto = new ActeMariageDto();
+                acteDto = new ActeDecesDto();
                 acteDto.setRegistreID(registreID);
-                int numeroActe = acteMariageService.numeroActe(registreID);
+                int numeroActe = acteDecesService.numeroActe(registreID);
                 acteDto.setNumero(numeroActe);
                 
                 break;
             case SAISIE_ACTE_EXISTANT:
-                acteDto = new ActeMariageDto();
+                acteDto = new ActeDecesDto();
                 acteDto.setRegistreID(registreID);
                 break;
             case MODIFICATION:
-                acteDto = acteMariageService.findById(acteMariageID);
+                acteDto = acteDecesService.findById(acteID);
                 break;
             case VALIDATION:
-                acteDto = acteMariageService.findById(acteMariageID);
+                acteDto = acteDecesService.findById(acteID);
                 break;
         }
         
         acteDto.setOperation(operation.name());
-        lazyActeMariageDataModel.setRegistreID(registreID);
+        lazyActeDecesDataModel.setRegistreID(registreID);
         
     }
     
     public void creer(){
         try{
-            acteMariageService.create(acteDto);
+            acteDecesService.create(acteDto);
             resetActeDto();
             addGlobalMessage("Déclaration enregistrée avec succès", FacesMessage.SEVERITY_INFO);
         }catch(ValidationException ex){
@@ -141,8 +135,8 @@ public class EditerBacking extends BaseBacking implements Serializable{
         acteDto.setOperation(Operation.MODIFICATION.name());
           
         try{
-            acteMariageService.update(acteDto.getId(),acteDto);
-            acteDto = acteMariageService.findById(acteDto.getId());
+            acteDecesService.update(acteDto.getId(),acteDto);
+            acteDto = acteDecesService.findById(acteDto.getId());
             addGlobalMessage("L'acte a été modifié avec succès", FacesMessage.SEVERITY_INFO);
         }catch(ValidationException ex){
            LOG.log(Level.SEVERE,ex.getMessage());
@@ -155,8 +149,8 @@ public class EditerBacking extends BaseBacking implements Serializable{
     public void valider(){
         
         try{
-            acteDto.setStatut(StatutActeMariage.VALIDE.name());
-            acteMariageService.update(acteDto.getId(), acteDto);
+            acteDto.setStatut(StatutActeDeces.VALIDE.name());
+            acteDecesService.update(acteDto.getId(), acteDto);
             addGlobalMessage("Acte validé avec succès", FacesMessage.SEVERITY_INFO);
             PrimeFaces.current().dialog().closeDynamic(null);
         }catch(ValidationException ex){
@@ -169,7 +163,7 @@ public class EditerBacking extends BaseBacking implements Serializable{
     public boolean renderedValiderButton(){
         if(operation != null){
             return operation == Operation.VALIDATION && 
-                    acteDto.getStatut().equals(StatutActeMariage.PROJET.name());
+                    acteDto.getStatut().equals(StatutActeDeces.PROJET.name());
         }
         
         return false;
@@ -192,9 +186,9 @@ public class EditerBacking extends BaseBacking implements Serializable{
     }
     
     private void resetActeDto(){
-        acteDto = new ActeMariageDto();
+        acteDto = new ActeDecesDto();
         if(operation == Operation.DECLARATION){
-            int numeroActe = acteMariageService.numeroActe(registreID);
+            int numeroActe = acteDecesService.numeroActe(registreID);
             acteDto.setNumero(numeroActe);
         }
        // selectedActe = null;
@@ -229,11 +223,11 @@ public class EditerBacking extends BaseBacking implements Serializable{
     }
 
     public String getActeMariageID() {
-        return acteMariageID;
+        return acteID;
     }
 
     public void setActeMariageID(String acteMariageID) {
-        this.acteMariageID = acteMariageID;
+        this.acteID = acteMariageID;
     }
 
     public String getOperationParam() {
@@ -252,26 +246,40 @@ public class EditerBacking extends BaseBacking implements Serializable{
         this.operation = operation;
     }
 
-    public ActeMariageDto getActeDto() {
+    public ActeDecesDto getActeDto() {
         return acteDto;
     }
 
-    public void setActeDto(ActeMariageDto acteDto) {
+    public void setActeDto(ActeDecesDto acteDto) {
         this.acteDto = acteDto;
     }
 
-    public LazyActeMariageDataModel getLazyActeMariageDataModel() {
-        return lazyActeMariageDataModel;
+    
+    public LazyActeDecesDataModel getLazyActeDecesDataModel() {
+        return lazyActeDecesDataModel;
     }
 
+    public void setLazyActeDecesDataModel(LazyActeDecesDataModel lazyActeDecesDataModel) {
+        this.lazyActeDecesDataModel = lazyActeDecesDataModel;
+    }
+
+        
     public List<SituationMatrimonialeDto> getSituations() {
         return situations;
     }
 
-    public List<RegimeDto> getRegimes() {
-        return regimes;
+    public String getActeID() {
+        return acteID;
     }
-    
+
+    public void setActeID(String acteID) {
+        this.acteID = acteID;
+    }
+
+    public List<OfficierEtatCivilDto> getOfficiers() {
+        return officiers;
+    }
+
     
     
 }

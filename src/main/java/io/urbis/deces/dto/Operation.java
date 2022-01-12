@@ -3,7 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package io.urbis.naissance.dto;
+package io.urbis.deces.dto;
+
 
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
@@ -13,7 +14,7 @@ import javax.ws.rs.core.Response;
  * @author florent
  */
 public enum Operation {
-    DECLARATION_JUGEMENT("Declaration jugement"),
+    DECLARATION("Declaration"),
     SAISIE_ACTE_EXISTANT("Saisie acte existant"),
     MODIFICATION("Modification"),
     VALIDATION("Validation");

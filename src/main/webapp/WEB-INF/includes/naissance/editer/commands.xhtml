@@ -2,8 +2,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-xmlns:h="http://xmlns.jcp.org/jsf/html"
-xmlns:f="http://xmlns.jcp.org/jsf/core"
 xmlns:p="http://primefaces.org/ui">
     
  <ui:composition>
@@ -17,14 +15,12 @@ xmlns:p="http://primefaces.org/ui">
                              action="#{acteNaissanceEditerBacking.creer()}"
                              update="@form messageForm"  icon="pi pi-check" 
                              styleClass="ui-button-outlined"
-                             rendered="#{acteNaissanceEditerBacking.renderCreateButton()}"
-                             oncomplete="PF('wizardWgt').loadStep('declaration','back')"/>
+                             rendered="#{acteNaissanceEditerBacking.renderCreateButton()}"/>
             <p:commandButton value="Mettre à jour l'acte de naissance" process="@form" 
                              action="#{acteNaissanceEditerBacking.modifier()}"
                              update="@form messageForm"  icon="pi pi-check" 
                              styleClass="ui-button-outlined"
-                             rendered="#{acteNaissanceEditerBacking.renderUpdateButton()}"
-                             oncomplete="PF('wizardWgt').loadStep('declaration','back')"/>
+                             rendered="#{acteNaissanceEditerBacking.renderUpdateButton()}"/>
 
         </div>
 

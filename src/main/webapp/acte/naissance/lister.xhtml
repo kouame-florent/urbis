@@ -9,7 +9,7 @@ xmlns:p="http://primefaces.org/ui">
  <ui:composition template="/WEB-INF/templates/dialog-tpl.xhtml">
      
      <ui:define name="title">
-         Actes :: Registre :: #{acteNaissanceListerBacking.registreDto.libelle}
+         ACTES DE NAISSANCE
      </ui:define>
     
     <ui:define name="content">
@@ -143,18 +143,23 @@ xmlns:p="http://primefaces.org/ui">
                     <p:menuButton icon="pi pi-ellipsis-h" style="width: 100%;white-space: nowrap;width: auto !important;"
                                   title="options">
                         <p:menuitem value="Consulter" process="@this"  icon="pi pi-book"/>
-                        <p:menuitem value="Valider" action="#{acteNaissanceListerBacking.showValiderActeView(acte)}" 
+                        <p:menuitem value="Valider" action="#{acteNaissanceListerBacking.openValiderActeView(acte)}" 
                                     process="@this" disabled="#{acteNaissanceListerBacking.disableMenuValiderActe(acte)}" 
                                     icon="pi pi-book">
                             <p:ajax event="dialogReturn" listener="#{acteNaissanceListerBacking.onActeValidated}" 
                                         update=":contentForm:actesDatatable"/>
                         </p:menuitem>
                         
-                        <p:menuitem value="Supprimer" action="#{acteNaissanceListerBacking.supprimer(acte)}" 
+                        <p:menuitem value="Supprimer" action="#{acteNaissanceListerBacking.supprimer(acte.id)}" 
                                     process="@this" disabled="#{acteNaissanceListerBacking.disableMenuValiderActe(acte)}" 
                                     icon="pi pi-book">
-                            <p:ajax event="dialogReturn" listener="#{acteNaissanceListerBacking.onActeValidated}" 
-                                        update=":contentForm:actesDatatable"/>
+                             
+                             <p:confirm header="Confirmation" 
+                                           message="Voulez-vous vraiment supprimer l'acte #{acte.numero} du registre
+                                           numéro #{acte.registreNumero} de #{acte.registreAnnee} ?" 
+                                           icon="pi pi-exclamation-triangle"/>
+                            
+                            
                         </p:menuitem>
                         
                     </p:menuButton>
@@ -162,7 +167,11 @@ xmlns:p="http://primefaces.org/ui">
                 
              
                 </p:dataTable>
-
+            
+             <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+                <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+                <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" />
+            </p:confirmDialog>
 
         </h:form>
           

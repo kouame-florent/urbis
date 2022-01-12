@@ -143,7 +143,7 @@ public class EditerBacking extends BaseBacking implements Serializable{
     private String registreID;
     private RegistreDto registreDto;
     
-    private String acteNaissanceID;
+    private String acteID;
     
     private String operationParam;
     private Operation operation;
@@ -248,7 +248,10 @@ public class EditerBacking extends BaseBacking implements Serializable{
                 acteNaissanceDto.setRegistreID(registreID);
                 break;
             case MODIFICATION:
-                acteNaissanceDto = acteNaissanceService.findById(acteNaissanceID);
+                acteNaissanceDto = acteNaissanceService.findById(acteID);
+                break;
+            case VALIDATION:
+                acteNaissanceDto = acteNaissanceService.findById(acteID);
                 break;
         }
         
@@ -264,7 +267,7 @@ public class EditerBacking extends BaseBacking implements Serializable{
         
         /*
         if(operation == Operation.MODIFICATION){
-            acteNaissanceDto = acteNaissanceService.findById(acteNaissanceID);
+            acteNaissanceDto = acteNaissanceService.findById(acteID);
             viewMode = ViewMode.UPDATE;
             selectedActe = acteNaissanceDto;
         }
@@ -853,14 +856,14 @@ public class EditerBacking extends BaseBacking implements Serializable{
         this.operationParam = operationParam;
     }
 
-    public String getActeNaissanceID() {
-        return acteNaissanceID;
+    public String getActeID() {
+        return acteID;
     }
 
-    public void setActeNaissanceID(String acteNaissanceID) {
-        this.acteNaissanceID = acteNaissanceID;
+    public void setActeID(String acteID) {
+        this.acteID = acteID;
     }
-
+    
     public MentionAdoptionDto getSelectedMentionAdoption() {
         return selectedMentionAdoption;
     }
