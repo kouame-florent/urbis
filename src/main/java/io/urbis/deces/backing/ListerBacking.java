@@ -114,7 +114,7 @@ public class ListerBacking extends BaseBacking implements Serializable{
         var operations = List.of(Operation.MODIFICATION.name());
         var acteIds = List.of(dto.getId());
         Map<String, List<String>> params = Map.of("reg-id", ids,"acte-id",acteIds,"operation",operations);
-        PrimeFaces.current().dialog().openDynamic("/acte/mariage/editer", getDialogOptions(98,98,false), params);
+        PrimeFaces.current().dialog().openDynamic("editer", getDialogOptions(98,98,false), params);
     }
     
     public String statutSeverity(String statut){
@@ -170,7 +170,7 @@ public class ListerBacking extends BaseBacking implements Serializable{
         var operations = List.of(Operation.VALIDATION.name());
         var acteIds = List.of(dto.getId());
         Map<String, List<String>> params = Map.of("reg-id", ids,"acte-id",acteIds,"operation",operations);
-        PrimeFaces.current().dialog().openDynamic("/acte/mariage/editer", getDialogOptions(98,98,true), params);
+        PrimeFaces.current().dialog().openDynamic("editer", getDialogOptions(98,98,true), params);
     }
 
     public boolean disableButtonsOpenNew(){

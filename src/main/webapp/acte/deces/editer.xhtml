@@ -214,9 +214,9 @@ xmlns:p="http://primefaces.org/ui">
                     <div class="p-grid">
                         <div class="p-lg-6">
                             <p:fieldset legend="Père">
-                            
+                            <p:outputPanel id="pereOutputPanel">
                             <div class="ui-fluid p-formgrid p-grid">
-                                <p:outputPanel id="pereOutputPanel">
+                                
                                     <div class="p-field p-lg-12">
                                     <p:outputLabel for="pereDecede" styleClass="p-d-block">Père décédé ?</p:outputLabel>
                                     <p:toggleSwitch id="pereDecede" value="#{acteDecesEditerBacking.acteDto.pereDecede}">
@@ -261,7 +261,7 @@ xmlns:p="http://primefaces.org/ui">
                                             
                                              <div class="p-field p-lg-12">
                                                 <div class="ui-fluid p-grid">
-                                                    <div class="p-field p-lg-6">
+                                                    <div class="p-field p-lg-12">
                                                         <p:outputLabel for="pereDateDeces" 
                                                                        rendered="#{acteDecesEditerBacking.acteDto.pereDecede}" styleClass="p-d-block">Décédé le</p:outputLabel>
                                                         <p:inputMask id="pereDateDeces" 
@@ -271,7 +271,7 @@ xmlns:p="http://primefaces.org/ui">
                                                            <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
                                                        </p:inputMask>
                                                     </div>
-                                                    <div class="p-field p-lg-6">
+                                                    <div class="p-field p-lg-12">
                                                         <p:outputLabel for="pereLieuDeces" 
                                                                        rendered="#{acteDecesEditerBacking.acteDto.pereDecede}" styleClass="p-d-block">à</p:outputLabel>
                                                         <p:inputText id="pereLieuDeces" 
@@ -284,21 +284,18 @@ xmlns:p="http://primefaces.org/ui">
                                           
                                         </div>
                                     </div>
-                                    
-                                    
-                                   
-                                 </div>
-                                </p:outputPanel>
+                                  </div>
+                                
                                 
                             </div>
-                            
+                            </p:outputPanel>
                             </p:fieldset>
                          </div>
                         <div class="p-lg-6">
                             <p:fieldset legend="Mère">
-                         
+                                <p:outputPanel id="mereOutputPanel">
                                 <div class="ui-fluid p-formgrid p-grid">
-                                    <p:outputPanel id="mereOutputPanel">
+                                    
                                         <div class="p-field p-lg-12">
                                         <p:outputLabel for="mereDecede" styleClass="p-d-block">Mère décédée ?</p:outputLabel>
                                         <p:toggleSwitch id="mereDecede" 
@@ -342,7 +339,7 @@ xmlns:p="http://primefaces.org/ui">
                                         </div>
                                         <div class="p-field p-lg-12">
                                             <div class="ui-fluid p-grid">
-                                                <div class="p-field p-lg-6">
+                                                <div class="p-field p-lg-12">
                                                     <p:outputLabel for="mereDateDeces" 
                                                                    rendered="#{acteDecesEditerBacking.acteDto.mereDecede}" styleClass="p-d-block">Décédé le</p:outputLabel>
                                                     <p:inputMask id="mereDateDeces" 
@@ -352,7 +349,7 @@ xmlns:p="http://primefaces.org/ui">
                                                        <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
                                                    </p:inputMask>
                                                 </div>
-                                                <div class="p-field p-lg-6">
+                                                <div class="p-field p-lg-12">
                                                     <p:outputLabel for="mereLieuDeces" 
                                                                    rendered="#{acteDecesEditerBacking.acteDto.mereDecede}" styleClass="p-d-block">à</p:outputLabel>
                                                     <p:inputText id="mereLieuDeces" 
@@ -365,12 +362,10 @@ xmlns:p="http://primefaces.org/ui">
                                        
 
                                      </div>
-                                    </p:outputPanel>
-                                    
-                                    
+                                     
                                 </div> 
                                     
-                               
+                               </p:outputPanel>
                             </p:fieldset>
                         </div>
 
