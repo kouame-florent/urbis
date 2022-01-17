@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package io.urbis.deces.dto;
+package io.urbis.common.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,7 +16,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SituationMatrimonialeDto {
+public class LienDeclarantDto {
+    
     private String code;
     private String libelle;
 }

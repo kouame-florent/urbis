@@ -5,7 +5,6 @@
  */
 package io.urbis.naissance.backing;
 
-import io.urbis.common.util.ViewMode;
 import io.urbis.common.util.BaseBacking;
 import io.urbis.mention.dto.MentionAdoptionDto;
 import io.urbis.mention.dto.MentionDecesDto;
@@ -15,22 +14,22 @@ import io.urbis.mention.dto.MentionMariageDto;
 import io.urbis.mention.dto.MentionReconnaissanceDto;
 import io.urbis.mention.dto.MentionRectificationDto;
 import io.urbis.naissance.dto.ActeNaissanceDto;
-import io.urbis.naissance.dto.LienDeclarantDto;
 import io.urbis.naissance.dto.ModeDeclarationDto;
-import io.urbis.naissance.dto.NationaliteDto;
+import io.urbis.common.dto.NationaliteDto;
 import io.urbis.param.dto.OfficierEtatCivilDto;
 import io.urbis.naissance.dto.Operation;
-import io.urbis.naissance.dto.SexeDto;
+import io.urbis.common.dto.SexeDto;
+import io.urbis.common.dto.LienDeclarantDto;
 import io.urbis.naissance.dto.TypeNaissanceDto;
-import io.urbis.naissance.dto.TypePieceDto;
+import io.urbis.common.dto.TypePieceDto; 
 import io.urbis.naissance.api.ActeNaissanceService;
 import io.urbis.naissance.api.LienDeclarantService;
 import io.urbis.naissance.api.ModeDeclarationService;
 import io.urbis.common.api.SexeService;
 import io.urbis.naissance.api.TypeNaissanceService;
-import io.urbis.naissance.api.TypePieceService;
+import io.urbis.common.api.TypePieceService;
 import io.urbis.registre.dto.RegistreDto;
-import io.urbis.registre.api.NationaliteService;
+import io.urbis.common.api.NationaliteService;
 import io.urbis.param.api.OfficierService;
 import io.urbis.registre.api.RegistreService;
 import java.io.Serializable;
@@ -58,7 +57,6 @@ import io.urbis.mention.api.MentionReconnaissanceService;
 import io.urbis.mention.api.MentionRectificationService;
 import io.urbis.mention.api.MentionMariageService;
 import io.urbis.mention.api.MentionLegitimationService;
-import java.util.Map;
 import org.primefaces.PrimeFaces;
 
 /**
@@ -160,7 +158,7 @@ public class EditerBacking extends BaseBacking implements Serializable{
     private List<SexeDto> sexes;
     private String selectedSexe;
     
-    private List<LienDeclarantDto> liensParenteDeclarant;
+    private List<LienDeclarantDto> liensParenteDeclarant; 
     private String selectedDeclarantLienParente;
     
     private List<TypePieceDto> typesPiece;
@@ -220,8 +218,9 @@ public class EditerBacking extends BaseBacking implements Serializable{
         typesNaissance = typeNaissanceService.findAll();
         sexes = sexeService.findAll();
         nationalites = nationaliteService.findAll();
+        //liensParenteDeclarant = lienDeclarantService.findAll();
         liensParenteDeclarant = lienDeclarantService.findAll();
-        typesPiece = typePieceService.findAll();
+        typesPiece = typePieceService.findAll(); 
         
        //acteNaissanceDto = new ActeNaissanceDto();
         
@@ -718,6 +717,8 @@ public class EditerBacking extends BaseBacking implements Serializable{
     public List<LienDeclarantDto> getLiensParenteDeclarant() {
         return liensParenteDeclarant;
     }
+
+  
 
     
     public List<TypePieceDto> getTypesPiece() {

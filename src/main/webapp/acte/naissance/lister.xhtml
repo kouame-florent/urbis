@@ -90,7 +90,7 @@ xmlns:p="http://primefaces.org/ui">
             </p:toolbar>
                 
             <p:dataTable id="actesDatatable"  var="acte" 
-                         value="#{acteNaissanceListerBacking.lazyDeclarationDataModel}"
+                         value="#{acteNaissanceListerBacking.lazyActeNaissanceDataModel}"
                          selection="#{acteNaissanceListerBacking.selectedActe}" rowKey="#{acte.id}" paginator="true"
                         rows="25" rowSelectMode="add" paginatorPosition="bottom">
                 

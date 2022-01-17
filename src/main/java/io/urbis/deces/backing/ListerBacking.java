@@ -157,7 +157,7 @@ public class ListerBacking extends BaseBacking implements Serializable{
     public void openNewDeclaration(){
         
         var ids = List.of(registreID);
-        var operations = List.of(Operation.DECLARATION.name());
+        var operations = List.of(Operation.DECLARATION_JUGEMENT.name());
         Map<String, List<String>> params = Map.of("reg-id", ids,"operation",operations);
         Map<String,Object> options = getDialogOptions(100, 100, false);
         options.put("resizable", false);

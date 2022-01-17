@@ -1,12 +1,523 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        Hello from Facelets
-    </h:body>
+xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+xmlns:h="http://xmlns.jcp.org/jsf/html"
+xmlns:f="http://xmlns.jcp.org/jsf/core"
+xmlns:p="http://primefaces.org/ui">
+    
+ <ui:composition template="/WEB-INF/templates/dialog-tpl.xhtml">
+     
+     <ui:define name="title">
+         ACTES DE DECES
+     </ui:define>
+    
+    <ui:define name="content">
+        
+        <f:metadata>
+            <f:viewParam name="operation" value="#{acteDecesEditerBacking.operationParam}" />
+            <f:viewParam name="reg-id" value="#{acteDecesEditerBacking.registreID}" />
+            <f:viewParam name="acte-id" value="#{acteDecesEditerBacking.acteID}" />
+            <f:viewAction action="#{acteDecesEditerBacking.onload}" />
+        </f:metadata>
+        
+        <h:form id="messageForm">
+                <p:growl globalOnly="true" life="15000" />        
+        </h:form>
+             
+        <h:form id="contentForm">  
+           
+            <p:toolbar style="border: none">
+                <p:toolbarGroup>
+                    
+                </p:toolbarGroup>
+                <p:toolbarGroup align="right">
+                    <p:commandButton title="fermer" action="#{acteDecesEditerBacking.closeView()}" process="@this" 
+                                     icon="pi pi-times" styleClass="rounded-button ui-button-danger"/>
+                </p:toolbarGroup>
+            </p:toolbar>
+            
+            <p:focus context="contentForm"/>
+         
+           
+            <p:fieldset legend="Référence registre">
+               <div class="ui-fluid p-formgrid p-grid">
+                   <div class="p-field p-col">
+                   <p:outputLabel for="localite" styleClass="p-d-block">Commune</p:outputLabel>
+                   <p:inputText id="localite" value="#{acteDecesEditerBacking.registreDto.localite}"
+                                disabled="true" required="true" styleClass="p-d-block"/>
+
+                   </div>
+                   <div class="p-field p-col">
+                       <p:outputLabel for="centre" styleClass="p-d-block">Centre</p:outputLabel>
+                       <p:inputText id="centre" value="#{acteDecesEditerBacking.registreDto.centre}"
+                                    disabled="true"  required="true" styleClass="p-d-block"/>
+
+                   </div>
+                   <div class="p-field p-col">
+                       <p:outputLabel for="annee" styleClass="p-d-block">Année</p:outputLabel>
+                       <p:inputText id="annee" value="#{acteDecesEditerBacking.registreDto.annee}" required="true"
+                                    disabled="true" styleClass="p-d-block"/>
+
+                   </div>
+                   <div class="p-field p-col">
+                       <p:outputLabel for="numero" styleClass="p-d-block">Numéro</p:outputLabel>
+                       <p:inputText id="numero" value="#{acteDecesEditerBacking.registreDto.numero}"  required="true" 
+                                    disabled="true"   styleClass="p-d-block"/>
+
+                   </div>
+                   <div class="p-field p-col">
+                       <p:outputLabel for="numeroPremierActe" styleClass="p-d-block">Numéro premier acte</p:outputLabel>
+                       <p:inputText id="numeroPremierActe" value="#{acteDecesEditerBacking.registreDto.numeroPremierActe}"  required="true" 
+                                    disabled="true"   styleClass="p-d-block"/>
+
+                   </div>
+                   <div class="p-field p-col">
+                       <p:outputLabel for="numeroDernierActe" styleClass="p-d-block">Numéro dernier acte</p:outputLabel>
+                       <p:inputText id="numeroDernierActe" value="#{acteDecesEditerBacking.registreDto.numeroDernierActe}"  required="true" 
+                                    disabled="true"   styleClass="p-d-block"/>
+
+                   </div>
+
+               </div>
+
+           </p:fieldset>
+            <p:spacer height="2" />
+              
+              
+                <p:spacer height="2" />
+
+                <p:outputPanel id="naissanceMultipleOutputPanel" >
+                <div class="ui-fluid p-formgrid p-grid">
+                    <div class="p-field p-lg-4">
+                        <p:fieldset>
+                              <p:outputLabel for="numeroActe" styleClass="p-d-block" style="color: #ffffff">Numéro acte</p:outputLabel>
+                              <p:inputText id="numeroActe" value="#{acteDecesEditerBacking.acteDto.numero}" 
+                                           required="true"/>
+                        </p:fieldset>
+                    </div>
+
+                </div>
+
+                <p:spacer width="2"/>
+                 
+                
+                <p:fieldset legend="Le defunt">
+                    <div class="ui-fluid p-formgrid p-grid">
+                        <div class="p-field p-lg-6">
+                            <p:outputLabel for="defuntDateDeces" styleClass="p-d-block">Date de decès</p:outputLabel>
+                            <p:inputMask id="defuntDateDeces" value="#{acteDecesEditerBacking.acteDto.defuntDateDeces}"
+                                         mask="99/99/9999 99:99:99" required="true">
+                                <f:convertDateTime locale="fr_FR" type="localDateTime" pattern="dd/MM/yyyy HH:mm:ss"/>
+                            </p:inputMask>
+
+                            <p:message for="defuntDateDeces"/>
+
+                        </div>
+                        <div class="p-field p-lg-6">
+                            <p:outputLabel for="defuntNom" styleClass="p-d-block">Nom</p:outputLabel>
+                            <p:inputText id="defuntNom" value="#{acteDecesEditerBacking.acteDto.defuntNom}" required="true"  
+                                            styleClass="p-d-block"/>
+                        </div>
+                        
+                        <div class="p-field p-lg-6">
+                            <p:outputLabel for="defuntPrenoms" styleClass="p-d-block">Prénoms</p:outputLabel>
+                            <p:inputText id="defuntPrenoms" value="#{acteDecesEditerBacking.acteDto.defuntPrenoms}" required="true"  
+                                            styleClass="p-d-block"/>
+                        </div>
+                        <div class="p-field p-lg-6">
+                            <p:outputLabel for="defuntLieuDeces" styleClass="p-d-block">Lieu de decès</p:outputLabel>
+                            <p:inputText id="defuntLieuDeces" value="#{acteDecesEditerBacking.acteDto.defuntLieuDeces}" required="true"  
+                                            styleClass="p-d-block"/>
+                        </div>
+                        
+                         <div class="p-field p-lg-6">
+                            <p:outputLabel for="defuntProfession" styleClass="p-d-block">Profession</p:outputLabel>
+                            <p:inputText id="defuntProfession" value="#{acteDecesEditerBacking.acteDto.defuntProfession}" required="true"  
+                                            styleClass="p-d-block"/>
+                        </div>
+                        
+                        <div class="p-field p-lg-6">
+                            <p:outputLabel for="defuntDomicile" styleClass="p-d-block">Domicile</p:outputLabel>
+                            <p:inputText id="defuntDomicile" value="#{acteDecesEditerBacking.acteDto.defuntDomicile}" required="true"  
+                                            styleClass="p-d-block"/>
+                        </div>
+                            
+                        
+                        <div class="p-field p-lg-12">
+                            <p:fieldset legend="Naissance">
+                                <div class="ui-fluid p-formgrid p-grid">
+                                    <div class="p-field p-lg-6">
+                                    <p:outputLabel for="defuntDateNaissance" styleClass="p-d-block">Date naissance</p:outputLabel>
+                                    <p:inputMask id="defuntDateNaissance" 
+                                                 value="#{acteDecesEditerBacking.acteDto.defuntDateNaissance}"
+                                         mask="99/99/9999" required="true">
+                                        <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
+                                    </p:inputMask>
+                                    </div>
+
+                                    <div class="p-field p-lg-6">
+                                        <p:outputLabel for="sexe" styleClass="p-d-block">Sexe</p:outputLabel>
+                                        <p:selectOneRadio id="sexe" value="#{acteDecesEditerBacking.acteDto.defuntSexe}" 
+                                                           converter="omnifaces.SelectItemsConverter"
+                                                           required="true">
+
+                                               <f:selectItems value="#{acteDecesEditerBacking.sexes}" var="sexe" 
+                                                              itemLabel="#{sexe.libelle}" itemValue="#{sexe.code}"/>
+                                          </p:selectOneRadio>
+                                    </div>
+                                    
+                                    <div class="p-field p-lg-6">
+                                        <p:outputLabel for="defuntLieuNaissance" styleClass="p-d-block">Lieu naissance</p:outputLabel>
+                                        <p:inputText id="defuntLieuNaissance" 
+                                                     value="#{acteDecesEditerBacking.acteDto.defuntLieuNaissance}" required="true"  
+                                                     styleClass="p-d-block"/>
+                                    </div>
+
+                                     <div class="p-field p-lg-6">
+                                        <p:outputLabel for="defuntLocaliteNaissance" styleClass="p-d-block">Commune/sous-préfecture</p:outputLabel>
+                                        <p:inputText id="defuntLocaliteNaissance" 
+                                                     value="#{acteDecesEditerBacking.acteDto.defuntLocaliteNaissance}" required="true"  
+                                                     styleClass="p-d-block"/>
+                                    </div>
+                                    
+                                    <div class="p-field p-lg-6">
+                                      <p:outputLabel for="defuntSituationMatrimoniale" styleClass="p-d-block">Situation matrimoniale</p:outputLabel>
+                                      <p:selectOneRadio id="defuntSituationMatrimoniale" 
+                                                        value="#{acteDecesEditerBacking.acteDto.defuntSituationMatrimoniale}" 
+                                                         converter="omnifaces.SelectItemsConverter"
+                                                         required="true">
+
+                                          <f:selectItems value="#{acteDecesEditerBacking.situations}" var="situation" 
+                                                            itemLabel="#{situation.libelle}" itemValue="#{situation.code}"/>
+                                        </p:selectOneRadio>
+                                   </div>
+                                    
+                                </div>
+                                
+    
+                             </p:fieldset>
+                            
+                        </div>
+                                                    
+                        
+         
+                    </div>
+
+                </p:fieldset>
+                 
+                </p:outputPanel>
+
+                <p:spacer height="2" />
+       
+                 <p:fieldset legend="Filiation">
+                    <div class="p-grid">
+                        <div class="p-lg-6">
+                            <p:fieldset legend="Père">
+                            
+                            <div class="ui-fluid p-formgrid p-grid">
+                                <p:outputPanel id="pereOutputPanel">
+                                    <div class="p-field p-lg-12">
+                                    <p:outputLabel for="pereDecede" styleClass="p-d-block">Père décédé ?</p:outputLabel>
+                                    <p:toggleSwitch id="pereDecede" value="#{acteDecesEditerBacking.acteDto.pereDecede}">
+                                        <p:ajax  update="pereOutputPanel"/>
+                                    </p:toggleSwitch>
+                                    <div class="p-field p-lg-12">    
+                                        <p:outputLabel for="pereNom" styleClass="p-d-block">Nom</p:outputLabel>
+                                        <p:inputText id="pereNom" 
+                                                     value="#{acteDecesEditerBacking.acteDto.pereNom}"
+                                                      styleClass="p-d-block"/>
+                                    </div>
+                                    <div class="p-field p-lg-12">
+                                        <p:outputLabel for="perePrenoms" styleClass="p-d-block">Prénoms</p:outputLabel>
+                                        <p:inputText id="perePrenoms" 
+                                                     value="#{acteDecesEditerBacking.acteDto.perePrenoms}"  
+                                                     styleClass="p-d-block"/>
+                                    </div>
+
+                                    <div class="p-field p-lg-12">
+                                        <p:outputLabel for="pereDateNaissance" styleClass="p-d-block">Date de naissance</p:outputLabel>
+                                        <p:inputMask id="pereDateNaissance" 
+                                                     value="#{acteDecesEditerBacking.acteDto.pereDateNaissance}"
+                                             mask="99/99/9999" >
+                                            <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
+                                        </p:inputMask>
+
+
+                                    </div>
+                                    <div class="p-field p-lg-12">
+                                        <p:outputLabel for="pereLieuNaissance" styleClass="p-d-block">Lieu de naissance</p:outputLabel>
+                                        <p:inputText id="pereLieuNaissance" 
+                                                     value="#{acteDecesEditerBacking.acteDto.pereLieuNaissance}"  
+                                                     styleClass="p-d-block"/>
+                                    </div>
+                                    <div class="p-field p-lg-12">
+                                        <p:outputLabel for="pereProfession" styleClass="p-d-block">Profession</p:outputLabel>
+                                        <p:inputText id="pereProfession" value="#{acteDecesEditerBacking.acteDto.pereProfession}"
+                                                     styleClass="p-d-block"/>
+                                    </div>
+                                    <div class="p-field p-lg-12">
+                                        <div class="ui-fluid p-grid">
+                                            
+                                             <div class="p-field p-lg-12">
+                                                <div class="ui-fluid p-grid">
+                                                    <div class="p-field p-lg-6">
+                                                        <p:outputLabel for="pereDateDeces" 
+                                                                       rendered="#{acteDecesEditerBacking.acteDto.pereDecede}" styleClass="p-d-block">Décédé le</p:outputLabel>
+                                                        <p:inputMask id="pereDateDeces" 
+                                                                     rendered="#{acteDecesEditerBacking.acteDto.pereDecede}" 
+                                                                      value="#{acteDecesEditerBacking.acteDto.pereDateDeces}"
+                                                            mask="99/99/9999" required="true" styleClass="p-d-block">
+                                                           <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
+                                                       </p:inputMask>
+                                                    </div>
+                                                    <div class="p-field p-lg-6">
+                                                        <p:outputLabel for="pereLieuDeces" 
+                                                                       rendered="#{acteDecesEditerBacking.acteDto.pereDecede}" styleClass="p-d-block">à</p:outputLabel>
+                                                        <p:inputText id="pereLieuDeces" 
+                                                                     rendered="#{acteDecesEditerBacking.acteDto.pereDecede}" value="#{acteNaissanceEditerBacking.acteNaissanceDto.pereLieuDeces}"  
+                                                                 styleClass="p-d-block"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                          
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                   
+                                 </div>
+                                </p:outputPanel>
+                                
+                            </div>
+                            
+                            </p:fieldset>
+                         </div>
+                        <div class="p-lg-6">
+                            <p:fieldset legend="Mère">
+                         
+                                <div class="ui-fluid p-formgrid p-grid">
+                                    <p:outputPanel id="mereOutputPanel">
+                                        <div class="p-field p-lg-12">
+                                        <p:outputLabel for="mereDecede" styleClass="p-d-block">Mère décédée ?</p:outputLabel>
+                                        <p:toggleSwitch id="mereDecede" 
+                                                        value="#{acteDecesEditerBacking.acteDto.mereDecede}">
+                                            <p:ajax  update="mereOutputPanel"/>
+                                        </p:toggleSwitch>
+                                        <div class="p-field p-lg-12">    
+                                            <p:outputLabel for="mereNom" styleClass="p-d-block">Nom</p:outputLabel>
+                                            <p:inputText id="mereNom" 
+                                                         value="#{acteDecesEditerBacking.acteDto.mereNom}"
+                                                          styleClass="p-d-block"/>
+                                        </div>
+                                        <div class="p-field p-lg-12">
+                                            <p:outputLabel for="merePrenoms" styleClass="p-d-block">Prénoms</p:outputLabel>
+                                            <p:inputText id="merePrenoms" 
+                                                         value="#{acteDecesEditerBacking.acteDto.merePrenoms}"  
+                                                         styleClass="p-d-block"/>
+                                        </div>
+
+                                        <div class="p-field p-lg-12">
+                                            <p:outputLabel for="mereDateNaissance" styleClass="p-d-block">Date de naissance</p:outputLabel>
+                                            <p:inputMask id="mereDateNaissance" 
+                                                         value="#{acteDecesEditerBacking.acteDto.mereDateNaissance}"
+                                                 mask="99/99/9999" >
+                                                <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
+                                            </p:inputMask>
+
+
+                                        </div>
+                                        <div class="p-field p-lg-12">
+                                            <p:outputLabel for="mereLieuNaissance" styleClass="p-d-block">Lieu de naissance</p:outputLabel>
+                                            <p:inputText id="mereLieuNaissance" 
+                                                         value="#{acteDecesEditerBacking.acteDto.mereLieuNaissance}"
+                                                         styleClass="p-d-block"/>
+                                        </div>
+                                        <div class="p-field p-lg-12">
+                                            <p:outputLabel for="mereProfession" styleClass="p-d-block">Profession</p:outputLabel>
+                                            <p:inputText id="mereProfession" value="#{acteDecesEditerBacking.acteDto.mereProfession}"
+                                                         
+                                                         styleClass="p-d-block"/>
+                                        </div>
+                                        <div class="p-field p-lg-12">
+                                            <div class="ui-fluid p-grid">
+                                                <div class="p-field p-lg-6">
+                                                    <p:outputLabel for="mereDateDeces" 
+                                                                   rendered="#{acteDecesEditerBacking.acteDto.mereDecede}" styleClass="p-d-block">Décédé le</p:outputLabel>
+                                                    <p:inputMask id="mereDateDeces" 
+                                                                 rendered="#{acteDecesEditerBacking.acteDto.mereDecede}" 
+                                                                  value="#{acteDecesEditerBacking.acteDto.mereDateDeces}"
+                                                        mask="99/99/9999" styleClass="p-d-block">
+                                                       <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
+                                                   </p:inputMask>
+                                                </div>
+                                                <div class="p-field p-lg-6">
+                                                    <p:outputLabel for="mereLieuDeces" 
+                                                                   rendered="#{acteDecesEditerBacking.acteDto.mereDecede}" styleClass="p-d-block">à</p:outputLabel>
+                                                    <p:inputText id="mereLieuDeces" 
+                                                                 rendered="#{acteDecesEditerBacking.acteDto.mereDecede}"
+                                                                 value="#{acteDecesEditerBacking.acteDto.mereLieuDeces}"  
+                                                             styleClass="p-d-block"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                       
+
+                                     </div>
+                                    </p:outputPanel>
+                                    
+                                    
+                                </div> 
+                                    
+                               
+                            </p:fieldset>
+                        </div>
+
+                    </div>
+
+                </p:fieldset>
+                
+
+                <p:fieldset >
+                    <div class="ui-fluid p-formgrid p-grid">
+                       
+                        <div class="p-field p-lg-4">
+                            <p:outputLabel for="dateDressage" styleClass="p-d-block">Date dressage</p:outputLabel>
+                            <p:inputMask id="dateDressage" value="#{acteDecesEditerBacking.acteDto.dateDressage}"
+                                        mask="99/99/9999 99:99:99" required="true">
+                                <f:convertDateTime locale="fr_FR" type="localDateTime" pattern="dd/MM/yyyy HH:mm:ss"/>
+                           </p:inputMask>
+
+                            <p:message for="dateDressage"/>
+                        </div>
+                        
+                        <div class="p-field p-lg-4">
+                            <p:outputLabel for="lienParenteDeclarant">Lien parenté déclarant</p:outputLabel>
+                            <p:selectOneRadio id="lienParenteDeclarant" 
+                                              value="#{acteDecesEditerBacking.acteDto.declarantLien}" 
+                                                converter="omnifaces.SelectItemsConverter"
+                                                required="true">
+
+                                <f:selectItems value="#{acteDecesEditerBacking.liens}" var="lien" 
+                                               itemLabel="#{lien.libelle}" itemValue="#{lien.code}"/>
+                                <p:ajax update="contentForm:declarantLienParente"/>
+                            </p:selectOneRadio>
+                        </div>
+                    </div>
+
+                </p:fieldset>
+
+            <p:fieldset legend="Autres informations">
+                
+                
+               <p:fieldset legend="Le déclarant">
+                    <div class="ui-fluid p-formgrid p-grid">
+                        <div class="p-field p-lg-6">
+                            <p:outputLabel for="declarantLienParente" styleClass="p-d-block">Lien parenté </p:outputLabel>
+                            <p:inputText id="declarantLienParente" value="#{acteDecesEditerBacking.acteDto.declarantLien}" 
+                                         styleClass="p-d-block"/>
+
+                        </div>
+                        <div class="p-field p-lg-6">
+                            <p:outputLabel for="declarantProfession" styleClass="p-d-block">Profession </p:outputLabel>
+                            <p:inputText id="declarantProfession" value="#{acteDecesEditerBacking.acteDto.declarantProfession}" 
+                                          styleClass="p-d-block"/>
+                        </div>
+                        <div class="p-field p-lg-6">
+                            <p:outputLabel for="declarantNom" styleClass="p-d-block">Nom</p:outputLabel>
+                            <p:inputText id="declarantNom" value="#{acteDecesEditerBacking.acteDto.declarantNom}" 
+                                          styleClass="p-d-block"/>
+                        </div>
+                        
+                        <div class="p-field p-lg-6">
+                            <p:outputLabel for="declarantPrenoms" styleClass="p-d-block">Prénoms </p:outputLabel>
+                            <p:inputText id="declarantPrenoms" value="#{acteDecesEditerBacking.acteDto.declarantProfession}" 
+                                          styleClass="p-d-block"/>
+                        </div>
+                        
+                        <div class="p-field p-lg-6">
+                            <div class="ui-fluid p-grid">
+                                <div class="p-field p-lg-6">
+                                    <p:outputLabel for="declarantDateNaissance" styleClass="p-d-block">Date naissance </p:outputLabel>
+                                    <p:inputMask id="declarantDateNaissance" 
+                                                 value="#{acteDecesEditerBacking.acteDto.declarantDateNaissance}"
+                                             mask="99/99/9999" styleClass="p-d-block">
+                                        <f:convertDateTime locale="fr_FR" type="localDate" pattern="dd/MM/yyyy"/>
+                                    </p:inputMask>
+                                </div>
+                                
+                            </div>
+
+                        </div>
+                        
+                    </div>
+                </p:fieldset>
+                
+                
+              
+                <p:spacer height="2"/>
+               
+                
+                
+            </p:fieldset>
+                
+            <p:spacer height="2"/>
+
+
+             <p:fieldset legend="Officier d'état civil">
+                    <div class="ui-fluid p-formgrid p-grid">
+                        <div class="p-field p-col">
+                            <p:outputLabel for="officierEtatCivil" styleClass="p-d-block">Officier</p:outputLabel>
+                            <p:selectOneMenu id="officierEtatCivil" value="#{acteDecesEditerBacking.acteDto.officierEtatCivilID}"          
+                                             label="Selectionnez" required="true">
+                                <f:selectItem itemValue="#{null}" itemLabel="-- selectionnez un officier --" />
+                                <f:selectItems value="#{acteDecesEditerBacking.officiers}" var="officier" 
+                                               itemLabel="#{officier.prenoms} #{officier.nom} [#{officier.titre}]" 
+                                               itemValue="#{officier.id}"/>
+                            </p:selectOneMenu>
+                        </div>
+                   </div>
+
+              </p:fieldset>
+            
+            
+            <p:outputPanel id="commandOutputPanel">
+                <p:fieldset>
+                <div class="ui-fluid p-formgrid p-grid">
+
+                    <div class="p-field p-lg-12">
+
+                        <p:commandButton value="Enregistrer l'acte de décès" process="@form" 
+                                         action="#{acteDecesEditerBacking.creer()}"
+                                         rendered="#{acteDecesEditerBacking.renderedCreerButton()}"
+                                         update="@form messageForm"  icon="pi pi-check" 
+                                         styleClass="ui-button-outlined"/>
+
+                        <p:commandButton value="Valider l'acte de décès" process="@form" 
+                                         action="#{acteDecesEditerBacking.valider()}"
+                                         rendered="#{acteDecesEditerBacking.renderedValiderButton()}"
+                                         update="@form messageForm"  icon="pi pi-check" 
+                                         styleClass="ui-button-outlined"/>
+                        
+                         <p:commandButton value="Modifier l'acte mariage" process="@form" 
+                                         action="#{acteDecesEditerBacking.modifier()}"
+                                         rendered="#{acteDecesEditerBacking.renderedModifierButton()}"
+                                         update="@form messageForm"  icon="pi pi-check" 
+                                         styleClass="ui-button-outlined"/>
+
+                    </div>
+                </div>
+                </p:fieldset>
+            </p:outputPanel>
+      
+             
+       </h:form>
+          
+        
+    </ui:define>
+
+</ui:composition>  
+ 
 </html>
 

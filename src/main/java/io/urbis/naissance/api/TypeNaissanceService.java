@@ -15,7 +15,7 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
  *
  * @author florent
  */
-@Path("/")
+@Path("/naissances")
 @RegisterRestClient(baseUri = "http://127.0.0.1:8181")
 public interface TypeNaissanceService {
     

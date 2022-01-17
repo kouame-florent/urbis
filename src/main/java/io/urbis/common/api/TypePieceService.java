@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package io.urbis.naissance.api;
+package io.urbis.common.api;
 
-import io.urbis.naissance.dto.TypePieceDto;
+import io.urbis.common.dto.TypePieceDto;
 import java.util.List;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

@@ -8,11 +8,11 @@ package io.urbis.mariage.backing;
 import io.urbis.common.util.BaseBacking;
 import io.urbis.mariage.api.ActeMariageService;
 import io.urbis.mariage.api.RegimeService;
-import io.urbis.mariage.api.SituationMatrimonialeService;
+import io.urbis.common.api.SituationMatrimonialeService;
 import io.urbis.mariage.dto.ActeMariageDto;
-import io.urbis.mariage.dto.Operation;
 import io.urbis.mariage.dto.RegimeDto;
-import io.urbis.mariage.dto.SituationMatrimonialeDto;
+import io.urbis.common.dto.SituationMatrimonialeDto;
+import io.urbis.deces.dto.Operation;
 import io.urbis.mariage.dto.StatutActeMariage;
 import io.urbis.param.api.OfficierService;
 import io.urbis.param.dto.OfficierEtatCivilDto;
@@ -100,7 +100,7 @@ public class EditerBacking extends BaseBacking implements Serializable{
         regimes = regimeService.findAll();
         
         switch(operation){
-            case DECLARATION:
+            case DECLARATION_JUGEMENT:
                 acteDto = new ActeMariageDto();
                 acteDto.setRegistreID(registreID);
                 int numeroActe = acteMariageService.numeroActe(registreID);
@@ -176,8 +176,10 @@ public class EditerBacking extends BaseBacking implements Serializable{
     }
     
     public boolean renderedCreerButton(){
+        LOG.log(Level.INFO,"---RENDERED CURRENT OPERATION : {0}",operation);
         if(operation != null){
-            return operation == Operation.SAISIE_ACTE_EXISTANT || operation == Operation.DECLARATION;
+            LOG.log(Level.INFO,"---RENDERED CURRENT OPERATION : {0}",operation.name());
+            return operation == Operation.SAISIE_ACTE_EXISTANT || operation == Operation.DECLARATION_JUGEMENT;
         }
         
         return false;
@@ -193,7 +195,7 @@ public class EditerBacking extends BaseBacking implements Serializable{
     
     private void resetActeDto(){
         acteDto = new ActeMariageDto();
-        if(operation == Operation.DECLARATION){
+        if(operation == Operation.DECLARATION_JUGEMENT){
             int numeroActe = acteMariageService.numeroActe(registreID);
             acteDto.setNumero(numeroActe);
         }

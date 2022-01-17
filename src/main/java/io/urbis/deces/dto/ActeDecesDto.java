@@ -37,6 +37,8 @@ public class ActeDecesDto {
     private int registreAnnee;
     private int registreNumero;
     
+    private String statut;
+    
     public String defuntNom;
     public String defuntPrenoms;
     public LocalDateTime defuntDateDeces;
@@ -45,7 +47,7 @@ public class ActeDecesDto {
     public String defuntDomicile;
     public LocalDate defuntDateNaissance;
     public String defuntLieuNaissance;
-    public String defuntLocalite;
+    public String defuntLocaliteNaissance;
     public String defuntSexe;
     public String defuntSituationMatrimoniale;
     
@@ -57,6 +59,7 @@ public class ActeDecesDto {
     private String jugementNumero;
     private String jugementTribunal;
   
+    private boolean pereDecede;
     private String pereNom;
     private String perePrenoms;
     private String pereProfession;
@@ -65,12 +68,9 @@ public class ActeDecesDto {
     private LocalDate pereDateNaissance;
     private LocalDate pereDateDeces;
     private String pereLieuDeces;
-    private String pereLocalite;
-    private String pereTypePiece;
-    private String pereNumeroPiece;
-    private LocalDate pereDatePiece;
-    private String pereLieuPiece;
+    private String pereLocaliteDeces;
     
+    private boolean mereDecede;
     private String mereNom;
     private String merePrenoms;
     private String mereProfession;
@@ -79,45 +79,14 @@ public class ActeDecesDto {
     private LocalDate mereDateNaissance;
     private LocalDate mereDateDeces;
     private String mereLieuDeces;
-    private String mereLocalite;
-    private String mereTypePiece;
-    private String mereNumeroPiece;
-    private LocalDate mereDatePiece;
-    private String mereLieuPiece;
-    
+    private String mereLocaliteDeces;
+      
     private String declarantLien;
     private String declarantNom;
     private String declarantPrenoms;
-    private String declarantProfession;
-    private String declarantLieuNaissance;
-    private String declarantNationalite;
     private LocalDate declarantDateNaissance;
-    private String declarantLocalite;
-    private String declarantTypePiece;
-    private String declarantNumeroPiece;
-    private LocalDate declarantDatePiece;
-    private String declarantLieuPiece;
-    
-    private String interpreteNom;
-    private String interpretePrenoms;
-    private String interpreteProfession;
-    private LocalDate interpreteDateNaissance;
-    private String interpreteDomicile;
-    private String interpreteLangue;
-    
-    private String temoinPremierNom;
-    private String temoinPremierPrenoms;
-    private LocalDate temoinPremierDateNaissance;
-    private String temoinPremierProfession;
-    private String temoinPremierDomicile;
-    
-    private String temoinDeuxiemeNom;
-    private String temoinDeuxiemePrenoms;
-    private LocalDate temoinDeuxiemeDateNaissance;
-    private String temoinDeuxiemeProfession;
-    private String temoinDeuxiemeDomicile;
-  
-    private String statut;
+    private String declarantProfession;
+    private String declarantDomicile;
         
     private String officierEtatCivilID;
     private String officierEtatCivilNom;

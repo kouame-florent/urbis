@@ -5,13 +5,21 @@
  */
 package io.urbis.deces.backing;
 
+
+import io.urbis.common.api.NationaliteService;
+import io.urbis.common.api.SexeService;
+import io.urbis.common.api.SituationMatrimonialeService;
+import io.urbis.common.api.TypePieceService;
+import io.urbis.common.dto.LienDeclarantDto;
+import io.urbis.common.dto.NationaliteDto;
 import io.urbis.common.util.BaseBacking;
 import io.urbis.deces.api.ActeDecesService;
-import io.urbis.deces.api.SituationMatrimonialeService;
 import io.urbis.deces.dto.ActeDecesDto;
-import io.urbis.deces.dto.SituationMatrimonialeDto;
 import io.urbis.deces.dto.StatutActeDeces;
-import io.urbis.divers.dto.Operation;
+import io.urbis.common.dto.SexeDto;
+import io.urbis.common.dto.SituationMatrimonialeDto;
+import io.urbis.common.dto.TypePieceDto;
+import io.urbis.deces.api.LienDeclarantService;
 import io.urbis.param.api.OfficierService;
 import io.urbis.param.dto.OfficierEtatCivilDto;
 import io.urbis.registre.api.RegistreService;
@@ -29,6 +37,7 @@ import javax.validation.ValidationException;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.primefaces.PrimeFaces;
 import org.primefaces.event.FlowEvent;
+import io.urbis.deces.dto.Operation;
 
 /**
  *
@@ -52,10 +61,26 @@ public class EditerBacking extends BaseBacking implements Serializable{
     @RestClient
     SituationMatrimonialeService situationMatrimonialeService;
     
+    @Inject
+    @RestClient
+    SexeService sexeService;
+    
+    @Inject
+    @RestClient
+    LienDeclarantService lienDeclarantService;
+    
+    @Inject
+    @RestClient
+    TypePieceService typePieceService;
+    
     
     @Inject 
     @RestClient
     OfficierService officierService;
+    
+    @Inject
+    @RestClient
+    NationaliteService nationaliteService;
     
     private String registreID;
     private RegistreDto registreDto;
@@ -70,6 +95,10 @@ public class EditerBacking extends BaseBacking implements Serializable{
     private List<SituationMatrimonialeDto> situations;
         
     private List<OfficierEtatCivilDto> officiers;
+    private List<SexeDto> sexes;
+    private List<LienDeclarantDto> liens;
+    private List<TypePieceDto> typesPieces;
+    private List<NationaliteDto> nationalites;
     
     
     @Inject
@@ -78,7 +107,9 @@ public class EditerBacking extends BaseBacking implements Serializable{
     @PostConstruct
     public void init(){
         officiers = officierService.findAll();
-        
+        liens = lienDeclarantService.findAll();
+        typesPieces = typePieceService.findAll();
+        nationalites = nationaliteService.findAll();
     }
     
     
@@ -91,17 +122,18 @@ public class EditerBacking extends BaseBacking implements Serializable{
         LOG.log(Level.INFO,"---ON LOAD CURRENT OPERATION : {0}",operation.name());
         
         situations = situationMatrimonialeService.findAll();
-        
+        sexes = sexeService.findAll();
         
         switch(operation){
-            case DECLARATION:
+            case DECLARATION_JUGEMENT:
+                LOG.log(Level.INFO,"---SWITCH CURRENT OPERATION : {0}",operation.name());
                 acteDto = new ActeDecesDto();
                 acteDto.setRegistreID(registreID);
                 int numeroActe = acteDecesService.numeroActe(registreID);
                 acteDto.setNumero(numeroActe);
-                
                 break;
             case SAISIE_ACTE_EXISTANT:
+                LOG.log(Level.INFO,"---SWITCH CURRENT OPERATION : {0}",operation.name());
                 acteDto = new ActeDecesDto();
                 acteDto.setRegistreID(registreID);
                 break;
@@ -115,6 +147,7 @@ public class EditerBacking extends BaseBacking implements Serializable{
         
         acteDto.setOperation(operation.name());
         lazyActeDecesDataModel.setRegistreID(registreID);
+        LOG.log(Level.INFO,"---END SWITCH CURRENT OPERATION : {0}",operation.name());
         
     }
     
@@ -161,6 +194,7 @@ public class EditerBacking extends BaseBacking implements Serializable{
     }
     
     public boolean renderedValiderButton(){
+       
         if(operation != null){
             return operation == Operation.VALIDATION && 
                     acteDto.getStatut().equals(StatutActeDeces.PROJET.name());
@@ -170,14 +204,16 @@ public class EditerBacking extends BaseBacking implements Serializable{
     }
     
     public boolean renderedCreerButton(){
+        
         if(operation != null){
-            return operation == Operation.SAISIE_ACTE_EXISTANT || operation == Operation.DECLARATION;
+            return operation == Operation.SAISIE_ACTE_EXISTANT || operation == Operation.DECLARATION_JUGEMENT;
         }
         
         return false;
     }
     
     public boolean renderedModifierButton(){
+        
         if(operation != null){
             return operation == Operation.MODIFICATION;
         }
@@ -187,7 +223,7 @@ public class EditerBacking extends BaseBacking implements Serializable{
     
     private void resetActeDto(){
         acteDto = new ActeDecesDto();
-        if(operation == Operation.DECLARATION){
+        if(operation == Operation.DECLARATION_JUGEMENT){
             int numeroActe = acteDecesService.numeroActe(registreID);
             acteDto.setNumero(numeroActe);
         }
@@ -238,13 +274,7 @@ public class EditerBacking extends BaseBacking implements Serializable{
         this.operationParam = operationParam;
     }
 
-    public Operation getOperation() {
-        return operation;
-    }
-
-    public void setOperation(Operation operation) {
-        this.operation = operation;
-    }
+    
 
     public ActeDecesDto getActeDto() {
         return acteDto;
@@ -278,6 +308,22 @@ public class EditerBacking extends BaseBacking implements Serializable{
 
     public List<OfficierEtatCivilDto> getOfficiers() {
         return officiers;
+    }
+
+    public List<SexeDto> getSexes() {
+        return sexes;
+    }
+
+    public List<LienDeclarantDto> getLiens() {
+        return liens;
+    }
+
+    public List<TypePieceDto> getTypesPieces() {
+        return typesPieces;
+    }
+
+    public List<NationaliteDto> getNationalites() {
+        return nationalites;
     }
 
     

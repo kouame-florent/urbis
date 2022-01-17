@@ -3,13 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package io.urbis.registre.api;
+package io.urbis.common.api;
 
-import io.urbis.naissance.dto.NationaliteDto;
+import io.urbis.common.dto.NationaliteDto;
 import java.util.List;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import org.eclipse.microprofile.rest.client.annotation.RegisterClientHeaders;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 /**

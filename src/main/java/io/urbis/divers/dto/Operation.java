@@ -6,7 +6,6 @@
 package io.urbis.divers.dto;
 
 
-import io.urbis.mariage.dto.*;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 

@@ -5,7 +5,7 @@
  */
 package io.urbis.common.api;
 
-import io.urbis.naissance.dto.SexeDto;
+import io.urbis.common.dto.SexeDto;
 import java.util.List;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

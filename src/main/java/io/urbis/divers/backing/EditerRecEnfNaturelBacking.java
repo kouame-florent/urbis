@@ -11,7 +11,7 @@ import io.urbis.common.api.SexeService;
 import io.urbis.divers.api.ActeRecEnfNaturelService;
 import io.urbis.divers.dto.Operation;
 import io.urbis.divers.dto.StatutActeDivers;
-import io.urbis.naissance.dto.SexeDto;
+import io.urbis.common.dto.SexeDto;
 import io.urbis.param.api.OfficierService;
 import io.urbis.param.dto.OfficierEtatCivilDto;
 import io.urbis.registre.api.RegistreService;

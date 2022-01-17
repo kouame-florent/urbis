@@ -352,9 +352,9 @@ public class ListerBacking extends BaseBacking implements Serializable{
             case MARIAGE:
                 openListActesMariage(registreDto);
                 break;
-            //case DIVERS:
-            //    openListActesDivers(registreDto);
-            //    break;
+            case DECES:
+                openListActesDeces(registreDto);
+                break;
         }
     }
     
@@ -386,18 +386,21 @@ public class ListerBacking extends BaseBacking implements Serializable{
         Map<String, List<String>> params = Map.of("reg-id", ids);
         PrimeFaces.current().dialog().openDynamic("/acte/divers/lister-reconnaissance-enfant-adulterin", 
                 getDialogOptions(100,100,true), params);
-        
-    
     }
     
     public void openListActesConsReconnaissance(RegistreDto registreDto) {
-        
         var ids = List.of(registreDto.getId());
         Map<String, List<String>> params = Map.of("reg-id", ids);
         PrimeFaces.current().dialog().openDynamic("/acte/divers/lister-consentement-reconnaissance", 
                 getDialogOptions(100,100,true), params);
-        
+    }
     
+    public void openListActesDeces(RegistreDto registreDto) {
+        
+        var ids = List.of(registreDto.getId());
+        Map<String, List<String>> params = Map.of("reg-id", ids);
+        PrimeFaces.current().dialog().openDynamic("/acte/deces/lister", 
+                getDialogOptions(100,100,true), params);
     }
     
     public boolean renderGererActesMenu(RegistreDto registreDto){

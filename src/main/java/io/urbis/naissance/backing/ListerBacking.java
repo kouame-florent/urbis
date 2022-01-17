@@ -47,7 +47,7 @@ public class ListerBacking extends BaseBacking implements Serializable{
     private static final Logger LOG = Logger.getLogger(ListerBacking.class.getName());
     
     @Inject
-    LazyDeclarationDataModel lazyDeclarationDataModel;
+    LazyActeNaissanceDataModel lazyActeNaissanceDataModel;
      
     @Inject 
     @RestClient
@@ -68,7 +68,7 @@ public class ListerBacking extends BaseBacking implements Serializable{
     public void onload(){
         LOG.log(Level.INFO,"REGISTRE ID: {0}",registreID);
         registreDto = registreService.findById(registreID);
-        lazyDeclarationDataModel.setRegistreID(registreID);
+        lazyActeNaissanceDataModel.setRegistreID(registreID);
     }
     
     private ActeNaissanceDto selectedActe;
@@ -184,13 +184,15 @@ public class ListerBacking extends BaseBacking implements Serializable{
         return true;
     }
 
-    public LazyDeclarationDataModel getLazyDeclarationDataModel() {
-        return lazyDeclarationDataModel;
+    public LazyActeNaissanceDataModel getLazyActeNaissanceDataModel() {
+        return lazyActeNaissanceDataModel;
     }
 
-    public void setLazyDeclarationDataModel(LazyDeclarationDataModel lazyDeclarationDataModel) {
-        this.lazyDeclarationDataModel = lazyDeclarationDataModel;
+    public void setLazyActeNaissanceDataModel(LazyActeNaissanceDataModel lazyActeNaissanceDataModel) {
+        this.lazyActeNaissanceDataModel = lazyActeNaissanceDataModel;
     }
+
+   
 
     public ActeNaissanceDto getSelectedActe() {
         return selectedActe;

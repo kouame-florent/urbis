@@ -6,7 +6,8 @@
 package io.urbis.deces.api;
 
 
-import io.urbis.deces.dto.SituationMatrimonialeDto;
+
+import io.urbis.common.dto.LienDeclarantDto;
 import java.util.List;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -16,11 +17,12 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
  *
  * @author florent
  */
-@Path("/")
+@Path("/deces")
 @RegisterRestClient(baseUri = "http://127.0.0.1:8181")
-public interface SituationMatrimonialeService {
+public interface LienDeclarantService {
     
-    @Path("/situations-matrimoniales")
+    @Path("/liens-declarant")
     @GET
-    List<SituationMatrimonialeDto> findAll();  
+    List<LienDeclarantDto> findAll();  
+    
 }
