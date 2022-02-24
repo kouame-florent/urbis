@@ -57,6 +57,8 @@ xmlns:p="http://primefaces.org/ui">
                                     styleClass="p-d-block"/>
 
                 </div>
+                    
+                
 
                 </div>
 
@@ -76,6 +78,16 @@ xmlns:p="http://primefaces.org/ui">
                                      maxlength="5" styleClass="p-d-block">
                           
                         </p:inputText>
+
+                    </div>
+                    
+                    <div class="p-field p-col">
+                        <p:outputLabel for="dateOuverture" styleClass="p-d-block">Date d'ouverture</p:outputLabel>
+                        <p:inputMask id="dateOuverture" value="#{registreEditerBacking.dateOuverture}"
+                                     mask="99/99/9999 99:99:99" required="true" disabled="true">
+                                <f:convertDateTime locale="fr_FR" type="localDateTime" pattern="dd/MM/yyyy HH:mm:ss"/>
+                        </p:inputMask>
+                        
 
                     </div>
 

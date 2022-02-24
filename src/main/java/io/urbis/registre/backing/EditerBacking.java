@@ -26,6 +26,7 @@ import io.urbis.param.dto.CentreDto;
 import io.urbis.param.dto.LocaliteDto;
 import io.urbis.param.dto.TribunalDto;
 import io.urbis.registre.dto.RegistreDto;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -83,6 +84,7 @@ public class EditerBacking extends BaseBacking implements Serializable{
     private int numeroRegistre;
     private int numeroPremierActe;
     private int nombreDeFeuillets;
+    private LocalDateTime dateOuverture;
     private TribunalDto currentTribunal;
     
     private List<OfficierEtatCivilDto> officiers = new ArrayList<>();
@@ -129,6 +131,7 @@ public class EditerBacking extends BaseBacking implements Serializable{
         annee = registreService.anneeCourante();
         numeroRegistre = registreService.numeroRegistre(selectedType.getCode(),annee);
         numeroPremierActe = registreService.numeroPremierActeCourant(selectedType.getCode(),annee);
+        dateOuverture = LocalDateTime.now();
     }
 
     public void onOfficierSelect(){
@@ -162,6 +165,7 @@ public class EditerBacking extends BaseBacking implements Serializable{
        registreDto.setCentreID(currentCentre.getId());
        registreDto.setAnnee(annee);
        registreDto.setNumero(numeroRegistre);
+       registreDto.setDateOuverture(dateOuverture);
        registreDto.setTribunal(currentTribunal.getLibelle());
        registreDto.setTribunalID(currentTribunal.getId());
        registreDto.setOfficierEtatCivilID(selectedOfficierId);
@@ -261,6 +265,14 @@ public class EditerBacking extends BaseBacking implements Serializable{
 
     public void setRegistreDto(RegistreDto registreDto) {
         this.registreDto = registreDto;
+    }
+
+    public LocalDateTime getDateOuverture() {
+        return dateOuverture;
+    }
+
+    public void setDateOuverture(LocalDateTime dateOuverture) {
+        this.dateOuverture = dateOuverture;
     }
 
     

@@ -40,48 +40,49 @@ xmlns:p="http://primefaces.org/ui">
             <p:focus context="contentForm"/>
           
             <p:fieldset legend="Référence registre">
-               <div class="ui-fluid p-formgrid p-grid">
-                   <div class="p-field p-col">
-                   <p:outputLabel for="localite" styleClass="p-d-block">Commune</p:outputLabel>
-                   <p:inputText id="localite" value="#{acteMariageEditerBacking.registreDto.localite}"
-                                disabled="true" required="true" styleClass="p-d-block"/>
+                
+                <div class="ui-fluid p-formgrid p-grid">
+                <div class="p-field p-col">
+                <p:outputLabel for="localite" styleClass="p-d-block">Commune</p:outputLabel>
+                <p:inputText id="localite" value="#{acteMariageEditerBacking.registreDto.localite}"
+                             disabled="true" required="true" styleClass="p-d-block"/>
 
-                   </div>
-                   <div class="p-field p-col">
-                       <p:outputLabel for="centre" styleClass="p-d-block">Centre</p:outputLabel>
-                       <p:inputText id="centre" value="#{acteMariageEditerBacking.registreDto.centre}"
-                                    disabled="true"  required="true" styleClass="p-d-block"/>
+                </div>
+                <div class="p-field p-col">
+                    <p:outputLabel for="centre" styleClass="p-d-block">Centre</p:outputLabel>
+                    <p:inputText id="centre" value="#{acteMariageEditerBacking.registreDto.centre}"
+                                 disabled="true"  required="true" styleClass="p-d-block"/>
 
-                   </div>
-                   <div class="p-field p-col">
-                       <p:outputLabel for="annee" styleClass="p-d-block">Année</p:outputLabel>
-                       <p:inputText id="annee" value="#{acteMariageEditerBacking.registreDto.annee}" required="true"
-                                    disabled="true" styleClass="p-d-block"/>
+                </div>
+                <div class="p-field p-col">
+                    <p:outputLabel for="annee" styleClass="p-d-block">Année</p:outputLabel>
+                    <p:inputText id="annee" value="#{acteMariageEditerBacking.registreDto.annee}" required="true"
+                                 disabled="true" styleClass="p-d-block"/>
 
-                   </div>
-                   <div class="p-field p-col">
-                       <p:outputLabel for="numero" styleClass="p-d-block">Numéro</p:outputLabel>
-                       <p:inputText id="numero" value="#{acteMariageEditerBacking.registreDto.numero}"  required="true" 
-                                    disabled="true"   styleClass="p-d-block"/>
+                </div>
+                <div class="p-field p-col">
+                    <p:outputLabel for="numero" styleClass="p-d-block">Numéro</p:outputLabel>
+                    <p:inputText id="numero" value="#{acteMariageEditerBacking.registreDto.numero}"  required="true" 
+                                 disabled="true"   styleClass="p-d-block"/>
 
-                   </div>
-                   <div class="p-field p-col">
-                       <p:outputLabel for="numeroPremierActe" styleClass="p-d-block">Numéro premier acte</p:outputLabel>
-                       <p:inputText id="numeroPremierActe" value="#{acteMariageEditerBacking.registreDto.numeroPremierActe}"  required="true" 
-                                    disabled="true"   styleClass="p-d-block"/>
+                </div>
+                <div class="p-field p-col">
+                    <p:outputLabel for="numeroPremierActe" styleClass="p-d-block">Numéro premier acte</p:outputLabel>
+                    <p:inputText id="numeroPremierActe" value="#{acteMariageEditerBacking.registreDto.numeroPremierActe}"  required="true" 
+                                 disabled="true"   styleClass="p-d-block"/>
 
-                   </div>
-                   <div class="p-field p-col">
-                       <p:outputLabel for="numeroDernierActe" styleClass="p-d-block">Numéro dernier acte</p:outputLabel>
-                       <p:inputText id="numeroDernierActe" value="#{acteMariageEditerBacking.registreDto.numeroDernierActe}"  required="true" 
-                                    disabled="true"   styleClass="p-d-block"/>
+                </div>
+                <div class="p-field p-col">
+                    <p:outputLabel for="numeroDernierActe" styleClass="p-d-block">Numéro dernier acte</p:outputLabel>
+                    <p:inputText id="numeroDernierActe" value="#{acteMariageEditerBacking.registreDto.numeroDernierActe}"  required="true" 
+                                 disabled="true"   styleClass="p-d-block"/>
 
-                   </div>
+                </div>
 
-               </div>
+            </div>
 
            </p:fieldset>
-            <p:spacer height="2" />
+        <p:spacer height="2" />
       
         <p:fieldset >
 

@@ -146,4 +146,6 @@ public class ActeNaissanceDto {
     private Set<MentionLegitimationDto> mentionLegitimationDtos = new HashSet<>();
     private Set<MentionReconnaissanceDto> mentionReconnaissanceDtos = new HashSet<>();
     private Set<MentionRectificationDto> mentionRectificationDtos = new HashSet<>();
+    
+    private ActeNaissanceEtatDto acteNaissanceEtatDto = new ActeNaissanceEtatDto();
 }

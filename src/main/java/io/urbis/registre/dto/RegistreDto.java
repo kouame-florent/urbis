@@ -41,6 +41,8 @@ public class RegistreDto {
     @Min(value = 1, message = "valeur minimale 1")
     private int numero;
     
+    private LocalDateTime dateOuverture;
+    
     private String tribunal;
     private String tribunalID;
     

@@ -12,7 +12,7 @@ import io.urbis.common.api.SituationMatrimonialeService;
 import io.urbis.mariage.dto.ActeMariageDto;
 import io.urbis.mariage.dto.RegimeDto;
 import io.urbis.common.dto.SituationMatrimonialeDto;
-import io.urbis.deces.dto.Operation;
+import io.urbis.mariage.dto.Operation;
 import io.urbis.mariage.dto.StatutActeMariage;
 import io.urbis.param.api.OfficierService;
 import io.urbis.param.dto.OfficierEtatCivilDto;
@@ -62,6 +62,9 @@ public class EditerBacking extends BaseBacking implements Serializable{
     @RestClient
     OfficierService officierService;
     
+    //@Inject
+    //RegistreReferenceBacking registreReferenceBacking;
+    
     private String registreID;
     private RegistreDto registreDto;
     
@@ -100,7 +103,7 @@ public class EditerBacking extends BaseBacking implements Serializable{
         regimes = regimeService.findAll();
         
         switch(operation){
-            case DECLARATION_JUGEMENT:
+            case DECLARATION:
                 acteDto = new ActeMariageDto();
                 acteDto.setRegistreID(registreID);
                 int numeroActe = acteMariageService.numeroActe(registreID);
@@ -179,7 +182,7 @@ public class EditerBacking extends BaseBacking implements Serializable{
         LOG.log(Level.INFO,"---RENDERED CURRENT OPERATION : {0}",operation);
         if(operation != null){
             LOG.log(Level.INFO,"---RENDERED CURRENT OPERATION : {0}",operation.name());
-            return operation == Operation.SAISIE_ACTE_EXISTANT || operation == Operation.DECLARATION_JUGEMENT;
+            return operation == Operation.SAISIE_ACTE_EXISTANT || operation == Operation.DECLARATION;
         }
         
         return false;
@@ -195,7 +198,7 @@ public class EditerBacking extends BaseBacking implements Serializable{
     
     private void resetActeDto(){
         acteDto = new ActeMariageDto();
-        if(operation == Operation.DECLARATION_JUGEMENT){
+        if(operation == Operation.DECLARATION){
             int numeroActe = acteMariageService.numeroActe(registreID);
             acteDto.setNumero(numeroActe);
         }
@@ -222,6 +225,7 @@ public class EditerBacking extends BaseBacking implements Serializable{
         this.registreID = registreID;
     }
 
+    
     public RegistreDto getRegistreDto() {
         return registreDto;
     }
@@ -229,7 +233,7 @@ public class EditerBacking extends BaseBacking implements Serializable{
     public void setRegistreDto(RegistreDto registreDto) {
         this.registreDto = registreDto;
     }
-
+    
     public String getActeMariageID() {
         return acteMariageID;
     }

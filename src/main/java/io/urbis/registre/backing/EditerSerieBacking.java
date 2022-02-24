@@ -20,6 +20,7 @@ import io.urbis.registre.dto.RegistreDto;
 import io.urbis.registre.dto.TypeRegistre;
 import io.urbis.registre.dto.TypeRegistreDto;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -151,6 +152,9 @@ public class EditerSerieBacking extends BaseBacking implements Serializable{
                     numeroPremierActe, nombreDeFeuillets);
             LOG.log(Level.INFO, "NUMERO PREMIER ACTE: {0}", numeroPremierActe);
             
+            LocalDateTime dateOuverture = LocalDateTime.of(annee, 1, 1, 12, 0);
+            
+            
             RegistreDto registreDto = new RegistreDto();
             
             registreDto.setTypeRegistre(selectedType.getCode());
@@ -161,6 +165,7 @@ public class EditerSerieBacking extends BaseBacking implements Serializable{
             registreDto.setCentreID(currentCentre.getId());
             registreDto.setAnnee(annee);
             registreDto.setNumero(i);
+            registreDto.setDateOuverture(dateOuverture);
             registreDto.setTribunal(currentTribunal.getLibelle());
             registreDto.setTribunalID(currentTribunal.getId());
             registreDto.setOfficierEtatCivilID(selectedOfficierId);
