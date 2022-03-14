@@ -11,7 +11,7 @@ import io.urbis.divers.dto.ActeDiversDto;
 import io.urbis.divers.dto.ActeRecEnfantNaturelDto;
 import io.urbis.divers.dto.Operation;
 import io.urbis.divers.dto.StatutActeDivers;
-import io.urbis.registre.api.EtatService;
+
 import io.urbis.registre.api.RegistreService;
 import io.urbis.registre.dto.RegistreDto;
 import io.urbis.registre.dto.StatutRegistre;
@@ -51,9 +51,7 @@ public class ListerRecEnfNaturelBacking extends BaseBacking implements Serializa
     @RestClient
     RegistreService registreService;  
     
-    @Inject 
-    @RestClient
-    EtatService etatService;
+    
     
     @Inject
     ActeRecEnfNaturelService acteRecEnfNaturelService;
@@ -116,6 +114,7 @@ public class ListerRecEnfNaturelBacking extends BaseBacking implements Serializa
 */
     
     public StreamedContent download(){
+        /*
        File file = etatService.downloadActeNaissance(selectedActeID);
        LOG.log(Level.INFO, "FILE NAME: {0}", file.getName());
        LOG.log(Level.INFO, "FILE ABSOLUTE PATH: {0}", file.getAbsolutePath());
@@ -134,6 +133,8 @@ public class ListerRecEnfNaturelBacking extends BaseBacking implements Serializa
         }
        
        return content;
+       */
+        return null;
     }
     
     public void openModifierActeView(ActeRecEnfantNaturelDto dto){

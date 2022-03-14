@@ -10,7 +10,7 @@ import io.urbis.naissance.api.ActeNaissanceService;
 import io.urbis.naissance.dto.ActeNaissanceDto;
 import io.urbis.naissance.dto.Operation;
 import io.urbis.naissance.dto.StatutActeNaissance;
-import io.urbis.registre.api.EtatService;
+
 import io.urbis.registre.api.RegistreService;
 import io.urbis.registre.dto.RegistreDto;
 import io.urbis.registre.dto.StatutRegistre;
@@ -30,11 +30,13 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.WebApplicationException;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.primefaces.PrimeFaces;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
+import io.urbis.naissance.api.ActeNaissanceEtatService;
 
 /**
  *
@@ -58,7 +60,12 @@ public class ListerBacking extends BaseBacking implements Serializable{
     
     @Inject 
     @RestClient
-    EtatService etatService;
+    ActeNaissanceEtatService acteNaissanceEtatService;
+    
+    @Inject
+    @ConfigProperty(name = "URBIS_TENANT", defaultValue = "standard")
+    String tenant;
+    
     
     private String registreID;
     private RegistreDto registreDto;
@@ -66,7 +73,8 @@ public class ListerBacking extends BaseBacking implements Serializable{
     String selectedActeID;
     
     public void onload(){
-        LOG.log(Level.INFO,"REGISTRE ID: {0}",registreID);
+        LOG.log(Level.INFO,"----- URBIS TENANT: {0}",tenant);
+        LOG.log(Level.INFO,"----- REGISTRE ID: {0}",registreID);
         registreDto = registreService.findById(registreID);
         lazyActeNaissanceDataModel.setRegistreID(registreID);
     }
@@ -80,7 +88,8 @@ public class ListerBacking extends BaseBacking implements Serializable{
     }
     
     public StreamedContent download(){
-       File file = etatService.downloadActeNaissance(selectedActeID);
+       File file = acteNaissanceEtatService.downloadActeNaissance(tenant, selectedActeID);
+       LOG.log(Level.INFO, "TENANT: {0}", tenant);
        LOG.log(Level.INFO, "FILE NAME: {0}", file.getName());
        LOG.log(Level.INFO, "FILE ABSOLUTE PATH: {0}", file.getAbsolutePath());
        LOG.log(Level.INFO, "FILE LENGHT: {0}", file.length());

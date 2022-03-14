@@ -10,7 +10,7 @@ import io.urbis.deces.api.ActeDecesService;
 import io.urbis.deces.dto.ActeDecesDto;
 import io.urbis.deces.dto.Operation;
 import io.urbis.deces.dto.StatutActeDeces;
-import io.urbis.registre.api.EtatService;
+
 import io.urbis.registre.api.RegistreService;
 import io.urbis.registre.dto.RegistreDto;
 import io.urbis.registre.dto.StatutRegistre;
@@ -53,9 +53,7 @@ public class ListerBacking extends BaseBacking implements Serializable{
     @RestClient
     RegistreService registreService;  
     
-    @Inject 
-    @RestClient
-    EtatService etatService;
+    
     
     @Inject 
     @RestClient
@@ -81,6 +79,7 @@ public class ListerBacking extends BaseBacking implements Serializable{
     }
     
     public StreamedContent download(){
+       /*
        File file = etatService.downloadActeNaissance(acteID);
        LOG.log(Level.INFO, "FILE NAME: {0}", file.getName());
        LOG.log(Level.INFO, "FILE ABSOLUTE PATH: {0}", file.getAbsolutePath());
@@ -99,6 +98,8 @@ public class ListerBacking extends BaseBacking implements Serializable{
         }
        
        return content;
+       */
+       return null;
     }
     
     public void onActeValidated(SelectEvent event){

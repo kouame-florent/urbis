@@ -12,7 +12,6 @@ import io.urbis.param.api.CentreService;
 import io.urbis.param.api.LocaliteService;
 import io.urbis.param.api.OfficierService;
 import io.urbis.param.api.TribunalService;
-import io.urbis.registre.api.EtatService;
 import io.urbis.registre.api.RegistreService;
 import io.urbis.registre.api.TypeRegistreService;
 import io.urbis.registre.dto.RegistreDto;
@@ -66,10 +65,7 @@ public class ListerBacking extends BaseBacking implements Serializable{
     @RestClient
     RegistreService registreService;
     
-    @Inject
-    @RestClient
-    EtatService etatService;
-    
+        
     @Inject
     CentreService centreService;
     
@@ -496,8 +492,7 @@ public class ListerBacking extends BaseBacking implements Serializable{
                 registreDto.getStatut().equals(StatutRegistre.CLOTURE.name());  
     }
     
-   
-    
+       
     public boolean disableMenuGererActes(RegistreDto registreDto){
         return registreDto.getStatut().equals(StatutRegistre.ANNULE.name()) || 
                 registreDto.getStatut().equals(StatutRegistre.PROJET.name());  
@@ -562,6 +557,7 @@ public class ListerBacking extends BaseBacking implements Serializable{
     }
     
     public StreamedContent download(){
+        /*
        File file = etatService.downloadRegistre();
        LOG.log(Level.INFO, "FILE NAME: {0}", file.getName());
        LOG.log(Level.INFO, "FILE ABSOLUTE PATH: {0}", file.getAbsolutePath());
@@ -580,6 +576,8 @@ public class ListerBacking extends BaseBacking implements Serializable{
         }
        
        return content;
+       */
+        return null;
     }
     
 

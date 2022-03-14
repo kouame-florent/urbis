@@ -31,10 +31,11 @@ import io.urbis.mariage.dto.StatutActeMariage;
 import java.util.List;
 import java.util.Map;
 import org.primefaces.PrimeFaces;
-import io.urbis.registre.api.EtatService;
+
 import io.urbis.registre.api.RegistreService;
 import io.urbis.registre.dto.StatutRegistre;
 import javax.validation.constraints.NotBlank;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 /**
  *
@@ -53,13 +54,14 @@ public class ListerBacking extends BaseBacking implements Serializable{
     @RestClient
     RegistreService registreService;  
     
-    @Inject 
-    @RestClient
-    EtatService etatService;
     
     @Inject 
     @RestClient
     ActeMariageService acteMariageService;
+    
+    @Inject
+    @ConfigProperty(name = "URBIS_TENANT", defaultValue = "standard")
+    String tenant;
     
     private String registreID;
     private RegistreDto registreDto;
@@ -67,7 +69,8 @@ public class ListerBacking extends BaseBacking implements Serializable{
     String selectedActeID;
     
     public void onload(){
-        LOG.log(Level.INFO,"REGISTRE ID: {0}",registreID);
+        LOG.log(Level.INFO,"---- URBIS TENANT: {0}",tenant);
+        LOG.log(Level.INFO,"---- REGISTRE ID: {0}",registreID);
         registreDto = registreService.findById(registreID);
         lazyActeMariageDataModele.setRegistreID(registreID);
     }
@@ -81,7 +84,9 @@ public class ListerBacking extends BaseBacking implements Serializable{
     }
     
     public StreamedContent download(){
-       File file = etatService.downloadActeNaissance(selectedActeID);
+        /*
+       LOG.log(Level.INFO, "--------- CURRENT TENANT: {0}", tenant);
+       File file = etatService.downloadActeNaissance(tenant, selectedActeID);
        LOG.log(Level.INFO, "FILE NAME: {0}", file.getName());
        LOG.log(Level.INFO, "FILE ABSOLUTE PATH: {0}", file.getAbsolutePath());
        LOG.log(Level.INFO, "FILE LENGHT: {0}", file.length());
@@ -99,6 +104,8 @@ public class ListerBacking extends BaseBacking implements Serializable{
         }
        
        return content;
+       */
+        return null;
     }
     
     public void onActeValidated(SelectEvent event){

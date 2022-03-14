@@ -3,11 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package io.urbis.registre.api;
+package io.urbis.naissance.api;
+
 
 import java.io.File;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
@@ -15,15 +17,11 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
  *
  * @author florent
  */
-@Path("/etats")
+@Path("/naissances/etats")
 @RegisterRestClient(baseUri = "http://127.0.0.1:8181/")
-public interface EtatService {
+public interface ActeNaissanceEtatService {
     
     @GET
-    @Path("/registres")
-    public File downloadRegistre();
-    
-    @GET
-    @Path("/acte_naissance")
-    public File downloadActeNaissance(@QueryParam("ACTE_NAISSANCE_ID") String acteNaissanceID);
+    @Path("/acte_naissance/{tenant}")
+    public File downloadActeNaissance(@PathParam("tenant") String tenant,@QueryParam("ACTE_NAISSANCE_ID") String acteNaissanceID);
 }

@@ -10,7 +10,7 @@ import io.urbis.divers.api.ActeRecEnfAdulterinService;
 import io.urbis.divers.dto.ActeRecEnfantAdulterinDto;
 import io.urbis.divers.dto.Operation;
 import io.urbis.divers.dto.StatutActeDivers;
-import io.urbis.registre.api.EtatService;
+
 import io.urbis.registre.api.RegistreService;
 import io.urbis.registre.dto.RegistreDto;
 import java.io.File;
@@ -49,9 +49,7 @@ public class ListerRecEnfAdulterinBacking extends BaseBacking implements Seriali
     @RestClient
     RegistreService registreService;  
     
-    @Inject 
-    @RestClient
-    EtatService etatService;
+    
     
     @Inject
     ActeRecEnfAdulterinService acteRecEnfNaturelService;
@@ -114,6 +112,7 @@ public class ListerRecEnfAdulterinBacking extends BaseBacking implements Seriali
 */
     
     public StreamedContent download(){
+        /*
        File file = etatService.downloadActeNaissance(selectedActeID);
        LOG.log(Level.INFO, "FILE NAME: {0}", file.getName());
        LOG.log(Level.INFO, "FILE ABSOLUTE PATH: {0}", file.getAbsolutePath());
@@ -132,6 +131,8 @@ public class ListerRecEnfAdulterinBacking extends BaseBacking implements Seriali
         }
        
        return content;
+        */
+        return null;
     }
     
     public void openModifierActeView(ActeRecEnfantAdulterinDto dto){

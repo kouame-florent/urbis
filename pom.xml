@@ -131,6 +131,11 @@
        </dependency>
        
        <dependency>
+            <groupId>org.eclipse.microprofile.config</groupId>
+            <artifactId>microprofile-config-api</artifactId>
+        </dependency>
+       
+       <dependency>
             <groupId>org.eclipse.microprofile.jwt</groupId>
             <artifactId>microprofile-jwt-auth-api</artifactId>
   

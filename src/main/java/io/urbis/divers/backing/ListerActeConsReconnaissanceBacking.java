@@ -10,7 +10,6 @@ import io.urbis.divers.api.ActeConsReconnaissanceService;
 import io.urbis.divers.dto.ActeConsReconnaissanceDto;
 import io.urbis.divers.dto.Operation;
 import io.urbis.divers.dto.StatutActeDivers;
-import io.urbis.registre.api.EtatService;
 import io.urbis.registre.api.RegistreService;
 import io.urbis.registre.dto.RegistreDto;
 import java.io.File;
@@ -49,9 +48,9 @@ public class ListerActeConsReconnaissanceBacking extends BaseBacking implements 
     @RestClient
     RegistreService registreService;  
     
-    @Inject 
-    @RestClient
-    EtatService etatService;
+    //@Inject 
+    //@RestClient
+   // EtatService etatService;
     
     @Inject
     ActeConsReconnaissanceService acteConsReconnaissanceService;
@@ -114,6 +113,7 @@ public class ListerActeConsReconnaissanceBacking extends BaseBacking implements 
 */
     
     public StreamedContent download(){
+        /*
        File file = etatService.downloadActeNaissance(selectedActeID);
        LOG.log(Level.INFO, "FILE NAME: {0}", file.getName());
        LOG.log(Level.INFO, "FILE ABSOLUTE PATH: {0}", file.getAbsolutePath());
@@ -132,6 +132,9 @@ public class ListerActeConsReconnaissanceBacking extends BaseBacking implements 
         }
        
        return content;
+       */
+        return null;
+
     }
     
     public void openModifierActeView(ActeConsReconnaissanceDto dto){
